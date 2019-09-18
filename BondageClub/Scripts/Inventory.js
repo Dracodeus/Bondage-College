@@ -114,7 +114,7 @@ function InventoryGet(C, AssetGroup) {
 function InventoryWear(C, AssetName, AssetGroup, ItemColor, Difficulty) {
 	for (var A = 0; A < Asset.length; A++)
 		if ((Asset[A].Name == AssetName) && (Asset[A].Group.Name == AssetGroup)) {
-			CharacterAppearanceSetItem(C, AssetGroup, Asset[A], ItemColor, Difficulty);
+			CharacterAppearanceSetItem(C, AssetGroup, Asset[A], ((ItemColor == null) || (ItemColor == "Default")) ? AssetGet(C.AssetFamily, AssetGroup, AssetName).DefaultColor : ItemColor, Difficulty);
 			InventoryExpressionTrigger(C, InventoryGet(C, AssetGroup));
 			return;
 		}
@@ -143,7 +143,8 @@ function InventoryWearRandom(C, AssetGroup, Difficulty) {
 			if ((Asset[A].Group.Name == AssetGroup) && Asset[A].Wear && Asset[A].Enable && Asset[A].Random)
 				List.push(Asset[A]);
 		if (List.length == 0) return;
-		CharacterAppearanceSetItem(C, AssetGroup, List[Math.floor(Math.random() * List.length)], null, Difficulty);
+		var RandomAsset = List[Math.floor(Math.random() * List.length)];
+		CharacterAppearanceSetItem(C, AssetGroup, RandomAsset, RandomAsset.DefaultColor, Difficulty);
 		CharacterRefresh(C);
 	}
 }
