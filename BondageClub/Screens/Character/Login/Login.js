@@ -144,6 +144,7 @@ function LoginResponse(C) {
 			Player.Name = C.Name;
 			Player.AccountName = C.AccountName;
 			Player.AssetFamily = C.AssetFamily;
+			Player.Title = C.Title;
 			if (CommonIsNumeric(C.Money)) Player.Money = C.Money;
 			Player.Owner = ((C.Owner == null) || (C.Owner == "undefined")) ? "" : C.Owner;
 			Player.Lover = ((C.Lover == null) || (C.Lover == "undefined")) ? "" : C.Lover;
