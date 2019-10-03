@@ -32,12 +32,12 @@ function InventoryItemNeckSlaveCollarDraw() {
         var Color = DialogFocusItem.Color;
         var I = 1;
         if (InventoryItemNeckSlaveColorMode) {
-            DrawButton(1775, 25, 90, 90, "", "White", "Icons/ColorCancel.png", DialogFind(Player, "ColorPick"));
-            DrawButton(1665, 25, 90, 90, "", "White", "Icons/ColorSelect.png", DialogFind(Player, "ColorPick"));
+            DrawButton(1775, 25, 90, 90, "", "White", "Icons/ColorCancel.png");
+            DrawButton(1665, 25, 90, 90, "", "White", "Icons/ColorSelect.png");
             ElementPosition("InputColor", 1450, 65, 300);
             DrawImage("Backgrounds/ColorPicker.png", 1300, 145);
         } else {
-            DrawButton(1775, 25, 90, 90, "", (Color != null && Color != "Default" && Color != "None") ? Color : "White", "Icons/ColorPick.png", DialogFind(Player, "ColorPick"));
+            DrawButton(1775, 25, 90, 90, "", (Color != null && Color != "Default" && Color != "None") ? Color : "White", "Icons/ColorPick.png");
         }
     }
     if (!InventoryItemNeckSlaveColorMode) {
@@ -61,7 +61,7 @@ function InventoryItemNeckSlaveCollarClick() {
             if ((MouseX >= 1665) && (MouseX <= 1755) && (MouseY >= 25) && (MouseY <= 110)) {
                 var Color = ElementValue("InputColor");
                 if (CommonIsColor(Color)) {
-                    CharacterAppearanceSetColorForGroup(C, "ItemNeck", Color);
+                    CharacterAppearanceSetColorForGroup(C, Color, "ItemNeck");
                     InventoryItemNeckSlaveColorMode = false;
                     ElementRemove("InputColor");
                     ChatRoomCharacterUpdate(C);
@@ -71,13 +71,13 @@ function InventoryItemNeckSlaveCollarClick() {
             }
             if ((MouseX >= 1775) && (MouseX <= 1865) && (MouseY >= 25) && (MouseY <= 110)) {
                 InventoryItemNeckSlaveColorMode = false;
-                CharacterAppearanceSetColorForGroup(C, "ItemNeck", InventoryItemNeckSlaveColor);
+                CharacterAppearanceSetColorForGroup(C, InventoryItemNeckSlaveColor, "ItemNeck");
                 ElementRemove("InputColor");
                 CharacterLoadCanvas(C);
             }
             if ((MouseX >= 1300) && (MouseX < 1975) && (MouseY >= 145) && (MouseY < 975)) {
                 var Color = DrawRGBToHex(MainCanvas.getImageData(MouseX, MouseY, 1, 1).data);
-                CharacterAppearanceSetColorForGroup(C, "ItemNeck", Color);
+                CharacterAppearanceSetColorForGroup(C, Color, "ItemNeck");
                 CharacterLoadCanvas(C);
                 ElementValue("InputColor", Color);
             }
