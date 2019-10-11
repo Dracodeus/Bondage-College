@@ -7,7 +7,7 @@ RemoveChainForItem,,,Remove the chain to the floor first
 MustCollaredFirst,,,A collar must be fitted first to attach accessories to.
 MustCollaredFirstAndRemoveSuspension,,,Must be collared and not suspended first.
 MustCollaredFirstAndRemoveSuspension1,,,Must be collared and not suspended/mounted first.
-FeetClosed,,,Can't have Items locked to your feet.
+LegsCannotOpen,,,Legs cannot open.
 Cancel,,,Cancel
 Exit,,,Back to character
 Next,,,View next items
@@ -18,6 +18,8 @@ Lock,,,Use a lock
 Unlock,,,Unlock the item
 InspectLock,,,Inspect the lock
 Remote,,,Use your remote
+DialogNormalMode,,,Exit Permission Mode
+DialogPermissionMode,,,Edit Item Permissions
 ButtPump,,,Use the Butt Plug's pump
 ColorPick,,,Color of next item
 ColorSelect,,,Use this color
@@ -43,11 +45,16 @@ PumpLevel1,,,Pump gag level: Light
 PumpLevel2,,,Pump gag level: Inflated
 PumpLevel3,,,Pump gag level: Bloated
 PumpLevel4,,,Pump gag level: Full mouth
-InflateLevel0,,,Pump plug level: Empty
-InflateLevel1,,,Pump plug level: Light
-InflateLevel2,,,Pump plug level: Inflated
-InflateLevel3,,,Pump plug level: Bloated
-InflateLevel4,,,Pump plug level: Max
+InflateLevel0,,,Inflation level: Empty
+InflateLevel1,,,Inflation level: Light
+InflateLevel2,,,Inflation level: Inflated
+InflateLevel3,,,Inflation level: Bloated
+InflateLevel4,,,Inflation level: Max
+SuctionLevel0,,,Suction Cup level: Loose
+SuctionLevel1,,,Suction Cup level: Light
+SuctionLevel2,,,Suction Cup level: Medium
+SuctionLevel3,,,Suction Cup level: Heavy
+SuctionLevel4,,,Suction Cup level: Max
 DeflateIt,,,Deflate it
 PumpIt,,,Pump it
 pumps,,,pumps
@@ -199,6 +206,22 @@ DildoIncreaseTo0,,,DestinationCharacter's vibrating dildo starts teasing her lig
 DildoIncreaseTo1,,,DestinationCharacter's vibrating dildo builds up to a moderate pace.
 DildoIncreaseTo2,,,DestinationCharacter's vibrating dildo starts buzzing strongly!
 DildoIncreaseTo3,,,DestinationCharacter's vibrating dildo jumps up to maximum intensity!
+InflVibeDildo_VibeDecreaseTo-1,,,DestinationCharacter's inflatable vibrating dildo stops vibrating.
+InflVibeDildo_VibeDecreaseTo0,,,DestinationCharacter's inflatable vibrating dildo slows down into a light tease.
+InflVibeDildo_VibeDecreaseTo1,,,DestinationCharacter's inflatable vibrating dildo returns to a moderate pace.
+InflVibeDildo_VibeDecreaseTo2,,,DestinationCharacter's inflatable vibrating dildo slows down a tiny bit.
+InflVibeDildo_VibeIncreaseTo0,,,DestinationCharacter's inflatable vibrating dildo starts teasing her lightly.
+InflVibeDildo_VibeIncreaseTo1,,,DestinationCharacter's inflatable vibrating dildo builds up to a moderate pace.
+InflVibeDildo_VibeIncreaseTo2,,,DestinationCharacter's inflatable vibrating dildo starts buzzing strongly!
+InflVibeDildo_VibeIncreaseTo3,,,DestinationCharacter's inflatable vibrating dildo jumps up to maximum intensity!
+InflVibeDildo_PumpdeflatesTo0,,,SourceCharacter deflates DestinationCharacter's inflatable vibrating dildo till it's regular sized.
+InflVibeDildo_PumpdeflatesTo1,,,SourceCharacter deflates DestinationCharacter's inflatable vibrating dildo till only slighty bulging.
+InflVibeDildo_PumpdeflatesTo2,,,SourceCharacter deflates DestinationCharacter's inflatable vibrating dildo till it's moderately bulging.
+InflVibeDildo_PumpdeflatesTo3,,,SourceCharacter deflates DestinationCharacter's inflatable vibrating dildo only a tiny bit.
+InflVibeDildo_PumppumpsTo1,,,SourceCharacter inflates DestinationCharacter's inflatable vibrating dildo only slightly.
+InflVibeDildo_PumppumpsTo2,,,SourceCharacter inflates DestinationCharacter's inflatable vibrating dildo till it's moderately bulging.
+InflVibeDildo_PumppumpsTo3,,,SourceCharacter inflates DestinationCharacter's inflatable vibrating dildo till it's heavily bulging.
+InflVibeDildo_PumppumpsTo4,,,SourceCharacter inflates DestinationCharacter's inflatable vibrating dildo to it's maximum size.
 NippleDecreaseTo-1,,,DestinationCharacter's vibrating nipple clamps stop vibrating.
 NippleDecreaseTo0,,,DestinationCharacter's vibrating nipple clamps slow down into a light tease.
 NippleDecreaseTo1,,,DestinationCharacter's vibrating nipple clamps return to a moderate pace.
@@ -207,6 +230,30 @@ NippleIncreaseTo0,,,DestinationCharacter's vibrating nipple clamps start teasing
 NippleIncreaseTo1,,,DestinationCharacter's vibrating nipple clamps build up to a moderate pace.
 NippleIncreaseTo2,,,DestinationCharacter's vibrating nipple clamps start buzzing strongly!
 NippleIncreaseTo3,,,DestinationCharacter's vibrating nipple clamps jump up to maximum intensity!
+NippleEggDecreaseTo-1,,,DestinationCharacter's vibrating eggs on her nipples stop vibrating.
+NippleEggDecreaseTo0,,,DestinationCharacter's vibrating eggs on her nipples slow down into a light tease.
+NippleEggDecreaseTo1,,,DestinationCharacter's vibrating eggs on her nipples return to a moderate pace.
+NippleEggDecreaseTo2,,,DestinationCharacter's vibrating eggs on her nipples slow down a tiny bit.
+NippleEggIncreaseTo0,,,DestinationCharacter's vibrating eggs on her nipples start teasing her lightly.
+NippleEggIncreaseTo1,,,DestinationCharacter's vibrating eggs on her nipples build up to a moderate pace.
+NippleEggIncreaseTo2,,,DestinationCharacter's vibrating eggs on her nipples start buzzing strongly!
+NippleEggIncreaseTo3,,,DestinationCharacter's vibrating eggs on her nipples jump up to maximum intensity!
+NipSucloosensTo0,,,SourceCharacter loosens DestinationCharacter's nipple suction cups until they hang loosely.
+NipSucloosensTo1,,,SourceCharacter loosens DestinationCharacter's nipple suction cups to a light amount of suction.
+NipSucloosensTo2,,,SourceCharacter loosens DestinationCharacter's nipple suction cups to a moderate amount of suction.
+NipSucloosensTo3,,,SourceCharacter loosens DestinationCharacter's nipple suction cups a bit to a heavy amount of suction.
+NipSuctightensTo1,,,SourceCharacter tweaks DestinationCharacter's nipple suction cups sucking in her nipples lightly.
+NipSuctightensTo2,,,SourceCharacter tweaks DestinationCharacter's nipple suction cups sucking in her nipples firmly.
+NipSuctightensTo3,,,SourceCharacter tweaks DestinationCharacter's nipple suction cups sucking in her nipples heavily.
+NipSuctightensTo4,,,SourceCharacter tweaks DestinationCharacter's nipple suction cups sucking in her nipples entirely.
+ClitSucloosensTo0,,,SourceCharacter loosens DestinationCharacter's clit suction cup until it hangs loosely.
+ClitSucloosensTo1,,,SourceCharacter loosens DestinationCharacter's clit suction cup to a light amount of suction.
+ClitSucloosensTo2,,,SourceCharacter loosens DestinationCharacter's clit suction cup to a moderate amount of suction.
+ClitSucloosensTo3,,,SourceCharacter loosens DestinationCharacter's clit suction cup a bit to a heavy amount of suction.
+ClitSuctightensTo1,,,SourceCharacter tweaks DestinationCharacter's clit suction cup sucking in her clit lightly.
+ClitSuctightensTo2,,,SourceCharacter tweaks DestinationCharacter's clit suction cup sucking in her clit firmly.
+ClitSuctightensTo3,,,SourceCharacter tweaks DestinationCharacter's clit suction cup sucking in her clit heavily.
+ClitSuctightensTo4,,,SourceCharacter tweaks DestinationCharacter's clit suction cup sucking in her clit entirely.
 PantiesDecreaseTo-1,,,DestinationCharacter's vibrating latex panties stops vibrating.
 PantiesDecreaseTo0,,,DestinationCharacter's vibrating latex panties slows down into a light tease.
 PantiesDecreaseTo1,,,DestinationCharacter's vibrating latex panties returns to a moderate pace.
@@ -251,6 +298,11 @@ Empty,,,Empty
 Light,,,Light
 Inflated,,,Inflated
 Bloated,,,Bloated
+Loose,,,Loose
+LightSuction,,,Light
+MediumSuction,,,Medium
+HeavySuction,,,Heavy
+MaximumSuction,,,Maximum
 UseRemote,,,Use Remote
 PlayerGagged,,,(You can use or remove items by selecting specific body regions on yourself.)
 0,,,(You can use or remove items by selecting specific body regions on yourself.)
