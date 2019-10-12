@@ -37,6 +37,7 @@ function AsylumTherapyClick() {
 	if ((MouseX >= 1000) && (MouseX < 1500) && (MouseY >= 0) && (MouseY < 1000) && (ReputationGet("Asylum") <= -1)) CharacterSetCurrent(AsylumTherapyNurse);
 	if ((MouseX >= 1885) && (MouseX < 1975) && (MouseY >= 25) && (MouseY < 115) && Player.CanWalk()) {
 		if (Player.CanChange() && (LogValue("Committed", "Asylum") >= CurrentTime)) AsylumEntranceWearPatientClothes(Player);
+		if ((ReputationGet("Asylum") <= -50) && (LogValue("Committed", "Asylum") >= CurrentTime)) InventoryWear(Player, "StraitJacket", "ItemArms", "Default", 3);
 		CommonSetScreen("Room", "AsylumEntrance");
 	}
 	if ((MouseX >= 1885) && (MouseX < 1975) && (MouseY >= 145) && (MouseY < 235)) InformationSheetLoadCharacter(Player);
@@ -93,4 +94,16 @@ function AsylumTherapyPainTherapyRestrain() {
 	if ((ReputationGet("Asylum") <= -50) && (ReputationGet("Asylum") >= -99)) InventoryGet(AsylumTherapyNurse, "ItemHands").Property = { Type: "Paddle" };
 	if (ReputationGet("Asylum") <= -100) InventoryGet(AsylumTherapyNurse, "ItemHands").Property = { Type: "Flogger" };
 	CharacterRefresh(AsylumTherapyNurse);
+}
+
+// For the tickle therapy, we use the four limbs shackle that forces the hands behind the back
+function AsylumTherapyTickleTherapyRestrain() {
+	InventoryWear(Player, "FourLimbsShackles", "ItemArms");
+}
+
+// For the tickle therapy, we apply a blindfold that's tougher depending on the patient reputation
+function AsylumTherapyTickleTherapyBlindfold() {
+	if ((ReputationGet("Asylum") <= -1) && (ReputationGet("Asylum") >= -49)) InventoryWear(Player, "ClothBlindfold", "ItemHead");
+	if ((ReputationGet("Asylum") <= -50) && (ReputationGet("Asylum") >= -99)) InventoryWear(Player, "LeatherBlindfold", "ItemHead");
+	if ((ReputationGet("Asylum") <= -100) && (ReputationGet("Asylum") >= -100)) InventoryWear(Player, "StuddedBlindfold", "ItemHead");
 }
