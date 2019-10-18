@@ -450,9 +450,9 @@ TeddyBearTypeKitty,,,Kitty
 TeddyBearTypePup,,,Puppy
 TeddyBearTypeBunny,,,Bunny
 TeddyBearTypePony,,,Pony
-TeddyBearSetBear,,,SourceCharacter gives DestinationCharacter's a cute teddy bear.
-TeddyBearSetFox,,,SourceCharacter gives DestinationCharacter's a cute foxy teddy.
-TeddyBearSetKitty,,,SourceCharacter gives DestinationCharacter's a cute kitty teddy.
-TeddyBearSetPup,,,SourceCharacter gives DestinationCharacter's a cute puppy teddy.
-TeddyBearSetBunny,,,SourceCharacter gives DestinationCharacter's a cute Bunny teddy.
-TeddyBearSetPony,,,SourceCharacter gives DestinationCharacter's a cute Pony teddy.
+TeddyBearSetBear,,,SourceCharacter gives DestinationCharacter a cute teddy bear.
+TeddyBearSetFox,,,SourceCharacter gives DestinationCharacter a cute foxy teddy.
+TeddyBearSetKitty,,,SourceCharacter gives DestinationCharacter a cute kitty teddy.
+TeddyBearSetPup,,,SourceCharacter gives DestinationCharacter a cute puppy teddy.
+TeddyBearSetBunny,,,SourceCharacter gives DestinationCharacter a cute Bunny teddy.
+TeddyBearSetPony,,,SourceCharacter gives DestinationCharacter a cute Pony teddy.
