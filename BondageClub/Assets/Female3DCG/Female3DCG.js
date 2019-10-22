@@ -220,7 +220,7 @@ var AssetFemale3DCG = [
 
 	{
 		Group: "Hat",
-		Priority: 36,
+		Priority: 37,
 		Default: false,
 		Clothing: true,
 		Color: ["Default", "#202020", "#808080", "#bbbbbb", "#aa8080", "#80aa80", "#8080aa", "#aaaa80", "#80aaaa", "#aa80aa", "#cc3333", "#33cc33", "#3333cc", "#cccc33", "#33cccc", "#cc33cc"],
@@ -229,14 +229,11 @@ var AssetFemale3DCG = [
 		Top: 0,
 		Asset: [
 			"Band1", "Beret1",
-			{ Name: "Ribbons1", Priority: 3 },
-			{ Name: "GiantBow1", Priority: 3 },
 			{ Name: "MaidHairband1", Value: -1 },
 			{ Name: "NurseCap", Value: -1 },
 			{ Name: "Santa1", Value: 30 },
 			{ Name: "CaptainHat1", Value: 20 },
 			{ Name: "BunnySuccubus2", Value: 50 },
-			{ Name: "HairFlower1", Value: 10 },
 			{ Name: "WitchHat1", Value: 77 },
 			{ Name: "PirateBandana1", Value: 50 },
 			{ Name: "PoliceWomanHat", Value: 50 }
@@ -244,7 +241,7 @@ var AssetFemale3DCG = [
 	},
 
 	{
-		Group: "HairAccessory",
+		Group: "HairAccessory1",
 		Priority: 35,
 		Default: false,
 		Clothing: true,
@@ -254,16 +251,46 @@ var AssetFemale3DCG = [
 		Top: 0,
 		Asset: [
 			"Ears1", "Ears2", "PonyEars1",
-			{ Name: "BunnyEars1", Value: 20 },
-			{ Name: "BunnyEars2", Value: 20 },
-			{ Name: "PuppyEars1", Value: 20, Priority: 30 },
-			{ Name: "SuccubusHorns", Value: 20 },
-			{ Name: "Horns", Value: 20 },
-			{ Name: "Horns2", Value: 20 },
-			{ Name: "Horns3", Value: 20 },
-			{ Name: "FoxEars1", Value: 20 },
-			{ Name: "BatWings", Value: 20 },
-			{ Name: "KittyMask1", Hide: ["HairFront", "Glasses"], Value: 20 }
+			{ Name: "Ribbons1", Priority: 3, BuyGroup: "Ribbons1" },
+			{ Name: "GiantBow1", Priority: 3, BuyGroup: "GiantBow1" },
+			{ Name: "BunnyEars1", Value: 20, BuyGroup: "BunnyEars1" },
+			{ Name: "BunnyEars2", Value: 20, BuyGroup: "BunnyEars2" },
+			{ Name: "PuppyEars1", Value: 20, Priority: 30, BuyGroup: "PuppyEars1" },
+			{ Name: "SuccubusHorns", Value: 20, BuyGroup: "SuccubusHorns" },
+			{ Name: "Horns", Value: 20, BuyGroup: "Horns" },
+			{ Name: "Horns2", Value: 20, BuyGroup: "Horns2"},
+			{ Name: "Horns3", Value: 20, BuyGroup: "Horns3" },
+			{ Name: "HairFlower1", Value: 10, BuyGroup: "HairFlower1"},
+			{ Name: "FoxEars1", Value: 20, BuyGroup: "FoxEars1" },
+			{ Name: "BatWings", Value: 20, BuyGroup: "BatWings" },
+			{ Name: "KittyMask1", Hide: ["HairFront", "Glasses", "HairAccessory2"], Value: 20, BuyGroup: "BatWings" }
+		]
+	},
+	
+	{
+		Group: "HairAccessory2",
+		Priority: 36,
+		Default: false,
+		Clothing: true,
+		Color: ["Default", "#202020", "#808080", "#bbbbbb", "#aa8080", "#80aa80", "#8080aa", "#aaaa80", "#80aaaa", "#aa80aa", "#cc3333", "#33cc33", "#3333cc", "#cccc33", "#33cccc", "#cc33cc"],
+		AllowPose: ["Suspension"],
+		Left: 90,
+		Top: 0,
+		Asset: [
+			"Ears1", "Ears2", "PonyEars1",
+			{ Name: "Ribbons1", Priority: 3, BuyGroup: "Ribbons1" },
+			{ Name: "GiantBow1", Priority: 3, BuyGroup: "GiantBow1" },
+			{ Name: "BunnyEars1", Value: 20, BuyGroup: "BunnyEars1" },
+			{ Name: "BunnyEars2", Value: 20, BuyGroup: "BunnyEars2" },
+			{ Name: "PuppyEars1", Value: 20, Priority: 30, BuyGroup: "PuppyEars1" },
+			{ Name: "SuccubusHorns", Value: 20, BuyGroup: "SuccubusHorns" },
+			{ Name: "Horns", Value: 20, BuyGroup: "Horns" },
+			{ Name: "Horns2", Value: 20, BuyGroup: "Horns2"},
+			{ Name: "Horns3", Value: 20, BuyGroup: "Horns3" },
+			{ Name: "HairFlower1", Value: 10, BuyGroup: "HairFlower1"},
+			{ Name: "FoxEars1", Value: 20, BuyGroup: "FoxEars1" },
+			{ Name: "BatWings", Value: 20, BuyGroup: "BatWings" },
+			{ Name: "KittyMask1", Hide: ["HairFront", "Glasses", "HairAccessory1"], Value: 20, BuyGroup: "BatWings" }
 		]
 	},
 
@@ -1001,17 +1028,17 @@ var AssetFemale3DCG = [
 		Asset: [
 			{ Name: "ClothBlindfold", DefaultColor: "#A0A0A0", Effect: ["BlindLight", "Prone"], Hide: ["Glasses"], Value: 20, Time: 5 },
 			{ Name: "LeatherBlindfold", DefaultColor: "#404040", Effect: ["BlindNormal", "Prone"], Hide: ["Glasses"], Value: 40, Time: 5, AllowLock: true },
-			{ Name: "LeatherHood", DefaultColor: "#404040", Effect: ["BlindHeavy", "DeafLight", "Prone", "GagNormal"], Hide: ["HairFront", "HairBack", "Glasses", "ItemMouth", "Eyes"], Block: ["ItemMouth", "ItemEars", "ItemNeck"], Difficulty: 50, Value: 90, Time: 15, AllowLock: true },
-			{ Name: "LeatherHoodOpenEyes", Priority: 29, DefaultColor: "#404040", Effect: ["GagLight"], Hide: ["HairFront", "HairBack", "Glasses", "ItemMouth"], Block: ["ItemMouth", "ItemEars", "ItemNeck"], Difficulty: 50, Value: 60, Time: 15, AllowLock: true },
+			{ Name: "LeatherHood", DefaultColor: "#404040", Effect: ["BlindHeavy", "DeafLight", "Prone", "GagNormal"], Hide: ["HairFront", "HairBack", "Glasses", "ItemMouth", "Eyes", "HairAccessory1", "HairAccessory2"], Block: ["ItemMouth", "ItemEars", "ItemNeck"], Difficulty: 50, Value: 90, Time: 15, AllowLock: true },
+			{ Name: "LeatherHoodOpenEyes", Priority: 29, DefaultColor: "#404040", Effect: ["GagLight"], Hide: ["HairFront", "HairBack", "Glasses", "ItemMouth", "HairAccessory1", "HairAccessory2"], Block: ["ItemMouth", "ItemEars", "ItemNeck"], Difficulty: 50, Value: 60, Time: 15, AllowLock: true },
 			{ Name: "StuddedBlindfold", DefaultColor: "#FF4040", Effect: ["BlindNormal", "Prone"], Hide: ["Glasses"], Difficulty: 2, Value: -1, Time: 5, AllowLock: true },
 			{ Name: "KittyBlindfold", DefaultColor: "#A0A0A0", Effect: ["BlindLight", "Prone"], Hide: ["Glasses"], Value: 25, Time: 5, AllowLock: true },
 			{ Name: "DuctTape", Extended: true, AllowEffect: ["BlindNormal", "Prone", "GagNormal"], AllowBlock: ["ItemMouth", "ItemEars"], Hide: ["Glasses"], Value: 50, Time: 10, RemoveTime: 5, BuyGroup: "DuctTape", AllowType: ["Double", "Wrap", "Mummy"] },
 			{ Name: "SmallBlindfold", DefaultColor: "#404040", Effect: ["BlindLight", "Prone"], Hide: ["Glasses"], Value: 40, Time: 5, AllowLock: true },
-			{ Name: "LeatherHoodOpenMouth", DefaultColor: "#404040", Effect: ["Prone", "BlindHeavy"], Block: ["ItemEars"], Hide: ["HairFront", "HairBack", "Glasses"], Difficulty: 50, Value: 60, Time: 15, AllowLock: true },
+			{ Name: "LeatherHoodOpenMouth", DefaultColor: "#404040", Effect: ["Prone", "BlindHeavy"], Block: ["ItemEars"], Hide: ["HairFront", "HairBack", "Glasses", "HairAccessory1", "HairAccessory2"], Difficulty: 50, Value: 60, Time: 15, AllowLock: true },
 			{ Name: "FullBlindfold", DefaultColor: "#353535", Effect: ["BlindHeavy", "Prone"], Hide: ["Glasses"], Difficulty: 6, Value: 50, Time: 5, AllowLock: true },
-			{ Name: "LeatherHoodSensDep", DefaultColor: "#555555", Effect: ["BlindHeavy", "DeafHeavy", "Prone", "GagTotal"], Hide: ["HairFront", "HairBack", "Glasses", "ItemMouth", "Eyes", "Hat", "HairAccessory"], Block: ["ItemMouth", "ItemEars", "ItemNeck"], Difficulty: 50, Value: 120, Time: 15, Random: false, AllowLock: true, Alpha: [[150, 50, 200, 50]] },
-			{ Name: "LatexHoodOpenHair", DefaultColor: "#555555", Block: ["ItemEars"], Hide: ["HairFront", "HairBack", "Hat", "HairAccessory"], Difficulty: 50, Value: 45, Time: 15, AllowLock: true, Alpha: [[150, 50, 200, 87]] },
-			{ Name: "LeatherHoodSealed", DefaultColor: "#555555", Effect: ["BlindHeavy", "Prone", "GagLight"], Hide: ["HairFront", "HairBack", "Glasses", "ItemMouth", "Eyes", "Hat", "HairAccessory"], Block: ["ItemMouth", "ItemEars", "ItemNeck"], Difficulty: 50, Value: 70, Time: 15, AllowLock: true, Alpha: [[150, 50, 200, 100]] }
+			{ Name: "LeatherHoodSensDep", DefaultColor: "#555555", Effect: ["BlindHeavy", "DeafHeavy", "Prone", "GagTotal"], Hide: ["HairFront", "HairBack", "Glasses", "ItemMouth", "Eyes", "Hat", "HairAccessory1", "HairAccessory2"], Block: ["ItemMouth", "ItemEars", "ItemNeck"], Difficulty: 50, Value: 120, Time: 15, AllowLock: true, Alpha: [[150, 50, 200, 50]] },
+			{ Name: "LatexHoodOpenHair", DefaultColor: "#555555", Block: ["ItemEars"], Hide: ["HairFront", "HairBack", "Hat", "HairAccessory1", "HairAccessory2"], Difficulty: 50, Value: 45, Time: 15, AllowLock: true, Alpha: [[150, 50, 200, 87]] },
+			{ Name: "LeatherHoodSealed", DefaultColor: "#555555", Effect: ["BlindHeavy", "Prone", "GagLight"], Hide: ["HairFront", "HairBack", "Glasses", "ItemMouth", "Eyes", "Hat", "HairAccessory1", "HairAccessory2"], Block: ["ItemMouth", "ItemEars", "ItemNeck"], Difficulty: 50, Value: 70, Time: 15, AllowLock: true, Alpha: [[150, 50, 200, 100]] }
 		]
 	},
 
@@ -1034,7 +1061,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemMisc",
 		Category: "Item",
-		Priority: 37,
+		Priority: 38,
 		Default: false,
 		Color: ["Default"],
 		Top: -250,
@@ -1059,7 +1086,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemDevices",
 		Category: "Item",
-		Priority: 38,
+		Priority: 39,
 		IsRestraint: true,
 		Default: false,
 		Color: ["Default"],
