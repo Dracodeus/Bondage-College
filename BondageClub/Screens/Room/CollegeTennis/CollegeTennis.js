@@ -96,7 +96,7 @@ function CollegeTennisGameStart(Difficulty) {
 function CollegeTennisGameEnd() {
 	CommonSetScreen("Room", "CollegeTennis");
 	CharacterSetCurrent(CollegeTennisJennifer);
-	if ((Difficulty == "Hard") && MiniGameVictory && (CollegeTennisJennifer.Name != "Jennifer")) CharacterChangeMoney(Player, 50);
+	if ((MiniGameDifficulty == "Hard") && MiniGameVictory && (CollegeTennisJennifer.Name != "Jennifer")) CharacterChangeMoney(Player, 50);
 	if (CollegeTennisJennifer.Name == "Jennifer") CollegeTennisJennifer.Stage = MiniGameVictory ? "100" : "200";
 	else CollegeTennisJennifer.Stage = MiniGameVictory ? "1100" : "1200";
 	CollegeTennisJennifer.CurrentDialog = DialogFind(CollegeTennisJennifer, MiniGameVictory ? "TennisVictory" : "TennisDefeat");

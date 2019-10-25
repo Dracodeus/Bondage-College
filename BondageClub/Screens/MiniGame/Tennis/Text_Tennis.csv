@@ -7,7 +7,8 @@ Point2,30
 Point3,40
 Deuce,Deuce
 Advantage,Advantage
-Perfect,Perfect victory!
+Winner,Winner
+Perfect,Victory!  Perfect game.
 Victory,You won the game.
 Defeat,You lost the game.
 ClickContinue,Click on yourself to continue.

@@ -17,9 +17,9 @@ TennisDefeat,,,(She looks happy.)  Good game!  But you need some practice.  We c
 0,20,"Mentor, I've found a wonderful club.",A club my protege?  What kind of club?,,"JenniferStatusIs(""Owner"")"
 0,20,"My girl, I've found a wonderful club.",A club Mentor?  What kind of club?,,"JenniferStatusIs(""Owned"")"
 0,,I need to go.  (Leave her.),,DialogLeave(),
-10,,An easy game ok?  (Play tennis.),,"StartGame(""Easy"")",
-10,,A game for honor?  (Play tennis.),,"StartGame(""Normal"")",
-10,,You'll bite the dust.  (Play tennis.),,"StartGame(""Hard"")",
+10,,An easy game ok?  (Play tennis.),,"GameStart(""Easy"")",
+10,,A game for honor?  (Play tennis.),,"GameStart(""Normal"")",
+10,,You'll bite the dust.  (Play tennis.),,"GameStart(""Hard"")",
 10,0,Maybe we can play later.,Of course.  You can come back whenever you want.,,
 20,21,It's called the Bondage Club.,(She giggles.)  I've heard of it.  It's an adult club downtown?,,
 20,21,Its a BDSM club.,"Oh yes, I've heard of the adult club downtown.",,
@@ -50,12 +50,12 @@ TennisDefeat,,,(She looks happy.)  Good game!  But you need some practice.  We c
 1000,,How do tennis points work?,"The first point is 15, second is 30 and third is 40.  You win if you score after 40.  There's a tie breaker if we are both at 40.",,
 1000,1010,We could play a tennis game.,"Absolutely, have you played before?  I can go easy on you if you're a beginner.",,
 1000,,I need to go.  (Leave her.),,DialogLeave(),
-1010,,Please go easy.  (Play tennis.),,"StartGame(""Easy"")",
-1010,,Let's do a regular game.  (Play tennis.),,"StartGame(""Normal"")",
+1010,,Please go easy.  (Play tennis.),,"GameStart(""Easy"")",
+1010,,Let's do a regular game.  (Play tennis.),,"GameStart(""Normal"")",
 1010,1011,We can bet some money on the game.,Are you willing to bet 25$ on the game?  The winner keeps everything.,,DialogMoneyGreater(25)
 1010,,We can bet some money on the game.,You're too poor for that.  Get 25$ and we can bet it on a tennis match.,,!DialogMoneyGreater(25)
 1010,1000,Maybe we can play later.,"Sure, let me know when you're ready.",,
-1011,,"Here's 25$, you're going down.  (Play tennis.)",,"StartGame(""Hard"")",
+1011,,"Here's 25$, you're going down.  (Play tennis.)",,"GameStart(""Hard"")",
 1011,1000,Forget it.,Chicken!,,
 1100,1010,Another match?  Sure!,"Perfect, this time I will crush you.",,
 1100,1000,"No, that's enough.","Alright, you can come back to play anytime.",,
