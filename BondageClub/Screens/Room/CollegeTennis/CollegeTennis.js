@@ -84,7 +84,8 @@ function CollegeTennisGameStart(Difficulty) {
 	InventoryGet(Player, "ItemHands").Property = { Type: "TennisRacket" };
 	CharacterRefresh(Player);
 
-	// Starts the match
+	// Starts the match (can bet money on the game if it's not against Jennifer)
+	if ((Difficulty == "Hard") && (CollegeTennisJennifer.Name != "Jennifer")) CharacterChangeMoney(Player, -25);
 	TennisCharacterLeft = Player;
 	TennisCharacterRight = CollegeTennisJennifer;
 	MiniGameStart("Tennis", Difficulty, "CollegeTennisGameEnd");
@@ -95,9 +96,11 @@ function CollegeTennisGameStart(Difficulty) {
 function CollegeTennisGameEnd() {
 	CommonSetScreen("Room", "CollegeTennis");
 	CharacterSetCurrent(CollegeTennisJennifer);
-	CollegeTennisJennifer.Stage = MiniGameVictory ? "100" : "200";
+	if ((Difficulty == "Hard") && MiniGameVictory && (CollegeTennisJennifer.Name != "Jennifer")) CharacterChangeMoney(Player, 50);
+	if (CollegeTennisJennifer.Name == "Jennifer") CollegeTennisJennifer.Stage = MiniGameVictory ? "100" : "200";
+	else CollegeTennisJennifer.Stage = MiniGameVictory ? "1100" : "1200";
 	CollegeTennisJennifer.CurrentDialog = DialogFind(CollegeTennisJennifer, MiniGameVictory ? "TennisVictory" : "TennisDefeat");
-	CollegeTennisJenniferWillJoinRoom = (MiniGameVictory && (MiniGameDifficulty != "Easy") && (CollegeTennisJenniferStatus != "Lover") && (CollegeTennisJenniferStatus != "Owned") && (CollegeTennisJenniferStatus != "Owner") && LogQuery("RentRoom", "PrivateRoom") && (PrivateCharacter.length < PrivateCharacterMax));
+	CollegeTennisJenniferWillJoinRoom = ((CollegeTennisJennifer.Name == "Jennifer") && MiniGameVictory && (MiniGameDifficulty != "Easy") && (CollegeTennisJenniferStatus != "Lover") && (CollegeTennisJenniferStatus != "Owned") && (CollegeTennisJenniferStatus != "Owner") && LogQuery("RentRoom", "PrivateRoom") && (PrivateCharacter.length < PrivateCharacterMax));
 }
 
 // When the plater invites Jennifer to her room, she also gets a tennis racket
@@ -109,7 +112,6 @@ function CollegeTennisInviteToPrivateRoom() {
 	var C = PrivateCharacter[PrivateCharacter.length - 1];
 	C.Trait = [];
 	NPCTraitSet(C, "Submissive", 20);
-	NPCTraitSet(C, "Peaceful", 50);
 	NPCTraitSet(C, "Frigid", 80);
 	NPCTraitSet(C, "Wise", 40);
 	NPCTraitSet(C, "Serious", 30);
