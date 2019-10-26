@@ -214,6 +214,7 @@ function CharacterOnlineRefresh(Char, data, SourceMemberNumber) {
 	Char.Reputation = (data.Reputation != null) ? data.Reputation : [];
 	Char.BlockItems = Array.isArray(data.BlockItems) ? data.BlockItems : [];
 	Char.Appearance = ServerAppearanceLoadFromBundle(Char, "Female3DCG", data.Appearance, SourceMemberNumber);
+	if (Char.ID == 0) LoginValidCollar();
 	if (Char.ID != 0) InventoryLoad(Char, data.Inventory);
 	CharacterLoadEffect(Char);
 	CharacterRefresh(Char);
