@@ -3,12 +3,16 @@ CannotUseOnSelf,,,Cannot use on yourself
 RemoveClothesForItem,,,Remove some clothes first
 RemoveSuspensionForItem,,,Remove the suspension first
 TheyMustBeStandingFirst,,,Must be standing and not suspended first.
+CannotBeUsedWithSaddleStand,,,Cannot be used with saddle stand.
 CannotBeUsedWithFeetSpreader,,,Cannot be used with legs spreader.
+RemoveChastityFirst,,,Must remove chastity first.
 RemoveChainForItem,,,Remove the chain to the floor first
 MustCollaredFirst,,,A collar must be fitted first to attach accessories to.
 MustCollaredFirstAndRemoveSuspension,,,Must be collared and not suspended first.
 MustCollaredFirstAndRemoveSuspension1,,,Must be collared and not suspended/mounted first.
 LegsCannotOpen,,,Legs cannot open.
+MustFreeFeetFirst,,,Must free feet frist.
+RemoveShacklesFirst,,,Must remove shackles first.
 Cancel,,,Cancel
 Exit,,,Back to character
 Next,,,View next items
@@ -139,6 +143,10 @@ DuctTapeRestrainHands,,,SourceCharacter wraps duct tape around DestinationCharac
 DuctTapeRestrainBottom,,,SourceCharacter creates a duct tape skirt on DestinationCharacter and traps her hands in it.
 DuctTapeRestrainTop,,,SourceCharacter creates a duct tape top on DestinationCharacter and traps her arms in it.
 DuctTapeRestrainFull,,,SourceCharacter creates a duct tape mummy on DestinationCharacter and traps her arms in it.
+WristShacklesPoseInFront,,,In-front of body
+WristShacklesPoseBehind,,,Behind back.
+WristShacklesRestrainInFront,,,DestinationCharacter shackles SourceCharacter's wrist in-front of their body.
+WristShacklesRestrainBehind,,,DestinationCharacter shackles SourceCharacter's wrist behind their back.
 SelectGagType,,,Select the type of gag
 ClothGagTypeSmall,,,Small
 ClothGagTypeCleave,,,Cleave

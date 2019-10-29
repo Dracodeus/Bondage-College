@@ -280,6 +280,7 @@ ItemFeet,MermaidRopeTie,Mermaid Rope Tie
 ItemFeet,LeatherAnkleCuffs,Leather Ankle Cuffs
 ItemFeet,SpreaderMetal, Metal Leg Spreader
 ItemFeet,BallChain,Ball And Chain
+ItemFeet,AnkleShackles, Ankle Shackles
 ItemLegs,,Legs
 ItemLegs,NylonRope,Nylon Rope
 ItemLegs,HempRope,Hemp Rope
@@ -368,6 +369,9 @@ ItemArms,LeatherArmbinder,Leather Armbinder
 ItemArms,LeatherCuffs,Leather Cuffs
 ItemArms,MittenChain1,Mittens Chain
 ItemArms,FourLimbsShackles,Four Limbs Shackles
+ItemArms,Manacles,Manacles
+ItemArms,FullBodyShackles,Full Body Shackles
+ItemArms,WristShackles,Wrist Shackles
 ItemArms,StraitLeotard,Latex Strait Leotard
 ItemArms,StraitJacket,Straitjacket
 ItemArms,Bolero,Bolero Straitjacket
@@ -482,6 +486,7 @@ ItemDevices,Cage,Stand up cage
 ItemDevices,LowCage,Kennel
 ItemDevices,SaddleStand,Saddle Stand
 ItemDevices,TeddyBear,Teddy Bear Set
+ItemDevices,OneBarPrison,One Bar Prison
 ItemBoots,,Feet
 ItemBoots,PonyBoots,Pony Boots
 ItemBoots,BalletHeels,Ballet Heels
