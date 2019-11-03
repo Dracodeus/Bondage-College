@@ -196,6 +196,7 @@ function LoginResponse(C) {
 			if ((InventoryGet(Player, "ItemArms") != null) && (InventoryGet(Player, "ItemArms").Asset.Name == "FourLimbsShackles")) InventoryRemove(Player, "ItemArms");
 			LoginValidCollar();
 			LoginMistressItems();
+			CharacterAppearanceValidate(Player);
 
 			// If the player must log back in the cell
 			if (LogQuery("Locked", "Cell")) {

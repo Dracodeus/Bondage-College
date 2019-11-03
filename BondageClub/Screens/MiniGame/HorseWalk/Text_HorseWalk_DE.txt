@@ -10,5 +10,5 @@ Congratulations!  (Win: $HURDLEWIN, Failed: $HURDLEFAIL)
 Glückwunsch! (Geschafft: $HURDLEWIN, Misslungen: $HURDLEFAIL)
 Sorry, you've failed.  (Win: $HURDLEWIN, Failed: $HURDLEFAIL)
 Du hast leider versagt. (Geschafft: $HURDLEWIN, Misslungen: $HURDLEFAIL)
-Whip the Ponies ($PONY), not the Trainer ($TRAINER).
+Whip the ponies ($PONY), not the trainer ($TRAINER).
 Peitsche das Pony aus ($PONY), aber nicht die Trainerin ($TRAINER).

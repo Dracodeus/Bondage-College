@@ -473,7 +473,7 @@ Ach, ich verstehe. Du möchtest zu deiner Herde. Viel Spaß.
 ###_NPC
 (She stows the equipment.)
 (Sie verstaut die Ausrüstung.)
-Gallop through the paddock.
+Gallop through the manege.
 Galoppiere durch die Koppel.
 ###_PLAYER
 (Run happily.)
@@ -491,7 +491,7 @@ Gehe ein paar Schritte und hebe die Beine ordentlich an.
 (Walk forward.)
 (Vorwärts gehen.)
 ###_NPC
-Dance around through the paddock.
+Dance around through the manege.
 Tanze in der Koppel herum.
 ###_PLAYER
 (Perform a feat.)
