@@ -71,7 +71,9 @@ var AssetFemale3DCG = [
 			},
 			{ Name: "BodyTowel1", Value: 30, HideItem: ["ClothLowerLatexSkirt1", "ClothLowerLatexSkirt2", "ClothLowerSkirt1", "ClothLowerTennisSkirt1", "ClothLowerClothSkirt1"] },
 			{ Name: "Yukata1", Value: 50, HideItem: ["ClothLowerLatexSkirt1", "ClothLowerLatexSkirt2", "ClothLowerSkirt1", "ClothLowerTennisSkirt1", "ClothLowerClothSkirt1"] },
-			{ Name: "SteampunkCorsetTop1", Priority: 21, Value: 70, HideItem: ["ClothLowerTennisSkirt1"] }
+			{ Name: "SteampunkCorsetTop1", Priority: 21, Value: 70, HideItem: ["ClothLowerTennisSkirt1"] },
+			{ Name: "BondageDress1", Value: 90, Hide: ["ClothLower"] },
+			{ Name: "BondageDress2", Value: 90, Hide: ["ClothLower"] }
 		]
 	},
 
