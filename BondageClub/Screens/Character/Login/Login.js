@@ -4,8 +4,8 @@ var LoginMessage = "";
 var LoginCredits = null;
 var LoginCreditsPosition = 0;
 var LoginThankYou = "";
-var LoginThankYouList = ["Alvin", "Bryce", "Christian", "Desch", "Dini", "DonOlaf", "Escurse", "Ethan", "Greendragon", "Kitten", "Laioken", "Michal", "Mindtie", "Misa", "MunchyCat", 
-						 "Nick", "Overlord", "Rashiash", "Robin", "Ryner", "Setsu", "Shadow", "Shaun", "Shinonon", "Simeon", "Sky", "Terry", "William", "Winterisbest", "Xepherio"];
+var LoginThankYouList = ["Alvin", "Bryce", "Christian", "Dan", "Desch", "Dick", "Dini", "DonOlaf", "Escurse", "Ethan", "Greendragon", "John", "Kitten", "Laioken", "Lennart", "Michal", "Mindtie", "Misa",
+						 "MunchyCat", "Nick", "Overlord", "Rashiash", "Robin", "Ryner", "Samuel", "Setsu", "Shadow", "Shinonon", "Simeon", "Sky", "Terry", "Victor", "William", "Winterisbest", "Xepherio"];
 var LoginThankYouNext = 0;
 
 // Loads the next thank you bubble

@@ -5,6 +5,18 @@ Ow!  Well done, you're a tough patient.  I'm not letting you out anyway.
 Au! Starke Leistung, du bist 'ne hartnäckige Patientin. Ich lasse dich aber trotzdem nicht raus.
 You really thought you could beat me?  You're truly mad, little patient.
 Dachtest du wirklich, du kämst an mir vorbei? Du bist wahrhaftig verrückt, kleine Patientin.
+What are you doing here little slave?  Go back to the club and serve our customers.
+Was machst du denn hier, kleine Sklavin? Gehe zurück in den Club und diene unseren Kunden.
+###_PLAYER
+Can we talk about the asylum?
+Können wir über die Anstalt reden?
+###_NPC
+No, as a club slave you have work to do.  Get going girl.
+Nein, als Clubsklavin hast du zu arbeiten. Mach dich auf den Weg, Mädchen.
+###_PLAYER
+(Leave her.)
+(Dialog beenden.)
+###_NPC
 Greetings doctor DialogPlayerName.  It's always a pleasure to see you.  Are you working today?
 Ich grüße Sie, Doktor DialogPlayerName. Es ist immer eine Freude, Sie zu sehen. Arbeiten Sie heute?
 Welcome to the asylum nurse DialogPlayerName.  Our patients are expecting you.  Are you here to work?

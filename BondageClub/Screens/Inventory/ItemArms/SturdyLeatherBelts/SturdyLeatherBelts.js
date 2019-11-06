@@ -1,4 +1,5 @@
 "use strict";
+var InventoryItemArmsSturdyLeatherBeltsMessage = "";
 
 // Loads the item extension properties
 function InventoryItemArmsSturdyLeatherBeltsLoad() {
@@ -28,6 +29,9 @@ function InventoryItemArmsSturdyLeatherBeltsDraw() {
 //	DrawButton(1750, 550, 225, 225, "", ((DialogFocusItem.Property.Restrain != null) && (DialogFocusItem.Property.Restrain == "Four")) ? "#888888" : "White");
 //	DrawImage("Screens/Inventory/" + DialogFocusItem.Asset.Group.Name + "/" + DialogFocusItem.Asset.Name + "/Four.png", 1750, 550);
 //	DrawText(DialogFind(Player, "SturdyLeatherBeltsPoseFour"), 1875, 800, "white", "gray");
+
+	// Draw the message if present
+	if (InventoryItemArmsSturdyLeatherBeltsMessage != null) DrawTextWrap(DialogFind(Player, InventoryItemArmsSturdyLeatherBeltsMessage), 1100, 850, 800, 160, "White");
 }
 
 // Catches the item extension clicks
@@ -47,20 +51,27 @@ function InventoryItemArmsSturdyLeatherBeltsSetPose(NewPose) {
 	if ((CurrentScreen == "ChatRoom") || (DialogFocusItem == null)) {
 		DialogFocusItem = InventoryGet(C, C.FocusGroup.Name);
 		InventoryItemArmsSturdyLeatherBeltsLoad();
-	}
+	
+	
+		if (InventoryGet(C, "Cloth") != null) {
+		InventoryItemArmsSturdyLeatherBeltsMessage = "RemoveClothesForItem";
+		return;
+		}
 
 	// Sets the new pose with it's effects
-	DialogFocusItem.Property.Restrain = NewPose;
-	if (NewPose == null) {
-		delete DialogFocusItem.Property.Difficulty;
-		delete DialogFocusItem.Property.Type;
-	} else {
-		DialogFocusItem.Property.SetPose = ["BackElbowTouch"]; DialogFocusItem.Property.Type = NewPose;
-		if (NewPose == "Two") DialogFocusItem.Property.Difficulty = 2;
-		if (NewPose == "Three") DialogFocusItem.Property.Difficulty = 4;
-//		if (NewPose == "Four") DialogFocusItem.Property.Difficulty = 6;
-	}
-	DialogFocusItem.Property.Restrain = NewPose;
+		DialogFocusItem.Property.Restrain = NewPose;
+		if (NewPose == null) {
+			delete DialogFocusItem.Property.Difficulty;
+			delete DialogFocusItem.Property.Type;
+		} else {
+			DialogFocusItem.Property.SetPose = ["BackElbowTouch"]; DialogFocusItem.Property.Type = NewPose;
+			if (NewPose == "Two") DialogFocusItem.Property.Difficulty = 2;
+			if (NewPose == "Three") DialogFocusItem.Property.Difficulty = 4;
+//			if (NewPose == "Four") DialogFocusItem.Property.Difficulty = 6;
+		}
+		DialogFocusItem.Property.Restrain = NewPose;
+	} 
+	
 
 	// Adds the lock effect back if it was padlocked
 	if ((DialogFocusItem.Property.LockedBy != null) && (DialogFocusItem.Property.LockedBy != "")) {
