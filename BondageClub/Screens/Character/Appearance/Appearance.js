@@ -331,6 +331,7 @@ function CharacterAppearanceGetCurrentValue(C, Group, Type) {
 			if (Type == "Effect") return C.Appearance[A].Asset.Effect;
 			if (Type == "Asset") return C.Appearance[A].Asset;
 			if (Type == "Full") return C.Appearance[A];
+			if (Type == "Zoom") return ((C.Appearance[A].Asset.ZoomModifier == null) || (C.Appearance[A].Asset.ZoomModifier > 1) || (C.Appearance[A].Asset.ZoomModifier < 0.9)) ? 1 : C.Appearance[A].Asset.ZoomModifier;
 		}
 	return "None";
 
@@ -354,7 +355,7 @@ function AppearanceRun() {
 		if (C.ID == 0) CharacterAppearanceHeaderText = TextGet("SelectYourAppearance");
 		else CharacterAppearanceHeaderText = TextGet("SelectSomeoneAppearance").replace("TargetCharacterName", C.Name);
 	}
-	DrawCharacter(C, -550, (C.IsKneeling()) ? -1100 : -100, 4);
+	DrawCharacter(C, -550, (C.IsKneeling()) ? -1100 : -100, 4, false);
 	DrawCharacter(C, 800, 0, 1);
 	DrawText(CharacterAppearanceHeaderText, 450, 40, "White", "Black");
 
