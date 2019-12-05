@@ -166,6 +166,7 @@ function LoginResponse(C) {
 			Player.ItemPermission = C.ItemPermission;
 			Player.ChatSettings = C.ChatSettings;
 			Player.AudioSettings = C.AudioSettings;
+			Player.GameplaySettings = C.GameplaySettings;
 			Player.WhiteList = C.WhiteList;
 			Player.BlackList = C.BlackList;
 			Player.FriendList = C.FriendList;
