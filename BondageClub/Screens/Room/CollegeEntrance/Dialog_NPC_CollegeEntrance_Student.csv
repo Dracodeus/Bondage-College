@@ -14,7 +14,7 @@ PlayerGagged,,,(She looks at you and giggles.)  Did you annoy one of the teacher
 0,20,Can I tie you up?,(She takes a step back.)  What?  Are you some kind of pervert?,DialogRemove(),,TieUpGroup
 0,,I need to go.  (Leave her.),,DialogLeave(),,
 10,,Who studies here?,"It's a girl only college.  There's only women, both students and teachers.",,,
-10,,Is it expansive?,My family is paying so I'm not sure.  I've heard that it's pretty expensive.,,,
+10,,Is it expensive?,My family is paying so I'm not sure.  I've heard that it's pretty expensive.,,,
 10,,What is the required uniform?,"Students must wear ties, a skirt like mine and high leg socks.  Also, nothing too exotic will be accepted.",,,
 10,,The place looks pretty old.,"Yeah, both the buildings and teaching methods are outdated.  It's very strict.",,,
 10,,Can I take classes?,"Why are you asking me that?  Sure, go inside and get to your classes.",,CanGoInside(),

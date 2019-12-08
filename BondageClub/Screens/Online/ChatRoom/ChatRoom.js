@@ -245,6 +245,11 @@ function ChatRoomSendChat() {
 		// Keeps the chat log in memory so it can be accessed with pageup/pagedown
 		ChatRoomLastMessage.push(msg);
 		ChatRoomLastMessageIndex = ChatRoomLastMessage.length;
+
+		// Replace < and > characters to prevent HTML injections
+		while (msg.indexOf("<") > -1) msg = msg.replace("<", "&lt;");
+		while (msg.indexOf(">") > -1) msg = msg.replace(">", "&gt;");
+
 		var m = msg.toLowerCase().trim();
 		
 		// Some custom functions like /dice or /coin are implemented for randomness
@@ -595,6 +600,11 @@ function ChatRoomSetRule(data) {
 		if (data.Content == "OwnerRuleKeyAllow") LogDelete("BlockKey", "OwnerRule");
 		if (data.Content == "OwnerRuleKeyConfiscate") InventoryConfiscateKey();
 		if (data.Content == "OwnerRuleKeyBlock") LogAdd("BlockKey", "OwnerRule");
+
+		// Remote rules
+		if (data.Content == "OwnerRuleRemoteAllow") LogDelete("BlockRemote", "OwnerRule");
+		if (data.Content == "OwnerRuleRemoteConfiscate") InventoryConfiscateRemote();
+		if (data.Content == "OwnerRuleRemoteBlock") LogAdd("BlockRemote", "OwnerRule");
 
 		// Timer cell punishment
 		var TimerCell = 0;

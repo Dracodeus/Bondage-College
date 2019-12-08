@@ -70,7 +70,7 @@ function CollegeEntranceIsWearingTennisClothes() {
 
 // Returns TRUE if the player is wearing college clothes
 function CollegeEntranceIsWearingCollegeClothes() {
-	if ((InventoryGet(Player, "Cloth") == null) || (InventoryGet(Player, "Cloth").Asset.Name != "CollegeOutfit1") || (InventoryGet(Player, "Cloth").Color != "Default")) return false;
+	if ((InventoryGet(Player, "Cloth") == null) || (InventoryGet(Player, "Cloth").Asset.Name != "CollegeOutfit1") || ((InventoryGet(Player, "Cloth").Color != null) && (InventoryGet(Player, "Cloth").Color != "Default"))) return false;
 	if (InventoryGet(Player, "Socks") == null) return false;
 	if (InventoryGet(Player, "Shoes") == null) return false;
 	if (InventoryGet(Player, "Wings") != null) return false;

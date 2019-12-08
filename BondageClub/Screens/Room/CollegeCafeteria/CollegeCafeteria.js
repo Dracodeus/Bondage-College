@@ -2,12 +2,13 @@
 var CollegeCafeteriaBackground = "CollegeCafeteria";
 var CollegeCafeteriaSidney = null;
 var CollegeCafeteriaSidneyStatus = "";
+var CollegeCafeteriaSidneyLove = 0;
 var CollegeCafeteriaStudentRight = null;
 var CollegeCafeteriaStudentFarRight = null;
 
 // Returns TRUE if the dialog option should be shown
 function CollegeCafeteriaSidneyStatusIs(QueryStatus) { return (QueryStatus == CollegeCafeteriaSidneyStatus) }
-function CollegeCafeteriaCanInviteToPrivateRoom() { return (LogQuery("RentRoom", "PrivateRoom") && (PrivateCharacter.length < PrivateCharacterMax)) }
+function CollegeCafeteriaCanInviteToPrivateRoom() { return (LogQuery("RentRoom", "PrivateRoom") && (PrivateCharacter.length < PrivateCharacterMax) && (CollegeCafeteriaSidneyLove > 10)) }
 
 // Generates Sidney
 function CollegeCafeteriaLoad() {
@@ -61,6 +62,13 @@ function CollegeCafeteriaLoad() {
 		CollegeCafeteriaStudentFarRight = CharacterLoadNPC("NPC_CollegeCafeteria_FarRight");
 		CollegeCafeteriaStudentFarRight.AllowItem = false;
 		CollegeEntranceWearStudentClothes(CollegeCafeteriaStudentFarRight);
+		
+		// Sets the starting love level
+		if (CollegeCafeteriaSidneyStatus == "Lover") CollegeCafeteriaSidneyLove = 5;
+		if (CollegeCafeteriaSidneyStatus == "ExLover") CollegeCafeteriaSidneyLove = -2;
+		if (CollegeCafeteriaSidneyStatus == "Owned") CollegeCafeteriaSidneyLove = 7;
+		if (CollegeCafeteriaSidneyStatus == "Owner") CollegeCafeteriaSidneyLove = 3;
+		if (CollegeCafeteriaSidneyStatus == "ExOwner") CollegeCafeteriaSidneyLove = -2;
 
 	}
 
@@ -78,7 +86,6 @@ function CollegeCafeteriaRun() {
 
 // When the user clicks in the room
 function CollegeCafeteriaClick() {
-	if ((MouseX >= 0) && (MouseX < 485) && (MouseY >= 0) && (MouseY < 1000)) CharacterSetCurrent(Player);
 	if ((MouseX >= 485) && (MouseX < 955) && (MouseY >= 0) && (MouseY < 1000)) CharacterSetCurrent(CollegeCafeteriaSidney);
 	if ((MouseX >= 925) && (MouseX < 1425) && (MouseY >= 0) && (MouseY < 1000)) CharacterSetCurrent(CollegeCafeteriaStudentRight);
 	if ((MouseX >= 1395) && (MouseX < 1885) && (MouseY >= 0) && (MouseY < 1000)) CharacterSetCurrent(CollegeCafeteriaStudentFarRight);
@@ -86,8 +93,34 @@ function CollegeCafeteriaClick() {
 	if ((MouseX >= 1885) && (MouseX < 1975) && (MouseY >= 145) && (MouseY < 235)) InformationSheetLoadCharacter(Player);
 }
 
+// When Sidney love towards the player changes
+function CollegeCafeteriaSidneyLoveChange(LoveChange, MoneyChange) {
+	if (LoveChange != null) CollegeCafeteriaSidneyLove = CollegeCafeteriaSidneyLove + parseInt(LoveChange);
+	if (MoneyChange != null) CharacterChangeMoney(Player, parseInt(MoneyChange) * -1);
+}
+
+// When Sidney starts a fight with the player
+function CollegeCafeteriaFightStart() {
+	KidnapStart(CollegeCafeteriaSidney, "CollegeCafeteriaDark", 7, "CollegeCafeteriaFightEnd()");
+}
+
+// When the fight with Sidney ends
+function CollegeCafeteriaFightEnd() {
+	SkillProgress("Willpower", ((Player.KidnapMaxWillpower - Player.KidnapWillpower) + (CollegeCafeteriaSidney.KidnapMaxWillpower - CollegeCafeteriaSidney.KidnapWillpower)) * 2);
+	CollegeCafeteriaSidney.Stage = (KidnapVictory) ? "300" : "400";
+	CharacterRelease(Player);
+	CharacterRelease(CollegeCafeteriaSidney);
+	InventoryWear(Player, "CollegeOutfit1", "Cloth", "Default");
+	InventoryWear(CollegeCafeteriaSidney, "CollegeOutfit1", "Cloth", "Default");
+	CommonSetScreen("Room", "CollegeCafeteria");
+	CharacterSetCurrent(CollegeCafeteriaSidney);
+	CollegeCafeteriaSidney.CurrentDialog = DialogFind(CollegeCafeteriaSidney, (KidnapVictory) ? "FightVictory" : "FightDefeat");
+}
+
 // When the plater invites Sidney to her room, she also gets a college dunce hat
 function CollegeCafeteriaInviteToPrivateRoom() {
+
+	// Adds the dunce hat and removes it from Sidney before adding her to the player's room
 	InventoryAdd(Player, "CollegeDunce", "Hat");
 	InventoryRemove(CollegeCafeteriaSidney, "Hat");
 	CommonSetScreen("Room", "Private");
@@ -117,7 +150,12 @@ function CollegeCafeteriaInviteToPrivateRoom() {
 	NPCTraitDialog(C);
 	ServerPrivateCharacterSync();
 	DialogLeave();
+
+	// Generates a new random character at Sidney's spot
 	CharacterAppearanceFullRandom(CollegeCafeteriaSidney);
 	CharacterRandomName(CollegeCafeteriaSidney);
-	CollegeCafeteriaSidney = null;
+	CollegeEntranceWearStudentClothes(CollegeCafeteriaSidney);
+	CollegeCafeteriaSidney.Stage = 1000;
+	CharacterRefresh(CollegeCafeteriaSidney);
+
 }
