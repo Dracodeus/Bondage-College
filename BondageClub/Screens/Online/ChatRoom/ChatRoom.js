@@ -295,7 +295,7 @@ function ChatRoomSendChat() {
 		else {
 
 			// Regular chat can be garbled with a gag
-			msg = SpeechGarble(Player, msg);
+			//msg = SpeechGarble(Player, msg);
 			if ((msg != "") && (ChatRoomTargetMemberNumber == null)) ServerSend("ChatRoomChat", { Content: msg, Type: "Chat" } );
 
 			// The whispers get sent to the server and shown on the client directly
