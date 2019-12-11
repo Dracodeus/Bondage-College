@@ -1,4 +1,77 @@
-PlayerGagged,,,Pupil!  This is not a silent play.  (She laughs.),
-0,,,(A large woman greets you warmly.)  Oooooh!  Are you here to enlist in the next play?,
-0,,TO DO,TO DO,
-0,,"Not now, maybe later.  (Leave her.)",,DialogLeave()
+PlayerGagged,,,Pupil!  This is not a silent play.  (She laughs.),,
+0,,,(A large woman greets you warmly.)  Oooooh!  Are you here to audition for the next play?,,
+0,,Who are you?,I'm Julia!  An art teacher is this wonderful institution.  I'm pleased to meet you pupil.,DialogRemove(),"!DialogLogQuery(""BondageCollege"", ""Import"")"
+0,,It's nice to see you again Julia.,(She gives you a warm hug.)  It's grande to see you again young pupil!,DialogRemove(),"DialogLogQuery(""BondageCollege"", ""Import"")"
+0,10,Theater is for losers.,"No, no, no, no.  Teatro is one of the oldest and greatest form or art, it transcands time and your soul.",JuliaLoveChange(0),
+0,10,I'm not a great actor.,"Practice makes perfect!  Teatro is one of the oldest and greatest form or art, it transcands time and your soul.",JuliaLoveChange(1),
+0,10,I would love to audition.,"Magnifico!  Teatro is one of the oldest and greatest form or art, it transcands time and your soul.",JuliaLoveChange(2),
+0,,"Not now, maybe later.  (Leave her.)",,DialogLeave(),
+10,,,Young pupil!  Are you ready to try for the play?,,
+10,20,I'm ready for teatro!,"Si, si , si, si!  Amaze me with your flame and presence.  And improvise!",JuliaLoveChange(2),
+10,20,Can I audition now?,"Si, si!  Amaze me with your flame and presence.  And improvise!",JuliaLoveChange(1),
+10,20,You do the audition?,Si!  Amaze me with your flame and presence.  And improvise!,JuliaLoveChange(0),
+10,,Give me a minute please.  (Leave her.),,DialogLeave(),
+20,100,I don't know what to do.,"(She analyzes you and smiles.)  You will play the sinister old witch, who desire the beauty of the fragile young maiden.",JuliaLoveChange(0),"DialogReputationGreater(""Dominant"", 30)"
+20,100,Ignite me teacher!,"(She analyzes you and smiles.)  You will play the sinister old witch, who desire the beauty of the fragile young maiden.",JuliaLoveChange(2),"DialogReputationGreater(""Dominant"", 30)"
+20,100,What's my role?,"(She analyzes you and smiles.)  You will play the sinister old witch, who desire the beauty of the fragile young maiden.",JuliaLoveChange(1),"DialogReputationGreater(""Dominant"", 30)"
+20,500,I don't know what to do.,"(She analyzes you and smiles.)  You will play the fragile young maiden, who must convince the old witch to keep her beauty.",JuliaLoveChange(0),"DialogReputationLess(""Dominant"", -30)"
+20,500,Ignite me teacher!,"(She analyzes you and smiles.)  You will play the fragile young maiden, who must convince the old witch to keep her beauty.",JuliaLoveChange(2),"DialogReputationLess(""Dominant"", -30)"
+20,500,What's my role?,"(She analyzes you and smiles.)  You will play the fragile young maiden, who must convince the old witch to keep her beauty.",JuliaLoveChange(1),"DialogReputationLess(""Dominant"", -30)"
+20,30,I don't know what to do.,(She seems undecided.)  Would you prefer to play the fragile young maiden or the sinister old witch who craves her beauty?,JuliaLoveChange(0),CanChooseRole()
+20,30,Ignite me teacher!,(She seems undecided.)  Would you prefer to play the fragile young maiden or the sinister old witch who craves her beauty?,JuliaLoveChange(2),CanChooseRole()
+20,30,What's my role?,(She seems undecided.)  Would you prefer to play the fragile young maiden or the sinister old witch who craves her beauty?,JuliaLoveChange(1),CanChooseRole()
+30,100,The sinister old witch.,"(She smiles.)  Si!  You will play the sinister old witch, who desire the beauty of the fragile young maiden.",,
+30,500,The fragile young maiden.,"(She smiles.)  Si!  You will play the fragile young maiden, who must convince the old witch to keep her beauty.",,
+100,110,I'm ready for it!,"(She smiles as you both dress up.)  As the old witch, you can use magic powers on me the maiden.  Be creative!","JuliaLoveChange(2, ""PlayerWitch"")",
+100,110,Alright.  Let's try that.,"(She nods as you both dress up.)  As the old witch, you can use magic powers on me the maiden.  Be creative!","JuliaLoveChange(1, ""PlayerWitch"")",
+100,110,You should be the ugly witch.,"(She frowns as you both dress up.)  As the old witch, you can use magic powers on me the maiden.  Be creative!","JuliaLoveChange(-2, ""PlayerWitch"")",
+100,110,(Stay silent.),"(She sighs as you both dress up.)  As the old witch, you can use magic powers on me the maiden.  Be creative!","JuliaLoveChange(0, ""PlayerWitch"")",
+110,120,(Freeze and stay silent.),(She whispers to be more creative and starts to act.)  A pleasant evening milady.  What brings you to my lonely cottage?,JuliaLoveChange(0),
+110,120,Good evening fair maiden.,(She seems impressed and starts to act.)  A pleasant evening milady.  What brings you to my lonely cottage?,JuliaLoveChange(2),
+110,120,Well...  Hello maiden.,(She nods and starts to act.)  A pleasant evening milady.  What brings you to my lonely cottage?,JuliaLoveChange(1),
+120,130,I've been stalking you.,Oh!  You were the shadow in my window.  Why are you following me?,JuliaLoveChange(1),
+120,130,I don't know.,"(She frowns and continues.)  I've seen your shadow in my window, were you spying on me?",JuliaLoveChange(0),
+120,130,I've had a vision of you.,(She smiles and continues.)  A vision you say?  You've been watching me?,JuliaLoveChange(2),
+120,130,I think I'm lost.,"Lost you say?  I've seen your shadow in my window, were you spying on me?",JuliaLoveChange(1),
+130,140,I'm admiring your youth and vitality.,"My youth?  Well I thank you deeply, but I have no merit on that matter.",JuliaLoveChange(2),
+130,140,You're cute girl.,"Thanks, but I was made like that, I have no merit.",JuliaLoveChange(0),
+130,140,Do you know that you're beautiful?,"Well I thank you, but I was made like that, I have no merit.",JuliaLoveChange(1),
+140,150,I want your beauty.,What do you mean milady?  I'm afraid I don't understand what you require from me.,JuliaLoveChange(1),
+140,150,I want your youth.,What do you mean milady?  I'm afraid I don't understand what you require from me.,JuliaLoveChange(1),
+140,150,I want you.,What do you mean milady?  I'm afraid I don't understand what you require from me.,JuliaLoveChange(0),
+140,150,I desire what I have lost.,What do you mean milady?  I'm afraid I don't understand what you require from me.,JuliaLoveChange(2),
+150,160,Magic!  Remove thy clothes!,(She swifthly removes her clothes.)  Gosh!  Where are my clothes?  Was that a curse?,"JuliaLoveChange(2, ""JuliaNaked"")",JuliaLoveIs(10)
+150,160,(Whisper to her that you do a spell to strip her.),(She reluctanly removes her clothes.)  Gosh!  Where are my clothes?  Was that a curse?,"JuliaLoveChange(0, ""JuliaNaked"")",JuliaLoveIs(10)
+150,900,Magic!  Remove thy clothes!,"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,!JuliaLoveIs(10)
+150,900,(Whisper to her that you do a spell to strip her.),"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,!JuliaLoveIs(10)
+150,900,Uh?  What do I do now?,"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,
+160,170,Shut up!,"(She gives you a suspicious look.)  Lady, I beg and implore you not to hurt me.",JuliaLoveChange(0),
+160,170,This is black magic!,"(She gives you a scared look.)  Lady, I beg and implore you not to hurt me.",JuliaLoveChange(1),
+160,170,"Yes, you are cursed young one.","(She gives you an intimidated look.)  Lady, I beg and implore you not to hurt me.",JuliaLoveChange(2),
+170,900,(Masturbate her.),"(She pushes you away and stops the play.)  Pupil!  What are you doing?  I'm sorry, you cannot be in the play.",,
+170,180,"Maiden, thy youth will be mine.",You cannot steal my youth!  Return to your cauldron old witch!,JuliaLoveChange(2),
+170,180,Gimme your look.,You cannot steal my look!  Return to your cauldron old witch!,JuliaLoveChange(0),
+170,180,I will steal your beauty.,You cannot steal my beauty!  Return to your cauldron old witch!,JuliaLoveChange(1),
+180,190,On your knees girl.,"Never!  (She starts to run around you, pretending to run away.)",JuliaLoveChange(0),
+180,190,Bow to my magic.,"Never!  (She starts to run around you, pretending to run away.)",JuliaLoveChange(1),
+180,190,Surrender or feel my wraith.,"Never!  (She starts to run around you, pretending to run away.)",JuliaLoveChange(2),
+190,200,(Whisper to her that you do a rope spell.),"(You pick a random theater rope and tie her up, pretending it's magic.)  By golly!  Your wickedness knows no end!","JuliaLoveChange(0, ""JuliaRope"")",JuliaLoveIs(15)
+190,200,Magika ropa!  (Pick a rope and tie her up.),"(You pick a random theater rope and tie her up, pretending it's magic.)  By golly!  Your wickedness knows no end!","JuliaLoveChange(2, ""JuliaRope"")",JuliaLoveIs(15)
+190,900,(Whisper to her that you do a rope spell.),"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,!JuliaLoveIs(15)
+190,900,Magika ropa!  (Pick a rope and tie her up.),"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,!JuliaLoveIs(15)
+190,900,I'm out of ideas Julia.,"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,
+200,,TO DO,TO DO,,
+200,,TO DO,TO DO,,
+200,,TO DO,TO DO,,
+500,510,I'm ready for it!,"(She smiles as you both dress up.)  Beware of my magical powers, and be creative!","JuliaLoveChange(2, ""JuliaWitch"")",
+500,510,Alright.  Let's try that.,"(She nods as you both dress up.)  Beware of my magical powers, and be creative!","JuliaLoveChange(1, ""JuliaWitch"")",
+500,510,You will be great as the ugly witch.,"(She frowns as you both dress up.)  Beware of my magical powers, and be creative!","JuliaLoveChange(-2, ""JuliaWitch"")",
+500,510,(Stay silent.),"(She sighs as you both dress up.)  Beware of my magical powers, and be creative!","JuliaLoveChange(0, ""JuliaWitch"")",
+510,,TO DO,TO DO,,
+510,,TO DO,TO DO,,
+510,,TO DO,TO DO,,
+900,910,You're stopping the audition?,(She nods.)  You don't have what it takes for the role.  You can try again on the next play.,DressBack(),
+900,910,Can you give me another chance?,"I'm sorry, it wouldn't be fair to the other students.  Everyone gets one try.",DressBack(),
+910,,,"Sorry little pupil, I cannot give you the role.  You can try again on the next play.",,
+910,,"Alright, take care.  (Leave her.)",,DialogLeave(),
+910,,"Fine, get lost.  (Leave her.)",,DialogLeave(),
