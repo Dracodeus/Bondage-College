@@ -65,8 +65,8 @@ PlayerGagged,,,Pupil!  This is not a silent play.  (She laughs.),,
 190,200,Beltus magicus!  (Pick some belts and tie her up.),"(You pick some random theater belts and strap her up, pretending it's magic.)  By golly!  Your wickedness knows no end!","JuliaLoveChange(2, ""JuliaBelt"")",JuliaLoveIs(15)
 190,900,(Whisper to her that you do a rope spell.),"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,!JuliaLoveIs(15)
 190,900,Magika ropa!  (Pick a rope and tie her up.),"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,!JuliaLoveIs(15)
-190,200,(Point at some belts to notice her you're doing magic.),"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,!JuliaLoveIs(15)
-190,200,Beltus magicus!  (Pick some belts and tie her up.),"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,!JuliaLoveIs(15)
+190,900,(Point at some belts to notice her you're doing magic.),"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,!JuliaLoveIs(15)
+190,900,Beltus magicus!  (Pick some belts and tie her up.),"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,!JuliaLoveIs(15)
 190,900,I'm out of ideas Julia.,"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,
 200,210,Struggle for me fair maiden.,(She struggles playfully to get free.)  Sorceress!  You will not get away with that!,JuliaLoveChange(1),
 200,210,Savor thy beauty and youth one last time.,(She struggles with fervor to get free.)  Sorceress!  You will not get away with that!,JuliaLoveChange(2),
@@ -122,10 +122,27 @@ PlayerGagged,,,Pupil!  This is not a silent play.  (She laughs.),,
 560,570,What happened to my clothes?,"Your smile, your vitality, it shall be mine!",JuliaLoveChange(1),
 560,570,Gosh!  Did you curse me old lady?,"(She seems impressed by your acting.)  Your smile, your vitality, it shall be mine!",JuliaLoveChange(2),
 560,570,Enjoy the show.,"(She doesn't seem impressed by your acting.)  Your smile, your vitality, it shall be mine!",JuliaLoveChange(0),
-570,,TO DO,TO DO,,
-570,,TO DO,TO DO,,
-570,,TO DO,TO DO,,
-570,,TO DO,TO DO,,
+570,900,Fuck off witch!,"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,
+570,580,You can't do that!,"Oh yes, little maiden.  You will come with me, and I shall steal thy youth.",JuliaLoveChange(0),
+570,580,"Old woman, maybe we can make a deal.","No, precious little maiden.  You will come with me, and I shall steal thy youth.",JuliaLoveChange(1),
+570,580,Mercy Milady!  I improre you!,"No, precious little maiden.  You will come with me, and I shall steal thy youth.",JuliaLoveChange(2),
+580,590,I shall never follow you!,"Oh, but you shall!  I just need to prepare you for your long trip.  Alambra Magika!  (She chants a magic spell.)",JuliaLoveChange(2),
+580,590,I'm not moving from here witch.,"Oh, but you shall!  I just need to prepare you for your long trip.  Alambra Magika!  (She chants a magic spell.)",JuliaLoveChange(1),
+580,590,Forget it lady.,(She frowns.)  A feisty one?  I just need to prepare you for your long trip.  Alambra Magika!  (She chants a magic spell.),JuliaLoveChange(0),
+590,600,(Lock some teather hand cuffs on yourself.),(You pick some hand cuffs from the teather props and lock them on yourself.)  Muahahaha!  You are now my prisoner.,"JuliaLoveChange(0, ""PlayerHandCuffs"")",JuliaLoveIs(15)
+590,600,Sorcery!  (Act like magic is locking teather hand cuffs.),(You pick some hand cuffs from the teather props and lock them on yourself.)  Muahahaha!  You are now my prisoner.,"JuliaLoveChange(2, ""PlayerHandCuffs"")",JuliaLoveIs(15)
+590,600,(Lock some teather leg cuffs on yourself.),(You pick some leg cuffs from the teather props and lock them on yourself.)  Muahahaha!  You are now my prisoner.,"JuliaLoveChange(0, ""PlayerFeetCuffs"")",JuliaLoveIs(15)
+590,600,Sorcery!  (Act like magic is locking teather leg cuffs.),(You pick some leg cuffs from the teather props and lock them on yourself.)  Muahahaha!  You are now my prisoner.,"JuliaLoveChange(2, ""PlayerFeetCuffs"")",JuliaLoveIs(15)
+590,600,(Lock a teather ankle iron ball on yourself.),(You pick an iron ball from the teather props and lock it on yourself.)  Muahahaha!  You are now my prisoner.,"JuliaLoveChange(0, ""PlayerFeetIron"")",JuliaLoveIs(15)
+590,600,Sorcery!  (Act like magic is locking an ankle iron ball.),(You pick an iron ball from the teather props and lock it on yourself.)  Muahahaha!  You are now my prisoner.,"JuliaLoveChange(2, ""PlayerFeetIron"")",JuliaLoveIs(15)
+590,900,(Lock some teather hand cuffs on yourself.),"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,!JuliaLoveIs(15)
+590,900,Sorcery!  (Act like magic is locking teather hand cuffs.),"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,!JuliaLoveIs(15)
+590,900,(Lock some teather leg cuffs on yourself.),"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,!JuliaLoveIs(15)
+590,900,Sorcery!  (Act like magic is locking teather leg cuffs.),"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,!JuliaLoveIs(15)
+590,900,(Lock a teather ankle iron ball on yourself.),"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,!JuliaLoveIs(15)
+590,900,Sorcery!  (Act like magic is locking an ankle iron ball.),"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,!JuliaLoveIs(15)
+590,900,I'm confused.  What are you doing?,"(She sighs and stops the play.)  I'm sorry little pupil, this is not working.  You don't have what it takes to be in the play.",,
+600,,TO DO,TO DO,,
 900,910,You're stopping the audition?,(She nods as you both dress back up.)  You don't have what it takes for the role.  You can try again on the next play.,DressBack(),
 900,910,Can you give me another chance?,"(She shakes her head as you both dress back up.)  I'm sorry, it wouldn't be fair to the other students.  Everyone gets one try.",DressBack(),
 910,,,"Sorry little pupil, I cannot give you the role.  You can try again on the next play.",,

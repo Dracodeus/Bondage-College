@@ -112,9 +112,10 @@ function CollegeTheaterJuliaLoveChange(LoveChange, Event) {
 	if (Event == "JuliaUnderwear") CollegeTheaterUnderwear(CollegeTheaterJulia);
 	if (Event == "PlayerNaked") CharacterNaked(Player);
 	if (Event == "JuliaNaked") CharacterNaked(CollegeTheaterJulia);
-	if (Event == "PlayerRope") CollegeTheaterRandomRope(Player);
+	if (Event == "PlayerHandCuffs") InventoryWear(Player, "MetalCuffs", "ItemArms", CommonRandomItemFromList("", CollegeTheaterRandomColors));
+	if (Event == "PlayerFeetCuffs") InventoryWear(Player, "Irish8Cuffs", "ItemFeet", CommonRandomItemFromList("", CollegeTheaterRandomColors));
+	if (Event == "PlayerFeetIron") InventoryWear(Player, "BallChain", "ItemFeet", CommonRandomItemFromList("", CollegeTheaterRandomColors));
 	if (Event == "JuliaRope") CollegeTheaterRandomRope(CollegeTheaterJulia);
-	if (Event == "PlayerBelt") CollegeTheaterRandomBelt(Player);
 	if (Event == "JuliaBelt") CollegeTheaterRandomBelt(CollegeTheaterJulia);
 	if (Event == "PlayerClothBlindfold") InventoryWear(Player, "ClothBlindfold", "ItemHead", CommonRandomItemFromList("", CollegeTheaterRandomColors));
 	if (Event == "JuliaClothBlindfold") InventoryWear(CollegeTheaterJulia, "ClothBlindfold", "ItemHead", CommonRandomItemFromList("", CollegeTheaterRandomColors));
