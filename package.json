@@ -1,0 +1,26 @@
+{
+  "name": "bondage-college",
+  "version": "1.0.0",
+  "description": "Welcome to the Bondage College!",
+  "main": "index.html",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "web:collage": "cd BondageClub && ws"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dracodeus/Bondage-College.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dracodeus/Bondage-College/issues"
+  },
+  "homepage": "https://github.com/Dracodeus/Bondage-College#readme",
+  "dependencies": {
+    "local-web-server": "^3.0.7"
+  }
+}
