@@ -19,13 +19,12 @@ function CollegeTeacherMildredClothes() {
 	InventoryWear(CollegeTeacherMildred, "Normal", "BodyUpper", "White");
 	InventoryWear(CollegeTeacherMildred, "Normal", "BodyLower", "White");
 	InventoryWear(CollegeTeacherMildred, "Default", "Hands", "White");
-	InventoryWear(CollegeTeacherMildred, "HairBack6", "HairBack", "#603022");
-	InventoryWear(CollegeTeacherMildred, "HairFront4", "HairFront", "#603022");
-	InventoryWear(CollegeTeacherMildred, "Ribbons2", "HairAccessory1", "#111111");
+	InventoryWear(CollegeTeacherMildred, "HairBack21", "HairBack", "#626060");
+	InventoryWear(CollegeTeacherMildred, "HairFront3", "HairFront", "#626060");
 	InventoryWear(CollegeTeacherMildred, "Bra1", "Bra", "#2222AA");
 	InventoryWear(CollegeTeacherMildred, "Panties11", "Panties", "#2222AA");
-	InventoryWear(CollegeTeacherMildred, "Socks5", "Socks", "#444458");
-	InventoryWear(CollegeTeacherMildred, "Shoes2", "Shoes", "#111111");
+	InventoryWear(CollegeTeacherMildred, "Socks5", "Socks", "#111111");
+	InventoryWear(CollegeTeacherMildred, "Heels1", "Shoes", "#222222");
 }
 
 // Generates Mildred
@@ -90,6 +89,7 @@ function CollegeTeacherMildredLoveChange(LoveChange, Event) {
 		CharacterSetFacialExpression(Player, "Blush", "Medium");
 		TimerInventoryRemoveSet(Player, "Blush", 3);
 	}		
+	if (Event == "Gag") InventoryWear(Player, "DogMuzzleExposed", "ItemMouth");
 }
 
 // Dress back the player and Mildred
@@ -98,6 +98,11 @@ function CollegeTeacherDressBack() {
 	CharacterRelease(CollegeTeacherMildred);
 	CollegeEntranceWearStudentClothes(Player);
 	CollegeTeacherMildredClothes();
+}
+
+// Sets the current background for the scene
+function CollegeTeacherNewBackground(New) {
+	CollegeTeacherBackground = New;
 }
 
 // When the plater invites Mildred to her room

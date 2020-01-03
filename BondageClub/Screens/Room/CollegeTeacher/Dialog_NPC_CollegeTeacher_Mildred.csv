@@ -1,7 +1,7 @@
 PlayerGagged,,,(She smirks and makes fun of your mumblings.),,
 0,,,(A gray haired woman stares at you as you enter the teacher's lounge.)  What are you doing here?,,
-0,,Who are you?,I'm teacher Mildred.  How did you got here little miss?,DialogRemove(),"!DialogLogQuery(""BondageCollege"", ""Import"")"
-0,,Hello teacher Mildred.,Greetings little miss DialogPlayerName.  How did you got here?,DialogRemove(),"DialogLogQuery(""BondageCollege"", ""Import"")"
+0,,Who are you?,I'm teacher Mildred.  How did you get here little miss?,DialogRemove(),"!DialogLogQuery(""BondageCollege"", ""Import"")"
+0,,Hello teacher Mildred.,Greetings little miss DialogPlayerName.  How did you get here?,DialogRemove(),"DialogLogQuery(""BondageCollege"", ""Import"")"
 0,10,The door was open.,That's impossible.  I always double-check it.  You've sneaked in didn't you?,,
 0,10,I've found this key.,You've stolen it!  And now you're sneaking in to steal our belongings?,,
 0,10,Julia let me in.,Even an excentric like her wouldn't do that.  You've sneaked in didn't you?,,
@@ -32,8 +32,8 @@ PlayerGagged,,,(She smirks and makes fun of your mumblings.),,
 60,70,What kind of device?,(She gets a large wooden plank with three holes and a locking mechanism.)  This is your demise.,,
 60,70,Something as old as you?,(She gets a large wooden plank with three holes and a locking mechanism.)  This is your demise.,MildredLoveChange(-1),
 60,70,I'm curious Miss.,(She gets a large wooden plank with three holes and a locking mechanism.)  This is your demise.,MildredLoveChange(1),
-70,80,I didn't thought that pillories were still used.,"I'm surprised you know the proper name.  Little miss, you will experience it.",MildredLoveChange(1),
-70,80,I didn't thought that stocks were still used.,"Stocks are for legs, the proper name is pillory.  And you will experience it little miss.",,
+70,80,I didn't think that pillories were still used.,"I'm surprised you know the proper name.  Little miss, you will experience it.",MildredLoveChange(1),
+70,80,I didn't think that stocks were still used.,"Stocks are for legs, the proper name is pillory.  And you will experience it little miss.",,
 70,80,That's a glory hole from the previous century?,"He who laughs last, laughs best.  You will experience it little miss.",MildredLoveChange(-1),
 70,80,Funny!  You should be a comedian.,"He who laughs last, laughs best.  You will experience it little miss.",MildredLoveChange(-1),
 70,80,What is that?,It's a pillory little miss.  And you will experience.,,
@@ -76,4 +76,51 @@ PlayerGagged,,,(She smirks and makes fun of your mumblings.),,
 180,200,I promise I will respect the teachers.,"Fine, you've learned your lesson.  You seem to be a good student after all.",,MildredLoveIs(10)
 180,300,I promise I will respect the teachers.,And I will make sure you never forget that promise.,,!MildredLoveIs(10)
 200,,TO DO INVITE,TO DO INVITE,,
-300,,TO DO HUMILIATE,TO DO HUMILIATE,,
+300,310,What do you mean?,It means we are going to take a little walk around school.,,MildredLoveIs(0)
+300,310,Isn't that enough?,No.  We are going to take a little walk around school.,,MildredLoveIs(0)
+300,310,(Stay silent.),We are going to take a little walk around school.,,MildredLoveIs(0)
+300,305,What do you mean?,It means we are going to take a little walk around school.  And you will be muzzled like a bitch.,,!MildredLoveIs(0)
+300,305,Isn't that enough?,No.  We are going to take a little walk around school.  And you will be muzzled like a bitch.,,!MildredLoveIs(0)
+300,305,(Stay silent.),We are going to take a little walk around school.  And you will be muzzled like a bitch.,,!MildredLoveIs(0)
+305,310,Muzzled?  Are you crazy?,(She straps a muzzle gag on your head and smirks.)  You will never forget this humiliation little bitch.,"MildredLoveChange(-1, ""Gag"")",
+305,310,This is inhumane!,(She straps a muzzle gag on your head and smirks.)  You will never forget this humiliation little bitch.,"MildredLoveChange(0, ""Gag"")",
+305,310,Yes teacher Mildred.,(She straps a muzzle gag on your head and smirks.)  You will never forget this humiliation little bitch.,"MildredLoveChange(1, ""Gag"")",
+310,320,Please don't be too harsh.,"Come, let's take a walk around the college.  (She whips you and takes you outside, so everyone can see you.)","NewBackground(""CollegeEntrance"")",
+310,320,I will get you for that.,"Come, let's take a walk around the college.  (She whips you and takes you outside, so everyone can see you.)","NewBackground(""CollegeEntrance"")",
+310,320,(Try to struggle out.),"Come, let's take a walk around the college.  (She whips you and takes you outside, so everyone can see you.)","NewBackground(""CollegeEntrance"")",
+310,320,(Bow your head.),"Come, let's take a walk around the college.  (She whips you and takes you outside, so everyone can see you.)","NewBackground(""CollegeEntrance"")",
+320,330,Hello everyone!,"Yes, hello everyone, come see our model student.  (She pushes you to the college teather stage.)","NewBackground(""CollegeTheater"")",
+320,330,This is so embarrassing.,And this is far from over.  (She pushes you to the college teather stage.),"NewBackground(""CollegeTheater"")",
+320,330,(Try to kick her.),I can also restrain your legs you know?  (She pushes you to the college teather stage.),"NewBackground(""CollegeTheater"")",
+320,330,(Blush red.),It's only the beginning.  (She pushes you to the college teather stage.),"NewBackground(""CollegeTheater"")",
+330,340,You're a comedian?,(She stays silent and whips you again.  Making you walk to the cafeteria where everyone stares at you.),"NewBackground(""CollegeCafeteria"")",
+330,340,To be or not to be!,(She stays silent and whips you again.  Making you walk to the cafeteria where everyone stares at you.),"NewBackground(""CollegeCafeteria"")",
+330,340,(Try to look away.),(She stays silent and whips you again.  Making you walk to the cafeteria where everyone stares at you.),"NewBackground(""CollegeCafeteria"")",
+330,340,(Grumble.),(She stays silent and whips you again.  Making you walk to the cafeteria where everyone stares at you.),"NewBackground(""CollegeCafeteria"")",
+340,350,How can the college allow this?,It's a wonderful establishment isn't it?  (She guides you to a class.  To humiliate you in front of the students.),"NewBackground(""CollegeDetention"")",
+340,350,You're enjoying this?,(She smirks and guides you to a class.  To humiliate you in front of the students.),"NewBackground(""CollegeDetention"")",
+340,350,(Turn your head.),It's time to see your friends.  (She guides you to a class.  To humiliate you in front of the students.),"NewBackground(""CollegeDetention"")",
+340,350,(Take loud breathes.),It's time to see your friends.  (She guides you to a class.  To humiliate you in front of the students.),"NewBackground(""CollegeDetention"")",
+350,360,That's enough!,Almost.  (She takes you back to the entrance for one last tour outside.),"NewBackground(""CollegeEntrance"")",
+350,360,Alright Miss.  I get the lesson.,Very good.  (She takes you back to the entrance for one last tour outside.),"NewBackground(""CollegeEntrance"")",
+350,360,(Try to break away.),Don't make me laugh.  (She takes you back to the entrance for one last tour outside.),"NewBackground(""CollegeEntrance"")",
+350,360,(Stay silent.),We are almost done.  (She takes you back to the entrance for one last tour outside.),"NewBackground(""CollegeEntrance"")",
+360,370,This is horrible.,"It's over little miss, let's go back.  (She whips you one last time as you both get back to the lounge.)","NewBackground(""CollegeTeacherLounge"")",
+360,370,Can we go in now?,"It's over little miss, let's go back.  (She whips you one last time as you both get back to the lounge.)","NewBackground(""CollegeTeacherLounge"")",
+360,370,(Roll your eyes up.),"It's over little miss, let's go back.  (She whips you one last time as you both get back to the lounge.)","NewBackground(""CollegeTeacherLounge"")",
+360,370,(Bow your head.),"It's over little miss, let's go back.  (She whips you one last time as you both get back to the lounge.)","NewBackground(""CollegeTeacherLounge"")",
+370,380,That was humiliating.,"That's the point.  From now on, will you be a good student?",,
+370,380,Finally!  We're back.,"That was a nice walk.  From now on, will you be a good student?",,
+370,380,You're a cruel teacher.,"Cruel for your own good.  From now on, will you be a good student?",,
+370,380,(Sigh loudly.),"From now on, will you be a good student?",,
+370,380,(Stay silent.),"From now on, will you be a good student?",,
+380,390,Yes Miss.,Good girl.  (She releases you.)  Now get out before I call security.,"DialogRelease(""Player"")",
+380,390,Forget it.,Stay like that and get lost then.  Get out before I call security.,,
+380,390,(Nod yes.),Good girl.  (She releases you.)  Now get out before I call security.,"DialogRelease(""Player"")",
+380,390,(Shake your head no.),Stay like that and get lost then.  Get out before I call security.,,
+390,,,Get out before I call security.,,
+390,395,I'll have my revenge someday.  (Leave her.),,DialogLeave(),Player.CanTalk()
+390,395,Thanks for the lesson.  (Leave her.),,DialogLeave(),Player.CanTalk()
+390,395,(Leave her.),,DialogLeave(),
+395,,,Get out before I call security.,,
+395,,(Leave her.),,DialogLeave(),
