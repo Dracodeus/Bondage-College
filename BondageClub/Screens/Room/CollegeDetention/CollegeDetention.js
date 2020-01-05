@@ -18,7 +18,7 @@ function CollegeDetentionYukiClothes() {
 	InventoryWear(CollegeDetentionYuki, "PussyDark3", "Pussy", "#333333");
 	InventoryWear(CollegeDetentionYuki, "Eyes1", "Eyes", "#a57b78");
 	InventoryWear(CollegeDetentionYuki, "Glasses1", "Glasses", "#333333");
-	InventoryWear(CollegeDetentionYuki, "Mouth1", "Mouth", "Default");
+	InventoryWear(CollegeDetentionYuki, "Mouth", "Mouth", "Default");
 	InventoryWear(CollegeDetentionYuki, "H0920", "Height", "Default");
 	InventoryWear(CollegeDetentionYuki, "Small", "BodyUpper", "Asian");
 	InventoryWear(CollegeDetentionYuki, "Small", "BodyLower", "Asian");

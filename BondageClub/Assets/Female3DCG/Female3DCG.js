@@ -516,9 +516,9 @@ var AssetFemale3DCG = [
 		Priority: 9,
 		AllowNone: false,
 		Color: ["#6a3628", "#5e481e", "#666666", "#555588", "#558855", "#885555", "#202020", "#aa3333", "#33aa33", "#3333aa", "#aaaa33", "#33aaaa", "#aa33aa"],
-		AllowExpression: ["Closed", "Wink", "Dazed"],
+		AllowExpression: ["Closed", "Dazed", "Shy", "Sad", "Horny", "Lewd", "VeryLewd", "Heart", "LewdHeart", "Dizzy", "Daydream", "WinkL", "WinkR", "Angry", "Surprised", "Scared"],
 		Left: 200,
-		Top: 150,
+		Top: 145,
 		FullAlpha: false,
 		Blink: true,
 		Asset: ["Eyes1", "Eyes2", "Eyes3", "Eyes4", "Eyes5", "Eyes6", "Eyes7", "Eyes8", "Eyes9", "Eyes10", "Eyes11"]
@@ -529,10 +529,17 @@ var AssetFemale3DCG = [
 		Priority: 10,
 		AllowNone: false,
 		Color: ["Default", "#803d26", "#aa5555", "#cc3333", "#55aa55", "#5555aa", "#55aaaa", "#aa55aa", "#aaaa55"],
-		AllowExpression: ["Frown"],
-		Left: 240,
-		Top: 190,
-		Asset: ["Mouth1", "Mouth2", "Mouth3", "Mouth4", "Mouth5"]
+		AllowExpression: ["Frown", "Sad", "Pained", "Angry", "HalfOpen", "Open", "Ahegao", "Moan", "TonguePinch", "LipBite", "Happy", "Devious", "Laughing", "Grin", "Smirk"],
+		Left: 235,
+		Top: 180,
+		Asset: [
+			{ Name: "Mouth", 
+			Layer: [
+					{ Name: "Lips", AllowColorize: true },
+					{ Name: "Inner", AllowColorize: false }
+				]
+			}
+		]
 	},
 
 	{
@@ -570,18 +577,6 @@ var AssetFemale3DCG = [
 		Top: 120,
 		Asset: ["Eyebrows1"]
 	},
-	
-	{
-		Group: "Drool",
-		Priority: 9,
-		AllowNone: false,
-		AllowColorize: false,
-		AllowCustomize: false,
-		AllowExpression: ["Right", "Left", "Both", "Messy"],
-		Left: 240,
-		Top: 190,
-		Asset: ["Drool"]
-	},
 
 	{
 		Group: "Blush",
@@ -589,10 +584,34 @@ var AssetFemale3DCG = [
 		AllowNone: false,
 		AllowColorize: false,
 		AllowCustomize: false,
-		AllowExpression: ["Low", "Medium", "High"],
-		Left: 200,
-		Top: 150,
+		AllowExpression: ["Low", "Medium", "High", "VeryHigh", "Extreme", "ShortBreath"],
+		Left: 190,
+		Top: 100,
 		Asset: ["Blush"]
+	},
+
+	{
+		Group: "Fluids",
+		Priority: 11,
+		AllowNone: false,
+		AllowColorize: false,
+		AllowCustomize: false,
+		AllowExpression: ["DroolLow", "DroolMedium", "DroolHigh", "DroolSides", "DroolMessy", "DroolTearsLow", "DroolTearsMedium", "DroolTearsHigh", "DroolTearsMessy", "DroolTearsSides", "TearsHigh", "TearsMedium", "TearsLow"],
+		Left: 200,
+		Top: 145,
+		Asset: ["Fluids"]
+	},
+
+	{
+		Group: "Emoticon",
+		Priority: 49,
+		AllowNone: false,
+		AllowColorize: false,
+		AllowCustomize: false,
+		AllowExpression: ["Afk", "Sleep", "Hearts", "Tear", "Hearing", "Confusion", "Exclamation", "Annoyed", "Read"],
+		Left: 250,
+		Top: 0,
+		Asset: ["Emoticon"]
 	},
 
 	// Item specific
@@ -1179,9 +1198,9 @@ var AssetFemale3DCG = [
 		Top: 0,
 		Zone: [[150, 160, 200, 50]],
 		Asset: [
-			{ Name: "ClothGag", DefaultColor: "#B0B0B0", Extended: true, Difficulty: -4, Value: 15, Time: 10, AllowEffect: ["GagLight"], ExpressionTrigger: [{ Group: "Drool", Name: "Left", Timer: 60 }], AllowType: ["Small", "Cleave", "OTM", "OTN"] },
+			{ Name: "ClothGag", DefaultColor: "#B0B0B0", Extended: true, Difficulty: -4, Value: 15, Time: 10, AllowEffect: ["GagLight"], ExpressionTrigger: [{ Group: "Fluids", Name: "DroolSides", Timer: 30 }], AllowType: ["Small", "Cleave", "OTM", "OTN"] },
 			{
-				Name: "WiffleGag", DefaultColor: "#FF6060", Effect: ["GagHeavy"], Difficulty: 1, Value: 30, Time: 10,  ExpressionTrigger: [{ Group: "Drool", Name: "Left", Timer: 120 }], AllowLock: true,
+				Name: "WiffleGag", DefaultColor: "#FF6060", Effect: ["GagHeavy"], Difficulty: 1, Value: 30, Time: 10, ExpressionTrigger: [{ Group: "Fluids", Name: "DroolSides", Timer: 30 }], AllowLock: true,
 				Layer: [
 					{ Name: "Strap", AllowColorize: false },
 					{ Name: "Ball", AllowColorize: true }
@@ -1196,7 +1215,7 @@ var AssetFemale3DCG = [
 			},
 			{ Name: "HarnessPanelGag", DefaultColor: "#404040", Effect: ["GagHeavy"], Difficulty: 6, Value: 80, Time: 20, AllowLock: true },
 			{
-				Name: "RingGag", DefaultColor: "#404040", Value: 30, Time: 5, ExpressionTrigger: [{ Group: "Drool", Name: "Left", Timer: 60 }], AllowLock: true,
+				Name: "RingGag", DefaultColor: "#404040", Value: 30, Time: 5, ExpressionTrigger: [{ Group: "Fluids", Name: "DroolSides", Timer: 30 }], AllowLock: true,
 				Layer: [
 					{ Name: "Mouth", AllowColorize: false },
 					{ Name: "Gag", AllowColorize: true }
@@ -1229,16 +1248,16 @@ var AssetFemale3DCG = [
 					{ Name: "Dildo", AllowColorize: true }
 				]
 			},
-			{ Name: "BoneGag", Difficulty: 6, Value: 50, Time: 10, Effect: ["GagNormal"], ExpressionTrigger: [{ Group: "Drool", Name: "Left", Timer: 60 }], AllowLock: true },
+			{ Name: "BoneGag", Difficulty: 6, Value: 50, Time: 10, Effect: ["GagNormal"], ExpressionTrigger: [{ Group: "Fluids", Name: "DroolSides", Timer: 30 }], AllowLock: true },
 			{ 
-				Name: "ChopstickGag", Difficulty: 2, Value: 15, Time: 10, ExpressionTrigger: [{ Group: "Drool", Name: "Left", Timer: 60 }],
+				Name: "ChopstickGag", Difficulty: 2, Value: 15, Time: 10, ExpressionTrigger: [{ Group: "Fluids", Name: "DroolSides", Timer: 30 }],
 				Layer: [
 					{ Name: "Chopsticks", AllowColorize: true },
 					{ Name: "Tongue", AllowColorize: false }
 				]
 			},
 			{
-				Name: "BambooGag", DefaultColor: "#A07858", Difficulty: 6, Value: 30, Time: 10, ExpressionTrigger: [{ Group: "Drool", Name: "Left", Timer: 60 }],
+				Name: "BambooGag", DefaultColor: "#A07858", Difficulty: 6, Value: 30, Time: 10, ExpressionTrigger: [{ Group: "Fluids", Name: "DroolSides", Timer: 30 }],
 				Layer: [
 					{ Name: "Rod", AllowColorize: false },
 					{ Name: "Rope", AllowColorize: true }
@@ -1247,14 +1266,14 @@ var AssetFemale3DCG = [
 			{ Name: "HarnessBallGag1", Effect: ["GagHeavy"], Difficulty: 4, Value: 75, Time: 20, AllowLock: true},
 			{ Name: "PumpkinGag", Effect: ["GagHeavy"], Difficulty: 1, Value: 40, Time: 10, AllowLock: true},
 			{
-				Name: "LipGag", Value: 40, Time: 5, AllowLock: true, ExpressionTrigger: [{ Group: "Drool", Name: "Left", Timer: 60 }],
+				Name: "LipGag", Value: 40, Time: 5, AllowLock: true, ExpressionTrigger: [{ Group: "Fluids", Name: "DroolSides", Timer: 30 }],
 				Layer: [
 					{ Name: "Mouth", AllowColorize: false },
 					{ Name: "Gag", AllowColorize: true }
 				]
 			},
 			{
-				Name: "SpiderGag", Value: 45, Time: 5, AllowLock: true, ExpressionTrigger: [{ Group: "Drool", Name: "Left", Timer: 60 }],
+				Name: "SpiderGag", Value: 45, Time: 5, AllowLock: true, ExpressionTrigger: [{ Group: "Fluids", Name: "DroolSides", Timer: 30 }],
 				Layer: [
 					{ Name: "Mouth", AllowColorize: false },
 					{ Name: "Gag", AllowColorize: true }
@@ -1273,8 +1292,8 @@ var AssetFemale3DCG = [
 			{ Name: "DeepthroatGag", DefaultColor: "#404040", Difficulty: 5, Effect: ["GagHeavy"], Value: 55, Time: 15, AllowLock: true, ExpressionTrigger: [{ Group: "Eyebrows", Name: "Raised", Timer: 10 }] },
 			{ Name: "LeatherCorsetCollar", DefaultColor: "#404040", Priority: 35, BuyGroup: ["LeatherCorsetCollar"], Block: ["ItemNeck"], Value: 75, Time: 20, RemoveTime: 30, Difficulty: 50, AllowLock: true },
 			{ Name: "LatexPostureCollar", Priority: 35, BuyGroup: ["LatexPostureCollar"], Block: ["ItemNeck"], Value: 80, Time: 20, RemoveTime: 30, Difficulty: 50, AllowLock: true },
-			{ Name: "BitGag", Difficulty: 4, Effect: ["GagHeavy"], Value: 40, Time: 20, ExpressionTrigger: [{ Group: "Drool", Name: "Left", Timer: 60 }], AllowLock: true },
-			{ Name: "XLBoneGag", Difficulty: 6, Value: 60, Time: 10, Effect: ["GagHeavy"], ExpressionTrigger: [{ Group: "Drool", Name: "Left", Timer: 60 }], AllowLock: true },
+			{ Name: "BitGag", Difficulty: 4, Effect: ["GagHeavy"], Value: 40, Time: 20, ExpressionTrigger: [{ Group: "Fluids", Name: "DroolSides", Timer: 30 }], AllowLock: true },
+			{ Name: "XLBoneGag", Difficulty: 6, Value: 60, Time: 10, Effect: ["GagHeavy"], ExpressionTrigger: [{ Group: "Fluids", Name: "DroolSides", Timer: 30 }], AllowLock: true },
 			{ Name: "DogMuzzleExposed", Difficulty: 7, Value: 50, Time: 10, Effect: ["GagNormal"], AllowLock: true },
 			{ Name: "FoxyHarnessPanelGag", Difficulty: 6, Value: 40, Time: 20, Effect: ["GagHeavy"], AllowLock: true }
 		]

@@ -14,7 +14,7 @@ function CollegeTeacherMildredClothes() {
 	InventoryWear(CollegeTeacherMildred, "PussyDark3", "Pussy", "#333333");
 	InventoryWear(CollegeTeacherMildred, "Eyes1", "Eyes", "#a57b78");
 	InventoryWear(CollegeTeacherMildred, "Glasses4", "Glasses", "#333333");
-	InventoryWear(CollegeTeacherMildred, "Mouth1", "Mouth", "Default");
+	InventoryWear(CollegeTeacherMildred, "Mouth", "Mouth", "Default");
 	InventoryWear(CollegeTeacherMildred, "H0940", "Height", "Default");
 	InventoryWear(CollegeTeacherMildred, "Normal", "BodyUpper", "White");
 	InventoryWear(CollegeTeacherMildred, "Normal", "BodyLower", "White");
@@ -96,6 +96,7 @@ function CollegeTeacherMildredLoveChange(LoveChange, Event) {
 function CollegeTeacherDressBack() {
 	CharacterRelease(Player);
 	CharacterRelease(CollegeTeacherMildred);
+	InventoryRemove(CollegeTeacherMildred, "ItemHands");
 	CollegeEntranceWearStudentClothes(Player);
 	CollegeTeacherMildredClothes();
 }
