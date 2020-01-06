@@ -109,6 +109,7 @@ function CollegeTeacherNewBackground(New) {
 // When the plater invites Mildred to her room
 function CollegeTeacherInviteToPrivateRoom() {
 	CollegeTeacherDressBack();
+	InventoryAdd(Player, "Pillory", "ItemArms");
 	CommonSetScreen("Room", "Private");
 	PrivateAddCharacter(CollegeTeacherMildred, null, true);
 	var C = PrivateCharacter[PrivateCharacter.length - 1];

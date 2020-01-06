@@ -62,6 +62,8 @@ function ManagementCannotBeClubSlaveDominant() { return (!InventoryCharacterHasO
 function ManagementCannotBeClubSlaveOwnerLock() { return InventoryCharacterHasOwnerOnlyRestraint(Player) }
 function ManagementCanKiss() { return (Player.CanTalk() && CurrentCharacter.CanTalk()) }
 function ManagementCanMasturbate() { return (Player.CanInteract() && !CurrentCharacter.IsVulvaChaste()) }
+function ManagementCanPlayWithSub() { return (DialogReputationLess("Dominant", 24) && !InventoryCharacterHasLockedRestraint(Player)) }
+function ManagementCannotPlayWithSubLock() { return (DialogReputationLess("Dominant", 24) && InventoryCharacterHasLockedRestraint(Player)) }
 
 // Returns TRUE if there's no other Mistress in the player private room
 function ManagementNoMistressInPrivateRoom() {
@@ -387,6 +389,7 @@ function ManagementClubSlaveTransferToRoom() {
 // When the player gets the Mistress clothes
 function ManagementGetMistressOutfit(Color) {
 	CharacterRelease(Player);
+	LoginMistressItems();
 	CharacterArchetypeClothes(Player, "Mistress", Color);
 	ServerPlayerInventorySync();
 }

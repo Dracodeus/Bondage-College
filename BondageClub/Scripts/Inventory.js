@@ -160,6 +160,12 @@ function InventoryAllow(C, Prerequisite, SetDialog) {
 	if (Prerequisite == "NotSuspendedOrHorsed" && C.Pose.indexOf("KneelingSpread") >= 0) T = "TheyMustBeStandingFirst";
 	if (Prerequisite == "NotSuspendedOrHorsed" && (InventoryGet(C, "ItemFeet") != null) && (InventoryGet(C, "ItemFeet").Asset.Name == "SpreaderMetal")) T = "CannotBeUsedWithFeetSpreader";
 	if (Prerequisite == "NotSuspendedOrHorsed" && C.Effect.indexOf("Mounted") >= 0) T = "CannotBeUsedWhenMounted";
+	
+	//Layered Gags, Prevent gags marked with "GagUnique" and "GagCorset" from being equipped over gags with "GagFlat"
+	if (Prerequisite == "GagUnique" && (InventoryGet(C, "ItemMouth") != null) && InventoryGet(C, "ItemMouth").Asset.Prerequisite == "GagFlat") T = "CannotBeUsedOverFlatGag";
+	if (Prerequisite == "GagUnique" && (InventoryGet(C, "ItemMouth2") != null) && InventoryGet(C, "ItemMouth2").Asset.Prerequisite == "GagFlat") T = "CannotBeUsedOverFlatGag";
+	if (Prerequisite == "GagUnique" && (InventoryGet(C, "ItemMouth") != null) && InventoryGet(C, "ItemMouth").Asset.Prerequisite == "GagCorset") T = "CannotBeUsedOverFlatGag";
+	if (Prerequisite == "GagUnique" && (InventoryGet(C, "ItemMouth2") != null) && InventoryGet(C, "ItemMouth2").Asset.Prerequisite == "GagCorset") T = "CannotBeUsedOverFlatGag";
 
 	// Burlap sack or body bag
 	if (Prerequisite == "CanBeBagged" && C.Pose.indexOf("Suspension") >= 0) T = "TheyMustBeStandingFirst";

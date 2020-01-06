@@ -206,6 +206,7 @@ function DialogMenuButtonBuild(C) {
 	// Main buttons
 	if (DialogProgress < 0) {
 		if ((DialogInventory.length > 12) && ((Player.CanInteract() && !InventoryGroupIsBlocked(C)) || DialogItemPermissionMode)) DialogMenuButton.push("Next");
+		if (C.FocusGroup.Name == "ItemMouth" || C.FocusGroup.Name == "ItemMouth2" || C.FocusGroup.Name == "ItemMouth3") DialogMenuButton.push("ChangeLayersMouth");
 		if (InventoryItemHasEffect(Item, "Lock", true) && DialogCanUnlock(C, Item) && InventoryAllow(C, Item.Asset.Prerequisite) && !InventoryGroupIsBlocked(C) && (Player.CanInteract() || ((C.ID == 0) && InventoryItemHasEffect(Item, "Block", true)))) DialogMenuButton.push("Unlock");
 		if ((Item != null) && (C.ID == 0) && (!Player.CanInteract() || (InventoryItemHasEffect(Item, "Lock", true) && !DialogCanUnlock(C, Item))) && (DialogMenuButton.indexOf("Unlock") < 0) && InventoryAllow(C, Item.Asset.Prerequisite) && !InventoryGroupIsBlocked(C)) DialogMenuButton.push("Struggle");
 		if (InventoryItemHasEffect(Item, "Lock", true) && !Player.IsBlind() && (Item.Property != null) && (Item.Property.LockedBy != null) && (Item.Property.LockedBy != "")) DialogMenuButton.push("InspectLock");
@@ -415,27 +416,41 @@ function DialogMenuButtonClick() {
 			}
 
 			// Next Icon - Shows the next 12 items
-			if (DialogMenuButton[I] == "Next") {
+			else if (DialogMenuButton[I] == "Next") {
 				DialogInventoryOffset = DialogInventoryOffset + 12;
 				if (DialogInventoryOffset >= DialogInventory.length) DialogInventoryOffset = 0;
 				return;
 			}
 
 			// Use Icon - Pops the item extension for the focused item
-			if ((DialogMenuButton[I] == "Use") && (Item != null)) {
+			else if ((DialogMenuButton[I] == "Use") && (Item != null)) {
 				DialogExtendItem(Item);
 				return;
 			}
 
 			// Remote Icon - Pops the item extension
-			if ((DialogMenuButton[I] == "Remote") && (Item != null)) {
+			else if ((DialogMenuButton[I] == "Remote") && (Item != null)) {
 				if (InventoryItemHasEffect(Item, "Egged") && InventoryAvailable(Player, "VibratorRemote", "ItemVulva"))
 					DialogExtendItem(Item);
 				return;
 			}
 
+			// Cycle through the layers of restraints for the mouth
+			else if (DialogMenuButton[I] == "ChangeLayersMouth") {
+				var NewLayerName;
+				if (C.FocusGroup.Name == "ItemMouth") NewLayerName = "ItemMouth2";
+				if (C.FocusGroup.Name == "ItemMouth2") NewLayerName = "ItemMouth3";
+				if (C.FocusGroup.Name == "ItemMouth3") NewLayerName = "ItemMouth";
+
+				for (var A = 0; A < AssetGroup.length; A++)
+					if (AssetGroup[A].Name == NewLayerName) {
+						C.FocusGroup = AssetGroup[A];
+						DialogInventoryBuild(C);
+					}
+			}
+
 			// Lock Icon - Rebuilds the inventory list with locking items
-			if ((DialogMenuButton[I] == "Lock") && (Item != null)) {
+			else if ((DialogMenuButton[I] == "Lock") && (Item != null)) {
 				if (DialogItemToLock == null) {
 					if ((Item != null) && (Item.Asset.AllowLock != null)) {
 						DialogInventoryOffset = 0;
@@ -453,20 +468,20 @@ function DialogMenuButtonClick() {
 			}
 
 			// Unlock/Remove/Struggle Icon - Starts the struggling mini-game (can be impossible to complete)
-			if (((DialogMenuButton[I] == "Unlock") || (DialogMenuButton[I] == "Remove") || (DialogMenuButton[I] == "Struggle") || (DialogMenuButton[I] == "Dismount") || (DialogMenuButton[I] == "Escape")) && (Item != null)) {
+			else if (((DialogMenuButton[I] == "Unlock") || (DialogMenuButton[I] == "Remove") || (DialogMenuButton[I] == "Struggle") || (DialogMenuButton[I] == "Dismount") || (DialogMenuButton[I] == "Escape")) && (Item != null)) {
 				DialogProgressStart(C, Item, null);
 				return;
 			}
 
 			// When the player inspects a lock
-			if ((DialogMenuButton[I] == "InspectLock") && (Item != null)) {
+			else if ((DialogMenuButton[I] == "InspectLock") && (Item != null)) {
 				var Lock = InventoryGetLock(Item);
 				if (Lock != null) DialogExtendItem(Lock, Item);
 				return;
 			}
 
 			// Color picker Icon - Starts the color picking
-			if (DialogMenuButton[I] == "ColorPick") {
+			else if (DialogMenuButton[I] == "ColorPick") {
 				ElementCreateInput("InputColor", "text", (DialogColorSelect != null) ? DialogColorSelect.toString() : "");
 				DialogColor = "";
 				DialogMenuButtonBuild(C);
@@ -474,7 +489,7 @@ function DialogMenuButtonClick() {
 			}
 
 			// When the user selects a color
-			if ((DialogMenuButton[I] == "ColorSelect") && CommonIsColor(ElementValue("InputColor"))) {
+			else if ((DialogMenuButton[I] == "ColorSelect") && CommonIsColor(ElementValue("InputColor"))) {
 				DialogColor = null;
 				DialogColorSelect = ElementValue("InputColor");
 				ElementRemove("InputColor");
@@ -483,7 +498,7 @@ function DialogMenuButtonClick() {
 			}
 
 			// When the user cancels out of color picking
-			if (DialogMenuButton[I] == "ColorCancel") {
+			else if (DialogMenuButton[I] == "ColorCancel") {
 				DialogColor = null;
 				DialogColorSelect = null;
 				ElementRemove("InputColor");
@@ -491,13 +506,13 @@ function DialogMenuButtonClick() {
 				return;
 			}
 
-			if (DialogMenuButton[I] == "DialogPermissionMode") {
+			else if (DialogMenuButton[I] == "DialogPermissionMode") {
 				DialogItemPermissionMode = true;
 				DialogInventoryBuild(C);
 				return;
 			}
 
-			if (DialogMenuButton[I] == "DialogNormalMode") {
+			else if (DialogMenuButton[I] == "DialogNormalMode") {
 				DialogItemPermissionMode = false;
 				DialogInventoryBuild(C);
 				return;
@@ -584,7 +599,10 @@ function DialogItemClick(ClickItem) {
 			if (InventoryAllow(C, ClickItem.Asset.Prerequisite))
 				if ((CurrentItem == null) || (CurrentItem.Asset.Name != ClickItem.Asset.Name)) {
 					if (ClickItem.Asset.Wear) {
-						if (ClickItem.Asset.SelfBondage || (C.ID != 0)) DialogProgressStart(C, CurrentItem, ClickItem);
+						// Prevent two unique gags being equipped. Also check if selfbondage is allowed for the item if used on self
+						if (ClickItem.Asset.Prerequisite == "GagUnique" && C.Pose.indexOf("GagUnique") >= 0) DialogSetText("CanOnlyEquipOneOfThisGag");
+						else if (ClickItem.Asset.Prerequisite == "GagCorset" && C.Pose.indexOf("GagCorset") >= 0) DialogSetText("CannotUseMultipleCorsetGags");
+						else if (ClickItem.Asset.SelfBondage || (C.ID != 0)) DialogProgressStart(C, CurrentItem, ClickItem);
 						else DialogSetText("CannotUseOnSelf");
 					} else {
 
@@ -791,7 +809,7 @@ function DialogDrawItemMenu(C) {
 
 	// Draws the top menu text & icons
 	if (DialogMenuButton == null) DialogMenuButtonBuild((Player.FocusGroup != null) ? Player : CurrentCharacter);
-	if ((DialogColor == null) && Player.CanInteract() && (DialogProgress < 0) && !InventoryGroupIsBlocked(C)) DrawTextWrap((!DialogItemPermissionMode) ? DialogText : DialogFind(Player, "DialogPermissionMode"), 1000, 0, 975 - DialogMenuButton.length * 110, 125, "White");
+	if ((DialogColor == null) && Player.CanInteract() && (DialogProgress < 0) && !InventoryGroupIsBlocked(C) && DialogMenuButton.length < 8) DrawTextWrap((!DialogItemPermissionMode) ? DialogText : DialogFind(Player, "DialogPermissionMode"), 1000, 0, 975 - DialogMenuButton.length * 110, 125, "White");
 	for (var I = DialogMenuButton.length - 1; I >= 0; I--)
 		DrawButton(1885 - I * 110, 15, 90, 90, "", ((DialogMenuButton[I] == "ColorPick") && (DialogColorSelect != null)) ? DialogColorSelect : "White", "Icons/" + DialogMenuButton[I] + ".png", (DialogColor == null) ? DialogFind(Player, DialogMenuButton[I]) : null);
 

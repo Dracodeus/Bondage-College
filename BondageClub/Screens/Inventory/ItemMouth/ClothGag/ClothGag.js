@@ -2,7 +2,7 @@
 
 // Loads the item extension properties
 function InventoryItemMouthClothGagLoad() {
-	if (DialogFocusItem.Property == null) DialogFocusItem.Property = { Type: null, Effect: ["GagLight"] };
+	if (DialogFocusItem.Property == null) DialogFocusItem.Property = { Type: null, Effect: ["GagVeryLight"] };
 }
 
 // Draw the item extension screen
@@ -46,10 +46,10 @@ function InventoryItemMouthClothGagSetType(NewType) {
 		InventoryItemMouthClothGagLoad();
 	}
 	DialogFocusItem.Property.Type = NewType;
-	if (NewType == null) DialogFocusItem.Property.Effect = ["GagLight"];
+	if (NewType == null) DialogFocusItem.Property.Effect = ["GagVeryLight"];
 	else if (NewType == "Cleave") DialogFocusItem.Property.Effect = ["GagLight"];
-	else if (NewType == "OTM") delete DialogFocusItem.Property.Effect;
-	else if (NewType == "OTN") delete DialogFocusItem.Property.Effect;
+	else if (NewType == "OTM") DialogFocusItem.Property.Effect = ["GagEasy"];
+	else if (NewType == "OTN") DialogFocusItem.Property.Effect = ["GagEasy"];
 
 	CharacterRefresh(C);
 	ChatRoomCharacterUpdate(C);

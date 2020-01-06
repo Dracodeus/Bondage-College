@@ -38,8 +38,8 @@ function InventoryItemMouthPlugGagSetType(NewType) {
 		InventoryItemMouthPlugGagLoad();
 	}
 	DialogFocusItem.Property.Type = NewType;
-	if (NewType == null) DialogFocusItem.Property.Effect = ["GagNormal"];
-	else if (NewType == "Plug") DialogFocusItem.Property.Effect = ["GagTotal"];
+	if (NewType == null) DialogFocusItem.Property.Effect = ["GagEasy"];
+	else if (NewType == "Plug") DialogFocusItem.Property.Effect = ["GagHeavy"];
 
 	// Adds the lock effect back if it was padlocked
 	if ((DialogFocusItem.Property.LockedBy != null) && (DialogFocusItem.Property.LockedBy != "")) {

@@ -177,9 +177,7 @@ function ChatRoomClick() {
 
 	// When the user character kneels
 	if ((MouseX >= 1805) && (MouseX < 1865) && (MouseY >= 935) && (MouseY < 995) && Player.CanKneel()) {
-		var Dictionary = [];
-		Dictionary.push({Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber});
-		ServerSend("ChatRoomChat", { Content: (Player.ActivePose == null) ? "KneelDown": "StandUp", Type: "Action" , Dictionary: Dictionary} );
+		ServerSend("ChatRoomChat", { Content: (Player.ActivePose == null) ? "KneelDown": "StandUp", Type: "Action" , Dictionary: [{Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber}]} );
 		CharacterSetActivePose(Player, (Player.ActivePose == null) ? "Kneel" : null);
 		ChatRoomCharacterUpdate(Player);
 	}
@@ -525,10 +523,16 @@ function ChatRoomViewProfile() {
 }
 
 // Sends an administrative command to the server for the chat room from the character dialog
-function ChatRoomAdminAction(ActionType) {
+function ChatRoomAdminAction(ActionType, Publish) {
 	if ((CurrentCharacter != null) && (CurrentCharacter.MemberNumber != null) && ChatRoomPlayerIsAdmin()) {
-		ServerSend("ChatRoomAdmin", { MemberNumber: CurrentCharacter.MemberNumber, Action: ActionType });
-		DialogLeave();
+		ServerSend("ChatRoomAdmin", { MemberNumber: CurrentCharacter.MemberNumber, Action: ActionType, Publish: ((Publish == null) || (Publish != "false")) });
+		if ((ActionType == "MoveLeft") || (ActionType == "MoveRight")) {
+			var Pos = ChatRoomCharacter.indexOf(CurrentCharacter);
+			if (ActionType == "MoveRight") Pos = Pos + 2;
+			if (Pos < 1) Pos = 1;
+			if (Pos > ChatRoomCharacter.length) Pos = ChatRoomCharacter.length;
+			CurrentCharacter.CurrentDialog = CurrentCharacter.CurrentDialog.replace("CharacterPosition", Pos.toString());
+		} else DialogLeave();
 	}
 }
 

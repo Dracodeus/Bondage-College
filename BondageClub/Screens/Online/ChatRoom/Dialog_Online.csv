@@ -13,7 +13,7 @@ MaidDrinkPickBeerPitcher,,,"buys a beer pitcher for everyone, from DialogCharact
 MaidDrinkPickFreeTea,,,picks a tea from DialogCharacterName tray.,,
 MaidDrinkPickFreeCoffee,,,picks a coffee from DialogCharacterName tray.,,
 MaidDrinkPickHotChocolate,,,buys a hot chocolate from DialogCharacterName tray.,,
-MaidDrinkPickExpresso,,,buys a espresso from DialogCharacterName tray.,,
+MaidDrinkPickExpresso,,,buys an espresso from DialogCharacterName tray.,,
 MaidDrinkPickCappuccino,,,buys a cappuccino from DialogCharacterName tray.,,
 PlayerGagged,,,(You can use or remove items by selecting specific body regions.),,DialogDoAllowItem(CurrentCharacter)
 PlayerGagged,,,(You don't have access to use or remove items on her.),,!DialogDoAllowItem(CurrentCharacter)
@@ -72,11 +72,15 @@ PlayerGagged,,,(You don't have access to use or remove items on her.),,!DialogDo
 24,0,(Back to main menu.),(Main menu.),,
 30,0,(Kick her out of the room.),,"AdminAction(""Kick"")",
 30,0,(Ban her from the room.),,"AdminAction(""Ban"")",
-30,0,(Move her to the left.),,"AdminAction(""MoveLeft"")",
-30,0,(Move her to the right.),,"AdminAction(""MoveRight"")",
+30,31,(Move her to the left.),DialogCharacterName as been moved to the left at position CharacterPosition.  Would you like to move her further?,"AdminAction(""MoveLeft"")",
+30,31,(Move her to the right.),DialogCharacterName as been moved to the right at position CharacterPosition.  Would you like to move her further?,"AdminAction(""MoveRight"")",
 30,0,(Promote her as room administrator.),,"AdminAction(""Promote"")",!CurrentCharacterIsAdmin()
 30,0,(Demote her from room administration.),,"AdminAction(""Demote"")",CurrentCharacterIsAdmin()
 30,0,(Back to main menu.),(Main menu.),,
+31,,(Move her to the left.),DialogCharacterName as been moved to the left at position CharacterPosition.  Would you like to move her further?,"AdminAction(""MoveLeft"", ""false"")",
+31,,(Move her to the right.),DialogCharacterName as been moved to the right at position CharacterPosition.  Would you like to move her further?,"AdminAction(""MoveRight"", ""false"")",
+31,0,(Back to main menu.),,,
+31,0,(Leave this menu.),,DialogLeave(),
 100,110,(Wardrobe access.),(Select her wardrobe access.),,
 100,120,(Whisper rules.),(Select her rules for whispering when you're in the same room.),,
 100,130,(Key restrictions.),(Select her restrictions for keys.),,
