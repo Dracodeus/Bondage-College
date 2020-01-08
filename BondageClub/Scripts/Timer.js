@@ -39,7 +39,6 @@ function TimerInventoryRemove() {
 						delete Character[C].Appearance[A].Property.LockMemberNumber;
 						delete Character[C].Appearance[A].Property.RemoveTimer;
 						delete Character[C].Appearance[A].Property.MaxTimer;
-						delete Character[C].Appearance[A].Property.RemoveItem;
 						delete Character[C].Appearance[A].Property.ShowTimer;
 						delete Character[C].Appearance[A].Property.EnableRandomInput;
 						delete Character[C].Appearance[A].Property.MemberNumberList;

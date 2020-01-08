@@ -13,6 +13,7 @@ CreditTypeTranslators
 adokilume
 gottspende
 Kurisu
+MAKeevchanin
 Drussler1
 Rafael
 tree13003
@@ -27,10 +28,10 @@ CreditTypeSupport
 
 Nythaleath
 Devil621
+Atasly
 BxRad
 Gnarp
 MrsHoudini
-Atasly
 Verity
 Sarukami
 Uwnodi
@@ -50,64 +51,71 @@ TomGlass1
 
 CreditTypePatrons
 
+SirCody|Ayezona Y.
 Fluffythewhat|BlueWinter
-VICTOR L.|John S.
-Samuel C.|Dan
-Lennart K.|Misa
-Greendragon|Don_Olaf
-Robin H.|Setsu95
-Desch U.|Escurse
-MunchyCat|Kitten
-Shaun B.|William K.
-Ryner L.|Mindtie
-Dini|Rashiash
-shadow|Sky L.
-Simeon C.|Alvin
-Laioken|Terry L.
+VICTOR L.|Samuel C.
+Dan|Lennart K.
+Misa|Greendragon
+Don_Olaf|Robin H.
+Setsu95|Desch U.
+Escurse|MunchyCat
+Kitten|Shaun B.
+William K.|Ryner L.
+Mindtie|Dini
+Rashiash|shadow
+Sky L.|Simeon C.
+Alvin|Laioken
 nick m.|Christian M.
 Overlord|bryce m.
 Xepherio|Winterisbest
-Michal P.|Araloki
-Selfcare|lewis s.
-RayWood|JohnL
-Fey|Jin
-Kharma B.|1073522
-JKarrde|Fluffle p.
-Joseph C.|Mijui
-UnknownResults|wiithrich
-Al S.|Dmitriy
-Girvan E.|Jason J.
-Gleipniir|John
-TheDoctor|cj N.
-Ryan D.|Karel N.
-Rick S.|Jared R.
-Yukio|Faker
-Merana33|SenpaiBlue
-Jeremiah|Lee D.
+Michal P.|Rafik G.
+HXH|Mantic
+Ameya B.|g k.
+Argus99|Jibble
+Fin H.|Slacker
+JKarrde|Joonas I.
+youhai2185|Steven G.
+Kyle K.|PlatiS
+lxwole|Chance
+Tokisaki K.|Janna B.
+Matt B.|Raiko
+Israel v.|Fire-Dash1988
+aiwass|ropemaster
+Malledant F.|Koluc
+Thomas|IAN
+Austin V.|Kris B.
+Matt|syota k.
+Laura L.|Araloki
+Selfcare|JohnL
+Fey|Kharma B.
+1073522|Fluffle p.
+Melanie|UnknownResults
+Al S.|Jason J.
+Gleipniir|TheDoctor
+Ryan D.|Rick S.
+Jared R.|Yukio
+Faker|Merana33
+SenpaiBlue|Jeremiah
 XD l.|Masked A.
 treasure w.|Irish S.
-ethan b.|Humanflea
-Zoe|Lee G.
-Pascal|Cinéhor
-ganster g.|julien c.
-Andreas N.|Deacon
-JEETEE|Rob H.
+Humanflea|Pascal
+Cinéhor|ganster g.
+julien c.|Andreas N.
+Deacon|Rob H.
 Jinx|David R.
 Philip R.|Sotius
-Loki|Kay R.
-dashyashy|Marwie
-Saman K.|Geng114514
-Irving Z.|Ashley S.
-Kalashnikow|INO00
-emanuela|Alexander L.
+Kay R.|dashyashy
+Marwie|Saman K.
+Geng114514|Irving Z.
+Ashley S.|Kalashnikow
+INO00|Alexander L.
 Achterlijk H.|GGMR
 RiceAttack|lennathefox
 Jenni15|Chiaro
 Yune23|Ella5991
 will y.|Grimtimes
-Christopher L.|Zlintel
-alterprise|Luke v.
-Libertyprime|Varrick
+Zlintel|alterprise
+Luke v.|Varrick
 Sergio R.|Mark C.
 Joel A.|Brittany L.
 Phillip T.|Leon
@@ -117,40 +125,38 @@ Patrik P.|Maasjo
 Destroyer-x|Logan N.
 Arien|mataria
 mataria|Reire M.
-CeciTheDoe|lxwole
-Rayna|William
-Deathlok|Mitchell
-Anaîs S.|AJ22
-Stigh|Kenny
+CeciTheDoe|Rayna
+William|Deathlok
+Mitchell|Anaîs S.
+AJ22|Kenny
 Pascal G.|Draen
 Jyeoh|Chad L.
 noname|NozRinKanYou
-Adjarc|marc h.
-Moggom|anon
-Yo y.|d123dl
-Kaira S.|FlyingRaichu
-BOB|Shish
-Yokowolf3|Mads
-Kaze|Jeremy O.
-Dion L.|Thomas C.
-Aaron H.|Domenic
-Sulbar T.|Kitsune-Hellfir
-Kurdranskyr|Shadowdath
-trbt|Guillaume
+Adjarc|Moggom
+anon|Yo y.
+d123dl|Kaira S.
+FlyingRaichu|BOB
+Shish|Yokowolf3
+Mads|Kaze
+Jeremy O.|Dion L.
+Thomas C.|Aaron H.
+Domenic|Sulbar T.
+Kitsune-Hellfir|Kurdranskyr
+Shadowdath|Guillaume
 Grant S.|Gopanka
 derBaecker|Azikela
 Jesse Y.|drill h.
 Matthew|Nikolai
-Kevin H.|Cheshiecat
-Kevin|Siegfried K.
-Sam W.|David
-hideki h.|monkerd2
-Robert B.|papettoB
-Komisch A.|kilrah
-Taylor N.|Sivart!
-Sean L.|adokilume
-SD|Quentin X.
-qiyufei|Jerome W.
+Cheshiecat|Kevin
+Siegfried K.|Sam W.
+David|hideki h.
+monkerd2|Robert B.
+papettoB|Komisch A.
+kilrah|Taylor N.
+Sivart!|Sean L.
+adokilume|SD
+Quentin X.|qiyufei
+Jerome W.|Joshua T.
 Anonymous|KingGrey02
 Hans M.|DarkJade
 Patrick L.|Alan J.
@@ -158,112 +164,105 @@ Yang K.|Ghost00001
 devan|Dazman1234
 Peter T.|ajwad
 chi21204|P
-Alexander J.|Apple A.
-Tai S.|masterar
-Karl P.|tetris245
-Moose|天河
-Jinx|bla_rg
-Michael I.|hiddenlotus555
+Alexander J.|Tai S.
+masterar|Karl P.
+tetris245|Moose
+天河|Jinx
+bla_rg|hiddenlotus555
 Nefarious|Foxtail35
 Simon W.|flydeath
-CuvyanTaylor|HXH
-Keso|Lukas Z.
-Steve J.|Nathaniel W.
-Blackfur|Adriano8727
-brunayla|Ryan K.
-Vkad 6.|Alfredo A.
-Kurami-|Winnie
-Kuroham|Joseph M.
-DARKSIDE W.|smack54
-neosuduno|Ian
-Hellgete|Arboraxx
-asdwdaw|James L.
-LuckyBonin|Bahamut101
-Mechio|Dethfox52
-PizzaRush|lostcapital
-Oskar H.|Anton A.
-Glenson|Lord H.
-Jojo|Tyler P.
-Nic|Out_erik
-Michał S.|scott s.
-Robert|Stanley F.
-Stargat53|Lovebdg1
-Jörn P.|bound
-takoyaki|MatthiasF
-Raiko|Daniel m.
-John S.|Niray-chan
-Hazel|Fin H.
+CuvyanTaylor|Keso
+Lukas Z.|Steve J.
+Nathaniel W.|Blackfur
+Adriano8727|brunayla
+Ryan K.|Vkad 6.
+Alfredo A.|Kurami-
+Winnie|Kuroham
+Joseph M.|DARKSIDE W.
+smack54|neosuduno
+Ian|Hellgete
+Arboraxx|asdwdaw
+James L.|LuckyBonin
+Bahamut101|Mechio
+Dethfox52|PizzaRush
+lostcapital|Oskar H.
+Anton A.|Glenson
+Lord H.|Jojo
+Tyler P.|Nic
+Out_erik|Michał S.
+scott s.|Robert
+Stanley F.|Stargat53
+Lovebdg1|Jörn P.
+Dario M.|Thelizardking
+fuzionfrenzy|Mr. M.
+Aj|plicoc
+Clash|bound
+Daniel m.|John S.
+Niray-chan|Hazel
 itami_no_hana|Tomas K.
 Potuma|DarMik
-F4Schizzle|Zian
-Fire-Dash1988|SSC10
+F4Schizzle|SSC10
 Laston|John T.
 Flo K.|finn
 Jokeman|Masatus
 Yagami Y.|Lily
 Justin A.|dontmindthemess
 gentry|BxRad
-Rasptin H.|Lucritius
-Magnus O.|Slash
-Stefano|Rafael R.
-Janna B.|Felix S.
+Rasptin H.|Magnus O.
+Slash|Stefano
+Rafael R.|Dmitriy
+Robert D.|Tony s.
+Александр К.|Zerox1001
+cdawson|Alex X.
+jeremy|MatthiasF
+Morgan|Toff
+wiithrich|Arentios
+rich|Stigh
+Evan|FS S.
 Richard M.|Lilian B.
-DeadMaster216|Aghjil
-Vince S.|HYH
+Aghjil|Vince S.
 CthuluDancing|Vanmi
-TheSchneeQueen|Setqq
-Tony s.|James J.
-Joonas I.|Austin E.
-Mantic|Rei H.
-Brian T.|Александр К.
-Katarina Y.|Plynky
-Jan G.|Ulith L.
-Amine T.|Étienne B.
-MegaLucario5|アッリ
-IAN|cdawson
-shaun m.|Jackeroo
-Atasly|Iwolf
-ExpertPlasma|PlayingFlunky5
+TheSchneeQueen|James J.
+Austin E.|Rei H.
+Brian T.|Katarina Y.
+Plynky|Jan G.
+Dreguito|MegaLucario5
+アッリ|shaun m.
+Jackeroo|Atasly
+Iwolf|PlayingFlunky5
 7Sonic|llll434
-plicoc|Mrs J.
-Dat B.|supernova
-Gu|Bob
-MaxFactor85|Jean v.
+Dat B.|Gu
+Bob|Jean v.
 Ralf B.|Marcin G.
 Yimeng Z.|Logain
 Intendigo|Adrien
 Martine79|Sriktana
-Leli N.|West
-VengeanceZ|Kitten W.
-mou|Angel M.
-AA|jim k.
-takoyaki m.|Asp
-proototip|Lorenzo F.
+West|Kitten W.
+Angel M.|jim k.
+Asp|proototip
 Pegasis|hung p.
 Silver R.|Robert J.
-Aj|Silly G.
-Paolo F.|shaydow k.
-vgeani|Clem49
-Memoduxplus|mitchell
-Xana|elvisghost
-Mr. M.|Pounge
+Silly G.|Paolo F.
+shaydow k.|vgeani
+Clem49|Memoduxplus
+mitchell|Xana
+elvisghost|Pounge
 wondercat|tom
 Mei|egrylbrody
-Adam|BlueEyedCat
-MadaRose|Kvitr0n
-Comrade J.|Gamefan
-René E.|Armando A.
+BlueEyedCat|MadaRose
+Kvitr0n|Comrade J.
+Gamefan|René E.
 dimstag|Christopher C.
 Sumeroda|ClockALock
 egadonb|Meyer
-Oren B.|Tsukki
-Arion|Ray W.
+Oren B.|Nanovya B.
+Tsukki|Ray W.
 B.C.|Sanae X.
 Tom A.|thomas
 Michael L.|target
-Slacker|DTAiko
-Míša Š.|pat
-jukehero461|Littleshiro-kun
+DTAiko|Míša Š.
+pat|jukehero461
+Littleshiro-kun|
 
 CreditTypeFans
 
