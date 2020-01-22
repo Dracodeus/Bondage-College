@@ -14,24 +14,25 @@ function InventoryItemTorsoHempRopeHarnessDraw() {
 	DrawTextFit(DialogFocusItem.Asset.Description, 1500, 375, 221, "black");
 
 	// Draw the possible Harness types
-	DrawText(DialogFind(Player, "SelectTieStyle"), 1500, 500, "white", "gray");
-	DrawButton(1100, 550, 225, 225, "", (DialogFocusItem.Property.Type == null || DialogFocusItem.Property.Type == "Basic") ? "#888888" : "White");
+	DrawText(DialogFind(Player, "SelectRopeBondage"), 1500, 500, "white", "gray");
+	DrawButton(1050, 550, 225, 225, "", (DialogFocusItem.Property.Type == null || DialogFocusItem.Property.Type == "Basic") ? "#888888" : "White");
 	DrawImage("Screens/Inventory/" + DialogFocusItem.Asset.Group.Name + "/" + DialogFocusItem.Asset.Name + "/Basic.png", 1100, 549);
-	DrawText(DialogFind(Player, "RopeStyleBasic"), 1213, 800, "white", "gray");
-	DrawButton(1400, 550, 225, 225, "", ((DialogFocusItem.Property.Type != null) && (DialogFocusItem.Property.Type == "CrotchRope")) ? "#888888" : "White");
+	DrawText(DialogFind(Player, "RopeBondageBasic"), 1213, 800, "white", "gray");
+	DrawButton(1387, 550, 225, 225, "", ((DialogFocusItem.Property.Type != null) && (DialogFocusItem.Property.Type == "CrotchRope")) ? "#888888" : "White");
 	DrawImage("Screens/Inventory/" + DialogFocusItem.Asset.Group.Name + "/" + DialogFocusItem.Asset.Name + "/CrotchRope.png", 1400, 549);
-	DrawText(DialogFind(Player, "RopeStyleCrotchRope"), 1513, 800, "white", "gray");
-	DrawButton(1700, 550, 225, 225, "", ((DialogFocusItem.Property.Type != null) && (DialogFocusItem.Property.Type == "Diamond")) ? "#888888" : "White");
+	DrawText(DialogFind(Player, "RopeBondageCrotchRope"), 1513, 800, "white", "gray");
+	DrawButton(1725, 550, 225, 225, "", ((DialogFocusItem.Property.Type != null) && (DialogFocusItem.Property.Type == "Diamond")) ? "#888888" : "White");
 	DrawImage("Screens/Inventory/" + DialogFocusItem.Asset.Group.Name + "/" + DialogFocusItem.Asset.Name + "/Diamond.png", 1700, 549);
-	DrawText(DialogFind(Player, "RopeStyleDiamond"), 1813, 800, "white", "gray");
+	DrawText(DialogFind(Player, "RopeBondageDiamond"), 1813, 800, "white", "gray");
+
 }
 
 // Catches the item extension clicks
 function InventoryItemTorsoHempRopeHarnessClick() {
 	if ((MouseX >= 1885) && (MouseX <= 1975) && (MouseY >= 25) && (MouseY <= 110)) DialogFocusItem = null;
-	if ((MouseX >= 1100) && (MouseX <= 1325) && (MouseY >= 550) && (MouseY <= 775) && (DialogFocusItem.Property.Type != null)) InventoryItemTorsoHempRopeHarnessSetType(null);
-	if ((MouseX >= 1400) && (MouseX <= 1625) && (MouseY >= 550) && (MouseY <= 775) && ((DialogFocusItem.Property.Type == null) || (DialogFocusItem.Property.Type != "CrotchRope"))) InventoryItemTorsoHempRopeHarnessSetType("CrotchRope");
-	if ((MouseX >= 1700) && (MouseX <= 1925) && (MouseY >= 550) && (MouseY <= 775) && ((DialogFocusItem.Property.Type == null) || (DialogFocusItem.Property.Type != "Diamond"))) InventoryItemTorsoHempRopeHarnessSetType("Diamond");
+	if ((MouseX >= 1050) && (MouseX <= 1275) && (MouseY >= 550) && (MouseY <= 775) && (DialogFocusItem.Property.Type != null)) InventoryItemTorsoHempRopeHarnessSetType(null);
+	if ((MouseX >= 1387) && (MouseX <= 1612) && (MouseY >= 550) && (MouseY <= 775) && ((DialogFocusItem.Property.Type == null) || (DialogFocusItem.Property.Type != "CrotchRope"))) InventoryItemTorsoHempRopeHarnessSetType("CrotchRope");
+	if ((MouseX >= 1725) && (MouseX <= 1950) && (MouseY >= 550) && (MouseY <= 775) && ((DialogFocusItem.Property.Type == null) || (DialogFocusItem.Property.Type != "Diamond"))) InventoryItemTorsoHempRopeHarnessSetType("Diamond");
 }
 
 // Sets the Harnass type (Diamond, Basic)

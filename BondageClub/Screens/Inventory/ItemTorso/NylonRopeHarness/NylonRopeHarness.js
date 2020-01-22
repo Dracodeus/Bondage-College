@@ -14,13 +14,13 @@ function InventoryItemTorsoNylonRopeHarnessDraw() {
 	DrawTextFit(DialogFocusItem.Asset.Description, 1500, 375, 221, "black");
 
 	// Draw the possible Harness types
-	DrawText(DialogFind(Player, "SelectTieStyle"), 1500, 500, "white", "gray");
+	DrawText(DialogFind(Player, "SelectRopeBondage"), 1500, 500, "white", "gray");
 	DrawButton(1175, 550, 225, 225, "", (DialogFocusItem.Property.Type == null || DialogFocusItem.Property.Type == "Basic") ? "#888888" : "White");
 	DrawImage("Screens/Inventory/" + DialogFocusItem.Asset.Group.Name + "/" + DialogFocusItem.Asset.Name + "/Basic.png", 1175, 549);
-	DrawText(DialogFind(Player, "RopeStyleBasic"), 1288, 800, "white", "gray");
+	DrawText(DialogFind(Player, "RopeBondageBasic"), 1288, 800, "white", "gray");
 	DrawButton(1600, 550, 225, 225, "", ((DialogFocusItem.Property.Type != null) && (DialogFocusItem.Property.Type == "CrotchRope")) ? "#888888" : "White");
 	DrawImage("Screens/Inventory/" + DialogFocusItem.Asset.Group.Name + "/" + DialogFocusItem.Asset.Name + "/CrotchRope.png", 1600, 549);
-	DrawText(DialogFind(Player, "RopeStyleCrotchRope"), 1713, 800, "white", "gray");
+	DrawText(DialogFind(Player, "RopeBondageCrotchRope"), 1713, 800, "white", "gray");
 }
 
 // Catches the item extension clicks
