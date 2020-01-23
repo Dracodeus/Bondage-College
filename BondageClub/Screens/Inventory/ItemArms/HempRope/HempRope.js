@@ -50,7 +50,7 @@ function InventoryItemArmsHempRopeSetPose(NewType) {
 	}
 
 	// Validates a few parameters before hogtied
-	if ((NewType != null) && !InventoryAllow(C, ["NotKneeling", "NotMounted", "NotChained", "NotHogtied"], true)) { DialogExtendedMessage = DialogText; return; }
+	if ((NewType != null) && !InventoryAllow(C, ["NotKneeling", "NotMounted", "NotChained", "NotSuspended"], true)) { DialogExtendedMessage = DialogText; return; }
 
 	// Sets the new pose with it's effects
 	DialogFocusItem.Property.Type = NewType;
@@ -69,7 +69,7 @@ function InventoryItemArmsHempRopeSetPose(NewType) {
 		InventoryRemove(C, "ItemHidden");
 	}
 	if (NewType == "SuspensionHogtied") {
-		DialogFocusItem.Property.SetPose = ["Hogtied", "SuspensionHogtied"]; 
+		DialogFocusItem.Property.SetPose = ["Hogtied", "SuspensionHogtied"];
 		DialogFocusItem.Property.Difficulty = 6; 
 		CharacterSetFacialExpression(C, "Blush", "Medium"); 
 		TimerInventoryRemoveSet(C, "Blush", 20);
@@ -86,6 +86,7 @@ function InventoryItemArmsHempRopeSetPose(NewType) {
 		Dictionary.push({Tag: "DestinationCharacter", Text: C.Name, MemberNumber: C.MemberNumber});
 		ChatRoomPublishCustomAction(msg, true, Dictionary);
 	} else {
+		DialogFocusItem = null;
 		if (C.ID == 0) DialogMenuButtonBuild(C);
 		else {
 			C.CurrentDialog = DialogFind(C, "RopeBondage" + ((NewType) ? NewType : "BoxTie"), "ItemArms");

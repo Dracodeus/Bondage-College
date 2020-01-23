@@ -22,6 +22,8 @@ ItemNeck,,,(You strap the collar on her while she blushes.)  I bet you're a grea
 RemoveItemNeck,,,(You remove the collar around her neck while she stares into your eyes.),,
 ItemPelvis,,,"(She struggles as you lock the device on her.)  No, please don't!  I don't have a key!",,
 RemoveItemPelvis,,,(She looks extremely relieved as you unlock the device.)  Thank you so much Miss DialogPlayerName.,,
+ItemTorso,,,(You use the item on her torso.)  They told me there will be days like that when I signed up.,,
+RemoveItemTorso,,,(You remove the item from her torso.)  Thanks a lot Miss.  (She bows for you.),,
 ItemHead,,,(You strap the device on her head as she sighs.)  Well this could make my shift difficult...,,
 RemoveItemHead,,,(You remove the device as she shakes her head joyfully.)  Wonderful!  That'll make my day easier.,,
 ItemBreastLeatherWhip,,,(She jumps from the searing pain on her breast.)  Ouch!  Miss Head Maid!,,
@@ -34,6 +36,9 @@ RopeBondageBoxTie,,,(You slowly restrain her arms in a box tie pattern and she n
 RopeBondageHogtied,,,(You use the ropes to restrain her in a tight hogtie.)  Ugh!  This is pretty tight.,,
 RopeBondageSuspension,,,(You restrain her legs with ropes and suspend her by the feet from the ceiling.)  I can feel the blood rushing to my head.,,
 RopeBondageSuspensionHogtied,,,"(You carefully hogtie her and suspend her from the ceiling.)  Well done, this is truly inescapable.",,
+RopeBondageCrotch,,,(You use a rope and restrain it on her crotch.)  A maid day can turn pretty kinky.,,
+RopeBondageHarness,,,(You use the ropes and create a harness around her body.)  Harnesses can be very handy.,,
+RopeBondageDiamond,,,(You use the ropes and create a diamond harness around her body.)  Very chic!,,
 0,,,Greetings Mistress DialogPlayerName.  Welcome to the introduction class.  (She does curtsies for you.),,"DialogLogQuery(""ClubMistress"", ""Management"")"
 0,,,Greetings head maid DialogPlayerName.  Welcome to the introduction class.  (She does curtsies for you.),,IsHeadMaid
 0,,,(She stares at you.)  Hello naked girl.  Welcome to the introduction class.,,Player.IsNaked()

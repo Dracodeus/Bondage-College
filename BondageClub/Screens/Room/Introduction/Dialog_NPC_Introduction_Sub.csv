@@ -21,6 +21,8 @@ ItemNeck,,,(You strap the collar on her while she blushes.)  Collars have a spec
 RemoveItemNeck,,,(You remove the collar around her neck.)  You can also lock collars on willing submissives.,,
 ItemPelvis,,,(You snap the belt around her waist while she wiggles her butt.)  This is so kinky!  Thanks Miss.,,
 RemoveItemPelvis,,,(You unlock the belt from her waist and crotch.)  I can't wait to see what you'll use on me next...,,
+ItemTorso,,,(You use the item on her torso.)  You can use anything you want on me.,,
+RemoveItemTorso,,,(You remove the item from her torso.)  I'm curious to see what you will try next.,,
 ItemHead,,,"(You strap the device on her head as she tries to look around.)  You know, this will heighten my other senses. Including touch...",,
 RemoveItemHead,,,(You remove the device and she looks at you.)  That was pretty intense.  What else can we try?,,
 ItemBreastLeatherWhip,,,(She trembles of pain and pleasure as you whip her breast.)  Ohhhh Miss!  This is wonderful.,,
@@ -33,6 +35,9 @@ RopeBondageBoxTie,,,(You slowly restrain her arms in a box tie pattern.)  Bondag
 RopeBondageHogtied,,,(You use the ropes to restrain her in a tight hogtie.)  You've been to the Dojo haven't you?,,
 RopeBondageSuspension,,,(You restrain her legs with ropes and suspend her by the feet from the ceiling.)  Weeeeeeeee!,,
 RopeBondageSuspensionHogtied,,,(You carefully hogtie her and suspend her from the ceiling.)  You're a rope master Miss DialogPlayerName.,,
+RopeBondageCrotch,,,"(You use a rope and restrain it on her crotch.)  I love crotch ropes, they are very intrusive.",,
+RopeBondageHarness,,,(You use the ropes and create a harness around her body.)  I hope you will link it to something else.,,
+RopeBondageDiamond,,,(You use the ropes and create a diamond harness around her body.)  It's both naughty and stylish.,,
 0,,,It's an honor to see you at the introduction class Mistress DialogPlayerName.,,"DialogLogQuery(""ClubMistress"", ""Management"")"
 0,,,(She giggles.)  Greetings naked girl.  Welcome to the introduction class.,,Player.IsNaked()
 0,,,Greetings head maid DialogPlayerName.  Welcome to the introduction class.,,IsHeadMaid
