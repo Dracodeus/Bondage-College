@@ -1,6 +1,7 @@
 SelectItem,,,Select an item to use.
 CannotUseOnSelf,,,Cannot use on yourself.
 RemoveClothesForItem,,,Remove some clothes first.
+UnZipSuitForItem,,,Unzip the suit first.
 RemoveSuspensionForItem,,,Remove the suspension first.
 ReleaseHogtieForItem,,,Release from hogtie first.
 RemoveRestraintsFirst,,,Remove some restraints first.
@@ -149,6 +150,7 @@ Dungeon,,,Dungeon
 Industrial,,,Industrial
 SunTemple,,,Sun Temple
 BackAlley,,,Back Alley
+BarRestaurant,,,Bar Restaurant
 DungeonRuin,,,Ruined Dungeon
 SecretChamber,,,Secret Chamber
 VaultCorridor,,,Vault Corridor
@@ -652,6 +654,10 @@ FullLatexSuitTypeWand,,,Wand Attachment
 FullLatexSuitSetZipped,,,SourceCharacter zips up TargetCharacter suit.
 FullLatexSuitSetUnZip,,,SourceCharacter unzips up TargetCharacter suit.
 FullLatexSuitSetWand,,,SourceCharacter attachs a wand to TargetCharacter suit.
+BitchSuitTypeZipped,,,Zipped Up
+BitchSuitTypeUnZip,,,Unzipped
+BitchSuitSetZipped,,,SourceCharacter zips up TargetCharacter suit.
+BitchSuitSetUnZip,,,SourceCharacter unzips up TargetCharacter suit.
 TurnOff,,,TurnOff
 Low,,,Low
 Medium,,,Medium
