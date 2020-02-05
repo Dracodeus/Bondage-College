@@ -7,6 +7,7 @@ var CharacterAppearanceBackup = null;
 var CharacterAppearanceAssets = [];
 var CharacterAppearanceColorPicker = "";
 var CharacterAppearanceColorPickerBackup = "";
+var CharacterAppearanceColorPickerRefreshTimer = null;
 var CharacterAppearanceSelection = null;
 var CharacterAppearanceReturnRoom = "MainHall";
 var CharacterAppearanceReturnModule = "Room";
@@ -374,6 +375,8 @@ function AppearanceRun() {
 	DrawCharacter(C, 750, 0, 1);
 	DrawText(CharacterAppearanceHeaderText, 400, 40, "White", "Black");
 
+	var HideColorPicker = true;
+
 	// Out of the color picker
 	if (!CharacterAppearanceWardrobeMode && CharacterAppearanceColorPicker == "") {
 
@@ -420,13 +423,19 @@ function AppearanceRun() {
 
 		// Draw the color picker
 		ElementPosition("InputColor", 1450, 65, 300);
-		DrawButton(1610, 37, 65, 65, "", "White", "Icons/Color.png");
 		HideColorPicker = false;
-		ColorPickerDraw(1300, 145, 675, 830, ElementValue("InputColor"), function (Color) {
-			CharacterAppearanceSetColorForGroup(C, Color, CharacterAppearanceColorPicker);
-			ElementValue("InputColor", Color);
+		ColorPickerDraw(1300, 145, 675, 830, document.getElementById("InputColor"), function (Color) {
+			// Prevent unneccessary character redraw
+			clearTimeout(CharacterAppearanceColorPickerRefreshTimer);
+			CharacterAppearanceColorPickerRefreshTimer = setTimeout(function () {
+				CharacterAppearanceSetColorForGroup(C, Color, CharacterAppearanceColorPicker);
+			}, 100);
 		});
 
+	}
+
+	if (HideColorPicker) {
+		ColorPickerHide();
 	}
 
 	// Hides the color picker if needed
