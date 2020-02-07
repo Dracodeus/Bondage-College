@@ -15,7 +15,7 @@ var AssetSpankingToys = {
 	Name: "SpankingToys", Wear: false, Random: false, BuyGroup: "SpankingToys", IgnoreParentGroup: true,
 	DynamicDescription: () => InventorySpankingToysGetType(),
 	DynamicPreviewIcon: () => InventorySpankingToysGetType(),
-	DynamicAllowInventoryAdd: () => InventoryIsWorn(Player, "ItemHands", "SpankingToys"),
+	DynamicAllowInventoryAdd: () => InventoryIsWorn(Player, "SpankingToys", "ItemHands"),
 	DynamicExpressionTrigger: () => SpankingInventory.find(x => x.Name == InventorySpankingToysGetType()).ExpressionTrigger
 };
 
@@ -1169,8 +1169,8 @@ var AssetFemale3DCG = [
 			{ Name: "DuctTape", SelfBondage: false, Value: 50, SetPose: ["TapedHands"], AllowPose: ["BackBoxTie", "BackElbowTouch", "BackCuffs", "Yoked"], Hide: ["Gloves"], Effect: ["Block", "Prone"], Time: 20, RemoveTime: 10, Difficulty: 5, BuyGroup: "DuctTape" },
 			{
 				Name: "SpankingToys", Priority: 46, Wear: true,  IsRestraint: false, Extended: true, Random: false, BuyGroup: "SpankingToys", AllowType: ["Crop", "Flogger", "Cane", "HeartCrop", "Paddle", "WhipPaddle", "Whip", "CattleProd", "TennisRacket"], IgnoreParentGroup: true, AllowPose: ["BackBoxTie", "BackElbowTouch", "BackCuffs", "Yoked"],
-				DynamicDescription: () => { return ((InventoryIsWorn(CurrentCharacter, "ItemHands", "SpankingToys")) && (InventoryGet(CurrentCharacter, "ItemHands").Property != null)) ? InventoryGet(CurrentCharacter, "ItemHands").Property.Type : "Spanking Toy" },
-				DynamicPreviewIcon: () => { return ((InventoryIsWorn(CurrentCharacter, "ItemHands", "SpankingToys")) && (InventoryGet(CurrentCharacter, "ItemHands").Property != null)) ? InventoryGet(CurrentCharacter, "ItemHands").Property.Type : "Paddle" }
+				DynamicDescription: () => { return ((InventoryIsWorn(CurrentCharacter, "SpankingToys", "ItemHands")) && (InventoryGet(CurrentCharacter, "ItemHands").Property != null)) ? InventoryGet(CurrentCharacter, "ItemHands").Property.Type : "Spanking Toy" },
+				DynamicPreviewIcon: () => { return ((InventoryIsWorn(CurrentCharacter, "SpankingToys", "ItemHands")) && (InventoryGet(CurrentCharacter, "ItemHands").Property != null)) ? InventoryGet(CurrentCharacter, "ItemHands").Property.Type : "Paddle" }
 			}, {
 				Name: "SpankingToysCrop", Value: 20, PrerequisiteBuyGroups: ["SpankingToys"], Random: false,
 				DynamicAllowInventoryAdd: () => { return false }
@@ -1215,7 +1215,7 @@ var AssetFemale3DCG = [
 			{ Name: "LeatherCollar", Value: 20, Time: 5, Difficulty: 50, AllowLock: true },
 			{ Name: "LeatherCollarBell", Value: 30, Time: 5, Difficulty: 50, AllowLock: true },
 			{ Name: "LeatherCollarBow", Value: 25, Time: 5, Difficulty: 50, AllowLock: true },
-			{ Name: "SlaveCollar", Priority: 33, Random: false, Effect: ["Lock"], OwnerOnly: true, Extended: true, Enable: false, Value: -1, Time: 5, Difficulty: 50, AllowEffect: ["GagNormal"], AllowBlock: ["ItemMouth", "ItemMouth2", "ItemMouth3"], AllowType: ["SteelPosture", "LeatherPosture", "PetCollar", "HighCollar", "LeatherCollarBell", "LeatherCollarBow", "MaidCollar", "BatCollar", "HighSecurityCollar", "SpikeCollar", "BordelleCollar", "LeatherCorsetCollar", "StrictPostureCollar", "LatexPostureCollar", "HeartCollar", "NobleCorsetCollar", "OrnateCollar"]},
+			{ Name: "SlaveCollar", Priority: 33, Random: false, Effect: ["Lock"], OwnerOnly: true, Extended: true, Enable: false, Value: -1, Time: 5, Difficulty: 50, AllowEffect: ["GagNormal"], AllowBlock: ["ItemMouth", "ItemMouth2", "ItemMouth3"], AllowType: ["SteelPosture", "LeatherPosture", "PetCollar", "HighCollar", "LeatherCollarBell", "LeatherCollarBow", "MaidCollar", "BatCollar", "HighSecurityCollar", "SpikeCollar", "BordelleCollar", "LeatherCorsetCollar", "StrictPostureCollar", "LatexPostureCollar", "HeartCollar", "NobleCorsetCollar", "OrnateCollar", "LoveLeatherCollar"]},
 			{ Name: "ClubSlaveCollar", Random: false, Effect: ["Lock"], Enable: false, Value: -1, Time: 5, Difficulty: 50, ExpressionTrigger: [{ Group: "Blush", Name: "Medium", Timer: 15 }] },
 			{ Name: "ShockCollar", Random: false, Extended: true, Effect: ["ReceiveShock"], BuyGroup: "ShockCollar", Value: 80, Time: 15, Difficulty: 50, AllowLock: true, ExpressionTrigger: [{ Group: "Eyebrows", Name: "Soft", Timer: 10 }] },
 			{ Name: "ShockCollarRemote", Random: false, Wear: false, Effect: ["TriggerShock"], BuyGroup: "ShockCollar", Value: -1, ExpressionTrigger: [{ Group: "Eyebrows", Name: "Soft", Timer: 10 }, { Group: "Blush", Name: "Soft", Timer: 15 }, { Group: "Eyes", Name: "Closed", Timer: 5 }] },
@@ -1235,7 +1235,7 @@ var AssetFemale3DCG = [
 			{ Name: "PetCollar", Value: -1, Time: 5, Difficulty: 50, AllowLock: true },
 			{ Name: "MaidCollar", Value: 30, Time: 5, Difficulty: 50, AllowLock: true },
 			{ Name: "BordelleCollar", Value: 30, Time: 5, Difficulty: 50, AllowLock: true },
-			{ Name: "LoveLeatherCollar", Value: 50, Time: 5, Difficulty: 50, AllowLock: true },
+			{ Name: "LoveLeatherCollar", Value: 50, Time: 5, Difficulty: 50, LoverOnly: true, AllowLock: true },
 			{ Name: "StrictPostureCollar", Priority: 38, Value: 60, Time: 30, RemoveTime: 40, Difficulty: 50, AllowLock: true },
 			{ Name: "NobleCorsetCollar", Value: 45, Time: 5, Difficulty: 50, AllowLock: true },
 			{ Name: "HeartCollar", Value: 50, Time: 5, Difficulty: 50, AllowLock: true },
@@ -1686,11 +1686,14 @@ var AssetFemale3DCG = [
 			{ Name: "TimerPadlock", Wear: false, Value: 80, RemoveTimer: 300, MaxTimer: 300, IsLock: true, Effect: [] },
 			{ Name: "OwnerPadlock", Wear: false, Value: 100, Time: 10, IsLock: true, OwnerOnly: true, Effect: [] },
 			{ Name: "OwnerTimerPadlock", Wear: false, Value: 100, RemoveTimer: 300, MaxTimer: 604800, IsLock: true, OwnerOnly: true, Effect: [] },
+			{ Name: "LoversPadlock", Wear: false, Value: 150, Time: 10, IsLock: true, LoverOnly: true, Effect: [] },
+			{ Name: "LoversTimerPadlock", Wear: false, Value: 150, RemoveTimer: 300, MaxTimer: 604800, IsLock: true, LoverOnly: true, Effect: [] },
 			{ Name: "MistressPadlock", Wear: false, Value: -1, Time: 10, IsLock: true, Effect: [] },
 			{ Name: "MistressTimerPadlock", Wear: false, Value: -1, RemoveTimer: 300, MaxTimer: 14400, IsLock: true, Effect:[] },
 			{ Name: "MetalPadlockKey", Wear: false, Value: 10, Effect: ["Unlock-MetalPadlock"] },
 			{ Name: "IntricatePadlockKey", Wear: false, Value: 30, Effect: ["Unlock-IntricatePadlock"] },
 			{ Name: "OwnerPadlockKey", Wear: false, Value: 60, OwnerOnly: true, Effect: ["Unlock-OwnerPadlock", "Unlock-OwnerTimerPadlock"] },
+			{ Name: "LoversPadlockKey", Wear: false, Value: 150, LoverOnly: true, Effect: ["Unlock-LoversPadlock", "Unlock-LoversTimerPadlock"] },
 			{ Name: "MistressPadlockKey", Wear: false, Value: -1, Effect: ["Unlock-MistressPadlock", "Unlock-MistressTimerPadlock"] },
 			{ Name: "MetalCuffsKey", Wear: false, Value: 20, Effect: ["Unlock-MetalCuffs"], Time: 5 },
 			{ Name: "WoodenMaidTray", Enable: false, Value: -1 },

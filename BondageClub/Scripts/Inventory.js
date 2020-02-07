@@ -312,6 +312,17 @@ function InventoryOwnerOnlyItem(Item) {
 	return false;
 }
 
+// Returns TRUE if the item has an LoverOnly flag, such as the lover padlock
+function InventoryLoverOnlyItem(Item) {
+	if (Item == null) return false;
+	if (Item.Asset.LoverOnly) return true;
+	if (Item.Asset.Group.Category == "Item") {
+		var Lock = InventoryGetLock(Item);
+		if ((Lock != null) && (Lock.Asset.LoverOnly != null) && Lock.Asset.LoverOnly) return true;
+	}
+	return false;
+}
+
 // Returns TRUE if the character is wearing at least one restraint that's locked with an extra lock
 function InventoryCharacterHasLockedRestraint(C) {
 	if (C.Appearance != null)
@@ -400,7 +411,20 @@ function InventoryConfiscateRemote() {
 	InventoryDelete(Player, "VibratorRemote", "ItemNipples");
 }
 
-// returns TRUE if the item is worn
-function InventoryIsWorn(C, AssetGroup, AssetName){
-	return C && C.Appearance && C.Appearance.some(Item => Item.Asset.Group.Name == AssetGroup && Item.Asset.Name == AssetName);
-} 
+// Returns TRUE if the item is worn by the character
+function InventoryIsWorn(C, AssetName, AssetGroup){
+	if ((C != null) && (C.Appearance != null) && Array.isArray(C.Appearance))
+		for (var A = 0; A < C.Appearance.length; A++)
+			if ((C.Appearance[A].Name == AssetName) && (C.Appearance[A].Group.Name == AssetGroup))
+				return true;
+	return false;
+}
+
+// Returns TRUE if a specific asset is blocked by the character permissions
+function InventoryIsPermissionBlocked(C, AssetName, AssetGroup) {
+	if ((C != null) && (C.BlockItems != null) && Array.isArray(C.BlockItems))
+		for (var B = 0; B < C.BlockItems.length; B++)
+			if ((C.BlockItems[B].Name == AssetName) && (C.BlockItems[B].Group == AssetGroup))
+				return true;
+	return false;
+}
