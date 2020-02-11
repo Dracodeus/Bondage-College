@@ -17,6 +17,7 @@
 <script src="Scripts/Common.js"></script>
 <script src="Scripts/Drawing.js"></script>
 <script src="Scripts/Timer.js"></script>
+<script src="Scripts/AfkTimer.js"></script>
 <script src="Scripts/GameLog.js"></script>
 <script src="Scripts/Reputation.js"></script>
 <script src="Scripts/Skill.js"></script>
@@ -188,9 +189,16 @@
 	OK - Color picker improvements, allow refresh when typing, two color palettes (vsan)
 	OK - Button to unlock without removing the item (Eveferox)
 	DISABLED - WebGL draw for better speed when colorizing (Sekkmer)
-	TEST - New backgrounds and sounds (aldarris)
-	TEST - New Lovers system (Atasly)
+	OK - New backgrounds and sounds (aldarris)
+	BUG SENT - New Lovers system (Atasly)
+	TEST - New sailor clothes (wildsj)
+	TEST - New plain dildo (wildsj)
+	TEST - stable hair color (Atasly)
+	TEST - Auto AFK after 5 minutes (EveFerox)
 
+	TO DO - Wedding Dress
+	TO DO - Wedding Tree Dialog for NPCs in private room (1 week between each stage)
+	
 	TO DO - Mobile Improvements & Quality of Life (Survey First)
 		- Change the chat room button layout on mobile, they are too close to each other
 		- The chat always scrolls up on Android after entering a new chat text
@@ -218,8 +226,8 @@
 
 // When the code is loaded, we start the game engine
 window.onload = function() {
-	CheatImport();
-	ServerURL = "https://bondage-club-server.herokuapp.com/";
+	//CheatImport();
+	//ServerURL = "https://bondage-club-server.herokuapp.com/";
 	CommonIsMobile = CommonDetectMobile();
 	TranslationLoad();
 	DrawLoad();
