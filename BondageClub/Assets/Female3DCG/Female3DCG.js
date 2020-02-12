@@ -37,7 +37,7 @@ var AssetFemale3DCG = [
 			{ Name: "StudentOutfit1", HideItem: ["ClothLowerLatexSkirt1", "ClothLowerLatexSkirt2", "ClothLowerSkirt1", "ClothLowerSkirt2", "ClothLowerSkirt3", "ClothLowerTennisSkirt1", "ClothLowerClothSkirt1", "ItemNipplesPiercingsRoundPiercing", "ItemNipplesPiercingsWeightedPiercing", "ItemDevicesStrapOnSmooth", "ItemDevicesStrapOnStuds"], Hide: ["ItemNeck", "ItemHidden"] },
 			{ Name: "StudentOutfit2", HideItem: ["ItemArmsLeatherCuffs", "ItemArmsOrnateCuffs", "ClothLowerLatexSkirt1", "ClothLowerLatexSkirt2", "ClothLowerSkirt1", "ClothLowerSkirt2", "ClothLowerSkirt3", "ClothLowerTennisSkirt1", "ClothLowerClothSkirt1", "ItemNipplesPiercingsRoundPiercing", "ItemNipplesPiercingsWeightedPiercing", "ItemHiddenLeatherArmbinderStrap", "ItemHiddenLeatherArmbinderWrapStrap", "ItemDevicesStrapOnSmooth", "ItemDevicesStrapOnStuds"] },
 			{
-			    Name: "StudentOutfit3", Require: ["ClothLower", "ClothAccessory"], HideItem: ["ItemArmsLeatherCuffs", "ItemArmsOrnateCuffs", "ItemNipplesPiercingsRoundPiercing", "ItemNipplesPiercingsWeightedPiercing", "ItemHiddenLeatherArmbinderStrap", "ItemHiddenLeatherArmbinderWrapStrap"],
+			    Name: "StudentOutfit3", Require: ["ClothLower", "ClothAccessory"], HideItem: ["ItemNipplesPiercingsRoundPiercing", "ItemNipplesPiercingsWeightedPiercing", "ItemHiddenLeatherArmbinderStrap", "ItemHiddenLeatherArmbinderWrapStrap"],
 				Layer: [
 					{ Name: "White", AllowColorize: false },
 					{ Name: "Color", AllowColorize: true }
@@ -816,7 +816,7 @@ var AssetFemale3DCG = [
 					{ Name: "Wand", AllowColorize: false }
 				]
 			},
-			{ Name: "SolidDildo", Priority: 11, Value: 20, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Medium", Timer: 10 }], BuyGroup: "PlainDildo",
+			{ Name: "PenisDildo", Priority: 11, Value: 20, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Medium", Timer: 10 }], BuyGroup: "PenisDildo",
 			Layer: [
 					{ Name: "Dildo", AllowColorize: true },
 					{ Name: "Pussy", AllowColorize: false }
@@ -886,7 +886,7 @@ var AssetFemale3DCG = [
 		Zone: [[300, 500, 100, 80]],
 		Asset: [
 			{ Name: "BlackButtPlug", Value: 15, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10 }], Visible: false },
-			{ Name: "PenisPlug", Value: 20, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10 }], Visible: false, BuyGroup: "PlainDildo" },
+			{ Name: "PenisPlug", Value: 20, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10 }], Visible: false, BuyGroup: "PenisDildo" },
 			{ Name: "TailButtPlug", Value: 40, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10 }] },
 			{ Name: "HorsetailPlug", Value: 30, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10 }] },
 			{ Name: "PuppyTailPlug", Value: 25, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10 }] },
@@ -926,14 +926,14 @@ var AssetFemale3DCG = [
 		Top: 375,
 		Zone: [[100, 420, 300, 80]],
 		Asset: [
-			{ Name: "StraponPanties", DefaultColor: "#505050", Effect: ["Chaste"], Block: ["ItemVulva", "ItemButt", "ItemVulvaPiercings"], HideItem: ["ItemButtAnalBeads2","ItemVulvaVibratingDildo", "ItemVulvaClitSuctionCup", "ItemVulvaInflatableVibeDildo"], Value: -1, Prerequisite: "AccessVulva", Time: 15 },
-			{ Name: "LeatherChastityBelt", Effect: ["Chaste"], Block: ["ItemVulva", "ItemButt", "ItemVulvaPiercings"], HideItem: ["ItemButtAnalBeads2", "ItemVulvaVibratingDildo", "ItemVulvaClitSuctionCup", "ItemVulvaInflatableVibeDildo"], Value: 30, Prerequisite: "AccessVulva", AllowLock: true, Difficulty: 8, Time: 20, RemoveTime: 10, ExpressionTrigger: [{ Group: "Eyebrows", Name: "Soft", Timer: 10 }] },
-			{ Name: "SleekLeatherChastityBelt", Effect: ["Chaste"], Block: ["ItemVulva", "ItemButt", "ItemVulvaPiercings"], HideItem: ["ItemButtAnalBeads2","ItemVulvaVibratingDildo", "ItemVulvaClitSuctionCup", "ItemVulvaInflatableVibeDildo"], Value: 45, Prerequisite: "AccessVulva", AllowLock: true, Difficulty: 11, Time: 20, RemoveTime: 10, ExpressionTrigger: [{ Group: "Eyebrows", Name: "Soft", Timer: 10 }] },
-			{ Name: "StuddedChastityBelt", Effect: ["Chaste"], Block: ["ItemVulva", "ItemButt", "ItemVulvaPiercings"], HideItem: ["ItemButtAnalBeads2","ItemVulvaVibratingDildo", "ItemVulvaClitSuctionCup", "ItemVulvaInflatableVibeDildo"], Value: 60, Prerequisite: "AccessVulva", AllowLock: true, Difficulty: 14, Time: 20, RemoveTime: 10, ExpressionTrigger: [{ Group: "Eyebrows", Name: "Soft", Timer: 10 }] },
-			{ Name: "MetalChastityBelt", Effect: ["Chaste"], Block: ["ItemVulva", "ItemButt", "ItemVulvaPiercings"], HideItem: ["ItemButtAnalBeads2","ItemVulvaVibratingDildo", "ItemVulvaClitSuctionCup", "ItemVulvaInflatableVibeDildo"], Value: 100, Prerequisite: "AccessVulva", AllowLock: true, Difficulty: 20, Time: 20, RemoveTime: 10, ExpressionTrigger: [{ Group: "Eyebrows", Name: "Soft", Timer: 10 }] },
-			{ Name: "PolishedChastityBelt", Effect: ["Chaste"], Block: ["ItemVulva", "ItemButt", "ItemVulvaPiercings"], HideItem: ["ItemButtAnalBeads2","ItemVulvaVibratingDildo", "ItemVulvaClitSuctionCup", "ItemVulvaInflatableVibeDildo"], Value: 150, Prerequisite: "AccessVulva", AllowLock: true, Difficulty: 30, Time: 20, RemoveTime: 10, ExpressionTrigger: [{ Group: "Eyebrows", Name: "Soft", Timer: 10 }] },
+			{ Name: "StraponPanties", DefaultColor: "#505050", Effect: ["Chaste"], Block: ["ItemVulva", "ItemButt", "ItemVulvaPiercings"], HideItem: ["ItemButtAnalBeads2", "ItemVulvaVibratingDildo", "ItemVulvaClitSuctionCup", "ItemVulvaInflatableVibeDildo", "ItemVulvaHeavyWeightClamp", "ItemVulvaPenisDildo"], Value: -1, Prerequisite: "AccessVulva", Time: 15 },
+			{ Name: "LeatherChastityBelt", Effect: ["Chaste"], Block: ["ItemVulva", "ItemButt", "ItemVulvaPiercings"], HideItem: ["ItemButtAnalBeads2", "ItemVulvaVibratingDildo", "ItemVulvaClitSuctionCup", "ItemVulvaInflatableVibeDildo", "ItemVulvaHeavyWeightClamp", "ItemVulvaPenisDildo"], Value: 30, Prerequisite: "AccessVulva", AllowLock: true, Difficulty: 8, Time: 20, RemoveTime: 10, ExpressionTrigger: [{ Group: "Eyebrows", Name: "Soft", Timer: 10 }] },
+			{ Name: "SleekLeatherChastityBelt", Effect: ["Chaste"], Block: ["ItemVulva", "ItemButt", "ItemVulvaPiercings"], HideItem: ["ItemButtAnalBeads2", "ItemVulvaVibratingDildo", "ItemVulvaClitSuctionCup", "ItemVulvaInflatableVibeDildo", "ItemVulvaHeavyWeightClamp", "ItemVulvaPenisDildo"], Value: 45, Prerequisite: "AccessVulva", AllowLock: true, Difficulty: 11, Time: 20, RemoveTime: 10, ExpressionTrigger: [{ Group: "Eyebrows", Name: "Soft", Timer: 10 }] },
+			{ Name: "StuddedChastityBelt", Effect: ["Chaste"], Block: ["ItemVulva", "ItemButt", "ItemVulvaPiercings"], HideItem: ["ItemButtAnalBeads2", "ItemVulvaVibratingDildo", "ItemVulvaClitSuctionCup", "ItemVulvaInflatableVibeDildo", "ItemVulvaHeavyWeightClamp", "ItemVulvaPenisDildo"], Value: 60, Prerequisite: "AccessVulva", AllowLock: true, Difficulty: 14, Time: 20, RemoveTime: 10, ExpressionTrigger: [{ Group: "Eyebrows", Name: "Soft", Timer: 10 }] },
+			{ Name: "MetalChastityBelt", Effect: ["Chaste"], Block: ["ItemVulva", "ItemButt", "ItemVulvaPiercings"], HideItem: ["ItemButtAnalBeads2", "ItemVulvaVibratingDildo", "ItemVulvaClitSuctionCup", "ItemVulvaInflatableVibeDildo", "ItemVulvaHeavyWeightClamp", "ItemVulvaPenisDildo"], Value: 100, Prerequisite: "AccessVulva", AllowLock: true, Difficulty: 20, Time: 20, RemoveTime: 10, ExpressionTrigger: [{ Group: "Eyebrows", Name: "Soft", Timer: 10 }] },
+			{ Name: "PolishedChastityBelt", Effect: ["Chaste"], Block: ["ItemVulva", "ItemButt", "ItemVulvaPiercings"], HideItem: ["ItemButtAnalBeads2", "ItemVulvaVibratingDildo", "ItemVulvaClitSuctionCup", "ItemVulvaInflatableVibeDildo", "ItemVulvaHeavyWeightClamp", "ItemVulvaPenisDildo"], Value: 150, Prerequisite: "AccessVulva", AllowLock: true, Difficulty: 30, Time: 20, RemoveTime: 10, ExpressionTrigger: [{ Group: "Eyebrows", Name: "Soft", Timer: 10 }] },
 			{
-				Name: "OrnateChastityBelt", Effect: ["Chaste"], Block: ["ItemVulva", "ItemButt", "ItemVulvaPiercings"], HideItem: ["ItemButtAnalBeads2","ItemVulvaVibratingDildo", "ItemVulvaClitSuctionCup", "ItemVulvaInflatableVibeDildo"], Value: 200, Prerequisite: "AccessVulva", AllowLock: true, Difficulty: 50, Time: 20, RemoveTime: 10, ExpressionTrigger: [{ Group: "Eyebrows", Name: "Soft", Timer: 10 }],
+				Name: "OrnateChastityBelt", Effect: ["Chaste"], Block: ["ItemVulva", "ItemButt", "ItemVulvaPiercings"], HideItem: ["ItemButtAnalBeads2", "ItemVulvaVibratingDildo", "ItemVulvaClitSuctionCup", "ItemVulvaInflatableVibeDildo", "ItemVulvaHeavyWeightClamp", "ItemVulvaPenisDildo"], Value: 200, Prerequisite: "AccessVulva", AllowLock: true, Difficulty: 50, Time: 20, RemoveTime: 10, ExpressionTrigger: [{ Group: "Eyebrows", Name: "Soft", Timer: 10 }],
 			Layer: [
 					{ Name: "Belt", AllowColorize: true },
 					{ Name: "Gems", AllowColorize: false }
@@ -942,7 +942,7 @@ var AssetFemale3DCG = [
 			{ Name: "SteelChastityPanties", Effect: ["Chaste"], Block: ["ItemVulva", "ItemButt", "ItemVulvaPiercings"], Hide: ["ItemVulva", "ItemVulvaPiercings"], Value: 150, Prerequisite: "AccessVulva", AllowLock: true, Difficulty: 50, Time: 50, RemoveTime: 60, ExpressionTrigger: [{ Group: "Eyebrows", Name: "Soft", Timer: 10 }] },
 			{ Name: "HarnessPanties1", Priority: 19, Value: 40, Prerequisite: "AccessVulva", AllowLock: true, Difficulty: 8, Time: 10, RemoveTime: 15, BuyGroup: ["HarnessPanties1"], Expose: ["ItemVulva", "ItemVulvaPiercings", "ItemButt"], AllowPose: ["LegsClosed", "Kneel"] },
 			{
-				Name: "LoveChastityBelt", HideItem: ["ItemButtAnalBeads2","ItemVulvaVibratingDildo", "ItemVulvaClitSuctionCup", "ItemVulvaInflatableVibeDildo"], Value: 250, Prerequisite: "AccessVulva", Difficulty: 50, Time: 20, RemoveTime: 10, Extended: true,
+				Name: "LoveChastityBelt", HideItem: ["ItemButtAnalBeads2", "ItemVulvaVibratingDildo", "ItemVulvaClitSuctionCup", "ItemVulvaInflatableVibeDildo", "ItemVulvaHeavyWeightClamp", "ItemVulvaPenisDildo"], Value: 250, Prerequisite: "AccessVulva", Difficulty: 50, Time: 20, RemoveTime: 10, Extended: true,
 				Effect: ["Lock"], OwnerOnly: true,
 				AllowEffect: ["Chaste", "Egged", "Vibrating"],
 				AllowBlock: ["ItemVulva", "ItemButt", "ItemVulvaPiercings"],
@@ -1177,7 +1177,7 @@ var AssetFemale3DCG = [
 				SetPose: ["BackElbowTouch", "StraitDressOpen"],
 				Hide: ["Socks", "BodyLower", "Cloth", "ClothLower", "Bra", "Shoes", "ItemBoots", "ItemLegs", "Suit", "SuitLower"],
 				Block: ["ItemBoots", "ItemPelvis", "ItemTorso", "ItemHands", "ItemLegs", "ItemFeet"],
-				Effect: ["Block", "Prone", "Freeze", "CannotKneel"],
+				Effect: ["Block", "Prone", "Freeze", "BlockKneel"],
 				HideItem: ["ItemFeetNylonRope", "ItemFeetHempRope", "ItemFeetLeatherBelt", "ItemFeetIrish8Cuffs", "ItemFeetDuctTape", "ItemFeetMermaidRopeTie", "ItemFeetLeatherAnkleCuffs"],
 				Prerequisite: ["NotSuspended", "NotKneeling", "NotHogtied", "NotMounted", "NotKneelingSpread", "NoFeetSpreader", "NotKneelingSpread", "NoFeetSpreader", "NotShackled", "CannotBeSuited"],
 				AllowEffect: ["Egged", "Vibrating"],
@@ -1696,7 +1696,7 @@ var AssetFemale3DCG = [
 			{ Name: "DogHood", DefaultColor: "#404040", Random: false, Effect: ["Prone", "GagNormal"], Hide: ["HairFront", "HairBack", "Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3", "HairAccessory1", "HairAccessory2"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3", "ItemEars"], Difficulty: 50, Value: 60, Time: 15, AllowLock: true },
 			{ Name: "FoxyMask", Random: false, Effect: ["Prone", "GagLight"], Hide: ["Glasses", "ItemMouth", "ItemMouth2", "ItemMouth3"], Block: ["ItemMouth", "ItemMouth2", "ItemMouth3"], Difficulty: 2, Value: 50, Time: 15, AllowLock: true },
 			{ Name: "SleepMask", Effect: ["BlindLight", "Prone"], Hide: ["Glasses"], Value: 5, Time: 5 },
-			{ Name: "BlackoutLenses", Random: false, Effect: ["BlindHeavy", "Prone"], Hide: ["Glasses", "Eyes"], Difficulty: 10, Value: 60 }
+			{ Name: "BlackoutLenses", DefaultColor: "#333333", Random: false, Effect: ["BlindHeavy", "Prone"], Hide: ["Glasses", "Eyes"], Difficulty: 10, Value: 60 }
 		]
 	},
 
