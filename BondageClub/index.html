@@ -52,6 +52,7 @@
 <script src="Screens/Character/FriendList/FriendList.js"></script>
 <script src="Screens/Character/Title/Title.js"></script>
 <script src="Screens/Character/BackgroundSelection/BackgroundSelection.js"></script>
+<script src="Screens/Character/Relog/Relog.js"></script>
 <script src="Screens/Room/MainHall/MainHall.js"></script>
 <script src="Screens/Room/Shop/Shop.js"></script>
 <script src="Screens/Room/Introduction/Introduction.js"></script>
@@ -206,7 +207,8 @@
 	OK - Wedding dresses and bridesmaid gown (Kira)
 	OK - Chains for feet, legs & arms (Kirsty + fixes from Kira)
 	OK - Catsuit fixes (Gatetrek)
-	OK - New gowns and Bondage Bouquet (wildsj)
+	TEST - New gowns and Wedding/Bondage Bouquet (wildsj)
+	TEST - New maid apron (Ayesha-678)
 	
 	OK - Get/break girlfriend dialog for NPCs in private room
 
@@ -217,7 +219,7 @@
 		- Option to auto-clean chat log after X messages, for better performance
 		- Back & Forth buttons everywhere
 
-	TO DO - Auto Reconnect & Chat Room re-join/re-create
+	IN PROGRESS - Auto Reconnect & Chat Room re-join/re-create
 	
 	TO DO - Each restraint will have different ways (mini-games) to try to struggle out of it:
 		1. Go Berserk (Duct Tape, Cages & Boxes, Mittens, Chastity Items, Body Harnesses, Gags with harness, Hoods) - Click the circles quickly before they disappear (Asylum)
@@ -236,7 +238,7 @@
 // When the code is loaded, we start the game engine
 window.onload = function() {
 	//CheatImport();
-	ServerURL = "https://bondage-club-server.herokuapp.com/";
+	//ServerURL = "https://bondage-club-server.herokuapp.com/";
 	CommonIsMobile = CommonDetectMobile();
 	TranslationLoad();
 	DrawLoad();

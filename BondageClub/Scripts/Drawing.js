@@ -1,7 +1,6 @@
 // The main game canvas where everything will be drawn
 "use strict";
 var MainCanvas;
-var TempCanvas;
 var ColorCanvas;
 
 // A bank of all the chached images
@@ -41,7 +40,6 @@ function DrawLoad() {
 
 	// Creates the objects used in the game
 	MainCanvas = document.getElementById("MainCanvas").getContext("2d");
-	TempCanvas = document.createElement("canvas").getContext("2d");
 	ColorCanvas = document.createElement("canvas");
 	document.getElementById("MainCanvas").addEventListener("keypress", KeyDown);
 	document.getElementById("MainCanvas").tabIndex = 1000;
