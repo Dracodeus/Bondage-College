@@ -15,19 +15,24 @@ function InventoryItemArmsChainsDraw() {
 	DrawTextFit(DialogFocusItem.Asset.Description, 1500, 375, 221, "black");
 
 	// Draw the possible positions and their requirements
-	DrawText(DialogExtendedMessage, 1500, 475, "white", "gray");
-	DrawButton(1050, 550, 225, 225, "", (DialogFocusItem.Property.Type == null) ? "#888888" : "White");
-	DrawImage("Screens/Inventory/" + DialogFocusItem.Asset.Group.Name + "/" + DialogFocusItem.Asset.Name + "/BoxTie.png", 1050, 551);
-	DrawText(DialogFind(Player, "ChainBondageBoxTie"), 1163, 800, "white", "gray");
-	DrawText(DialogFind(Player, "NoRequirement"), 1163, 850, "white", "gray");
-	DrawButton(1387, 550, 225, 225, "", ((DialogFocusItem.Property.Type != null) && (DialogFocusItem.Property.Type == "Hogtied")) ? "#888888" : (SkillGetLevelReal(Player, "Bondage") < 4) ? "Pink" : "White");
-	DrawImage("Screens/Inventory/" + DialogFocusItem.Asset.Group.Name + "/" + DialogFocusItem.Asset.Name + "/Hogtied.png", 1387, 551);
-	DrawText(DialogFind(Player, "ChainBondageHogtied"), 1500, 800, "white", "gray");
-	DrawText(DialogFind(Player, "RequireBondageLevel").replace("ReqLevel", "4"), 1500, 850, "white", "gray");
-	DrawButton(1725, 550, 225, 225, "", ((DialogFocusItem.Property.Type != null) && (DialogFocusItem.Property.Type == "SuspensionHogtied")) ? "#888888" : (SkillGetLevelReal(Player, "Bondage") < 8) ? "Pink" : "White");
-	DrawImage("Screens/Inventory/" + DialogFocusItem.Asset.Group.Name + "/" + DialogFocusItem.Asset.Name + "/SuspensionHogtied.png", 1725, 551);
-	DrawText(DialogFind(Player, "ChainBondageSuspensionHogtied"), 1838, 800, "white", "gray");
-	DrawText(DialogFind(Player, "RequireBondageLevel").replace("ReqLevel", "8"), 1838, 850, "white", "gray");
+	if (!InventoryItemHasEffect(DialogFocusItem, "Lock", true)) {
+		DrawText(DialogExtendedMessage, 1500, 475, "white", "gray");
+		DrawButton(1050, 550, 225, 225, "", (DialogFocusItem.Property.Type == null) ? "#888888" : "White");
+		DrawImage("Screens/Inventory/" + DialogFocusItem.Asset.Group.Name + "/" + DialogFocusItem.Asset.Name + "/BoxTie.png", 1050, 551);
+		DrawText(DialogFind(Player, "ChainBondageBoxTie"), 1163, 800, "white", "gray");
+		DrawText(DialogFind(Player, "NoRequirement"), 1163, 850, "white", "gray");
+		DrawButton(1387, 550, 225, 225, "", ((DialogFocusItem.Property.Type != null) && (DialogFocusItem.Property.Type == "Hogtied")) ? "#888888" : (SkillGetLevelReal(Player, "Bondage") < 4) ? "Pink" : "White");
+		DrawImage("Screens/Inventory/" + DialogFocusItem.Asset.Group.Name + "/" + DialogFocusItem.Asset.Name + "/Hogtied.png", 1387, 551);
+		DrawText(DialogFind(Player, "ChainBondageHogtied"), 1500, 800, "white", "gray");
+		DrawText(DialogFind(Player, "RequireBondageLevel").replace("ReqLevel", "4"), 1500, 850, "white", "gray");
+		DrawButton(1725, 550, 225, 225, "", ((DialogFocusItem.Property.Type != null) && (DialogFocusItem.Property.Type == "SuspensionHogtied")) ? "#888888" : (SkillGetLevelReal(Player, "Bondage") < 8) ? "Pink" : "White");
+		DrawImage("Screens/Inventory/" + DialogFocusItem.Asset.Group.Name + "/" + DialogFocusItem.Asset.Name + "/SuspensionHogtied.png", 1725, 551);
+		DrawText(DialogFind(Player, "ChainBondageSuspensionHogtied"), 1838, 800, "white", "gray");
+		DrawText(DialogFind(Player, "RequireBondageLevel").replace("ReqLevel", "8"), 1838, 850, "white", "gray");
+	}
+	else {
+		DrawText(DialogFind(Player, "CantChangeWhileLocked"), 1500, 500, "white", "gray");
+	}
 
 }
 
@@ -53,27 +58,38 @@ function InventoryItemArmsChainsSetPose(NewType) {
 	if ((NewType != null) && !InventoryAllow(C, ["NotKneeling", "NotMounted", "NotChained", "NotSuspended"], true)) { DialogExtendedMessage = DialogText; return; }
 
 	// Sets the new pose with it's effects
-	DialogFocusItem.Property.Type = NewType;
-	DialogFocusItem.Property.Effect = (NewType == null) ? ["Block", "Prone"] : ["Block", "Freeze", "Prone"];
-	DialogFocusItem.Property.Block = (NewType == null) ? null : ["ItemHands", "ItemLegs", "ItemFeet", "ItemBoots"];
-	if (NewType == null) {
-		DialogFocusItem.Property.SetPose = ["BackBoxTie"];
-		DialogFocusItem.Property.Difficulty = 0;
-		InventoryRemove(C, "ItemHidden");
+	if (!InventoryItemHasEffect(DialogFocusItem, "Lock", true)) {
+		DialogFocusItem.Property.Type = NewType;
+		DialogFocusItem.Property.Effect = (NewType == null) ? ["Block", "Prone"] : ["Block", "Freeze", "Prone"];
+		DialogFocusItem.Property.Block = (NewType == null) ? null : ["ItemHands", "ItemLegs", "ItemFeet", "ItemBoots"];
+		if (NewType == null) {
+			DialogFocusItem.Property.SetPose = ["BackBoxTie"];
+			DialogFocusItem.Property.Difficulty = 0;
+			InventoryRemove(C, "ItemHidden");
+		}
+		if (NewType == "Hogtied") {
+			DialogFocusItem.Property.SetPose = ["Hogtied"];
+			DialogFocusItem.Property.Difficulty = 2;
+			CharacterSetFacialExpression(C, "Blush", "Medium");
+			TimerInventoryRemoveSet(C, "Blush", 10);
+			InventoryRemove(C, "ItemHidden");
+		}
+		if (NewType == "SuspensionHogtied") {
+			DialogFocusItem.Property.SetPose = ["Hogtied", "SuspensionHogtied"];
+			DialogFocusItem.Property.Difficulty = 6; 
+			CharacterSetFacialExpression(C, "Blush", "Medium"); 
+			TimerInventoryRemoveSet(C, "Blush", 20);
+			InventoryWear(C, "SuspensionChains", "ItemHidden", DialogFocusItem.Color);
+		}
 	}
-	if (NewType == "Hogtied") {
-		DialogFocusItem.Property.SetPose = ["Hogtied"];
-		DialogFocusItem.Property.Difficulty = 2;
-		CharacterSetFacialExpression(C, "Blush", "Medium");
-		TimerInventoryRemoveSet(C, "Blush", 10);
-		InventoryRemove(C, "ItemHidden");
+	else { 
+		return; 
 	}
-	if (NewType == "SuspensionHogtied") {
-		DialogFocusItem.Property.SetPose = ["Hogtied", "SuspensionHogtied"];
-		DialogFocusItem.Property.Difficulty = 6; 
-		CharacterSetFacialExpression(C, "Blush", "Medium"); 
-		TimerInventoryRemoveSet(C, "Blush", 20);
-		InventoryWear(C, "SuspensionChains", "ItemHidden", DialogFocusItem.Color);
+	
+	// Adds the lock effect back if it was padlocked
+	if ((DialogFocusItem.Property.LockedBy != null) && (DialogFocusItem.Property.LockedBy != "")) {
+		if (DialogFocusItem.Property.Effect == null) DialogFocusItem.Property.Effect = [];
+		DialogFocusItem.Property.Effect.push("Lock");
 	}
 	CharacterRefresh(C);
 

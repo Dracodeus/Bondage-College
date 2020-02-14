@@ -200,6 +200,7 @@ function LoginResponse(C) {
 			Player.Description = C.Description;
 			Player.Creation = C.Creation;
 			Player.Wardrobe = C.Wardrobe;
+			WardrobeFixLength();
 			Player.OnlineID = C.ID.toString();
 			Player.MemberNumber = C.MemberNumber;
 			Player.BlockItems = ((C.BlockItems == null) || !Array.isArray(C.BlockItems)) ? [] : C.BlockItems;

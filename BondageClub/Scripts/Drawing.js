@@ -480,9 +480,6 @@ function DrawBackNextButton(Left, Top, Width, Height, Label, Color, Image, BackT
 	DrawTextFit(Label, Left + Width / 2, Top + (Height / 2) + 1, (CommonIsMobile) ? Width - 6 : Width - 36, "Black");
 	if ((Image != null) && (Image != "")) DrawImage(Image, Left + 2, Top + 2);
 
-	// PC only section
-	if (CommonIsMobile) return;
-
 	// Draw the back arrow 
 	MainCanvas.beginPath();
 	MainCanvas.fillStyle = "black";
@@ -501,7 +498,8 @@ function DrawBackNextButton(Left, Top, Width, Height, Label, Color, Image, BackT
 	MainCanvas.stroke();
 	MainCanvas.closePath();
 
-	// Draw the hovering text
+	// Draw the hovering text on the PC
+	if (CommonIsMobile) return;
 	if (BackText == null) BackText = () => "MISSING VALUE FOR: BACK TEXT";
 	if (NextText == null) NextText = () => "MISSING VALUE FOR: NEXT TEXT";
 	if ((MouseX >= Left) && (MouseX <= Left + Width) && (MouseY >= Top) && (MouseY <= Top + Height))

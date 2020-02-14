@@ -14,15 +14,18 @@ function InventoryItemLegsChainsDraw() {
 	DrawTextFit(DialogFocusItem.Asset.Description, 1500, 375, 221, "black");
 
 	// Draw the possible rope bondage positions
-	DrawText(DialogFind(Player, "SelectChainBondage"), 1500, 475, "white", "gray");
-	DrawButton(1175, 550, 225, 225, "", (DialogFocusItem.Property.Type == null || DialogFocusItem.Property.Type == "Basic") ? "#888888" : "White");
-	DrawImage("Screens/Inventory/" + DialogFocusItem.Asset.Group.Name + "/" + DialogFocusItem.Asset.Name + "/Basic.png", 1175, 551);
-	DrawText(DialogFind(Player, "ChainBondageBasic"), 1288, 800, "white", "gray");
-	DrawText(DialogFind(Player, "NoRequirement").replace("ReqLevel", "2"), 1288, 850, "white", "gray");
-	DrawButton(1600, 550, 225, 225, "", ((DialogFocusItem.Property.Type != null) && (DialogFocusItem.Property.Type == "Strict")) ? "#888888" : (SkillGetLevelReal(Player, "Bondage") < 2) ? "Pink" : "White");
-	DrawImage("Screens/Inventory/" + DialogFocusItem.Asset.Group.Name + "/" + DialogFocusItem.Asset.Name + "/Strict.png", 1600, 551);
-	DrawText(DialogFind(Player, "ChainBondageStrict"), 1713, 800, "white", "gray");
-	DrawText(DialogFind(Player, "RequireBondageLevel").replace("ReqLevel", "2"), 1713, 850, "white", "gray");
+	if (!InventoryItemHasEffect(DialogFocusItem, "Lock", true)) {
+		DrawText(DialogFind(Player, "SelectChainBondage"), 1500, 475, "white", "gray");
+		DrawButton(1175, 550, 225, 225, "", (DialogFocusItem.Property.Type == null || DialogFocusItem.Property.Type == "Basic") ? "#888888" : "White");
+		DrawImage("Screens/Inventory/" + DialogFocusItem.Asset.Group.Name + "/" + DialogFocusItem.Asset.Name + "/Basic.png", 1175, 551);
+		DrawText(DialogFind(Player, "ChainBondageBasic"), 1288, 800, "white", "gray");
+		DrawText(DialogFind(Player, "NoRequirement").replace("ReqLevel", "2"), 1288, 850, "white", "gray");
+		DrawButton(1600, 550, 225, 225, "", ((DialogFocusItem.Property.Type != null) && (DialogFocusItem.Property.Type == "Strict")) ? "#888888" : (SkillGetLevelReal(Player, "Bondage") < 2) ? "Pink" : "White");
+		DrawImage("Screens/Inventory/" + DialogFocusItem.Asset.Group.Name + "/" + DialogFocusItem.Asset.Name + "/Strict.png", 1600, 551);
+		DrawText(DialogFind(Player, "ChainBondageStrict"), 1713, 800, "white", "gray");
+		DrawText(DialogFind(Player, "RequireBondageLevel").replace("ReqLevel", "2"), 1713, 850, "white", "gray");
+	}
+	else DrawText(DialogFind(Player, "CantChangeWhileLocked"), 1500, 500, "white", "gray");
 
 }
 
@@ -44,16 +47,25 @@ function InventoryItemLegsChainsSetType(NewType) {
 	}
 
 	// Sets the position & difficulty
-	DialogFocusItem.Property.Type = NewType;
-	DialogFocusItem.Property.Effect = [];
-	if (NewType == null) DialogFocusItem.Property.Difficulty = 0;
-	if (NewType == "Strict") DialogFocusItem.Property.Difficulty = 2;
+	if (!InventoryItemHasEffect(DialogFocusItem, "Lock", true)) {
+		DialogFocusItem.Property.Type = NewType;
+		DialogFocusItem.Property.Effect = [];
+		if (NewType == null) DialogFocusItem.Property.Difficulty = 0;
+		if (NewType == "Strict") DialogFocusItem.Property.Difficulty = 2;
+	}
+	else return;
+
+	// Adds the lock effect back if it was padlocked
+	if ((DialogFocusItem.Property.LockedBy != null) && (DialogFocusItem.Property.LockedBy != "")) {
+		if (DialogFocusItem.Property.Effect == null) DialogFocusItem.Property.Effect = [];
+		DialogFocusItem.Property.Effect.push("Lock");
+	}
 	CharacterRefresh(C);
 
 	// Sets the chatroom or NPC message
 	if (CurrentScreen == "ChatRoom") {
 		ChatRoomCharacterUpdate(C);
-		var msg = "LegRopeSet" + ((NewType) ? NewType : "Basic");
+		var msg = "LegChainSet" + ((NewType) ? NewType : "Basic");
 		var Dictionary = [];
 		Dictionary.push({Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber});
 		Dictionary.push({Tag: "TargetCharacter", Text: C.Name, MemberNumber: C.MemberNumber});
