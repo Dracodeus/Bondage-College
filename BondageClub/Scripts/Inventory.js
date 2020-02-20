@@ -416,7 +416,7 @@ function InventoryConfiscateRemote() {
 function InventoryIsWorn(C, AssetName, AssetGroup){
 	if ((C != null) && (C.Appearance != null) && Array.isArray(C.Appearance))
 		for (var A = 0; A < C.Appearance.length; A++)
-			if ((C.Appearance[A].Name == AssetName) && (C.Appearance[A].Group.Name == AssetGroup))
+			if ((C.Appearance[A].Asset.Name == AssetName) && (C.Appearance[A].Asset.Group.Name == AssetGroup))
 				return true;
 	return false;
 }
