@@ -155,6 +155,8 @@ AlchemistOffice,,,Alchemist Office
 HellEntrance,,,Entrance to Hell
 PirateIsland,,,Pirate Island
 PirateIslandNight,,,Pirate Island Night
+CaptainCabin,,,Captain Cabin
+MedinaMarket,,,Medina Market
 ThroneRoom,,,Throne Room
 Dungeon,,,Dungeon
 Industrial,,,Industrial
@@ -162,6 +164,7 @@ SunTemple,,,Sun Temple
 BackAlley,,,Back Alley
 CreepyBasement,,,Creepy Basement
 Cellar,,,Cellar
+SlumCellar,,,Slum Cellar
 BarRestaurant,,,Bar Restaurant
 DungeonRuin,,,Ruined Dungeon
 SecretChamber,,,Secret Chamber
@@ -169,6 +172,10 @@ VaultCorridor,,,Vault Corridor
 AncientRuins,,,Ancient Ruins
 JungleTemple,,,Jungle Temple
 CeremonialVenue,,,Ceremony Venue
+BeachCafe,,,Beach Promenade Cafe
+Confessions,,,Confessions
+DesolateVillage,,,Desolate Village
+LostVages,,,Lost Vages Casino
 WeddingRoom,,,Wedding Room
 WeddingArch,,,Wedding Arch
 WeddingBeach,,,Wedding Beach

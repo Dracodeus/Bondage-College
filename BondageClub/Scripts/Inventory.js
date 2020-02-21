@@ -287,10 +287,8 @@ function InventoryItemHasEffect(Item, Effect, CheckProperties) {
 function InventoryExpressionTrigger(C, Item) {
 	if ((Item != null) && (Item.Asset != null) && (Item.Asset.DynamicExpressionTrigger() != null))
 		for (var E = 0; E < Item.Asset.DynamicExpressionTrigger().length; E++)
-			if ((InventoryGet(C, Item.Asset.DynamicExpressionTrigger()[E].Group) == null) || (InventoryGet(C, Item.Asset.DynamicExpressionTrigger()[E].Group).Property == null) || (InventoryGet(C, Item.Asset.DynamicExpressionTrigger()[E].Group).Property.Expression == null)) {
-				CharacterSetFacialExpression(C, Item.Asset.DynamicExpressionTrigger()[E].Group, Item.Asset.DynamicExpressionTrigger()[E].Name);
-				TimerInventoryRemoveSet(C, Item.Asset.DynamicExpressionTrigger()[E].Group, Item.Asset.DynamicExpressionTrigger()[E].Timer);
-			}
+			if ((InventoryGet(C, Item.Asset.DynamicExpressionTrigger()[E].Group) == null) || (InventoryGet(C, Item.Asset.DynamicExpressionTrigger()[E].Group).Property == null) || (InventoryGet(C, Item.Asset.DynamicExpressionTrigger()[E].Group).Property.Expression == null))
+				CharacterSetFacialExpression(C, Item.Asset.DynamicExpressionTrigger()[E].Group, Item.Asset.DynamicExpressionTrigger()[E].Name, Item.Asset.DynamicExpressionTrigger()[E].Timer);
 }
 
 // Returns the item that locks another item

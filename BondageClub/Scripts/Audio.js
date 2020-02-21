@@ -27,6 +27,7 @@ function AudioDialogStop() {
 
 // Takes a data dictionary content and sends the related audio mp3 to be played
 function AudioPlayContent(data) {
+console.log(data);
 	// Exits right away if we are missing content data
 	if (!Player.AudioSettings || !Player.AudioSettings.PlayItem || (Player.AudioSettings.Volume == 0)) return;
 	if (!data.Dictionary || !data.Dictionary.length) return;
@@ -67,6 +68,8 @@ function AudioPlayContent(data) {
 				case "DuctTape" : audioFile = "Audio/DuctTape18.mp3"; break;
 				case "BurlapSack" : audioFile = "Audio/Bag.mp3"; break;
 				case "HempRope" : audioFile = "Audio/RopeShort.mp3"; break;
+				case "CollarChainShort":
+				case "CollarChainLong":
 				case "Chains":
 				case "Manacles":
 				case "FullBodyShackles": audioFile = "Audio/ChainLong.mp3"; break;
@@ -76,6 +79,7 @@ function AudioPlayContent(data) {
 				case "LowCage":
 				case "TheDisplayFrame":
 				case "HighSecurityCollar": audioFile = "Audio/LockLarge.mp3"; break;
+				case "CollarLeash":
 				case "MetalCuffs":
 				case "ToeCuffs": audioFile = "Audio/LockSmall.mp3"; break;
 				case "BondageBouquet":
@@ -129,9 +133,11 @@ function AudioPlayContent(data) {
 		} else if (data.Content.includes("ShacklesRestrain") || data.Content.includes("Ornate")){
 			audioFile = "Audio/CuffsMetal.mp3";
 		} else if (data.Content.includes("RopeSet")){
-			audioFile = "Audio/RopeShort.mp3"; noiseLevelModifier += 2;
+			audioFile = "Audio/RopeShort.mp3";
+			data.Sender = data.Dictionary.find(function (el) {return el.Tag == "SourceCharacter";}).MemberNumber;
 		} else if (data.Content.includes("ChainSet")){
-			audioFile = "Audio/ChainLong.mp3"; noiseLevelModifier += 2;
+			audioFile = "Audio/ChainLong.mp3";
+			data.Sender = data.Dictionary.find(function (el) {return el.Tag == "SourceCharacter";}).MemberNumber;
 		}
 	}
 

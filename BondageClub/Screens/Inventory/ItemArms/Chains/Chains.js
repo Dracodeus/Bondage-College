@@ -68,15 +68,13 @@ function InventoryItemArmsChainsSetPose(NewType) {
 		if (NewType == "Hogtied") {
 			DialogFocusItem.Property.SetPose = ["Hogtied"];
 			DialogFocusItem.Property.Difficulty = 2;
-			CharacterSetFacialExpression(C, "Blush", "Medium");
-			TimerInventoryRemoveSet(C, "Blush", 10);
+			CharacterSetFacialExpression(C, "Blush", "Medium", 10);
 			InventoryRemove(C, "ItemHidden");
 		}
 		if (NewType == "SuspensionHogtied") {
 			DialogFocusItem.Property.SetPose = ["Hogtied", "SuspensionHogtied"];
-			DialogFocusItem.Property.Difficulty = 6; 
-			CharacterSetFacialExpression(C, "Blush", "Medium"); 
-			TimerInventoryRemoveSet(C, "Blush", 20);
+			DialogFocusItem.Property.Difficulty = 6;
+			CharacterSetFacialExpression(C, "Blush", "Medium", 20);
 			InventoryWear(C, "SuspensionChains", "ItemHidden", DialogFocusItem.Color);
 		}
 	}
