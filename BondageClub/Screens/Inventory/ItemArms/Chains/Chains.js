@@ -68,15 +68,13 @@ function InventoryItemArmsChainsSetPose(NewType) {
 		if (NewType == "Hogtied") {
 			DialogFocusItem.Property.SetPose = ["Hogtied"];
 			DialogFocusItem.Property.Difficulty = 2;
-			CharacterSetFacialExpression(C, "Blush", "Medium");
-			TimerInventoryRemoveSet(C, "Blush", 10);
+			CharacterSetFacialExpression(C, "Blush", "Medium", 10);
 			InventoryRemove(C, "ItemHidden");
 		}
 		if (NewType == "SuspensionHogtied") {
 			DialogFocusItem.Property.SetPose = ["Hogtied", "SuspensionHogtied"];
-			DialogFocusItem.Property.Difficulty = 6; 
-			CharacterSetFacialExpression(C, "Blush", "Medium"); 
-			TimerInventoryRemoveSet(C, "Blush", 20);
+			DialogFocusItem.Property.Difficulty = 6;
+			CharacterSetFacialExpression(C, "Blush", "Medium", 20);
 			InventoryWear(C, "SuspensionChains", "ItemHidden", DialogFocusItem.Color);
 		}
 	}
@@ -95,7 +93,7 @@ function InventoryItemArmsChainsSetPose(NewType) {
 		var msg = "ArmsChainSet" + ((NewType) ? NewType : "BoxTie");
 		var Dictionary = [];
 		Dictionary.push({Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber});
-		Dictionary.push({Tag: "DestinationCharacter", Text: C.Name, MemberNumber: C.MemberNumber});
+		Dictionary.push({Tag: "TargetCharacter", Text: C.Name, MemberNumber: C.MemberNumber});
 		ChatRoomPublishCustomAction(msg, true, Dictionary);
 	} else {
 		DialogFocusItem = null;
