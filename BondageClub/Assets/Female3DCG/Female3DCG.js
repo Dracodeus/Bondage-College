@@ -764,6 +764,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemFeet",
 		Category: "Item",
+		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "Massage", "Grope"],
 		Priority: 27,
 		ParentGroup: "BodyLower",
 		Default: false,
@@ -799,6 +800,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemLegs",
 		Category: "Item",
+		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "Massage", "Grope"],
 		Priority: 25,
 		ParentGroup: "BodyLower",
 		Default: false,
@@ -852,6 +854,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemVulva",
 		Category: "Item",
+		Activity: ["Kiss", "MasturbateHand", "MasturbateFist", "MasturbateFoot", "MasturbateTongue", "Slap", "Caress"],
 		Priority: 15,
 		Default: false,
 		Color: ["Default"],
@@ -940,6 +943,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemButt",
 		Category: "Item",
+		Activity: ["Kiss", "MasturbateHand", "MasturbateFist", "MasturbateTongue", "Spank", "Caress", "Grope"],
 		Priority: 4,
 		Default: false,
 		Color: ["Default"],
@@ -979,6 +983,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemPelvis",
 		Category: "Item",
+		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "Massage", "Grope"],
 		Priority: 17,
 		ParentGroup: "BodyLower",
 		Default: false,
@@ -1053,6 +1058,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemTorso",
 		ParentGroup: "BodyUpper",
+		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "Massage", "Rub"],
 		Category: "Item",
 		Priority: 18,
 		Default: false,
@@ -1082,6 +1088,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemNipples",
 		ParentGroup: "BodyUpper",
+		Activity: ["Kiss", "Lick", "Pinch", "Suck", "Caress"],
 		Category: "Item",
 		Priority: 19,
 		Default: false,
@@ -1142,6 +1149,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemBreast",
 		ParentGroup: "BodyUpper",
+		Activity: ["Kiss", "Lick", "Tickle", "Slap", "Caress", "MasturbateHand", "Grope"],
 		Category: "Item",
 		Priority: 14,
 		Default: false,
@@ -1167,6 +1175,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemArms",
 		ParentGroup: "BodyUpper",
+		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "Massage", "Grope"],
 		Category: "Item",
 		Priority: 32,
 		Default: false,
@@ -1281,6 +1290,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemHands",
 		ParentGroup: "BodyUpper",
+		Activity: ["Kiss", "Lick", "PoliteKiss", "Spank", "Caress", "Polish"],
 		Category: "Item",
 		Priority: 34,
 		Default: false,
@@ -1332,6 +1342,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemNeck",
 		Category: "Item",
+		Activity: ["Kiss", "Lick", "Caress", "Massage", "Strangle", "Bite"],
 		Priority: 33,
 		Default: false,
 		Color: ["Default"],
@@ -1430,6 +1441,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemMouth",
 		Category: "Item",
+		Activity: ["Kiss", "FrenchKiss", "PoliteKiss", "Lick", "Caress"],
 		Priority: 34,
 		Default: false,
 		IsRestraint: true,
@@ -1757,6 +1769,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemHead",
 		Category: "Item",
+		Activity: ["Kiss", "Slap", "Caress", "Brush", "Pull"],
 		Priority: 42,
 		Default: false,
 		IsRestraint: true,
@@ -1792,6 +1805,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemEars",
 		Category: "Item",
+		Activity: ["Kiss", "Lick", "Pinch", "Caress", "Whisper"],
 		Priority: 1,
 		Default: false,
 		IsRestraint: true,
@@ -1889,6 +1903,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemBoots",
 		Category: "Item",
+		Activity: ["Kiss", "Lick", "Suck", "Tickle", "Spank", "Massage", "Polish"],
 		Priority: 23,
 		ParentGroup: "BodyLower",
 		Default: false,
@@ -1965,3 +1980,104 @@ var PoseFemale3DCG = [
 	}
 
 ];
+
+// 3D Custom Girl based activities
+var ActivityFemale3DCG = [
+	{
+		Name: "Kiss",
+		Prerequisite: "NotGagged"
+	},
+	{
+		Name: "FrenchKiss",
+		Prerequisite: "NotGagged"
+	},
+	{
+		Name: "PoliteKiss",
+		Prerequisite: "NotGagged"
+	},
+	{
+		Name: "Lick",
+		Prerequisite: "NotGagged"
+	},
+	{
+		Name: "Suck",
+		Prerequisite: "NotGagged"
+	},
+	{
+		Name: "Bite",
+		Prerequisite: "NotGagged"
+	},
+	{
+		Name: "Whisper",
+		Prerequisite: "NotGagged"
+	},
+	{
+		Name: "Tickle",
+		Prerequisite: "NotBlocked"
+	},
+	{
+		Name: "Caress",
+		Prerequisite: "NotBlocked"
+	},
+	{
+		Name: "Rub",
+		Prerequisite: "NotFrozen"
+	},
+	{
+		Name: "Brush",
+		Prerequisite: "NotBlocked"
+	},
+	{
+		Name: "Massage",
+		Prerequisite: "NotBlocked"
+	},
+	{
+		Name: "Polish",
+		Prerequisite: "NotBlocked"
+	},
+	{
+		Name: "Grope",
+		Prerequisite: "NotBlocked"
+	},
+	{
+		Name: "Pinch",
+		Prerequisite: "NotBlocked"
+	},
+	{
+		Name: "Spank",
+		Prerequisite: "NotBlocked"
+	},
+	{
+		Name: "Slap",
+		Prerequisite: "NotBlocked"
+	},
+	{
+		Name: "Pull",
+		Prerequisite: "NotBlocked"
+	},
+	{
+		Name: "Strangle",
+		Prerequisite: "NotBlocked"
+	},
+	{
+		Name: "MasturbateTongue",
+		Orgasm: true,
+		Prerequisite: "NotGagged"
+	},
+	{
+		Name: "MasturbateHand",
+		Orgasm: true,
+		Prerequisite: "NotBlocked"
+	},
+	{
+		Name: "MasturbateFist",
+		Orgasm: true,
+		Prerequisite: "NotBlocked"
+	},
+	{
+		Name: "MasturbateFoot",
+		Orgasm: true,
+		Prerequisite: "NotFrozen"
+	}
+	
+]
