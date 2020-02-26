@@ -245,10 +245,12 @@ function LoginResponse(C) {
 			Player.VisualSettings = C.VisualSettings;
 			Player.AudioSettings = C.AudioSettings;
 			Player.GameplaySettings = C.GameplaySettings;
+			Player.ArousalSettings = C.ArousalSettings;
 			Player.WhiteList = C.WhiteList;
 			Player.BlackList = C.BlackList;
 			Player.FriendList = C.FriendList;
 
+			// Calls the preference init to make sure the preferences are loaded correctly
 			PreferenceInit(Player);
 
 			// Loads the player character model and data

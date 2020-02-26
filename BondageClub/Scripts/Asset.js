@@ -23,6 +23,7 @@ function AssetGroupAdd(NewAssetFamily, NewAsset) {
 		ParentColor: (NewAsset.ParentColor == null) ? "" : NewAsset.ParentColor,
 		Clothing: (NewAsset.Clothing == null) ? false : NewAsset.Clothing,
 		Underwear: (NewAsset.Underwear == null) ? false : NewAsset.Underwear,
+		Activity: NewAsset.Activity,
 		Zone: NewAsset.Zone,
 		SetPose: NewAsset.SetPose,
 		AllowPose: NewAsset.AllowPose,

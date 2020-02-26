@@ -152,7 +152,7 @@ function DrawCharacter(C, X, Y, Zoom, IsHeightResizeAllowed) {
 		if (C.Pose.indexOf("Suspension") >= 0) Y += (Zoom * Canvas.height * (1 - HeightRatio) / HeightRatio);
 
 		// Draws the character focus zones if we need too
-		if ((C.FocusGroup != null) && (C.FocusGroup.Zone != null)) {
+		if ((C.FocusGroup != null) && (C.FocusGroup.Zone != null) && (CurrentScreen != "Preference")) {
 
 			// Draw all the possible zones in transparent colors (gray if free, yellow if occupied, red if blocker)
 			for (var A = 0; A < AssetGroup.length; A++)
@@ -184,6 +184,15 @@ function DrawAssetGroupZone(C, Zone, HeightRatio, X, Y, Color, Thickness = 3) {
 			DrawEmptyRect((HeightRatio * Zone[Z][0]) + X, (1000 - (HeightRatio * (Zone[Z][1] + Y + Zone[Z][3]))) - C.HeightModifier, (HeightRatio * Zone[Z][2]), (HeightRatio * Zone[Z][3]), Color, Thickness);
 		else
 			DrawEmptyRect((HeightRatio * Zone[Z][0]) + X, HeightRatio * (Zone[Z][1] - C.HeightModifier) + Y, (HeightRatio * Zone[Z][2]), (HeightRatio * Zone[Z][3]), Color, Thickness);
+}
+
+// Scans the item zone and draws a background rectangle over it
+function DrawAssetGroupZoneBackground(C, Zone, HeightRatio, X, Y, Color) {
+	for (var Z = 0; Z < Zone.length; Z++)
+		if (C.Pose.indexOf("Suspension") >= 0)
+			DrawRect((HeightRatio * Zone[Z][0]) + X, (1000 - (HeightRatio * (Zone[Z][1] + Y + Zone[Z][3]))) - C.HeightModifier, (HeightRatio * Zone[Z][2]), (HeightRatio * Zone[Z][3]), Color);
+		else
+			DrawRect((HeightRatio * Zone[Z][0]) + X, HeightRatio * (Zone[Z][1] - C.HeightModifier) + Y, (HeightRatio * Zone[Z][2]), (HeightRatio * Zone[Z][3]), Color);
 }
 
 // Draw a zoomed image from a source to a specific canvas

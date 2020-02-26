@@ -1,6 +1,7 @@
 Preferences,- Preferences -
 ChatPreferences,- Chat Preferences -
 AudioPreferences,- Audio Preferences -
+ArousalPreferences,- Arousal Meter & Sexual Activities Preferences -
 CharacterLabelColor,Character label color:
 ItemPermission,Item permission:
 PermissionLevel0,"Everyone, no exceptions"
@@ -35,3 +36,66 @@ BlindDisableExamine,Disable examining people when blind
 DisableAutoRemoveLogin,Keep all of your restraints when relogging
 ForceFullHeight,Display all characters at maximum height
 EnableAfkTimer,Show AFK bubble if idle for 5 minutes
+ArousalActive,Activation:
+ArousalActiveInactive,Disable sexual activities
+ArousalActiveNoMeter,Allow without a meter
+ArousalActiveControl,Allow with controllable meter
+ArousalActiveAutomatic,Allow with automatic meter
+ArousalVisible,Meter Visibility:
+ArousalVisibleAll,Show arousal to everyone
+ArousalVisibleAccess,Show if they have access
+ArousalVisibleSelf,Show to yourself only
+ArousalActivity,Activity preferences:
+ArousalActivityTypeKiss,Kissing
+ArousalActivityTypeFrenchKiss,French Kissing
+ArousalActivityTypePoliteKiss,Polite Kissing
+ArousalActivityTypeLick,Licking
+ArousalActivityTypeTickle,Tickling
+ArousalActivityTypeSpank,Spanking
+ArousalActivityTypeCaress,Caressing
+ArousalActivityTypeMassage,Massaging
+ArousalActivityTypeGrope,Groping
+ArousalActivityTypeMasturbateTongue,Tongue Mastubation
+ArousalActivityTypeMasturbateHand,Hand Masturbation
+ArousalActivityTypeMasturbateFist,Fist Masturbation
+ArousalActivityTypeMasturbateFoot,Foot Masturbation
+ArousalActivityTypePinch,Pinching
+ArousalActivityTypeSuck,Sucking
+ArousalActivityTypePolish,Nail Polishing
+ArousalActivityTypeStrangle,Strangling
+ArousalActivityTypeBite,Biting
+ArousalActivityTypeSlap,Slapping
+ArousalActivityTypeBrush,Brushing
+ArousalActivityTypePull,Hair Pulling
+ArousalActivityTypeWhisper,Ear Whispering
+ArousalActivityTypeRub,Body Rubbing
+ArousalActivityLoveSelf,Done on yourself:
+ArousalActivityLoveOther,Doing it to others:
+ArousalActivityLove0,Hate it
+ArousalActivityLove1,Doesn't like it
+ArousalActivityLove2,Neutral on it
+ArousalActivityLove3,Like it
+ArousalActivityLove4,Love it
+ArousalSelectErogenousZones,Click on yourself to set your erogenous zones
+ArousalConfigureErogenousZones,Configure this zone to be erogenous or not
+ArousalZoneLove0,"Hate this zone, it's a big turn-off"
+ArousalZoneLove1,"Dislike this zone, it's a turn-off"
+ArousalZoneLove2,This zone isn't special for you
+ArousalZoneLove3,"Like this zone, it turns you on"
+ArousalZoneLove4,"Love this zone, it's a big turn-on"
+ArousalAllowOrgasm,This zone can give you an orgasm
+ArousalZoneItemBoots,Feet & Toes
+ArousalZoneItemFeet,Lower Legs
+ArousalZoneItemLegs,Upper Legs
+ArousalZoneItemVulva,Clitoris & Vagina
+ArousalZoneItemButt,Butt / Anal
+ArousalZoneItemPelvis,Pelvis & Belly
+ArousalZoneItemTorso,Torso & Ribs
+ArousalZoneItemNipples,Nipples
+ArousalZoneItemBreast,Breast
+ArousalZoneItemArms,Arms & Shoulders
+ArousalZoneItemHands,Hands
+ArousalZoneItemNeck,Neck
+ArousalZoneItemMouth,Mouth & Lips
+ArousalZoneItemHead,Head & Hair
+ArousalZoneItemEars,Ears
