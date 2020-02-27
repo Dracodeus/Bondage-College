@@ -77,7 +77,6 @@ function PrivateWontTakePlayerAsLover() { return (((CurrentCharacter.Lover == nu
 function PrivateWontTakePlayerAsLoverAlreadyDating() { return ((CurrentCharacter.Lover != null) && (CurrentCharacter.Lover != "") && (CurrentCharacter.Lover != Player.Name) && (Player.Lover == "") && (Player.Lovership == null)) }
 function PrivateWontTakePlayerAsLoverPlayerDating() { return (((CurrentCharacter.Lover == null) || (CurrentCharacter.Lover == "")) && ((Player.Lover != "") || (Player.Lovership != null))) }
 
-
 // Loads the private room vendor NPC
 function PrivateLoad() {
 
@@ -223,6 +222,14 @@ function PrivateClickCharacter() {
 	for (var C = PrivateCharacterOffset; (C < PrivateCharacter.length && C < PrivateCharacterOffset + 4); C++)
 		if ((MouseX >= X + (C - PrivateCharacterOffset) * 470) && (MouseX <= X + 470 + (C - PrivateCharacterOffset) * 470))
 			if ((NPCEventGet(PrivateCharacter[C], "SlaveMarketRent") <= CurrentTime) && (NPCEventGet(PrivateCharacter[C], "AsylumSent") <= CurrentTime)) {
+
+				// If the player can manually control her arousal or wants to fight her desire
+				if ((PrivateCharacter[C].ID == 0) && (MouseX >= X + (C - PrivateCharacterOffset) * 470 + 400) && (MouseX <= X + (C - PrivateCharacterOffset) * 470 + 450) && (MouseY >= 200) && (MouseY <= 700))
+					if ((Player.ArousalSettings != null) && (Player.ArousalSettings.Active != null) && (Player.ArousalSettings.Progress != null)) {
+						if ((Player.ArousalSettings.Active == "Manual") || (Player.ArousalSettings.Active == "Hybrid")) CharacterSetArousal(Player, Math.round((675 - MouseY) / 4.5, 0));
+						if ((Player.ArousalSettings.Active == "Automatic") && (Player.ArousalSettings.Progress > 0)) CharacterSetArousal(Player, Player.ArousalSettings.Progress - 1);
+						return;
+					}
 
 				// Sets the new character (1000 if she's owner, 2000 if she's owned)
 				if (PrivateCharacter[C].ID != 0) {

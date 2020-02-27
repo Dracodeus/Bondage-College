@@ -72,6 +72,7 @@ function ChatRoomLoad() {
 	ElementRemove("InputDescription");
 	ElementRemove("InputSize");
 	ChatRoomCreateElement();
+	ChatRoomCharacterUpdate(Player);
 }
 
 // Returns TRUE if the player owner is inside the room
@@ -130,6 +131,14 @@ function ChatRoomDrawCharacter(DoClick) {
 		if (DoClick) {
 			if ((MouseX >= (C % 5) * Space + X) && (MouseX <= (C % 5) * Space + X + 450 * Zoom) && (MouseY >= Y + Math.floor(C / 5) * 500) && (MouseY <= Y + Math.floor(C / 5) * 500 + 1000 * Zoom)) {
 				if ((MouseY <= Y + Math.floor(C / 5) * 500 + 900 * Zoom) && (Player.GameplaySettings && Player.GameplaySettings.BlindDisableExamine ? (!(Player.Effect.indexOf("BlindHeavy") >= 0) || ChatRoomCharacter[C].ID == Player.ID) : true)) {
+
+					// If the player can manually control her arousal or wants to fight her desire
+					if ((ChatRoomCharacter[C].ID == 0) && (MouseX >= (C % 5) * Space + X + 400 * Zoom) && (MouseX <= (C % 5) * Space + X + 450 * Zoom) && (MouseY >= Y + Math.floor(C / 5) * 500 + 200 * Zoom) && (MouseY <= Y + Math.floor(C / 5) * 500 + 700 * Zoom))
+						if ((Player.ArousalSettings != null) && (Player.ArousalSettings.Active != null) && (Player.ArousalSettings.Progress != null)) {
+							if ((Player.ArousalSettings.Active == "Manual") || (Player.ArousalSettings.Active == "Hybrid")) CharacterSetArousal(Player, Math.round((Y + (Math.floor(C / 5) * 500 + 675 * Zoom) - MouseY) / (4.5 * Zoom), 0));
+							if ((Player.ArousalSettings.Active == "Automatic") && (Player.ArousalSettings.Progress > 0)) CharacterSetArousal(Player, Player.ArousalSettings.Progress - 1);
+							return;
+						}
 
 					// If a character to swap was selected, we can complete the swap with the second character
 					if (ChatRoomHasSwapTarget() && ChatRoomSwapTarget != ChatRoomCharacter[C].MemberNumber) {
@@ -475,8 +484,9 @@ function ChatRoomCharacterUpdate(C) {
 	var data = {
 		ID: (C.ID == 0) ? Player.OnlineID : C.AccountName.replace("Online-", ""),
 		ActivePose: C.ActivePose,
-		Appearance: ServerAppearanceBundle(C.Appearance)
+		Appearance: ServerAppearanceBundle(C.Appearance),
 	};
+	if (C.ID == 0) data.ArousalSettings = C.ArousalSettings;
 	ServerSend("ChatRoomCharacterUpdate", data);
 }
 
