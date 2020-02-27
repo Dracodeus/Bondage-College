@@ -39,9 +39,10 @@ EnableAfkTimer,Show AFK bubble if idle for 5 minutes
 ArousalActive,Activation:
 ArousalActiveInactive,Disable sexual activities
 ArousalActiveNoMeter,Allow without a meter
-ArousalActiveControl,Allow with controllable meter
-ArousalActiveAutomatic,Allow with automatic meter
-ArousalVisible,Meter Visibility:
+ArousalActiveManual,Allow with a manual meter
+ArousalActiveHybrid,Allow with an hybrid meter
+ArousalActiveAutomatic,Allow with a locked meter
+ArousalVisible,Meter visibility:
 ArousalVisibleAll,Show arousal to everyone
 ArousalVisibleAccess,Show if they have access
 ArousalVisibleSelf,Show to yourself only
@@ -71,14 +72,14 @@ ArousalActivityTypeWhisper,Ear Whispering
 ArousalActivityTypeRub,Body Rubbing
 ArousalActivityLoveSelf,Done on yourself:
 ArousalActivityLoveOther,Doing it to others:
-ArousalActivityLove0,Hate it
+ArousalActivityLove0,Forbid/Block it
 ArousalActivityLove1,Doesn't like it
 ArousalActivityLove2,Neutral on it
 ArousalActivityLove3,Like it
-ArousalActivityLove4,Love it
+ArousalActivityLove4,Adore it
 ArousalSelectErogenousZones,Click on yourself to set your erogenous zones
 ArousalConfigureErogenousZones,Configure this zone to be erogenous or not
-ArousalZoneLove0,"Hate this zone, it's a big turn-off"
+ArousalZoneLove0,Block all activities on this zone
 ArousalZoneLove1,"Dislike this zone, it's a turn-off"
 ArousalZoneLove2,This zone isn't special for you
 ArousalZoneLove3,"Like this zone, it turns you on"

@@ -99,6 +99,23 @@ function DrawGetImageOnError(Img, IsAsset) {
 	}
 }
 
+// Draw the arousal meter below the player if allowed and should be visible to the player
+function DrawArousalMeter(C, X, Y, Zoom) {
+	if (((CurrentScreen == "ChatRoom") || ((CurrentScreen == "Private") && LogQuery("RentRoom", "PrivateRoom"))) && (CurrentCharacter == null))
+		if ((C.ArousalSettings != null) && (C.ArousalSettings.Active != null) && ((C.ArousalSettings.Active == "Manual") || (C.ArousalSettings.Active == "Hybrid") || (C.ArousalSettings.Active == "Automatic")))
+			if ((C.ID == 0) || ((C.ArousalSettings.Visible != null) && (C.ArousalSettings.Visible == "Access") && C.AllowItem) || ((C.ArousalSettings.Visible != null) && (C.ArousalSettings.Visible == "All"))) {
+
+				// Validates the current arousal progress
+				CharacterSetArousal(C, C.ArousalSettings.Progress);
+
+				// Draw the gradient meter with a white border if the user can control her meter or a gold border if she cannot
+				DrawRect(X + (400 * Zoom), Y + (200 * Zoom) - 2, (45 * Zoom) + 4, (500 * Zoom) + 4, (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white");
+				DrawImageZoomCanvas("Screens/Character/Player/ArousalMeter.png", MainCanvas, 0, 0, 50, 500, X + (400 * Zoom) + 2, Y + (200 * Zoom), 45 * Zoom, 500 * Zoom);
+				DrawEmptyRect(X + (400 * Zoom) + 1, Y + (200 * Zoom) + ((100 - C.ArousalSettings.Progress) * 4.5 * Zoom), (45 * Zoom) + 2, (50 * Zoom), (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white", 3);
+
+			}
+}
+
 // Refreshes the character if not all images are loaded and draw the character canvas on the main game screen
 function DrawCharacter(C, X, Y, Zoom, IsHeightResizeAllowed) {
 	if ((C != null) && ((C.ID == 0) || (Player.Effect.indexOf("BlindHeavy") < 0) || (CurrentScreen == "InformationSheet"))) {
@@ -174,6 +191,10 @@ function DrawCharacter(C, X, Y, Zoom, IsHeightResizeAllowed) {
 				DrawText(C.Name, X + 255 * Zoom, Y + 980 * ((C.Pose.indexOf("SuspensionHogtied") < 0) ? Zoom : Zoom / HeightRatio), (CommonIsColor(C.LabelColor)) ? C.LabelColor : "White", "Black");
 				MainCanvas.font = "36px Arial";
 			}
+			
+		// Draw the arousal meter on certain conditions
+		DrawArousalMeter(C, X - Zoom * Canvas.width * (1 - HeightRatio) / 2, Y - Zoom * Canvas.height * (1 - HeightRatio), Zoom / HeightRatio);
+		
 	}
 }
 

@@ -218,6 +218,7 @@ function CharacterOnlineRefresh(Char, data, SourceMemberNumber) {
 	Char.LabelColor = data.LabelColor;
 	Char.Creation = data.Creation;
 	if (Char.ID != 0) Char.ItemPermission = data.ItemPermission;
+	if (Char.ID != 0) Char.ArousalSettings = data.ArousalSettings;
 	Char.Ownership = data.Ownership;
 	Char.Lovership = data.Lovership;
 	Char.Reputation = (data.Reputation != null) ? data.Reputation : [];
@@ -253,7 +254,8 @@ function CharacterLoadOnline(data, SourceMemberNumber) {
 		Char.Title = data.Title;
 		Char.Description = data.Description;
 		Char.AccountName = "Online-" + data.ID.toString();
-		Char.MemberNumber = data.MemberNumber;	
+		Char.MemberNumber = data.MemberNumber;
+		Char.AllowItem = false;
 		var BackupCurrentScreen = CurrentScreen;
 		CurrentScreen = "ChatRoom";
 		CharacterLoadCSVDialog(Char, "Screens/Online/ChatRoom/Dialog_Online");
@@ -292,6 +294,7 @@ function CharacterLoadOnline(data, SourceMemberNumber) {
 		// Flags "refresh" if the ownership or or lovership or inventory or blockitems has changed
 		if (!Refresh && (JSON.stringify(Char.Ownership) !== JSON.stringify(data.Ownership))) Refresh = true;
 		if (!Refresh && (JSON.stringify(Char.Lovership) !== JSON.stringify(data.Lovership))) Refresh = true;
+		if (!Refresh && (JSON.stringify(Char.ArousalSettings) !== JSON.stringify(data.ArousalSettings))) Refresh = true;
 		if (!Refresh && (data.Inventory != null) && (Char.Inventory.length != data.Inventory.length)) Refresh = true;
 		if (!Refresh && (data.BlockItems != null) && (Char.BlockItems.length != data.BlockItems.length)) Refresh = true;
 
@@ -568,8 +571,18 @@ function CharacterResetFacialExpression(C) {
 			CharacterSetFacialExpression(C, C.Appearance[A].Asset.Group.Name, null);
 }
 
-
 // returns the current selected character
 function CharacterGetCurrent() {
 	return (Player.FocusGroup != null) ? Player : CurrentCharacter;
+}
+
+// Sets the character arousal level and validates the value
+function CharacterSetArousal(C, Progress) {
+	if ((Progress == null) || (Progress < 0)) Progress = 0;
+	if (Progress > 100) Progress = 100;
+	if ((C.ArousalSettings.Progress == null) || (C.ArousalSettings.Progress != Progress)) {
+		C.ArousalSettings.Progress = Progress;
+		if ((C.ID == 0) && (CurrentScreen == "ChatRoom"))
+			ChatRoomCharacterUpdate(Player);
+	}
 }

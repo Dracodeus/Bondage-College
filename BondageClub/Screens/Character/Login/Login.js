@@ -252,6 +252,7 @@ function LoginResponse(C) {
 
 			// Calls the preference init to make sure the preferences are loaded correctly
 			PreferenceInit(Player);
+			CharacterSetArousal(Player, 0);
 
 			// Loads the player character model and data
 			Player.Appearance = ServerAppearanceLoadFromBundle(Player, C.AssetFamily, C.Appearance);

@@ -16,7 +16,7 @@ var PreferenceSettingsSensDepList = ["Normal", "SensDepNames", "SensDepTotal"];
 var PreferenceSettingsSensDepIndex = 0;
 var PreferenceSettingsVolumeList = [1, 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9];
 var PreferenceSettingsVolumeIndex = 0;
-var PreferenceArousalActiveList = ["Inactive", "NoMeter", "Control", "Automatic"];
+var PreferenceArousalActiveList = ["Inactive", "NoMeter", "Manual", "Hybrid", "Automatic"];
 var PreferenceArousalActiveIndex = 0;
 var PreferenceArousalVisibleList = ["All", "Access", "Self"];
 var PreferenceArousalVisibleIndex = 0;
@@ -94,7 +94,7 @@ function PreferenceGetFactorColor(Factor) {
 
 // Returns TRUE if we must active the preference controls
 function PreferenceArousalIsActive() {
-	return (PreferenceArousalActiveList[PreferenceArousalActiveIndex] == "Control") || (PreferenceArousalActiveList[PreferenceArousalActiveIndex] == "Automatic");
+	return (PreferenceArousalActiveList[PreferenceArousalActiveIndex] == "Hybrid") || (PreferenceArousalActiveList[PreferenceArousalActiveIndex] == "Automatic");
 }
 
 // Loads the activity factor combo boxes based on the current activity selected
@@ -112,9 +112,10 @@ function PreferenceInit(C) {
     if (!C.AudioSettings || (typeof C.AudioSettings.Volume !== "number") || (typeof C.AudioSettings.PlayBeeps !== "boolean")) C.AudioSettings = { Volume: 1, PlayBeeps: false };
 
 	// Sets the default arousal settings
-	if (!C.ArousalSettings) C.ArousalSettings = { Active: "Control", Visible: "Access", Activity: [], Zone: [] };
-	if (typeof C.ArousalSettings.Active !== "string") C.ArousalSettings.Active = "Control";
+	if (!C.ArousalSettings) C.ArousalSettings = { Active: "Hybrid", Visible: "Access", Progress: 0, Activity: [], Zone: [] };
+	if (typeof C.ArousalSettings.Active !== "string") C.ArousalSettings.Active = "Hybrid";
 	if (typeof C.ArousalSettings.Visible !== "string") C.ArousalSettings.Visible = "Access";
+	if (typeof C.ArousalSettings.Progress !== "number") C.ArousalSettings.Progress = 0;
 	if ((C.ArousalSettings.Activity == null) || !Array.isArray(C.ArousalSettings.Activity)) C.ArousalSettings.Activity = [];
 	if ((C.ArousalSettings.Zone == null) || !Array.isArray(C.ArousalSettings.Zone)) C.ArousalSettings.Zone = [];
 
@@ -403,6 +404,13 @@ function PreferenceSubscreenArousalRun() {
 		DrawBackNextButton(900, 393, 500, 64, TextGet("ArousalActivityType" + PreferenceArousalActivityList[PreferenceArousalActivityIndex]), "White", "", () => "", () => "");
 		DrawBackNextButton(900, 493, 300, 64, TextGet("ArousalActivityLove" + PreferenceArousalActivityFactorSelf), PreferenceGetFactorColor(PreferenceGetActivityFactor(Player, PreferenceArousalActivityList[PreferenceArousalActivityIndex], true)), "", () => "", () => "");
 		DrawBackNextButton(1605, 493, 300, 64, TextGet("ArousalActivityLove" + PreferenceArousalActivityFactorOther), PreferenceGetFactorColor(PreferenceGetActivityFactor(Player, PreferenceArousalActivityList[PreferenceArousalActivityIndex], false)), "", () => "", () => "");
+
+	} else if (PreferenceArousalActiveList[PreferenceArousalActiveIndex] == "Manual") {
+
+		// In manual, you can only select if the meter is visible to others or not
+		DrawText(TextGet("ArousalVisible"), 1240, 225, "Black", "Gray");
+		MainCanvas.textAlign = "center";
+		DrawBackNextButton(1505, 193, 400, 64, TextGet("ArousalVisible" + PreferenceArousalVisibleList[PreferenceArousalVisibleIndex]), "White", "", () => "", () => "");
 
 	}
 

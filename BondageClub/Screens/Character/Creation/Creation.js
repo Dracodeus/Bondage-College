@@ -76,6 +76,10 @@ function CreationResponse(data) {
 			Log = [];
 			ImportBondageCollege(Player);
 
+			// Calls the preference init to make sure the preferences are loaded correctly
+			PreferenceInit(Player);
+			CharacterSetArousal(Player, 0);
+
 			// Flush the controls and enters the main hall
 			ServerPlayerAppearanceSync();
 			ElementRemove("InputCharacter");
