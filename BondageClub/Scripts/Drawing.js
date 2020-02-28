@@ -109,9 +109,15 @@ function DrawArousalMeter(C, X, Y, Zoom) {
 				CharacterSetArousal(C, C.ArousalSettings.Progress);
 
 				// Draw the gradient meter with a white border if the user can control her meter or a gold border if she cannot
-				DrawRect(X + (400 * Zoom), Y + (200 * Zoom) - 2, (45 * Zoom) + 4, (500 * Zoom) + 4, (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white");
-				DrawImageZoomCanvas("Screens/Character/Player/ArousalMeter.png", MainCanvas, 0, 0, 50, 500, X + (400 * Zoom) + 2, Y + (200 * Zoom), 45 * Zoom, 500 * Zoom);
-				DrawEmptyRect(X + (400 * Zoom) + 1, Y + (200 * Zoom) + ((100 - C.ArousalSettings.Progress) * 4.5 * Zoom), (45 * Zoom) + 2, (50 * Zoom), (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white", 3);
+				if (C.ID == 0) {
+					DrawRect(X + (400 * Zoom), Y + (200 * Zoom) - 2, (45 * Zoom) + 4, (500 * Zoom) + 4, (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white");
+					DrawImageZoomCanvas("Screens/Character/Player/ArousalMeter.png", MainCanvas, 0, 0, 50, 500, X + (400 * Zoom) + 2, Y + (200 * Zoom), 45 * Zoom, 500 * Zoom);
+					DrawEmptyRect(X + (400 * Zoom) + 1, Y + (200 * Zoom) + ((100 - C.ArousalSettings.Progress) * 4.5 * Zoom), (45 * Zoom) + 2, (50 * Zoom), (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white", 3);
+				} else {
+					DrawRect(X + (400 * Zoom), Y + (325 * Zoom) - 2, (22 * Zoom) + 4, (250 * Zoom) + 4, (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white");
+					DrawImageZoomCanvas("Screens/Character/Player/ArousalMeter.png", MainCanvas, 0, 0, 50, 500, X + (400 * Zoom) + 2, Y + (325 * Zoom), 22 * Zoom, 250 * Zoom);
+					DrawEmptyRect(X + (400 * Zoom) + 1, Y + (325 * Zoom) + ((100 - C.ArousalSettings.Progress) * 2.25 * Zoom), (22 * Zoom) + 2, (25 * Zoom), (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white", 3);
+				}
 
 			}
 }
