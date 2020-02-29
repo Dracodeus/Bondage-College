@@ -235,7 +235,7 @@ function PreferenceRun() {
     	ColorPickerHide();
 		DrawButton(1815, 190, 90, 90, "", "White", "Icons/Chat.png");
 		DrawButton(1815, 305, 90, 90, "", "White", "Icons/Audio.png");
-		DrawButton(1815, 420, 90, 90, "", "White", "Icons/Arousal.png");
+		DrawButton(1815, 420, 90, 90, "", "White", "Icons/Activity.png");
 	}
 }
 

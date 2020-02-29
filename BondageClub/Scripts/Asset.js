@@ -213,3 +213,12 @@ function AssetGet(Family, Group, Name) {
 			return Asset[A];
 	return null;
 }
+
+// Gets an activity asset by family and name
+function AssetGetActivity(Family, Name) {
+	if (Family == "Female3DCG")
+		for (var A = 0; A < ActivityFemale3DCG.length; A++)
+			if (ActivityFemale3DCG[A].Name == Name)
+				return ActivityFemale3DCG[A];
+	return null;
+}

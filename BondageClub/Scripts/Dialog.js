@@ -28,6 +28,8 @@ var DialogAllowFluids = false;
 var DialogFacialExpressions = [];
 var DialogItemPermissionMode = false;
 var DialogExtendedMessage = "";
+var DialogActivityMode = false;
+var DialogActivity = [];
 
 function DialogReputationLess(RepType, Value) { return (ReputationGet(RepType) <= Value); } // Returns TRUE if a specific reputation type is less or equal than a given value
 function DialogReputationGreater(RepType, Value) { return (ReputationGet(RepType) >= Value); } // Returns FALSE if a specific reputation type is greater or equal than a given value
@@ -240,10 +242,60 @@ function DialogMenuButtonBuild(C) {
 		if (InventoryItemHasEffect(Item, "Egged") && InventoryAvailable(Player, "VibratorRemote", "ItemVulva") && Player.CanInteract()) DialogMenuButton.push("Remote");
 		if ((Item != null) && Item.Asset.Extended && Player.CanInteract() && !IsGroupBlocked && (!Item.Asset.OwnerOnly || (C.IsOwnedByPlayer())) && (!Item.Asset.LoverOnly || (C.IsLoverOfPlayer()))) DialogMenuButton.push("Use");
 		if (Player.CanInteract()) DialogMenuButton.push("ColorPick");
+		if ((C.FocusGroup.Activity != null) && !IsGroupBlocked && (Item == null) && ((CurrentScreen == "ChatRoom") || ((CurrentScreen == "Private") && LogQuery("RentRoom", "PrivateRoom"))) && ((C.ArousalSettings != null) && (C.ArousalSettings.Active != null) && (C.ArousalSettings.Active != "Inactive"))) DialogMenuButton.push("Activity");
 		if (C.ID == 0) {
 			if (DialogItemPermissionMode) DialogMenuButton.push("DialogNormalMode");
 			else DialogMenuButton.push("DialogPermissionMode");
 		}
+	}
+
+}
+
+// Builds an activity selection dialog
+function DialogActivityBuild(C) {
+
+	// Clears the current activities to rebuild them
+	DialogActivity = [];
+	if ((C.FocusGroup != null) && (C.FocusGroup.Activity != null)) {
+
+		// For each activities
+		for (var A = 0; A < C.FocusGroup.Activity.length; A++) {
+
+			// Make sure the activity is valid for that player asset family
+			var Activity = AssetGetActivity(C.AssetFamily, C.FocusGroup.Activity[A]);
+			if (Activity != null) {
+
+				// If the player is targeting herself, we validate that this activity can be done on self
+				var Allow = true;
+				if ((C.ID == 0) && ((Activity.TargetSelf == null) || (ActivityFemale3DCG[L].TargetSelf.indexOf(C.FocusGroup.Name) < 0))) Allow = false;
+
+				// Make sure all the prerequisites are met
+				if (Allow && (Activity.Prerequisite != null))
+					for (var P = 0; P < Activity.Prerequisite.length; P++) {
+						if ((Activity.Prerequisite[P] == "UseMouth") && !Player.CanTalk()) Allow = false;
+						if ((Activity.Prerequisite[P] == "UseHands") && !Player.CanInteract()) Allow = false;
+						if ((Activity.Prerequisite[P] == "UseFeet") && !Player.CanWalk()) Allow = false;
+					}
+
+				// Make sure the current player has permission to do this activity
+				if (Allow && (Player.ArousalSettings != null) && (Player.ArousalSettings.Activity != null))
+					for (var P = 0; P < Player.ArousalSettings.Activity.length; P++)
+						if ((Player.ArousalSettings.Activity[P].Name == Player.FocusGroup.Activity[A]) && (Player.ArousalSettings.Activity[P].Other != null) && (Player.ArousalSettings.Activity[P].Other == 0))
+							Allow = false;
+
+				// Make sure the target player gives permission for this activity
+				if (Allow && (C.ArousalSettings != null) && (C.ArousalSettings.Activity != null))
+					for (var P = 0; P < C.ArousalSettings.Activity.length; P++)
+						if ((C.ArousalSettings.Activity[P].Name == C.FocusGroup.Activity[A]) && (C.ArousalSettings.Activity[P].Self != null) && (C.ArousalSettings.Activity[P].Self == 0))
+							Allow = false;
+
+				// Adds the activity to the dialog if it's allowed
+				if (Allow) DialogActivity.push(Activity);
+
+			}
+
+		}
+
 	}
 
 }
@@ -576,6 +628,13 @@ function DialogMenuButtonClick() {
 				return;
 			}
 
+			// When the user wants to select a sexual activity to perform
+			else if (DialogMenuButton[I] == "Activity") {
+				DialogActivityMode = true;
+				DialogActivityBuild(C);
+				return;
+			}
+			
 			else if (DialogMenuButton[I] == "DialogPermissionMode") {
 				DialogItemPermissionMode = true;
 				DialogInventoryBuild(C);
