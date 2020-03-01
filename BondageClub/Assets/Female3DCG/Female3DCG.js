@@ -1985,99 +1985,117 @@ var PoseFemale3DCG = [
 var ActivityFemale3DCG = [
 	{
 		Name: "Kiss",
-		Prerequisite: "NotGagged"
+		TargetSelf: ["ItemHands", "ItemArms", "ItemBoots"],
+		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "FrenchKiss",
-		Prerequisite: "NotGagged"
+		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "PoliteKiss",
-		Prerequisite: "NotGagged"
+		TargetSelf: ["ItemHands", "ItemArms", "ItemBoots"],
+		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "Lick",
-		Prerequisite: "NotGagged"
+		TargetSelf: ["ItemHands", "ItemArms", "ItemBoots"],
+		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "Suck",
-		Prerequisite: "NotGagged"
+		TargetSelf: ["ItemHands", "ItemArms", "ItemBoots"],
+		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "Bite",
-		Prerequisite: "NotGagged"
+		TargetSelf: ["ItemHands", "ItemArms", "ItemBoots"],
+		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "Whisper",
-		Prerequisite: "NotGagged"
+		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "Tickle",
-		Prerequisite: "NotBlocked"
+		TargetSelf: ["ItemTorso", "ItemPelvis", "ItemBreast", "ItemNipples", "ItemLegs", "ItemFeet", "ItemBoots", "ItemArms", "ItemHands"],
+		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Caress",
-		Prerequisite: "NotBlocked"
+		TargetSelf: ["ItemTorso", "ItemPelvis", "ItemBreast", "ItemNipples", "ItemLegs", "ItemFeet", "ItemBoots", "ItemArms", "ItemHands", "ItemButt", "ItemVulva", "ItemHead"],
+		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Rub",
-		Prerequisite: "NotFrozen"
+		TargetSelf: ["ItemTorso", "ItemPelvis", "ItemBreast", "ItemLegs", "ItemFeet", "ItemArms", "ItemHead"],
+		Prerequisite: ["UseFeet"]
 	},
 	{
 		Name: "Brush",
-		Prerequisite: "NotBlocked"
+		TargetSelf: ["ItemHead"],
+		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Massage",
-		Prerequisite: "NotBlocked"
+		TargetSelf: ["ItemTorso", "ItemPelvis", "ItemBreast", "ItemLegs", "ItemFeet", "ItemBoots", "ItemArms", "ItemHands", "ItemButt", "ItemVulva", "ItemHead"],
+		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Polish",
-		Prerequisite: "NotBlocked"
+		TargetSelf: ["ItemHands", "ItemBoots"],
+		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Grope",
-		Prerequisite: "NotBlocked"
+		TargetSelf: ["ItemButt", "ItemBreast"],
+		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Pinch",
-		Prerequisite: "NotBlocked"
+		TargetSelf: ["ItemNipples", "ItemEars"],
+		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Spank",
-		Prerequisite: "NotBlocked"
+		TargetSelf: ["ItemButt", "ItemLegs"],
+		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Slap",
-		Prerequisite: "NotBlocked"
+		TargetSelf: ["ItemBreast", "ItemHead"],
+		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Pull",
-		Prerequisite: "NotBlocked"
+		TargetSelf: ["ItemHead"],
+		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Strangle",
-		Prerequisite: "NotBlocked"
+		TargetSelf: ["ItemNeck"],
+		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "MasturbateTongue",
 		Orgasm: true,
-		Prerequisite: "NotGagged"
+		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "MasturbateHand",
+		TargetSelf: ["ItemBreast", "ItemVulva", "ItemButt"],
 		Orgasm: true,
-		Prerequisite: "NotBlocked"
+		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "MasturbateFist",
 		Orgasm: true,
-		Prerequisite: "NotBlocked"
+		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "MasturbateFoot",
 		Orgasm: true,
-		Prerequisite: "NotFrozen"
+		Prerequisite: ["UseFeet"]
 	}
 	
 ]
