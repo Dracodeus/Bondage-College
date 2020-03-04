@@ -255,55 +255,6 @@ function DialogMenuButtonBuild(C) {
 
 }
 
-// Builds an activity selection dialog
-function DialogActivityBuild(C) {
-
-	// Clears the current activities to rebuild them
-	DialogActivity = [];
-	if ((C.FocusGroup != null) && (C.FocusGroup.Activity != null)) {
-
-		// For each activities
-		for (var A = 0; A < C.FocusGroup.Activity.length; A++) {
-
-			// Make sure the activity is valid for that player asset family
-			var Activity = AssetGetActivity(C.AssetFamily, C.FocusGroup.Activity[A]);
-			if (Activity != null) {
-
-				// If the player is targeting herself, we validate that this activity can be done on self
-				var Allow = true;
-				if ((C.ID == 0) && ((Activity.TargetSelf == null) || (Activity.TargetSelf.indexOf(C.FocusGroup.Name) < 0))) Allow = false;
-
-				// Make sure all the prerequisites are met
-				if (Allow && (Activity.Prerequisite != null))
-					for (var P = 0; P < Activity.Prerequisite.length; P++) {
-						if ((Activity.Prerequisite[P] == "UseMouth") && !Player.CanTalk()) Allow = false;
-						if ((Activity.Prerequisite[P] == "UseHands") && !Player.CanInteract()) Allow = false;
-						if ((Activity.Prerequisite[P] == "UseFeet") && !Player.CanWalk()) Allow = false;
-					}
-
-				// Make sure the current player has permission to do this activity
-				if (Allow && (Player.ArousalSettings != null) && (Player.ArousalSettings.Activity != null))
-					for (var P = 0; P < Player.ArousalSettings.Activity.length; P++)
-						if ((Player.ArousalSettings.Activity[P].Name == Player.FocusGroup.Activity[A]) && (Player.ArousalSettings.Activity[P].Other != null) && (Player.ArousalSettings.Activity[P].Other == 0))
-							Allow = false;
-
-				// Make sure the target player gives permission for this activity
-				if (Allow && (C.ArousalSettings != null) && (C.ArousalSettings.Activity != null))
-					for (var P = 0; P < C.ArousalSettings.Activity.length; P++)
-						if ((C.ArousalSettings.Activity[P].Name == C.FocusGroup.Activity[A]) && (C.ArousalSettings.Activity[P].Self != null) && (C.ArousalSettings.Activity[P].Self == 0))
-							Allow = false;
-
-				// Adds the activity to the dialog if it's allowed
-				if (Allow) DialogActivity.push(Activity);
-
-			}
-
-		}
-
-	}
-
-}
-
 // Build the inventory listing for the dialog which is what's equipped, the player inventory and the character inventory for that group
 function DialogInventoryBuild(C) {
 
@@ -639,7 +590,7 @@ function DialogMenuButtonClick() {
 				DialogInventoryOffset = 0;
 				DialogTextDefault = "";
 				DialogTextDefaultTimer = 0;
-				DialogActivityBuild(C);
+				ActivityDialogBuild(C);
 				return;
 			}
 			
@@ -799,6 +750,35 @@ function DialogClick() {
 						break;
 					}
 	}
+
+	// In activity mode, we check if the user clicked on an activity box
+	if (DialogActivityMode && (DialogProgress < 0) && (DialogColor == null) && ((Player.FocusGroup != null) || ((CurrentCharacter.FocusGroup != null) && CurrentCharacter.AllowItem)))
+		if ((MouseX >= 1000) && (MouseX <= 1975) && (MouseY >= 125) && (MouseY <= 1000) && !InventoryGroupIsBlocked((Player.FocusGroup != null) ? Player : CurrentCharacter)) {
+
+			// For each activities in the list
+			var X = 1000;
+			var Y = 125;
+			for (var A = DialogInventoryOffset; (A < DialogActivity.length) && (A < DialogInventoryOffset + 12); A++) {
+
+				// If this specific activity is clicked, we run it
+				if ((MouseX >= X) && (MouseX < X + 225) && (MouseY >= Y) && (MouseY < Y + 275)) {
+					ActivityRun((Player.FocusGroup != null) ? Player : CurrentCharacter, DialogActivity[A]);
+					return;
+				}
+
+				// Change the X and Y position to get the next square
+				X = X + 250;
+				if (X > 1800) {
+					X = 1000;
+					Y = Y + 300;
+				}
+
+			}
+
+			// Exits and do not validate any more clicks
+			return;
+
+		}
 
 	// In item menu mode VS text dialog mode
 	if (((Player.FocusGroup != null) || ((CurrentCharacter.FocusGroup != null) && CurrentCharacter.AllowItem)) && (DialogIntro() != "")) {
@@ -982,7 +962,7 @@ function DialogDrawActivityMenu(C) {
 		var Hover = (MouseX >= X) && (MouseX < X + 225) && (MouseY >= Y) && (MouseY < Y + 275) && !CommonIsMobile;
 		DrawRect(X, Y, 225, 275, (Hover) ? "cyan" : "white");
 		DrawImageResize("Assets/" + C.AssetFamily + "/Activity/" + Act.Name + ".png", X + 2, Y + 2, 221, 221);
-		DrawTextFit(DialogFind(Player, "Activity" + Act.Name), X + 112, Y + 250, 221, "black");
+		DrawTextFit(ActivityDictionaryText("Activity" + Act.Name), X + 112, Y + 250, 221, "black");
 		X = X + 250;
 		if (X > 1800) {
 			X = 1000;

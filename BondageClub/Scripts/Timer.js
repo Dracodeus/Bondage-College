@@ -3,6 +3,8 @@ var CurrentTime = 0;
 var TimerRunInterval = 20;
 var TimerCycle = 0;
 var TimerLastTime = CommonTime();
+var TimerLastArousalProgress = 0;
+var TimerLastArousalDecay = 0;
 
 // Returns a string of the current remaining timer
 function TimerToString(T) {
@@ -104,6 +106,32 @@ function TimerProcess(Timestamp) {
 		TimerPrivateOwnerBeep();
 	}
 
+	// Arousal can change every half a second, based on ProgressTimer
+	if ((TimerLastArousalProgress + 500 < CurrentTime) || (TimerLastArousalProgress - 500 > CurrentTime)) {
+		TimerLastArousalProgress = CurrentTime;
+		for (var C = 0; C < Character.length; C++)
+			if ((Character[C].ArousalSettings != null) && (Character[C].ArousalSettings.Active != null) && ((Character[C].ArousalSettings.Active == "Automatic") || (Character[C].ArousalSettings.Active == "Hybrid")))
+				if ((Character[C].ArousalSettings.ProgressTimer != null) && (typeof Character[C].ArousalSettings.ProgressTimer === "number") && !isNaN(Character[C].ArousalSettings.ProgressTimer) && (Character[C].ArousalSettings.ProgressTimer != 0)) {
+					if (Character[C].ArousalSettings.ProgressTimer < 0) {
+						Character[C].ArousalSettings.ProgressTimer++;
+						ActivityTimerProgress(Character[C], -1);
+					}
+					else {
+						Character[C].ArousalSettings.ProgressTimer--;
+						ActivityTimerProgress(Character[C], 1);
+					}
+				}
+	}
+
+	// Arousal decays by 1 naturally every 10 seconds
+	if ((TimerLastArousalDecay + 10000 < CurrentTime) || (TimerLastArousalDecay - 10000 > CurrentTime)) {
+		TimerLastArousalDecay = CurrentTime;
+		for (var C = 0; C < Character.length; C++)
+			if ((Character[C].ArousalSettings != null) && (Character[C].ArousalSettings.Active != null) && ((Character[C].ArousalSettings.Active == "Automatic") || (Character[C].ArousalSettings.Active == "Hybrid")))
+				if ((Character[C].ArousalSettings.Progress != null) && (typeof Character[C].ArousalSettings.Progress === "number") && !isNaN(Character[C].ArousalSettings.Progress) && (Character[C].ArousalSettings.Progress > 0))
+					ActivityTimerProgress(Character[C], -1);
+	}
+	
 	// Launches the main again for the next frame
 	requestAnimationFrame(MainRun);
 

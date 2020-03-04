@@ -137,8 +137,8 @@ function ChatRoomDrawCharacter(DoClick) {
 					// If the player can manually control her arousal or wants to fight her desire
 					if ((ChatRoomCharacter[C].ID == 0) && (MouseX >= (C % 5) * Space + X + 400 * Zoom) && (MouseX <= (C % 5) * Space + X + 450 * Zoom) && (MouseY >= Y + Math.floor(C / 5) * 500 + 200 * Zoom) && (MouseY <= Y + Math.floor(C / 5) * 500 + 700 * Zoom))
 						if ((Player.ArousalSettings != null) && (Player.ArousalSettings.Active != null) && (Player.ArousalSettings.Progress != null)) {
-							if ((Player.ArousalSettings.Active == "Manual") || (Player.ArousalSettings.Active == "Hybrid")) CharacterSetArousal(Player, Math.round((Y + (Math.floor(C / 5) * 500 + 675 * Zoom) - MouseY) / (4.5 * Zoom), 0));
-							if ((Player.ArousalSettings.Active == "Automatic") && (Player.ArousalSettings.Progress > 0)) CharacterSetArousal(Player, Player.ArousalSettings.Progress - 1);
+							if ((Player.ArousalSettings.Active == "Manual") || (Player.ArousalSettings.Active == "Hybrid")) ActivitySetArousal(Player, Math.round((Y + (Math.floor(C / 5) * 500 + 675 * Zoom) - MouseY) / (4.5 * Zoom), 0));
+							if ((Player.ArousalSettings.Active == "Automatic") && (Player.ArousalSettings.Progress > 0)) ActivitySetArousal(Player, Player.ArousalSettings.Progress - 1);
 							return;
 						}
 

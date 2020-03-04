@@ -101,25 +101,34 @@ function DrawGetImageOnError(Img, IsAsset) {
 
 // Draw the arousal meter below the player if allowed and should be visible to the player
 function DrawArousalMeter(C, X, Y, Zoom) {
-	if (((CurrentScreen == "ChatRoom") || ((CurrentScreen == "Private") && LogQuery("RentRoom", "PrivateRoom"))) && (CurrentCharacter == null))
+	if ((CurrentScreen == "ChatRoom") || ((CurrentScreen == "Private") && LogQuery("RentRoom", "PrivateRoom")))
 		if ((C.ArousalSettings != null) && (C.ArousalSettings.Active != null) && ((C.ArousalSettings.Active == "Manual") || (C.ArousalSettings.Active == "Hybrid") || (C.ArousalSettings.Active == "Automatic")))
-			if ((C.ID == 0) || ((C.ArousalSettings.Visible != null) && (C.ArousalSettings.Visible == "Access") && C.AllowItem) || ((C.ArousalSettings.Visible != null) && (C.ArousalSettings.Visible == "All"))) {
+			if ((C.ID == 0) || ((C.ArousalSettings.Visible != null) && (C.ArousalSettings.Visible == "Access") && C.AllowItem) || ((C.ArousalSettings.Visible != null) && (C.ArousalSettings.Visible == "All"))) 
+				if ((C.ID == 0) || (Player.ArousalSettings.ShowOtherMeter == null) || Player.ArousalSettings.ShowOtherMeter) {
 
-				// Validates the current arousal progress
-				CharacterSetArousal(C, C.ArousalSettings.Progress);
+					// Validates the current arousal progress
+					ActivitySetArousal(C, C.ArousalSettings.Progress);
 
-				// Draw the gradient meter with a white border if the user can control her meter or a gold border if she cannot
-				if (C.ID == 0) {
-					DrawRect(X + (400 * Zoom), Y + (200 * Zoom) - 2, (45 * Zoom) + 4, (500 * Zoom) + 4, (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white");
-					DrawImageZoomCanvas("Screens/Character/Player/ArousalMeter.png", MainCanvas, 0, 0, 50, 500, X + (400 * Zoom) + 2, Y + (200 * Zoom), 45 * Zoom, 500 * Zoom);
-					DrawEmptyRect(X + (400 * Zoom) + 1, Y + (200 * Zoom) + ((100 - C.ArousalSettings.Progress) * 4.5 * Zoom), (45 * Zoom) + 2, (50 * Zoom), (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white", 3);
-				} else {
-					DrawRect(X + (400 * Zoom), Y + (325 * Zoom) - 2, (22 * Zoom) + 4, (250 * Zoom) + 4, (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white");
-					DrawImageZoomCanvas("Screens/Character/Player/ArousalMeter.png", MainCanvas, 0, 0, 50, 500, X + (400 * Zoom) + 2, Y + (325 * Zoom), 22 * Zoom, 250 * Zoom);
-					DrawEmptyRect(X + (400 * Zoom) + 1, Y + (325 * Zoom) + ((100 - C.ArousalSettings.Progress) * 2.25 * Zoom), (22 * Zoom) + 2, (25 * Zoom), (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white", 3);
+					// In orgasm mode, we only draw a pink rectangle
+					if ((C.ArousalSettings.OrgasmTimer != null) && (typeof C.ArousalSettings.OrgasmTimer === "number") && !isNaN(C.ArousalSettings.OrgasmTimer) && (C.ArousalSettings.OrgasmTimer > CurrentTime)) {
+						DrawRect(X + (400 * Zoom), Y + (325 * Zoom) - 2, (22 * Zoom) + 4, (250 * Zoom) + 4, (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white");
+						DrawRect(X + (400 * Zoom) + 2, Y + (325 * Zoom), (22 * Zoom), (250 * Zoom), "pink");
+					} else {
+									
+						// Draw the gradient meter with a white border if the user can control her meter or a gold border if she cannot
+						if ((C.ID == 0) && (CurrentCharacter == null) && (C.ArousalSettings.Active != "Automatic")) {
+							DrawRect(X + (400 * Zoom), Y + (200 * Zoom) - 2, (45 * Zoom) + 4, (500 * Zoom) + 4, (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white");
+							DrawImageZoomCanvas("Screens/Character/Player/ArousalMeter.png", MainCanvas, 0, 0, 50, 500, X + (400 * Zoom) + 2, Y + (200 * Zoom), 45 * Zoom, 500 * Zoom);
+							DrawEmptyRect(X + (400 * Zoom) + 1, Y + (200 * Zoom) + ((100 - C.ArousalSettings.Progress) * 4.5 * Zoom), (45 * Zoom) + 2, (50 * Zoom), (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white", 3);
+						} else {
+							DrawRect(X + (400 * Zoom), Y + (325 * Zoom) - 2, (22 * Zoom) + 4, (250 * Zoom) + 4, (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white");
+							DrawImageZoomCanvas("Screens/Character/Player/ArousalMeter.png", MainCanvas, 0, 0, 50, 500, X + (400 * Zoom) + 2, Y + (325 * Zoom), 22 * Zoom, 250 * Zoom);
+							DrawEmptyRect(X + (400 * Zoom) + 1, Y + (325 * Zoom) + ((100 - C.ArousalSettings.Progress) * 2.25 * Zoom), (22 * Zoom) + 2, (25 * Zoom), (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white", 3);
+						}
+						
+					}
+
 				}
-
-			}
 }
 
 // Refreshes the character if not all images are loaded and draw the character canvas on the main game screen

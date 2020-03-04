@@ -150,6 +150,7 @@ function NPCArousal(C) {
 	// Forces the automatic meter and resets it
 	C.ArousalSettings.Active = "Automatic";
 	C.ArousalSettings.Progress = 0;
+	C.ArousalSettings.ProgressTimer = 0;
 
 }
 

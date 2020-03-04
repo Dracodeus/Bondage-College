@@ -575,14 +575,3 @@ function CharacterResetFacialExpression(C) {
 function CharacterGetCurrent() {
 	return (Player.FocusGroup != null) ? Player : CurrentCharacter;
 }
-
-// Sets the character arousal level and validates the value
-function CharacterSetArousal(C, Progress) {
-	if ((Progress == null) || (Progress < 0)) Progress = 0;
-	if (Progress > 100) Progress = 100;
-	if ((C.ArousalSettings.Progress == null) || (C.ArousalSettings.Progress != Progress)) {
-		C.ArousalSettings.Progress = Progress;
-		if ((C.ID == 0) && (CurrentScreen == "ChatRoom"))
-			ChatRoomCharacterUpdate(Player);
-	}
-}

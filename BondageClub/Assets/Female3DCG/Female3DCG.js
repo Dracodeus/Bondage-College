@@ -783,7 +783,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemFeet",
 		Category: "Item",
-		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "Massage", "Grope"],
+		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "MassageHands", "Grope"],
 		Priority: 27,
 		ParentGroup: "BodyLower",
 		Default: false,
@@ -819,7 +819,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemLegs",
 		Category: "Item",
-		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "Massage", "Grope"],
+		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "MassageHands", "Grope"],
 		Priority: 25,
 		ParentGroup: "BodyLower",
 		Default: false,
@@ -873,7 +873,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemVulva",
 		Category: "Item",
-		Activity: ["Kiss", "MasturbateHand", "MasturbateFist", "MasturbateFoot", "MasturbateTongue", "Slap", "Caress"],
+		Activity: ["MasturbateHand", "MasturbateFist", "MasturbateFoot", "MasturbateTongue", "Caress", "Slap", "Kiss", "Bite"],
 		Priority: 15,
 		Default: false,
 		Color: ["Default"],
@@ -1004,7 +1004,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemPelvis",
 		Category: "Item",
-		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "Massage", "Grope"],
+		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "MassageHands", "Grope"],
 		Priority: 17,
 		ParentGroup: "BodyLower",
 		Default: false,
@@ -1079,7 +1079,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemTorso",
 		ParentGroup: "BodyUpper",
-		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "Massage", "Rub"],
+		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "MassageHands", "MassageFeet", "Rub"],
 		Category: "Item",
 		Priority: 18,
 		Default: false,
@@ -1109,7 +1109,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemNipples",
 		ParentGroup: "BodyUpper",
-		Activity: ["Kiss", "Lick", "Pinch", "Suck", "Caress"],
+		Activity: ["Kiss", "Lick", "Suck", "Bite", "Pinch", "Caress"],
 		Category: "Item",
 		Priority: 19,
 		Default: false,
@@ -1199,7 +1199,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemArms",
 		ParentGroup: "BodyUpper",
-		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "Massage", "Grope"],
+		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "MassageHands", "Grope"],
 		Category: "Item",
 		Priority: 32,
 		Default: false,
@@ -1320,7 +1320,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemHands",
 		ParentGroup: "BodyUpper",
-		Activity: ["Kiss", "Lick", "PoliteKiss", "Spank", "Caress", "Polish"],
+		Activity: ["Kiss", "Lick", "PoliteKiss", "Spank", "Caress"],
 		Category: "Item",
 		Priority: 34,
 		Default: false,
@@ -1372,7 +1372,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemNeck",
 		Category: "Item",
-		Activity: ["Kiss", "Lick", "Caress", "Massage", "Strangle", "Bite"],
+		Activity: ["Kiss", "Lick", "Caress", "MassageHands", "Strangle", "Bite"],
 		Priority: 33,
 		Default: false,
 		Color: ["Default"],
@@ -1472,7 +1472,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemMouth",
 		Category: "Item",
-		Activity: ["Kiss", "FrenchKiss", "PoliteKiss", "Lick", "Caress"],
+		Activity: ["Kiss", "FrenchKiss", "PoliteKiss", "Lick", "Bite", "Caress"],
 		Priority: 34,
 		Default: false,
 		IsRestraint: true,
@@ -1934,7 +1934,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemBoots",
 		Category: "Item",
-		Activity: ["Kiss", "Lick", "Suck", "Tickle", "Spank", "Massage", "Polish"],
+		Activity: ["Kiss", "Lick", "Suck", "Tickle", "Spank", "MassageHands"],
 		Priority: 23,
 		ParentGroup: "BodyLower",
 		Default: false,
@@ -2022,116 +2022,134 @@ var PoseFemale3DCG = [
 var ActivityFemale3DCG = [
 	{
 		Name: "Kiss",
+		MaxProgress: 50,
 		TargetSelf: ["ItemHands", "ItemArms", "ItemBoots"],
 		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "FrenchKiss",
+		MaxProgress: 70,
 		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "PoliteKiss",
+		MaxProgress: 30,
 		TargetSelf: ["ItemHands", "ItemArms", "ItemBoots"],
 		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "Lick",
+		MaxProgress: 90,
 		TargetSelf: ["ItemHands", "ItemArms", "ItemBoots"],
 		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "Suck",
+		MaxProgress: 60,
 		TargetSelf: ["ItemHands", "ItemArms", "ItemBoots"],
 		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "Bite",
+		MaxProgress: 40,
 		TargetSelf: ["ItemHands", "ItemArms", "ItemBoots"],
 		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "Whisper",
+		MaxProgress: 20,
 		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "Tickle",
+		MaxProgress: 50,
 		TargetSelf: ["ItemTorso", "ItemPelvis", "ItemBreast", "ItemNipples", "ItemLegs", "ItemFeet", "ItemBoots", "ItemArms", "ItemHands"],
 		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Caress",
+		MaxProgress: 80,
 		TargetSelf: ["ItemTorso", "ItemPelvis", "ItemBreast", "ItemNipples", "ItemLegs", "ItemFeet", "ItemBoots", "ItemArms", "ItemHands", "ItemButt", "ItemVulva", "ItemHead"],
 		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Rub",
+		MaxProgress: 60,
 		TargetSelf: ["ItemTorso", "ItemPelvis", "ItemBreast", "ItemLegs", "ItemFeet", "ItemArms", "ItemHead"],
 		Prerequisite: ["UseFeet"]
 	},
 	{
 		Name: "Brush",
+		MaxProgress: 30,
 		TargetSelf: ["ItemHead"],
 		Prerequisite: ["UseHands"]
 	},
 	{
-		Name: "Massage",
+		Name: "MassageHands",
+		MaxProgress: 60,
 		TargetSelf: ["ItemTorso", "ItemPelvis", "ItemBreast", "ItemLegs", "ItemFeet", "ItemBoots", "ItemArms", "ItemHands", "ItemButt", "ItemVulva", "ItemHead"],
 		Prerequisite: ["UseHands"]
 	},
 	{
-		Name: "Polish",
-		TargetSelf: ["ItemHands", "ItemBoots"],
-		Prerequisite: ["UseHands"]
+		Name: "MassageFeet",
+		MaxProgress: 40,
+		Prerequisite: ["UseFeet"]
 	},
 	{
 		Name: "Grope",
+		MaxProgress: 50,
 		TargetSelf: ["ItemButt", "ItemBreast"],
 		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Pinch",
+		MaxProgress: 20,
 		TargetSelf: ["ItemNipples", "ItemEars"],
 		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Spank",
+		MaxProgress: 40,
 		TargetSelf: ["ItemButt", "ItemLegs"],
 		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Slap",
+		MaxProgress: 30,
 		TargetSelf: ["ItemBreast", "ItemHead"],
 		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Pull",
+		MaxProgress: 30,
 		TargetSelf: ["ItemHead"],
 		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Strangle",
+		MaxProgress: 50,
 		TargetSelf: ["ItemNeck"],
 		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "MasturbateTongue",
-		Orgasm: true,
+		MaxProgress: 100,
 		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "MasturbateHand",
 		TargetSelf: ["ItemBreast", "ItemVulva", "ItemButt"],
-		Orgasm: true,
+		MaxProgress: 100,
 		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "MasturbateFist",
-		Orgasm: true,
+		MaxProgress: 100,
 		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "MasturbateFoot",
-		Orgasm: true,
+		MaxProgress: 100,
 		Prerequisite: ["UseFeet"]
 	}
 	
