@@ -52,8 +52,9 @@ ClothAccessory,Bouquet,Bouquet of flowers
 ClothAccessory,FrillyApron,Frilly Apron
 Suit,,Upper Suit
 Suit,Catsuit,Catsuit
-Suit,Seethroughsuit,Seethrough suit
-SuitLower,Seethroughsuitzip,Seethrough suit
+Suit,SeamlessCatsuit, Seamless Catsuit
+Suit,SeethroughSuit,See-through Suit
+Suit,SeethroughSuitzip,See-through Zipsuit
 ClothLower,,Bottom
 ClothLower,Skirt1,Skirt
 ClothLower,Skirt2,Student Skirt
@@ -75,8 +76,9 @@ ClothLower,ChineseSkirt1,Chinese Skirt
 ClothLower,Gown2Skirt,Hobble Gown Skirt
 SuitLower,,Suit Lower
 SuitLower,Catsuit,Catsuit
-SuitLower,Seethroughsuit,Seethrough suit
-SuitLower,Seethroughsuitzip,Seethrough suit
+SuitLower,SeamlessCatsuit, Seamless Catsuit
+SuitLower,SeethroughSuit,See-through Suit
+SuitLower,SeethroughSuitZip,See-through Zipsuit
 Bra,,Bra
 Bra,Bra1,Style 1
 Bra,Bra2,Style 2
@@ -267,7 +269,7 @@ Gloves,MistressGloves,Mistress Gloves
 Gloves,FingerlessGloves,Fingerless Gloves
 Gloves,GlovesFur,Gloves with Fur
 Gloves,Catsuit,Catsuit Gloves
-SuitLower,Seethroughsuit,Seethrough suit
+SuitLower,SeethroughSuit,See-through Suit
 Glasses,,Glasses
 Glasses,Glasses1,Style 1
 Glasses,Glasses2,Style 2

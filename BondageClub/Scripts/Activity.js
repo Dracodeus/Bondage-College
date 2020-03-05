@@ -130,8 +130,14 @@ function CharacterSetArousalTimer(C, Progress) {
 function ActivityOrgasm(C) {
 	if ((C.ID == 0) || (C.AccountName.substring(0, 4) == "NPC_") || (C.AccountName.substring(0, 4) == "NPC-")) {
 
+		// Starts the timer and exits from dialog if necessary
 		C.ArousalSettings.OrgasmTimer = CurrentTime + (Math.random() * 10000) + 5000;
-		ActivitySetArousal(C, 25);
+		ActivitySetArousal(C, 23);
+		if ((CurrentCharacter != null) && (CurrentCharacter.ID == C.ID)) DialogLeave();
+
+		// If an NPC orgasmed, it will raise her love based on the horny trait
+		if ((C.AccountName.substring(0, 4) == "NPC_") || (C.AccountName.substring(0, 4) == "NPC-"))
+			NPCLoveChange(C, Math.floor((NPCTraitGet(C, "Horny") + 100) / 20) + 1);
 
 	}
 }
@@ -144,10 +150,50 @@ function ActivityTimerProgress(C, Progress) {
 	if (C.ArousalSettings.Progress < 0) C.ArousalSettings.Progress = 0
 	if (C.ArousalSettings.Progress > 100) {
 		C.ArousalSettings.Progress = 100;
+		C.ArousalSettings.ProgressTimer = 0;
 		ActivityOrgasm(C);
 	}
-	
-	// If it can affect facial expressions
+
+	// Out of orgasm mode, it can affect facial expressions
+	if ((C.ArousalSettings.OrgasmTimer == null) || (typeof C.ArousalSettings.OrgasmTimer !== "number") || isNaN(C.ArousalSettings.OrgasmTimer) || (C.ArousalSettings.OrgasmTimer < CurrentTime))	
+		if (((C.ArousalSettings.AffectExpression == null) || C.ArousalSettings.AffectExpression) && (C.ArousalSettings.Progress % 10 == 0)) {
+
+			// The blushes goes to red progressively
+			var Blush = "";
+			if ((C.ArousalSettings.Progress == 10) || (C.ArousalSettings.Progress == 30) || (C.ArousalSettings.Progress == 50) || (C.ArousalSettings.Progress == 70)) Blush = "Low";
+			if ((C.ArousalSettings.Progress == 60) || (C.ArousalSettings.Progress == 80) || (C.ArousalSettings.Progress == 90)) Blush = "Medium";
+			if (C.ArousalSettings.Progress == 100) Blush = "High";
+
+			// The eyebrows position changes
+			var Eyebrows = "";
+			if ((C.ArousalSettings.Progress == 20) || (C.ArousalSettings.Progress == 30)) Eyebrows = "Raised";
+			if ((C.ArousalSettings.Progress == 50) || (C.ArousalSettings.Progress == 60)) Eyebrows = "Lowered";
+			if ((C.ArousalSettings.Progress == 80) || (C.ArousalSettings.Progress == 90)) Eyebrows = "Soft";
+
+			// Drool can activate at a few stages
+			var Fluids = "";
+			if ((C.ArousalSettings.Progress == 40) || (C.ArousalSettings.Progress == 70)) Fluids = "DroolLow";
+			if (C.ArousalSettings.Progress == 100) Fluids = "DroolMedium";
+
+			// Eyes can activate at a few stages
+			var Eyes = "";
+			if (C.ArousalSettings.Progress == 20) Eyes = "Dazed";
+			if (C.ArousalSettings.Progress == 70) Eyes = "Horny";
+			if (C.ArousalSettings.Progress == 90) Eyes = "Surprised";
+			if (C.ArousalSettings.Progress == 100) Eyes = "Closed";
+
+			// Find the expression in the character appearance and alters it
+			for (var A = 0; A < C.Appearance.length; A++) {
+				if (C.Appearance[A].Asset.Group.Name == "Blush") C.Appearance[A].Property = { Expression: Blush };
+				if (C.Appearance[A].Asset.Group.Name == "Eyebrows") C.Appearance[A].Property = { Expression: Eyebrows };
+				if (C.Appearance[A].Asset.Group.Name == "Fluids") C.Appearance[A].Property = { Expression: Fluids };
+				if (C.Appearance[A].Asset.Group.Name == "Eyes") C.Appearance[A].Property = { Expression: Eyes };
+			}
+
+			// Refreshes the character
+			CharacterRefresh(C);
+
+		}
 
 }
 
