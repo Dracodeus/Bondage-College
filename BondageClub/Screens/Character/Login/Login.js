@@ -252,16 +252,19 @@ function LoginResponse(C) {
 			Player.FriendList = ((C.FriendList == null) || !Array.isArray(C.FriendList)) ? [] : C.FriendList;
 			Player.GhostList = ((C.GhostList == null) || !Array.isArray(C.GhostList)) ? [] : C.GhostList;
 
-			// Calls the preference init to make sure the preferences are loaded correctly
-			PreferenceInit(Player);
-			ActivitySetArousal(Player, 0);
-
 			// Loads the player character model and data
 			Player.Appearance = ServerAppearanceLoadFromBundle(Player, C.AssetFamily, C.Appearance);
 			InventoryLoad(Player, C.Inventory);
 			LogLoad(C.Log);
 			ReputationLoad(C.Reputation);
 			SkillLoad(C.Skill);
+
+			// Calls the preference init to make sure the preferences are loaded correctly
+			PreferenceInit(Player);
+			ActivitySetArousal(Player, 0);
+			ActivityTimerProgress(Player, 0);
+
+			// Loads the dialog and removes the login controls
 			CharacterLoadCSVDialog(Player);
 			PrivateCharacterMax = 4 + (LogQuery("Expansion", "PrivateRoom") ? 4 : 0) + (LogQuery("SecondExpansion", "PrivateRoom") ? 4 : 0);
 			CharacterRefresh(Player, false);

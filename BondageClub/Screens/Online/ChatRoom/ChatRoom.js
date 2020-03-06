@@ -138,7 +138,6 @@ function ChatRoomDrawCharacter(DoClick) {
 					if ((ChatRoomCharacter[C].ID == 0) && (MouseX >= (C % 5) * Space + X + 400 * Zoom) && (MouseX <= (C % 5) * Space + X + 450 * Zoom) && (MouseY >= Y + Math.floor(C / 5) * 500 + 200 * Zoom) && (MouseY <= Y + Math.floor(C / 5) * 500 + 700 * Zoom))
 						if ((Player.ArousalSettings != null) && (Player.ArousalSettings.Active != null) && (Player.ArousalSettings.Progress != null)) {
 							if ((Player.ArousalSettings.Active == "Manual") || (Player.ArousalSettings.Active == "Hybrid")) ActivitySetArousal(Player, Math.round((Y + (Math.floor(C / 5) * 500 + 675 * Zoom) - MouseY) / (4.5 * Zoom), 0));
-							if ((Player.ArousalSettings.Active == "Automatic") && (Player.ArousalSettings.Progress > 0)) ActivitySetArousal(Player, Player.ArousalSettings.Progress - 1);
 							return;
 						}
 
@@ -250,7 +249,7 @@ function ChatRoomClick() {
 
 	// When the user character kneels
 	if ((MouseX >= 1353) && (MouseX < 1473) && (MouseY >= 0) && (MouseY <= 62) && Player.CanKneel()) {
-		ServerSend("ChatRoomChat", { Content: (Player.ActivePose == null) ? "KneelDown": "StandUp", Type: "Action" , Dictionary: [{Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber}]} );
+		ServerSend("ChatRoomChat", { Content: (Player.ActivePose == null) ? "KneelDown": "StandUp", Type: "Action", Dictionary: [{Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber}]} );
 		CharacterSetActivePose(Player, (Player.ActivePose == null) ? "Kneel" : null);
 		ChatRoomCharacterUpdate(Player);
 	}
@@ -572,6 +571,7 @@ function ChatRoomMessage(data) {
 				AudioPlayContent(data);
 			}
 
+			// Prepares the HTML tags
 			if (data.Type != null) {
 				if (data.Type == "Chat"){
 					if (PreferenceIsPlayerInSensDep() && SenderCharacter.MemberNumber != Player.MemberNumber) msg = '<span class="ChatMessageName" style="color:' + (SenderCharacter.LabelColor || 'gray') + ';">' + SpeechGarble(SenderCharacter, SenderCharacter.Name) + ':</span> ' + SpeechGarble(SenderCharacter, msg);
@@ -586,6 +586,29 @@ function ChatRoomMessage(data) {
 				}
 				else if (data.Type == "Action") msg = "(" + msg + ")";
 				else if (data.Type == "ServerMessage") msg = "<b>" + msg + "</b>";
+			}
+
+			// Sets up the activity text
+			if ((data.Type != null) && (data.Type == "Activity")) {
+
+				// Creates the output message using the activity dictionary, keep some values to calculate the activity effects
+				msg = ActivityDictionaryText(msg);
+				var TargetMemberNumber = null;
+				var ActivityName = null;
+				var ActivityGroup = null;
+				if (data.Dictionary != null)
+					for (var D = 0; D < data.Dictionary.length; D++) {
+							if (data.Dictionary[D].MemberNumber != null) msg = msg.replace(data.Dictionary[D].Tag, (PreferenceIsPlayerInSensDep() && (data.Dictionary[D].MemberNumber != Player.MemberNumber)) ? DialogFind(Player, "Someone") : ChatRoomHTMLEntities(data.Dictionary[D].Text));
+							if ((data.Dictionary[D].MemberNumber != null) && (data.Dictionary[D].Tag == "TargetCharacter")) TargetMemberNumber = data.Dictionary[D].MemberNumber;
+							if (data.Dictionary[D].Tag == "ActivityName") ActivityName = data.Dictionary[D].Text;
+							if (data.Dictionary[D].Tag == "ActivityGroup") ActivityGroup = data.Dictionary[D].Text;
+						}
+
+				// If the player does the activity on herself or an NPC, we calculate the result right away
+				if ((TargetMemberNumber == Player.MemberNumber) && (SenderCharacter.MemberNumber != Player.MemberNumber))
+					if ((Player.ArousalSettings == null) || (Player.ArousalSettings.Active == null) || (Player.ArousalSettings.Active == "Hybrid") || (Player.ArousalSettings.Active == "Automatic"))
+						ActivityEffect(SenderCharacter, Player, ActivityName, ActivityGroup);
+
 			}
 
 			// Adds the message and scrolls down unless the user has scrolled up

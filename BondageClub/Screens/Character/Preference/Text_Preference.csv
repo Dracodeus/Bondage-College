@@ -79,3 +79,8 @@ ArousalZoneItemNeck,Neck
 ArousalZoneItemMouth,Mouth & Lips
 ArousalZoneItemHead,Head & Hair
 ArousalZoneItemEars,Ears
+ArousalStutter,Speech stuttering:
+ArousalStutterNone,Never stutter
+ArousalStutterArousal,When you're aroused
+ArousalStutterVibration,When you're vibrated
+ArousalStutterAll,Aroused & vibrated

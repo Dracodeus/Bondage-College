@@ -87,14 +87,18 @@ function ActivityDialogBuild(C) {
 
 }
 
-// Calculates the effect of an activity (A) on target character (C) from source character (S)
-function ActivityEffect(S, C, A) {
+// Calculates the effect of an activity (A) on target character (C) from source character (S) on zone (Z)
+function ActivityEffect(S, C, A, Z) {
+
+	// Converts from activity name to the activity object
+	if (typeof A === "string") A = AssetGetActivity(C.AssetFamily, A);
+	if ((A == null) || (typeof A === "string")) return;
 
 	// Calculates the next progress factor
 	var Factor = (PreferenceGetActivityFactor(C, A.Name, (C.ID == 0)) * 5) - 10; // Check how much the character likes the activity, from -10 to +10
-	Factor = Factor + (PreferenceGetZoneFactor(C, C.FocusGroup.Name) * 5) - 10; // The zone used also adds from -10 to +10
-	Factor = Factor + Math.floor((Math.random() * 6)); // Random 0 to 5 bonus
-	if ((C.ID != 0) && C.IsLoverOfPlayer()) Factor = Factor + Math.floor((Math.random() * 6)); // Another random 0 to 5 bonus if the target is the player's lover
+	Factor = Factor + (PreferenceGetZoneFactor(C, Z) * 5) - 10; // The zone used also adds from -10 to +10
+	Factor = Factor + Math.floor((Math.random() * 8)); // Random 0 to 7 bonus
+	if ((C.ID != S.ID) && (((C.ID != 0) && C.IsLoverOfPlayer()) || ((C.ID == 0) && S.IsLoverOfPlayer()))) Factor = Factor + Math.floor((Math.random() * 8)); // Another random 0 to 7 bonus if the target is the player's lover
 	CharacterSetArousalTimer(C, Factor);
 
 }
@@ -203,17 +207,22 @@ function ActivityRun(C, A) {
 	// If the player does the activity on herself or an NPC, we calculate the result right away
 	if ((C.ArousalSettings.Active == "Hybrid") || (C.ArousalSettings.Active == "Automatic"))
 		if ((C.ID == 0) || (C.AccountName.substring(0, 4) == "NPC_") || (C.AccountName.substring(0, 4) == "NPC-"))
-			ActivityEffect(Player, C, A);
+			ActivityEffect(Player, C, A, C.FocusGroup.Name);
 
 	// The text result can be outputted in the chatroom or in the NPC dialog
 	if (CurrentScreen == "ChatRoom") {
 
-		// Publishes the activity as a regular chatroom action
+		// Publishes the activity to the chatroom
 		var Dictionary = [];
-		Dictionary.push({Tag: "SourceCharacter", Text: Player.Name});
-		Dictionary.push({Tag: "TargetCharacter", Text: C.Name});
-		ServerSend("ChatRoomChat", { Content: (C.ID == 0) ? "ChatSelf-" : "ChatOther-" + C.FocusGroup.Name + "-" + A.Name, Type: "Action", Dictionary: Dictionary} );
+		Dictionary.push({Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber});
+		Dictionary.push({Tag: "TargetCharacter", Text: C.Name, MemberNumber: C.MemberNumber});
+		Dictionary.push({Tag: "ActivityGroup", Text: C.FocusGroup.Name});
+		Dictionary.push({Tag: "ActivityName", Text: A.Name});
+		ServerSend("ChatRoomChat", {Content: ((C.ID == 0) ? "ChatSelf-" : "ChatOther-") + C.FocusGroup.Name + "-" + A.Name, Type: "Activity", Dictionary: Dictionary});
+
+		// Exits from dialog to see the result
+		DialogLeave();
 
 	}
-	
+
 }

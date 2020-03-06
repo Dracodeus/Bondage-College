@@ -228,8 +228,10 @@ function DialogMenuButtonBuild(C) {
 		return;
 	}
 
-	// Pushes all valid main buttons, based on if the player is restrained, has a blocked group, has the key, etc.
+	// Out of struggle mode, we calculate which buttons to show in the UI
 	if ((DialogProgress < 0) && !DialogActivityMode) {
+
+		// Pushes all valid main buttons, based on if the player is restrained, has a blocked group, has the key, etc.
 		var Item = InventoryGet(C, C.FocusGroup.Name);
 		var IsItemLocked = InventoryItemHasEffect(Item, "Lock", true);
 		var IsGroupBlocked = InventoryGroupIsBlocked(C);
@@ -246,11 +248,19 @@ function DialogMenuButtonBuild(C) {
 		if (InventoryItemHasEffect(Item, "Egged") && InventoryAvailable(Player, "VibratorRemote", "ItemVulva") && Player.CanInteract()) DialogMenuButton.push("Remote");
 		if ((Item != null) && Item.Asset.Extended && Player.CanInteract() && !IsGroupBlocked && (!Item.Asset.OwnerOnly || (C.IsOwnedByPlayer())) && (!Item.Asset.LoverOnly || (C.IsLoverOfPlayer()))) DialogMenuButton.push("Use");
 		if (Player.CanInteract()) DialogMenuButton.push("ColorPick");
-		if ((C.FocusGroup.Activity != null) && !IsGroupBlocked && (Item == null) && ((CurrentScreen == "ChatRoom") || ((CurrentScreen == "Private") && LogQuery("RentRoom", "PrivateRoom"))) && ((C.ArousalSettings != null) && (C.ArousalSettings.Active != null) && (C.ArousalSettings.Active != "Inactive"))) DialogMenuButton.push("Activity");
+
+		// Make sure the target player zone is allowed for an activity
+		if ((C.FocusGroup.Activity != null) && !IsGroupBlocked && (Item == null) && ((CurrentScreen == "ChatRoom") || ((CurrentScreen == "Private") && LogQuery("RentRoom", "PrivateRoom"))) && ((C.ArousalSettings != null) && (C.ArousalSettings.Zone != null) && (C.ArousalSettings.Active != null) && (C.ArousalSettings.Active != "Inactive")))
+			for (var Z = 0; Z < C.ArousalSettings.Zone.length; Z++)
+				if ((C.ArousalSettings.Zone[Z].Name == C.FocusGroup.Name) && (C.ArousalSettings.Zone[Z].Factor != null) && (C.ArousalSettings.Zone[Z].Factor > 0))
+					DialogMenuButton.push("Activity");
+				
+		// Item permission enter/exit
 		if (C.ID == 0) {
 			if (DialogItemPermissionMode) DialogMenuButton.push("DialogNormalMode");
 			else DialogMenuButton.push("DialogPermissionMode");
 		}
+
 	}
 
 }

@@ -513,6 +513,7 @@ ItemTorso,Corset5,Floral Corset
 ItemTorso,LeatherBreastBinder,Leather Breast Binder
 ItemTorso,LatexCorset1,Latex Corset
 ItemTorso,LeatherStrapBra1,Leather Strap Bra
+ItemTorso,CrotchChain, Crotch Chain
 ItemNipples,,Nipples
 ItemNipples,NippleClamp,Nipple Clamps
 ItemNipples,VibeNippleClamp,Vibrating Nipple Clamps
@@ -821,6 +822,8 @@ ItemDevices,TheDisplayFrame,Display Frame
 ItemDevices,Sybian,Sybian
 ItemDevices,StrapOnSmooth,Smooth Strap On
 ItemDevices,StrapOnStuds,Studded Strap On
+ItemDevices,DisplayCase,Display Case
+ItemDevices,SmallDisplayCase,Small Display Case 
 ItemAddon,,Body
 ItemAddon,BondageBenchStraps,Leather Belt Straps
 ItemBoots,,Feet
@@ -831,6 +834,7 @@ ItemBoots,ToeCuffs,Metal Toe Cuffs
 ItemBoots,LeatherToeCuffs,Leather Toe Cuffs
 ItemBoots,ToeTie,Toe Tie
 ItemBoots,ThighHighLatexHeels,Latex Heels
+ItemBoots,LockingHeels,Locking Heels
 ItemHidden,Accessories,
 ItemHidden,LeatherArmbinderStraps,Leather Armbinder Straps
 ItemHidden,LeatherArmbinderWrapStrap,Leather Armbinder WrapStraps
