@@ -128,7 +128,7 @@ function ActivitySetArousalTimer(C, Activity, Zone, Progress) {
 	// Make sure we do not allow orgasms if the activity (MaxProgress) or the zone (AllowOrgasm) doesn't allow it
 	var Max = ((Activity.MaxProgress == null) || (Activity.MaxProgress > 100)) ? 100 : Activity.MaxProgress;
 	if ((Max == 100) && !PreferenceGetZoneOrgasm(C, Zone)) Max = 90;
-	if ((Progress > 0) && (C.ArousalSettings.Progress + Progress > Max)) Progress = (A.MaxProgress - C.ArousalSettings.Progress >= 0) ? A.MaxProgress - C.ArousalSettings.Progress : 0;
+	if ((Progress > 0) && (C.ArousalSettings.Progress + Progress > Max)) Progress = (Max - C.ArousalSettings.Progress >= 0) ? Max - C.ArousalSettings.Progress : 0;
 
 	// If we must apply a progress timer change, we publish it
 	if ((C.ArousalSettings.ProgressTimer == null) || (C.ArousalSettings.ProgressTimer != Progress)) {
@@ -147,7 +147,7 @@ function ActivityOrgasm(C) {
 		if ((C.ID == 0) && (CurrentScreen == "ChatRoom")) {
 			var Dictionary = [];
 			Dictionary.push({Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber});
-			ServerSend("ChatRoomChat", {Content: "Orgasm" + (Math.random() * 10).toString(), Type: "Activity", Dictionary: Dictionary});
+			ServerSend("ChatRoomChat", {Content: "Orgasm" + (Math.floor(Math.random() * 10)).toString(), Type: "Activity", Dictionary: Dictionary});
 		}
 
 		// Starts the timer and exits from dialog if necessary
@@ -166,7 +166,7 @@ function ActivityOrgasm(C) {
 function ActivityExpression(C, Progress) {
 
 	// Floors the progress to the nearest 10 to pick the expression
-	Progress = Math.floor(C.ArousalSettings.Progress / 10) * 10;
+	Progress = Math.floor(Progress / 10) * 10;
 	
 	// The blushes goes to red progressively
 	var Blush = "";

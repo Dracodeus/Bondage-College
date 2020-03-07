@@ -226,7 +226,14 @@ function PrivateClickCharacter() {
 				// If the player can manually control her arousal or wants to fight her desire
 				if ((PrivateCharacter[C].ID == 0) && (MouseX >= X + (C - PrivateCharacterOffset) * 470 + 400) && (MouseX <= X + (C - PrivateCharacterOffset) * 470 + 450) && (MouseY >= 200) && (MouseY <= 700))
 					if ((Player.ArousalSettings != null) && (Player.ArousalSettings.Active != null) && (Player.ArousalSettings.Progress != null)) {
-						if ((Player.ArousalSettings.Active == "Manual") || (Player.ArousalSettings.Active == "Hybrid")) ActivitySetArousal(Player, Math.round((675 - MouseY) / 4.5, 0));
+						if ((Player.ArousalSettings.Active == "Manual") || (Player.ArousalSettings.Active == "Hybrid")) {
+							var Arousal = Math.round((675 - MouseY) / 4.5, 0);
+							if (Arousal < 0) Arousal = 0;
+							if (Arousal > 100) Arousal = 100;
+							if ((Player.ArousalSettings.AffectExpression == null) || Player.ArousalSettings.AffectExpression) ActivityExpression(Player, Arousal);
+							ActivitySetArousal(Player, Arousal);
+							if (Arousal == 100) ActivityOrgasm(Player);
+						}
 						return;
 					}
 

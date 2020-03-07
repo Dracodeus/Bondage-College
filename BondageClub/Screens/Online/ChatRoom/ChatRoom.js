@@ -139,6 +139,8 @@ function ChatRoomDrawCharacter(DoClick) {
 						if ((Player.ArousalSettings != null) && (Player.ArousalSettings.Active != null) && (Player.ArousalSettings.Progress != null)) {
 							if ((Player.ArousalSettings.Active == "Manual") || (Player.ArousalSettings.Active == "Hybrid")) {
 								var Arousal = Math.round((Y + (Math.floor(C / 5) * 500 + 675 * Zoom) - MouseY) / (4.5 * Zoom), 0);
+								if (Arousal < 0) Arousal = 0;
+								if (Arousal > 100) Arousal = 100;
 								if ((Player.ArousalSettings.AffectExpression == null) || Player.ArousalSettings.AffectExpression) ActivityExpression(Player, Arousal);
 								ActivitySetArousal(Player, Arousal);
 								if (Arousal == 100) ActivityOrgasm(Player);
