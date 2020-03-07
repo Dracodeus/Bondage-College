@@ -99,7 +99,7 @@ function ActivityEffect(S, C, A, Z) {
 	Factor = Factor + (PreferenceGetZoneFactor(C, Z) * 5) - 10; // The zone used also adds from -10 to +10
 	Factor = Factor + Math.floor((Math.random() * 8)); // Random 0 to 7 bonus
 	if ((C.ID != S.ID) && (((C.ID != 0) && C.IsLoverOfPlayer()) || ((C.ID == 0) && S.IsLoverOfPlayer()))) Factor = Factor + Math.floor((Math.random() * 8)); // Another random 0 to 7 bonus if the target is the player's lover
-	CharacterSetArousalTimer(C, Factor);
+	ActivitySetArousalTimer(C, A, Z, Factor);
 
 }
 
@@ -116,23 +116,39 @@ function ActivitySetArousal(C, Progress) {
 	}
 }
 
-// The progress can be set on a timer to grow slowly
-function CharacterSetArousalTimer(C, Progress) {
+// The progress can be set on a timer to grow slowly, activities are capped at MaxProgress
+function ActivitySetArousalTimer(C, Activity, Zone, Progress) {
+
+	// If there's already a progress timer running, we add it's value but divide it by 2 to lessen the impact, the progress must be between -25 and 25
 	if ((C.ArousalSettings.ProgressTimer == null) || (typeof C.ArousalSettings.ProgressTimer !== "number") || isNaN(C.ArousalSettings.ProgressTimer)) C.ArousalSettings.ProgressTimer = 0;
-	C.ArousalSettings.ProgressTimer
 	Progress = Math.round((C.ArousalSettings.ProgressTimer / 2) + Progress);
 	if (Progress < -25) Progress = -25;
 	if (Progress > 25) Progress = 25;
+
+	// Make sure we do not allow orgasms if the activity (MaxProgress) or the zone (AllowOrgasm) doesn't allow it
+	var Max = ((Activity.MaxProgress == null) || (Activity.MaxProgress > 100)) ? 100 : Activity.MaxProgress;
+	if ((Max == 100) && !PreferenceGetZoneOrgasm(C, Zone)) Max = 90;
+	if ((Progress > 0) && (C.ArousalSettings.Progress + Progress > Max)) Progress = (A.MaxProgress - C.ArousalSettings.Progress >= 0) ? A.MaxProgress - C.ArousalSettings.Progress : 0;
+
+	// If we must apply a progress timer change, we publish it
 	if ((C.ArousalSettings.ProgressTimer == null) || (C.ArousalSettings.ProgressTimer != Progress)) {
 		C.ArousalSettings.ProgressTimer = Progress;
 		if ((C.ID == 0) && (CurrentScreen == "ChatRoom"))
 			ChatRoomCharacterUpdate(Player);
 	}
+
 }
 
 // Triggers an orgasm for the player or an NPC which lasts from 5 to 15 seconds
 function ActivityOrgasm(C) {
 	if ((C.ID == 0) || (C.AccountName.substring(0, 4) == "NPC_") || (C.AccountName.substring(0, 4) == "NPC-")) {
+
+		// The orgasm can be outputted in the chatroom
+		if ((C.ID == 0) && (CurrentScreen == "ChatRoom")) {
+			var Dictionary = [];
+			Dictionary.push({Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber});
+			ServerSend("ChatRoomChat", {Content: "Orgasm" + (Math.random() * 10).toString(), Type: "Activity", Dictionary: Dictionary});
+		}
 
 		// Starts the timer and exits from dialog if necessary
 		C.ArousalSettings.OrgasmTimer = CurrentTime + (Math.random() * 10000) + 5000;
@@ -146,58 +162,64 @@ function ActivityOrgasm(C) {
 	}
 }
 
+// The current arousal level can affect the facial expressions of a character
+function ActivityExpression(C, Progress) {
+
+	// Floors the progress to the nearest 10 to pick the expression
+	Progress = Math.floor(C.ArousalSettings.Progress / 10) * 10;
+	
+	// The blushes goes to red progressively
+	var Blush = "";
+	if ((Progress == 10) || (Progress == 30) || (Progress == 50) || (Progress == 70)) Blush = "Low";
+	if ((Progress == 60) || (Progress == 80) || (Progress == 90)) Blush = "Medium";
+	if (Progress == 100) Blush = "High";
+
+	// The eyebrows position changes
+	var Eyebrows = "";
+	if ((Progress == 20) || (Progress == 30)) Eyebrows = "Raised";
+	if ((Progress == 50) || (Progress == 60)) Eyebrows = "Lowered";
+	if ((Progress == 80) || (Progress == 90)) Eyebrows = "Soft";
+
+	// Drool can activate at a few stages
+	var Fluids = "";
+	if ((Progress == 40) || (C.ArousalSettings.Progress == 70)) Fluids = "DroolLow";
+	if (Progress == 100) Fluids = "DroolMedium";
+
+	// Eyes can activate at a few stages
+	var Eyes = "";
+	if (Progress == 20) Eyes = "Dazed";
+	if (Progress == 70) Eyes = "Horny";
+	if (Progress == 90) Eyes = "Surprised";
+	if (Progress == 100) Eyes = "Closed";
+
+	// Find the expression in the character appearance and alters it
+	for (var A = 0; A < C.Appearance.length; A++) {
+		if (C.Appearance[A].Asset.Group.Name == "Blush") C.Appearance[A].Property = { Expression: Blush };
+		if (C.Appearance[A].Asset.Group.Name == "Eyebrows") C.Appearance[A].Property = { Expression: Eyebrows };
+		if (C.Appearance[A].Asset.Group.Name == "Fluids") C.Appearance[A].Property = { Expression: Fluids };
+		if (C.Appearance[A].Asset.Group.Name == "Eyes") C.Appearance[A].Property = { Expression: Eyes };
+	}
+
+	// Refreshes the character
+	CharacterRefresh(C);
+
+}
+
 // With time ticking, the arousal get increase or decrease
 function ActivityTimerProgress(C, Progress) {
 
-	// Changes the value
+	// Changes the current arousal progress value
 	C.ArousalSettings.Progress = C.ArousalSettings.Progress + Progress;
-	if (C.ArousalSettings.Progress < 0) C.ArousalSettings.Progress = 0
-	if (C.ArousalSettings.Progress > 100) {
-		C.ArousalSettings.Progress = 100;
-		C.ArousalSettings.ProgressTimer = 0;
-		ActivityOrgasm(C);
-	}
+	if (C.ArousalSettings.Progress < 0) C.ArousalSettings.Progress = 0;
+	if (C.ArousalSettings.Progress > 100) C.ArousalSettings.Progress = 100;
 
-	// Out of orgasm mode, it can affect facial expressions
-	if ((C.ArousalSettings.OrgasmTimer == null) || (typeof C.ArousalSettings.OrgasmTimer !== "number") || isNaN(C.ArousalSettings.OrgasmTimer) || (C.ArousalSettings.OrgasmTimer < CurrentTime))	
-		if (((C.ArousalSettings.AffectExpression == null) || C.ArousalSettings.AffectExpression) && (C.ArousalSettings.Progress % 10 == 0)) {
+	// Out of orgasm mode, it can affect facial expressions at every 10 steps
+	if ((C.ArousalSettings.OrgasmTimer == null) || (typeof C.ArousalSettings.OrgasmTimer !== "number") || isNaN(C.ArousalSettings.OrgasmTimer) || (C.ArousalSettings.OrgasmTimer < CurrentTime))
+		if (((C.ArousalSettings.AffectExpression == null) || C.ArousalSettings.AffectExpression) && (C.ArousalSettings.Progress % 10 == 0))
+			ActivityExpression(C, C.ArousalSettings.Progress);
 
-			// The blushes goes to red progressively
-			var Blush = "";
-			if ((C.ArousalSettings.Progress == 10) || (C.ArousalSettings.Progress == 30) || (C.ArousalSettings.Progress == 50) || (C.ArousalSettings.Progress == 70)) Blush = "Low";
-			if ((C.ArousalSettings.Progress == 60) || (C.ArousalSettings.Progress == 80) || (C.ArousalSettings.Progress == 90)) Blush = "Medium";
-			if (C.ArousalSettings.Progress == 100) Blush = "High";
-
-			// The eyebrows position changes
-			var Eyebrows = "";
-			if ((C.ArousalSettings.Progress == 20) || (C.ArousalSettings.Progress == 30)) Eyebrows = "Raised";
-			if ((C.ArousalSettings.Progress == 50) || (C.ArousalSettings.Progress == 60)) Eyebrows = "Lowered";
-			if ((C.ArousalSettings.Progress == 80) || (C.ArousalSettings.Progress == 90)) Eyebrows = "Soft";
-
-			// Drool can activate at a few stages
-			var Fluids = "";
-			if ((C.ArousalSettings.Progress == 40) || (C.ArousalSettings.Progress == 70)) Fluids = "DroolLow";
-			if (C.ArousalSettings.Progress == 100) Fluids = "DroolMedium";
-
-			// Eyes can activate at a few stages
-			var Eyes = "";
-			if (C.ArousalSettings.Progress == 20) Eyes = "Dazed";
-			if (C.ArousalSettings.Progress == 70) Eyes = "Horny";
-			if (C.ArousalSettings.Progress == 90) Eyes = "Surprised";
-			if (C.ArousalSettings.Progress == 100) Eyes = "Closed";
-
-			// Find the expression in the character appearance and alters it
-			for (var A = 0; A < C.Appearance.length; A++) {
-				if (C.Appearance[A].Asset.Group.Name == "Blush") C.Appearance[A].Property = { Expression: Blush };
-				if (C.Appearance[A].Asset.Group.Name == "Eyebrows") C.Appearance[A].Property = { Expression: Eyebrows };
-				if (C.Appearance[A].Asset.Group.Name == "Fluids") C.Appearance[A].Property = { Expression: Fluids };
-				if (C.Appearance[A].Asset.Group.Name == "Eyes") C.Appearance[A].Property = { Expression: Eyes };
-			}
-
-			// Refreshes the character
-			CharacterRefresh(C);
-
-		}
+	// Can trigger an orgasm
+	if (C.ArousalSettings.Progress == 100) ActivityOrgasm(C);
 
 }
 

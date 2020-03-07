@@ -109,7 +109,12 @@ function PreferenceLoadActivityFactor() {
 function PreferenceInit(C) {
 
 	// If the settings aren't set before, construct them to replicate the default behavior
-	if (!C.ChatSettings) C.ChatSettings = { DisplayTimestamps: true, ColorNames: true, ColorActions: true, ColorEmotes: true };
+	if (!C.ChatSettings) C.ChatSettings = { DisplayTimestamps: true, ColorNames: true, ColorActions: true, ColorEmotes: true, ShowActivities: true };
+	if (C.ChatSettings.DisplayTimestamps == null) C.ChatSettings.DisplayTimestamps = true;
+	if (C.ChatSettings.ColorNames == null) C.ChatSettings.ColorNames = true;
+	if (C.ChatSettings.ColorActions == null) C.ChatSettings.ColorActions = true;
+	if (C.ChatSettings.ColorEmotes == null) C.ChatSettings.ColorEmotes = true;
+	if (C.ChatSettings.ShowActivities == null) C.ChatSettings.ShowActivities = true;
 	if (!C.VisualSettings) C.VisualSettings = { ForceFullHeight: false };
     if (!C.AudioSettings || (typeof C.AudioSettings.Volume !== "number") || (typeof C.AudioSettings.PlayBeeps !== "boolean")) C.AudioSettings = { Volume: 1, PlayBeeps: false };
 
@@ -351,6 +356,7 @@ function PreferenceSubscreenChatRun() {
 	DrawText(TextGet("ColorNames"), 600, 625, "Black", "Gray");
 	DrawText(TextGet("ColorActions"), 600, 725, "Black", "Gray");
 	DrawText(TextGet("ColorEmotes"), 600, 825, "Black", "Gray");
+	DrawText(TextGet("ShowActivities"), 600, 925, "Black", "Gray");
 	MainCanvas.textAlign = "center";
 	DrawBackNextButton(1000, 190, 350, 70, TextGet(PreferenceChatColorThemeSelected), "White", "",
 		() => TextGet((PreferenceChatColorThemeIndex == 0) ? PreferenceChatColorThemeList[PreferenceChatColorThemeList.length - 1] : PreferenceChatColorThemeList[PreferenceChatColorThemeIndex - 1]),
@@ -365,6 +371,7 @@ function PreferenceSubscreenChatRun() {
 	DrawButton(500, 592, 64, 64, "", "White", (Player.ChatSettings && Player.ChatSettings.ColorNames) ? "Icons/Checked.png" : "");
 	DrawButton(500, 692, 64, 64, "", "White", (Player.ChatSettings && Player.ChatSettings.ColorActions) ? "Icons/Checked.png" : "");
 	DrawButton(500, 792, 64, 64, "", "White", (Player.ChatSettings && Player.ChatSettings.ColorEmotes) ? "Icons/Checked.png" : "");
+	DrawButton(500, 892, 64, 64, "", "White", (Player.ChatSettings && Player.ChatSettings.ShowActivities) ? "Icons/Checked.png" : "");
 	DrawButton(1815, 75, 90, 90, "", "White", "Icons/Exit.png");
 	DrawCharacter(Player, 50, 50, 0.9);
 }
@@ -465,6 +472,7 @@ function PreferenceSubscreenChatClick() {
 		if ((MouseY >= 592) && (MouseY < 656)) Player.ChatSettings.ColorNames = !Player.ChatSettings.ColorNames;
 		if ((MouseY >= 692) && (MouseY < 756)) Player.ChatSettings.ColorActions = !Player.ChatSettings.ColorActions;
 		if ((MouseY >= 792) && (MouseY < 856)) Player.ChatSettings.ColorEmotes = !Player.ChatSettings.ColorEmotes;
+		if ((MouseY >= 892) && (MouseY < 956)) Player.ChatSettings.ShowActivities = !Player.ChatSettings.ShowActivities;
 	}
 
 	// If the user used one of the BackNextButtons

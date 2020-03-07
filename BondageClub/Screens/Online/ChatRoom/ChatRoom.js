@@ -134,10 +134,15 @@ function ChatRoomDrawCharacter(DoClick) {
 			if ((MouseX >= (C % 5) * Space + X) && (MouseX <= (C % 5) * Space + X + 450 * Zoom) && (MouseY >= Y + Math.floor(C / 5) * 500) && (MouseY <= Y + Math.floor(C / 5) * 500 + 1000 * Zoom)) {
 				if ((MouseY <= Y + Math.floor(C / 5) * 500 + 900 * Zoom) && (Player.GameplaySettings && Player.GameplaySettings.BlindDisableExamine ? (!(Player.Effect.indexOf("BlindHeavy") >= 0) || ChatRoomCharacter[C].ID == Player.ID) : true)) {
 
-					// If the player can manually control her arousal or wants to fight her desire
+					// If the player can manually control her arousal, we set the progress manual and change the facial expression, it can trigger an orgasm at 100%
 					if ((ChatRoomCharacter[C].ID == 0) && (MouseX >= (C % 5) * Space + X + 400 * Zoom) && (MouseX <= (C % 5) * Space + X + 450 * Zoom) && (MouseY >= Y + Math.floor(C / 5) * 500 + 200 * Zoom) && (MouseY <= Y + Math.floor(C / 5) * 500 + 700 * Zoom))
 						if ((Player.ArousalSettings != null) && (Player.ArousalSettings.Active != null) && (Player.ArousalSettings.Progress != null)) {
-							if ((Player.ArousalSettings.Active == "Manual") || (Player.ArousalSettings.Active == "Hybrid")) ActivitySetArousal(Player, Math.round((Y + (Math.floor(C / 5) * 500 + 675 * Zoom) - MouseY) / (4.5 * Zoom), 0));
+							if ((Player.ArousalSettings.Active == "Manual") || (Player.ArousalSettings.Active == "Hybrid")) {
+								var Arousal = Math.round((Y + (Math.floor(C / 5) * 500 + 675 * Zoom) - MouseY) / (4.5 * Zoom), 0);
+								if ((Player.ArousalSettings.AffectExpression == null) || Player.ArousalSettings.AffectExpression) ActivityExpression(Player, Arousal);
+								ActivitySetArousal(Player, Arousal);
+								if (Arousal == 100) ActivityOrgasm(Player);
+							}
 							return;
 						}
 
@@ -588,11 +593,11 @@ function ChatRoomMessage(data) {
 				else if (data.Type == "ServerMessage") msg = "<b>" + msg + "</b>";
 			}
 
-			// Sets up the activity text
+			// Outputs the sexual activities text and runs the activity if the player is targeted
 			if ((data.Type != null) && (data.Type == "Activity")) {
 
-				// Creates the output message using the activity dictionary, keep some values to calculate the activity effects
-				msg = ActivityDictionaryText(msg);
+				// Creates the output message using the activity dictionary and tags, keep some values to calculate the activity effects on the player
+				msg = "(" + ActivityDictionaryText(msg) + ")";
 				var TargetMemberNumber = null;
 				var ActivityName = null;
 				var ActivityGroup = null;
@@ -608,6 +613,9 @@ function ChatRoomMessage(data) {
 				if ((TargetMemberNumber == Player.MemberNumber) && (SenderCharacter.MemberNumber != Player.MemberNumber))
 					if ((Player.ArousalSettings == null) || (Player.ArousalSettings.Active == null) || (Player.ArousalSettings.Active == "Hybrid") || (Player.ArousalSettings.Active == "Automatic"))
 						ActivityEffect(SenderCharacter, Player, ActivityName, ActivityGroup);
+
+				// Exits before outputting the text if the player doesn't want to see the sexual activity messages
+				if ((Player.ChatSettings != null) && (Player.ChatSettings.ShowActivities != null) && !Player.ChatSettings.ShowActivities) return;
 
 			}
 
