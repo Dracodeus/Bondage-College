@@ -62,6 +62,8 @@ function ActivityDialogBuild(C) {
 						if ((Activity.Prerequisite[P] == "UseMouth") && !Player.CanTalk()) Allow = false;
 						if ((Activity.Prerequisite[P] == "UseHands") && !Player.CanInteract()) Allow = false;
 						if ((Activity.Prerequisite[P] == "UseFeet") && !Player.CanWalk()) Allow = false;
+						if ((Activity.Prerequisite[P] == "ZoneNaked") && ((C.FocusGroup.Name == "ItemButt") || (C.FocusGroup.Name == "ItemVulva")) && (InventoryPrerequisiteMessage(C, "AccessVulva") != "")) Allow = false;
+						if ((Activity.Prerequisite[P] == "ZoneNaked") && (C.FocusGroup.Name == "ItemBreast") && (InventoryPrerequisiteMessage(C, "AccessBreast") != "")) Allow = false;
 					}
 
 				// Make sure the current player has permission to do this activity
@@ -127,7 +129,8 @@ function ActivitySetArousalTimer(C, Activity, Zone, Progress) {
 
 	// Make sure we do not allow orgasms if the activity (MaxProgress) or the zone (AllowOrgasm) doesn't allow it
 	var Max = ((Activity.MaxProgress == null) || (Activity.MaxProgress > 100)) ? 100 : Activity.MaxProgress;
-	if ((Max == 100) && !PreferenceGetZoneOrgasm(C, Zone)) Max = 90;
+	if ((Max > 95) && !PreferenceGetZoneOrgasm(C, Zone)) Max = 95;
+	if ((Max > 67) && (Zone == "ActivityOnOther")) Max = 67;
 	if ((Progress > 0) && (C.ArousalSettings.Progress + Progress > Max)) Progress = (Max - C.ArousalSettings.Progress >= 0) ? Max - C.ArousalSettings.Progress : 0;
 
 	// If we must apply a progress timer change, we publish it
@@ -230,6 +233,14 @@ function ActivityRun(C, A) {
 	if ((C.ArousalSettings.Active == "Hybrid") || (C.ArousalSettings.Active == "Automatic"))
 		if ((C.ID == 0) || (C.AccountName.substring(0, 4) == "NPC_") || (C.AccountName.substring(0, 4) == "NPC-"))
 			ActivityEffect(Player, C, A, C.FocusGroup.Name);
+
+	// If the player does the activity on someone else, we calculate the result right away
+	if (((Player.ArousalSettings.Active == "Hybrid") || (Player.ArousalSettings.Active == "Automatic")) && (C.ID != 0)) {
+		var Factor = (PreferenceGetActivityFactor(Player, A.Name, false) * 5) - 10; // Check how much the player likes the activity, from -10 to +10
+		Factor = Factor + Math.floor((Math.random() * 8)); // Random 0 to 7 bonus
+		if (C.IsLoverOfPlayer()) Factor = Factor + Math.floor((Math.random() * 8)); // Another random 0 to 7 bonus if the target is the player's lover
+		ActivitySetArousalTimer(Player, A, "ActivityOnOther", Factor); // For activities on other, it cannot go over 2/3
+	}
 
 	// The text result can be outputted in the chatroom or in the NPC dialog
 	if (CurrentScreen == "ChatRoom") {

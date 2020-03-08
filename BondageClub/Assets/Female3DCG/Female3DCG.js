@@ -2146,23 +2146,23 @@ var ActivityFemale3DCG = [
 	{
 		Name: "MasturbateTongue",
 		MaxProgress: 100,
-		Prerequisite: ["UseMouth"]
+		Prerequisite: ["UseMouth", "ZoneNaked"]
 	},
 	{
 		Name: "MasturbateHand",
 		TargetSelf: ["ItemBreast", "ItemVulva", "ItemButt"],
 		MaxProgress: 100,
-		Prerequisite: ["UseHands"]
+		Prerequisite: ["UseHands", "ZoneNaked"]
 	},
 	{
 		Name: "MasturbateFist",
 		MaxProgress: 100,
-		Prerequisite: ["UseHands"]
+		Prerequisite: ["UseHands", "ZoneNaked"]
 	},
 	{
 		Name: "MasturbateFoot",
 		MaxProgress: 100,
-		Prerequisite: ["UseFeet"]
+		Prerequisite: ["UseFeet", "ZoneNaked"]
 	}
 	
 ]
