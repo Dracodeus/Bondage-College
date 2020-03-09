@@ -20,6 +20,8 @@ var PreferenceArousalActiveList = ["Inactive", "NoMeter", "Manual", "Hybrid", "A
 var PreferenceArousalActiveIndex = 0;
 var PreferenceArousalVisibleList = ["All", "Access", "Self"];
 var PreferenceArousalVisibleIndex = 0;
+var PreferenceArousalAffectStutterList = ["None", "Arousal", "Vibration", "All"];
+var PreferenceArousalAffectStutterIndex = 0;
 var PreferenceArousalActivityList = null;
 var PreferenceArousalActivityIndex = 0;
 var PreferenceArousalActivityFactorSelf = 0;
@@ -107,15 +109,24 @@ function PreferenceLoadActivityFactor() {
 function PreferenceInit(C) {
 
 	// If the settings aren't set before, construct them to replicate the default behavior
-	if (!C.ChatSettings) C.ChatSettings = { DisplayTimestamps: true, ColorNames: true, ColorActions: true, ColorEmotes: true };
+	if (!C.ChatSettings) C.ChatSettings = { DisplayTimestamps: true, ColorNames: true, ColorActions: true, ColorEmotes: true, ShowActivities: true };
+	if (C.ChatSettings.DisplayTimestamps == null) C.ChatSettings.DisplayTimestamps = true;
+	if (C.ChatSettings.ColorNames == null) C.ChatSettings.ColorNames = true;
+	if (C.ChatSettings.ColorActions == null) C.ChatSettings.ColorActions = true;
+	if (C.ChatSettings.ColorEmotes == null) C.ChatSettings.ColorEmotes = true;
+	if (C.ChatSettings.ShowActivities == null) C.ChatSettings.ShowActivities = true;
 	if (!C.VisualSettings) C.VisualSettings = { ForceFullHeight: false };
     if (!C.AudioSettings || (typeof C.AudioSettings.Volume !== "number") || (typeof C.AudioSettings.PlayBeeps !== "boolean")) C.AudioSettings = { Volume: 1, PlayBeeps: false };
 
 	// Sets the default arousal settings
-	if (!C.ArousalSettings) C.ArousalSettings = { Active: "Hybrid", Visible: "Access", Progress: 0, Activity: [], Zone: [] };
+	if (!C.ArousalSettings) C.ArousalSettings = { Active: "Hybrid", Visible: "Access", ShowOtherMeter: true, AffectExpression: true, AffectStutter: "All", Progress: 0, ProgressTimer: 0, Activity: [], Zone: [] };
 	if (typeof C.ArousalSettings.Active !== "string") C.ArousalSettings.Active = "Hybrid";
 	if (typeof C.ArousalSettings.Visible !== "string") C.ArousalSettings.Visible = "Access";
-	if (typeof C.ArousalSettings.Progress !== "number") C.ArousalSettings.Progress = 0;
+	if (typeof C.ArousalSettings.ShowOtherMeter !== "boolean") C.ArousalSettings.ShowOtherMeter = true;
+	if (typeof C.ArousalSettings.AffectExpression !== "boolean") C.ArousalSettings.AffectExpression = true;
+	if (typeof C.ArousalSettings.AffectStutter !== "string") C.ArousalSettings.AffectStutter = "All";
+	if ((typeof C.ArousalSettings.Progress !== "number") || isNaN(C.ArousalSettings.Progress)) C.ArousalSettings.Progress = 0;
+	if ((typeof C.ArousalSettings.ProgressTimer !== "number") || isNaN(C.ArousalSettings.ProgressTimer)) C.ArousalSettings.ProgressTimer = 0;
 	if ((C.ArousalSettings.Activity == null) || !Array.isArray(C.ArousalSettings.Activity)) C.ArousalSettings.Activity = [];
 	if ((C.ArousalSettings.Zone == null) || !Array.isArray(C.ArousalSettings.Zone)) C.ArousalSettings.Zone = [];
 
@@ -179,6 +190,7 @@ function PreferenceLoad() {
     PreferenceSettingsVolumeIndex = (PreferenceSettingsVolumeList.indexOf(Player.AudioSettings.Volume) < 0) ? 0 : PreferenceSettingsVolumeList.indexOf(Player.AudioSettings.Volume);
     PreferenceArousalActiveIndex = (PreferenceArousalActiveList.indexOf(Player.ArousalSettings.Active) < 0) ? 0 : PreferenceArousalActiveList.indexOf(Player.ArousalSettings.Active);
     PreferenceArousalVisibleIndex = (PreferenceArousalVisibleList.indexOf(Player.ArousalSettings.Visible) < 0) ? 0 : PreferenceArousalVisibleList.indexOf(Player.ArousalSettings.Visible);
+    PreferenceArousalAffectStutterIndex = (PreferenceArousalAffectStutterList.indexOf(Player.ArousalSettings.AffectStutter) < 0) ? 0 : PreferenceArousalAffectStutterList.indexOf(Player.ArousalSettings.AffectStutter);
 	PreferenceChatColorThemeSelected = PreferenceChatColorThemeList[PreferenceChatColorThemeIndex];
 	PreferenceChatEnterLeaveSelected = PreferenceChatEnterLeaveList[PreferenceChatEnterLeaveIndex];
 	PreferenceChatMemberNumbersSelected = PreferenceChatMemberNumbersList[PreferenceChatMemberNumbersIndex];
@@ -341,9 +353,10 @@ function PreferenceSubscreenChatRun() {
 	DrawText(TextGet("EnterLeaveStyle"), 500, 325, "Black", "Gray");
 	DrawText(TextGet("DisplayMemberNumbers"), 500, 425, "Black", "Gray");
 	DrawText(TextGet("DisplayTimestamps"), 600, 525, "Black", "Gray");
-	DrawText(TextGet("ColorNames"), 600, 625, "Black", "Gray");
-	DrawText(TextGet("ColorActions"), 600, 725, "Black", "Gray");
-	DrawText(TextGet("ColorEmotes"), 600, 825, "Black", "Gray");
+	DrawText(TextGet("ColorNames"), 600, 605, "Black", "Gray");
+	DrawText(TextGet("ColorActions"), 600, 685, "Black", "Gray");
+	DrawText(TextGet("ColorEmotes"), 600, 765, "Black", "Gray");
+	DrawText(TextGet("ShowActivities"), 600, 845, "Black", "Gray");
 	MainCanvas.textAlign = "center";
 	DrawBackNextButton(1000, 190, 350, 70, TextGet(PreferenceChatColorThemeSelected), "White", "",
 		() => TextGet((PreferenceChatColorThemeIndex == 0) ? PreferenceChatColorThemeList[PreferenceChatColorThemeList.length - 1] : PreferenceChatColorThemeList[PreferenceChatColorThemeIndex - 1]),
@@ -355,9 +368,10 @@ function PreferenceSubscreenChatRun() {
 		() => TextGet((PreferenceChatMemberNumbersIndex == 0) ? PreferenceChatMemberNumbersList[PreferenceChatMemberNumbersList.length - 1] : PreferenceChatMemberNumbersList[PreferenceChatMemberNumbersIndex - 1]),
 		() => TextGet((PreferenceChatMemberNumbersIndex >= PreferenceChatMemberNumbersList.length - 1) ? PreferenceChatMemberNumbersList[0] : PreferenceChatMemberNumbersList[PreferenceChatMemberNumbersIndex + 1]));
 	DrawButton(500, 492, 64, 64, "", "White", (Player.ChatSettings && Player.ChatSettings.DisplayTimestamps) ? "Icons/Checked.png" : "");
-	DrawButton(500, 592, 64, 64, "", "White", (Player.ChatSettings && Player.ChatSettings.ColorNames) ? "Icons/Checked.png" : "");
-	DrawButton(500, 692, 64, 64, "", "White", (Player.ChatSettings && Player.ChatSettings.ColorActions) ? "Icons/Checked.png" : "");
-	DrawButton(500, 792, 64, 64, "", "White", (Player.ChatSettings && Player.ChatSettings.ColorEmotes) ? "Icons/Checked.png" : "");
+	DrawButton(500, 572, 64, 64, "", "White", (Player.ChatSettings && Player.ChatSettings.ColorNames) ? "Icons/Checked.png" : "");
+	DrawButton(500, 652, 64, 64, "", "White", (Player.ChatSettings && Player.ChatSettings.ColorActions) ? "Icons/Checked.png" : "");
+	DrawButton(500, 732, 64, 64, "", "White", (Player.ChatSettings && Player.ChatSettings.ColorEmotes) ? "Icons/Checked.png" : "");
+	DrawButton(500, 812, 64, 64, "", "White", (Player.ChatSettings && Player.ChatSettings.ShowActivities) ? "Icons/Checked.png" : "");
 	DrawButton(1815, 75, 90, 90, "", "White", "Icons/Exit.png");
 	DrawCharacter(Player, 50, 50, 0.9);
 }
@@ -370,15 +384,18 @@ function PreferenceSubscreenArousalRun() {
 	MainCanvas.textAlign = "left";
 	DrawText(TextGet("ArousalPreferences"), 550, 125, "Black", "Gray");
 	DrawText(TextGet("ArousalActive"), 550, 225, "Black", "Gray");
-	
+	DrawText(TextGet("ArousalStutter"), 550, 425, "Black", "Gray");
+	DrawCheckbox(550, 286, 64, 64, TextGet("ArousalShowOtherMeter"), Player.ArousalSettings.ShowOtherMeter);
+
 	// The other controls are only drawn if the arousal is active
 	if (PreferenceArousalIsActive()) {
-		
-		// Draws the label on the left side
+
+		// Draws the labels and check boxes
+		DrawCheckbox(1250, 286, 64, 64, TextGet("ArousalAffectExpression"), Player.ArousalSettings.AffectExpression);
 		DrawText(TextGet("ArousalVisible"), 1240, 225, "Black", "Gray");
-		DrawText(TextGet("ArousalActivity"), 550, 425, "Black", "Gray");
-		DrawText(TextGet("ArousalActivityLoveSelf"), 550, 525, "Black", "Gray");
-		DrawText(TextGet("ArousalActivityLoveOther"), 1255, 525, "Black", "Gray");
+		DrawText(TextGet("ArousalActivity"), 550, 525, "Black", "Gray");
+		DrawText(TextGet("ArousalActivityLoveSelf"), 550, 625, "Black", "Gray");
+		DrawText(TextGet("ArousalActivityLoveOther"), 1255, 625, "Black", "Gray");
 
 		// Draws all the available character zones
 		for (var A = 0; A < AssetGroup.length; A++)
@@ -401,9 +418,9 @@ function PreferenceSubscreenArousalRun() {
 		// Draws the sub-selection controls
 		MainCanvas.textAlign = "center";
 		DrawBackNextButton(1505, 193, 400, 64, TextGet("ArousalVisible" + PreferenceArousalVisibleList[PreferenceArousalVisibleIndex]), "White", "", () => "", () => "");
-		DrawBackNextButton(900, 393, 500, 64, TextGet("ArousalActivityType" + PreferenceArousalActivityList[PreferenceArousalActivityIndex]), "White", "", () => "", () => "");
-		DrawBackNextButton(900, 493, 300, 64, TextGet("ArousalActivityLove" + PreferenceArousalActivityFactorSelf), PreferenceGetFactorColor(PreferenceGetActivityFactor(Player, PreferenceArousalActivityList[PreferenceArousalActivityIndex], true)), "", () => "", () => "");
-		DrawBackNextButton(1605, 493, 300, 64, TextGet("ArousalActivityLove" + PreferenceArousalActivityFactorOther), PreferenceGetFactorColor(PreferenceGetActivityFactor(Player, PreferenceArousalActivityList[PreferenceArousalActivityIndex], false)), "", () => "", () => "");
+		DrawBackNextButton(900, 493, 500, 64, ActivityDictionaryText("Activity" + PreferenceArousalActivityList[PreferenceArousalActivityIndex]), "White", "", () => "", () => "");
+		DrawBackNextButton(900, 593, 300, 64, TextGet("ArousalActivityLove" + PreferenceArousalActivityFactorSelf), PreferenceGetFactorColor(PreferenceGetActivityFactor(Player, PreferenceArousalActivityList[PreferenceArousalActivityIndex], true)), "", () => "", () => "");
+		DrawBackNextButton(1605, 593, 300, 64, TextGet("ArousalActivityLove" + PreferenceArousalActivityFactorOther), PreferenceGetFactorColor(PreferenceGetActivityFactor(Player, PreferenceArousalActivityList[PreferenceArousalActivityIndex], false)), "", () => "", () => "");
 
 	} else if (PreferenceArousalActiveList[PreferenceArousalActiveIndex] == "Manual") {
 
@@ -414,9 +431,10 @@ function PreferenceSubscreenArousalRun() {
 
 	}
 
-	// We always draw the active control
+	// We always draw the active & stutter control
 	MainCanvas.textAlign = "center";
 	DrawBackNextButton(750, 193, 450, 64, TextGet("ArousalActive" + PreferenceArousalActiveList[PreferenceArousalActiveIndex]), "White", "", () => "", () => "");
+	DrawBackNextButton(900, 393, 500, 64, TextGet("ArousalStutter" + PreferenceArousalAffectStutterList[PreferenceArousalAffectStutterIndex]), "White", "", () => "", () => "");
 	DrawButton(1815, 75, 90, 90, "", "White", "Icons/Exit.png");
 
 }
@@ -449,11 +467,12 @@ function PreferenceSubscreenAudioClick() {
 function PreferenceSubscreenChatClick() {
 
 	// If the user clicked one of the check-boxes
-	if ((MouseX >= 500) && (MouseX < 564)) {
-		if ((MouseY >= 492) && (MouseY < 556)) Player.ChatSettings.DisplayTimestamps = !Player.ChatSettings.DisplayTimestamps;
-		if ((MouseY >= 592) && (MouseY < 656)) Player.ChatSettings.ColorNames = !Player.ChatSettings.ColorNames;
-		if ((MouseY >= 692) && (MouseY < 756)) Player.ChatSettings.ColorActions = !Player.ChatSettings.ColorActions;
-		if ((MouseY >= 792) && (MouseY < 856)) Player.ChatSettings.ColorEmotes = !Player.ChatSettings.ColorEmotes;
+	if ((MouseX >= 500) && (MouseX <= 564)) {
+		if ((MouseY >= 492) && (MouseY <= 556)) Player.ChatSettings.DisplayTimestamps = !Player.ChatSettings.DisplayTimestamps;
+		if ((MouseY >= 572) && (MouseY <= 636)) Player.ChatSettings.ColorNames = !Player.ChatSettings.ColorNames;
+		if ((MouseY >= 652) && (MouseY <= 716)) Player.ChatSettings.ColorActions = !Player.ChatSettings.ColorActions;
+		if ((MouseY >= 732) && (MouseY <= 796)) Player.ChatSettings.ColorEmotes = !Player.ChatSettings.ColorEmotes;
+		if ((MouseY >= 812) && (MouseY <= 876)) Player.ChatSettings.ShowActivities = !Player.ChatSettings.ShowActivities;
 	}
 
 	// If the user used one of the BackNextButtons
@@ -501,32 +520,47 @@ function PreferenceSubscreenArousalClick() {
         Player.ArousalSettings.Active = PreferenceArousalActiveList[PreferenceArousalActiveIndex];
     }
 
+	// Speech stuttering control
+    if ((MouseX >= 900) && (MouseX < 1400) && (MouseY >= 393) && (MouseY < 457)) {
+        if (MouseX <= 1150) PreferenceArousalAffectStutterIndex = (PreferenceArousalAffectStutterList.length + PreferenceArousalAffectStutterIndex - 1) % PreferenceArousalAffectStutterList.length;
+        else PreferenceArousalAffectStutterIndex = (PreferenceArousalAffectStutterIndex + 1) % PreferenceArousalAffectStutterList.length;
+        Player.ArousalSettings.AffectStutter = PreferenceArousalAffectStutterList[PreferenceArousalAffectStutterIndex];
+    }
+
+	// Show other player meter check box
+	if ((MouseX >= 550) && (MouseX < 614) && (MouseY >= 286) && (MouseY < 350)) 
+		Player.ArousalSettings.ShowOtherMeter = !Player.ArousalSettings.ShowOtherMeter;
+	
 	// If the arousal is active, we allow more controls
 	if (PreferenceArousalIsActive()) {
 
+		// Meter affect your facial expressions check box
+		if ((MouseX >= 1250) && (MouseX < 1314) && (MouseY >= 286) && (MouseY < 350)) 
+			Player.ArousalSettings.AffectExpression = !Player.ArousalSettings.AffectExpression;
+
 		// Arousal visible control
-		if ((MouseX >= 1505) && (MouseX < 1905) && (MouseY >= 193) && (MouseY < 257)) {
+		if ((MouseX >= 1505) && (MouseX < 1905) && (MouseY >= 193) && (MouseY <= 257)) {
 			if (MouseX <= 1705) PreferenceArousalVisibleIndex = (PreferenceArousalVisibleList.length + PreferenceArousalVisibleIndex - 1) % PreferenceArousalVisibleList.length;
 			else PreferenceArousalVisibleIndex = (PreferenceArousalVisibleIndex + 1) % PreferenceArousalVisibleList.length;
 			Player.ArousalSettings.Visible = PreferenceArousalVisibleList[PreferenceArousalVisibleIndex];
 		}
 
 		// Arousal activity control
-		if ((MouseX >= 900) && (MouseX < 1400) && (MouseY >= 393) && (MouseY < 457)) {
+		if ((MouseX >= 900) && (MouseX < 1400) && (MouseY >= 493) && (MouseY <= 557)) {
 			if (MouseX <= 1150) PreferenceArousalActivityIndex = (PreferenceArousalActivityList.length + PreferenceArousalActivityIndex - 1) % PreferenceArousalActivityList.length;
 			else PreferenceArousalActivityIndex = (PreferenceArousalActivityIndex + 1) % PreferenceArousalActivityList.length;
 			PreferenceLoadActivityFactor();
 		}
 
 		// Arousal activity love on self control
-		if ((MouseX >= 900) && (MouseX < 1200) && (MouseY >= 493) && (MouseY < 557)) {
+		if ((MouseX >= 900) && (MouseX < 1200) && (MouseY >= 593) && (MouseY <= 657)) {
 			if (MouseX <= 1050) PreferenceArousalActivityFactorSelf = (5 + PreferenceArousalActivityFactorSelf - 1) % 5;
 			else PreferenceArousalActivityFactorSelf = (PreferenceArousalActivityFactorSelf + 1) % 5;
 			PreferenceSetActivityFactor(Player, PreferenceArousalActivityList[PreferenceArousalActivityIndex], true, PreferenceArousalActivityFactorSelf);
 		}
 
 		// Arousal activity love on other control
-		if ((MouseX >= 1605) && (MouseX < 1905) && (MouseY >= 493) && (MouseY < 557)) {
+		if ((MouseX >= 1605) && (MouseX < 1905) && (MouseY >= 593) && (MouseY <= 657)) {
 			if (MouseX <= 1755) PreferenceArousalActivityFactorOther = (5 + PreferenceArousalActivityFactorOther - 1) % 5;
 			else PreferenceArousalActivityFactorOther = (PreferenceArousalActivityFactorOther + 1) % 5;
 			PreferenceSetActivityFactor(Player, PreferenceArousalActivityList[PreferenceArousalActivityIndex], false, PreferenceArousalActivityFactorOther);

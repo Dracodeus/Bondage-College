@@ -28,7 +28,7 @@ var AssetFemale3DCG = [
 		Priority: 31,
 		ParentGroup: "BodyUpper",
 		Clothing: true,
-		AllowPose: ["TapedHands", "BackBoxTie", "BackCuffs", "BackElbowTouch", "Bolero", "Yoked", "Hogtied"],
+		AllowPose: ["TapedHands", "BackBoxTie", "BackCuffs", "BackElbowTouch", "Bolero", "Yoked", "Hogtied", "AllFours"],
 		Color: ["Default", "#202020", "#808080", "#bbbbbb", "#aa8080", "#80aa80", "#8080aa", "#aaaa80", "#80aaaa", "#aa80aa", "#cc3333", "#33cc33", "#3333cc", "#cccc33", "#33cccc", "#cc33cc"],
 		Asset: [
 			{ Name: "CollegeOutfit1", HideItem: ["ClothLowerLatexSkirt1", "ClothLowerLatexSkirt2", "ClothLowerSkirt1", "ClothLowerSkirt2", "ClothLowerSkirt3", "ClothLowerTennisSkirt1", "ClothLowerClothSkirt1", "ItemNipplesPiercingsRoundPiercing", "ItemNipplesPiercingsWeightedPiercing", "ItemDevicesStrapOnSmooth", "ItemDevicesStrapOnStuds"], Hide: ["ItemNeck"], Value: -1 },
@@ -134,6 +134,14 @@ var AssetFemale3DCG = [
 					{ Name: "Base", AllowColorize: true },
 					{ Name: "Zip", AllowColorize: false }
 				]
+			},
+			{ Name: "SeamlessCatsuit", Priority: 13, Value: -1, BuyGroup: "Catsuit", Hide: ["ItemNipplesPiercings"], HideItem: ["ItemNipplesScrewClamps", "ItemNipplesPiercingsChainTassles", "ItemNipplesKittyPasties" , "ItemNipplesChopStickNippleClamps", "ItemNipplesHeartPasties"] },
+			{ Name: "SeethroughSuit", Priority: 13, Value: 100, BuyGroup: "SeethroughSuit", Hide: ["ItemNipplesPiercings"], HideItem: ["ItemNipplesScrewClamps", "ItemNipplesPiercingsChainTassles", "ItemNipplesKittyPasties" , "ItemNipplesChopStickNippleClamps", "ItemNipplesHeartPasties"] },
+			{ Name: "SeethroughSuitZip", Priority: 13, Value: -1, BuyGroup: "SeethroughSuit", Hide: ["ItemNipplesPiercings"], HideItem: ["ItemNipplesScrewClamps", "ItemNipplesPiercingsChainTassles", "ItemNipplesKittyPasties" , "ItemNipplesChopStickNippleClamps", "ItemNipplesHeartPasties"],
+				Layer: [
+					{ Name: "Base", AllowColorize: true },
+					{ Name: "Zip", AllowColorize: false }
+				]
 			}
 		]
 	},
@@ -194,7 +202,15 @@ var AssetFemale3DCG = [
 		Top: 380,
 		Asset: [
 		{
-			    Name: "Catsuit", Priority: 13, Value: -1, BuyGroup: "Catsuit", Hide: ["ItemVulva", "ItemVulvaPiercings", "ItemButt", "BodyLower"], HideItem: ["SocksPantyhose1"],
+			    Name: "Catsuit", Priority: 13, Value: -1, BuyGroup: "Catsuit", Hide: ["ItemVulva", "ItemVulvaPiercings", "BodyLower"], HideItem: ["SocksPantyhose1"],
+				Layer: [
+					{ Name: "Base", AllowColorize: true },
+					{ Name: "Zip", AllowColorize: false }
+				]
+			},
+		{ Name: "SeamlessCatsuit", Priority: 13, Value: -1, BuyGroup: "Catsuit", Hide: ["ItemVulva", "ItemVulvaPiercings", "ItemButt", "BodyLower"], HideItem: ["SocksPantyhose1"] },
+		{ Name: "SeethroughSuit", Priority: 13, Value: -1, BuyGroup: "SeethroughSuit", Hide: ["ItemVulva", "ItemVulvaPiercings"], HideItem: ["SocksPantyhose1"] },
+		{ Name: "SeethroughSuitZip", Priority: 13, Value: -1, BuyGroup: "SeethroughSuit", Hide: ["ItemVulva", "ItemVulvaPiercings"], HideItem: ["SocksPantyhose1"],
 				Layer: [
 					{ Name: "Base", AllowColorize: true },
 					{ Name: "Zip", AllowColorize: false }
@@ -499,7 +515,7 @@ var AssetFemale3DCG = [
 		Clothing: true,
 		Underwear: true,
 		Default: false,
-		AllowPose: ["BackBoxTie", "BackCuffs", "BackElbowTouch", "Yoked"],
+		AllowPose: ["BackBoxTie", "BackCuffs", "BackElbowTouch", "Yoked", "AllFours"],
 		Color: ["Default", "#cccccc", "#aaaaaa", "#888888", "#666666", "#444444", "#222222", "#aa8080", "#80aa80", "#8080aa", "#aaaa80", "#80aaaa", "#aa80aa", "#cc3333", "#33cc33", "#3333cc", "#cccc33", "#33cccc", "#cc33cc"],
 		Asset: [
 			"Gloves1", "Gloves2",
@@ -513,7 +529,8 @@ var AssetFemale3DCG = [
 					{ Name: "Fur", AllowColorize: false }
 				]
 			},
-			{ Name: "Catsuit", Value: -1, BuyGroup: "Catsuit" }
+			{ Name: "Catsuit", Value: -1, BuyGroup: "Catsuit" },
+			{ Name: "SeethroughSuit", Value: -1, BuyGroup: "SeethroughSuit" }
 		]
 	},
 
@@ -535,6 +552,7 @@ var AssetFemale3DCG = [
 		Default: false,
 		Clothing: true,
 		Underwear: true,
+		AllowPose: ["AllFours"],
 		Color: ["Default", "#cccccc", "#aaaaaa", "#888888", "#666666", "#444444", "#222222", "#aa8080", "#80aa80", "#8080aa", "#aaaa80", "#80aaaa", "#aa80aa", "#cc3333", "#33cc33", "#3333cc", "#cccc33", "#33cccc", "#cc33cc"],
 		Left: 0,
 		Top: 150,
@@ -542,6 +560,7 @@ var AssetFemale3DCG = [
 		Asset: [
 			{ Name: "TailStrap", Value: 30 },
 			{ Name: "HorseTailStrap", Value: 20 },
+			{ Name: "HorseTailStrap1", Value: 30 },
 			{ Name: "FoxTailsStrap", Priority: 2, Value: 50 },
 			{ Name: "PuppyTailStrap", Value: 15 },
 			{ Name: "SuccubusStrap", Value: 15 },
@@ -555,7 +574,8 @@ var AssetFemale3DCG = [
 			{ Name: "FoxTailStrap2", Value: 20 },
 			{ Name: "WolfTailStrap1", Value: 20 },
 			{ Name: "WolfTailStrap2", Value: 20 },
-			{ Name: "WolfTailStrap3", Value: 20 }
+			{ Name: "WolfTailStrap3", Value: 20 },
+			{ Name: "DemonPlug", Value: 30 }
 		]
 	},
 
@@ -602,7 +622,7 @@ var AssetFemale3DCG = [
 		Priority: 7,
 		AllowNone: false,
 		AllowColorize: false,
-		AllowPose: ["TapedHands", "BackBoxTie", "BackCuffs", "BackElbowTouch", "StraitDressOpen", "Yoked", "Hogtied"],
+		AllowPose: ["TapedHands", "BackBoxTie", "BackCuffs", "BackElbowTouch", "StraitDressOpen", "Yoked", "Hogtied", "AllFours"],
 		Color: ["White", "Asian", "Black"],
 		Asset: ["Small", "Normal", "Large", "XLarge"]
 	},
@@ -626,7 +646,7 @@ var AssetFemale3DCG = [
 		AllowNone: false,
 		AllowColorize: false,
 		ParentColor: "BodyUpper",
-		AllowPose: ["TapedHands", "BackBoxTie", "BackCuffs", "BackElbowTouch"],
+		AllowPose: ["TapedHands", "BackBoxTie", "BackCuffs", "BackElbowTouch", "AllFours"],
 		Color: ["White", "Asian", "Black"],
 		Asset: ["Default"]
 	},
@@ -636,7 +656,7 @@ var AssetFemale3DCG = [
 		Priority: 5,
 		AllowNone: false,
 		Color: ["#6a3628", "#202020", "#dcc787", "#6c2132", "#999999", "#dddddd", "#e781b1", "#81e7b1", "#81b1e7", "#eeee99", "#ee9999", "#ee99ee"],
-		AllowPose: ["Suspension", "Hogtied"],
+		AllowPose: ["Suspension", "Hogtied", "AllFours"],
 		Left: 50,
 		Top: 0,
 		Asset: ["HairNone", "HairBack1", "HairBack2", "HairBack4", "HairBack10", "HairBack14", "HairBack15", "HairBack16", "HairBack17", "HairBack18", "HairBack19", "HairBack20", "HairBack5", "HairBack8", "HairBack11", "HairBack6", "HairBack21", "HairBack22",
@@ -764,7 +784,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemFeet",
 		Category: "Item",
-		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "Massage", "Grope"],
+		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "MassageHands", "Grope"],
 		Priority: 27,
 		ParentGroup: "BodyLower",
 		Default: false,
@@ -800,7 +820,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemLegs",
 		Category: "Item",
-		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "Massage", "Grope"],
+		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "MassageHands", "Grope"],
 		Priority: 25,
 		ParentGroup: "BodyLower",
 		Default: false,
@@ -832,7 +852,7 @@ var AssetFemale3DCG = [
 				]
 			},
 			{
-				Name: "HobbleSkirt", DefaultColor: "#222222", Value: 125, Block: ["ItemPelvis", "ItemFeet", "ItemVulva", "ItemVulvaPiercings", "ItemButt"], SetPose: ["LegsClosed"], Hide: ["Socks", "BodyLower", "ClothLower", "Shoes", "ItemBoots"], HideItem: ["OrnateAnkleCuffs", "ItemFeetNylonRope", "ItemFeetHempRope", "ItemFeetLeatherBelt", "ItemFeetIrish8Cuffs", "ItemFeetDuctTape", "ItemFeetMermaidRopeTie", "ItemFeetLeatherAnkleCuffs"], Effect: ["Prone"], Time: 30, RemoveTime: 20, Difficulty: 15, AllowLock: true, Prerequisite: ["NotKneeling", "NotSuspended", "NotHogtied"],
+				Name: "HobbleSkirt", DefaultColor: "#222222", Value: 125, Block: ["ItemPelvis", "ItemFeet", "ItemVulva", "ItemVulvaPiercings", "ItemButt"], SetPose: ["LegsClosed"], Hide: ["Socks", "BodyLower", "ClothLower", "Shoes", "ItemBoots", "SuitLower"], HideItem: ["OrnateAnkleCuffs", "ItemFeetNylonRope", "ItemFeetHempRope", "ItemFeetLeatherBelt", "ItemFeetIrish8Cuffs", "ItemFeetDuctTape", "ItemFeetMermaidRopeTie", "ItemFeetLeatherAnkleCuffs"], Effect: ["Prone"], Time: 30, RemoveTime: 20, Difficulty: 15, AllowLock: true, Prerequisite: ["NotKneeling", "NotSuspended", "NotHogtied"],
 				Layer: [
 					{ Name: "Latex", AllowColorize: true },
 					{ Name: "Belts", AllowColorize: false }
@@ -854,7 +874,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemVulva",
 		Category: "Item",
-		Activity: ["Kiss", "MasturbateHand", "MasturbateFist", "MasturbateFoot", "MasturbateTongue", "Slap", "Caress"],
+		Activity: ["MasturbateHand", "MasturbateFist", "MasturbateFoot", "MasturbateTongue", "Caress", "Slap", "Kiss", "Bite"],
 		Priority: 15,
 		Default: false,
 		Color: ["Default"],
@@ -905,6 +925,12 @@ var AssetFemale3DCG = [
 			{ Name: "BenWaBalls", Value: 30, Prerequisite: "AccessVulva", Time: 5, ExpressionTrigger: [{ Group: "Eyebrows", Name: "Soft", Timer: 5 }], Visible: false },
 			{ Name: "HeavyWeightClamp", Value: 30, Prerequisite: "AccessVulva", Time: 5, ExpressionTrigger: [{ Group: "Eyes", Name: "Closed", Timer: 5 }, { Group: "Eyebrows", Name: "Soft", Timer: 5 }] },
 			{ Name: "FullLatexSuitWand", Priority: 33, IsRestraint: true, Block: ["ItemVulvaPiercings"], AllowLock: true, Value: -1, Effect: ["Egged", "Block", "Prone"], AllowEffect: ["Egged", "Vibrating"], Time: 5, Difficulty: 12 },
+			{ Name: "ClitAndDildoVibratorbelt", Priority: 11, Effect: ["Egged"], Hide: ["Panties"], Block: ["ItemPelvis"], AllowLock: true, Value: 100, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Medium", Timer: 10 }], AllowEffect: ["Egged", "Vibrating"],
+			Layer: [
+					{ Name: "Belt", AllowColorize: true },
+					{ Name: "Crotch", AllowColorize: false }
+				]
+			},
 			AssetSpankingToys
 		]
 	},
@@ -947,6 +973,7 @@ var AssetFemale3DCG = [
 		Priority: 4,
 		Default: false,
 		Color: ["Default"],
+		AllowPose: ["AllFours"],
 		Left: 0,
 		Top: 0,
 		Zone: [[300, 500, 100, 80]],
@@ -955,6 +982,7 @@ var AssetFemale3DCG = [
 			{ Name: "PenisPlug", Value: 20, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10 }], Visible: false, BuyGroup: "PenisDildo" },
 			{ Name: "TailButtPlug", Value: 40, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10 }] },
 			{ Name: "HorsetailPlug", Value: 30, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10 }] },
+			{ Name: "HorsetailPlug1", Value: 40, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10 }] },
 			{ Name: "PuppyTailPlug", Value: 25, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10 }] },
 			{ Name: "PuppyTailPlug1", Value: 30, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10 }] },
 			{ Name: "SuccubusButtPlug", Value: 25, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10 }] },
@@ -976,6 +1004,7 @@ var AssetFemale3DCG = [
 			{ Name: "WolfTail1", Value: 45, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10 }] },
 			{ Name: "WolfTail2", Value: 45, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10 }] },
 			{ Name: "WolfTail3", Value: 45, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10 }] },
+			{ Name: "DemonPlug", Value: 45, Prerequisite: "AccessVulva", Time: 10, ExpressionTrigger: [{ Group: "Blush", Name: "Low", Timer: 10 }] },
 			AssetSpankingToys
 		]
 	},
@@ -983,7 +1012,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemPelvis",
 		Category: "Item",
-		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "Massage", "Grope"],
+		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "MassageHands", "Grope"],
 		Priority: 17,
 		ParentGroup: "BodyLower",
 		Default: false,
@@ -1058,11 +1087,11 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemTorso",
 		ParentGroup: "BodyUpper",
-		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "Massage", "Rub"],
+		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "MassageHands", "MassageFeet", "Rub"],
 		Category: "Item",
 		Priority: 18,
 		Default: false,
-		AllowPose: ["TapedHands", "BackBoxTie", "BackCuffs", "BackElbowTouch", "Yoked", "Hogtied"],
+		AllowPose: ["TapedHands", "BackBoxTie", "BackCuffs", "BackElbowTouch", "Yoked", "Hogtied", "AllFours"],
 		Color: ["Default"],
 		Left: 125,
 		Top: 200,
@@ -1081,6 +1110,7 @@ var AssetFemale3DCG = [
 			{ Name: "LeatherBreastBinder", Value: 30, Prerequisite: "AccessTorso", Time: 15, RemoveTime: 10, Difficulty: 50, AllowLock: true },
 			{ Name: "LatexCorset1", Priority: 20, Value: 40, Prerequisite: "AccessTorso", Time: 15, RemoveTime: 10, Difficulty: 8, BuyGroup: ["LatexCorset1"], Expose: ["ItemNipples", "ItemBreast", "ItemNipplesPiercings"], AllowLock: true },
 			{ Name: "LeatherStrapBra1", Left: 150, Top: 200, Value: 15, Prerequisite: "AccessTorso", Time: 15, RemoveTime: 10, Difficulty: 5, AllowLock: true, BuyGroup: ["LeatherStrapBra1"] },
+			{ Name: "CrotchChain", Value: 40, Prerequisite: "AccessTorso", Time: 15, RemoveTime: 10, Difficulty: 50, AllowLock: true },
 			AssetSpankingToys
 		]
 	},
@@ -1088,11 +1118,12 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemNipples",
 		ParentGroup: "BodyUpper",
-		Activity: ["Kiss", "Lick", "Pinch", "Suck", "Caress"],
+		Activity: ["Kiss", "Lick", "Suck", "Bite", "Pinch", "Caress"],
 		Category: "Item",
 		Priority: 19,
 		Default: false,
 		Color: ["Default"],
+		AllowPose: ["AllFours"],
 		Left: 150,
 		Top: 200,
 		Zone: [[100, 270, 100, 70]],
@@ -1122,6 +1153,7 @@ var AssetFemale3DCG = [
 		Priority: 18,
 		Default: false,
 		Color: ["Default"],
+		AllowPose: ["AllFours"],
 		Left: 150,
 		Top: 200,
 		Zone: [[200, 270, 100, 70]],
@@ -1154,6 +1186,7 @@ var AssetFemale3DCG = [
 		Priority: 14,
 		Default: false,
 		Color: ["Default"],
+		AllowPose: ["AllFours"],
 		Left: 150,
 		Top: 200,
 		Zone: [[300, 270, 100, 70]],
@@ -1175,7 +1208,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemArms",
 		ParentGroup: "BodyUpper",
-		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "Massage", "Grope"],
+		Activity: ["Kiss", "Lick", "Tickle", "Spank", "Caress", "MassageHands", "Grope"],
 		Category: "Item",
 		Priority: 32,
 		Default: false,
@@ -1186,7 +1219,7 @@ var AssetFemale3DCG = [
 		Zone: [[10, 200, 90, 200], [400, 200, 90, 200]],
 		Asset: [
 			{ Name: "NylonRope", DefaultColor: "#909090", SelfBondage: false, Value: 30, BuyGroup: ["NylonRope"], SetPose: ["BackBoxTie"], Effect: ["Block", "Prone"], Time: 15, Audio: "RopeLong" },
-			{ Name: "HempRope", Extended: true, SelfBondage: false, Value: 60, SetPose: ["BackBoxTie"], AllowType: ["Hogtied", "SuspensionHogtied"], BuyGroup: ["HempRope"], Effect: ["Block", "Prone"], AllowEffect: ["Freeze", "Block", "Prone"], AllowBlock: ["ItemHands", "ItemLegs", "ItemFeet", "ItemBoots"], HideItem: ["ItemDevicesTeddyBear"], Time: 20, Difficulty: 3, RemoveItemOnRemove: [{ Name: "SuspensionHempRope", Group: "ItemHidden" }], Audio: "RopeLong" },
+			{ Name: "HempRope", Extended: true, SelfBondage: false, Value: 60, SetPose: ["BackBoxTie"], AllowType: ["Hogtied", "SuspensionHogtied", "AllFours"], BuyGroup: ["HempRope"], Effect: ["Block", "Prone"], AllowEffect: ["Freeze", "Block", "Prone", "ForceKneel"], AllowBlock: ["ItemHands", "ItemLegs", "ItemFeet", "ItemBoots"], HideItem: ["ItemDevicesTeddyBear"], Time: 20, Difficulty: 3, RemoveItemOnRemove: [{ Name: "SuspensionHempRope", Group: "ItemHidden" }], Audio: "RopeLong" },
 			{ Name: "MetalCuffs", Priority: 30, Value: 40, SetPose: ["BackCuffs"], Effect: ["Block", "Prone", "Lock"], Difficulty: 5, Time: 5 },
 			{ Name: "SturdyLeatherBelts", SelfBondage: false, AllowLock: true, Value: 50, SetPose: ["BackElbowTouch"], Effect: ["Block", "Prone"], Time: 20, Difficulty: 5, BuyGroup: "SturdyLeatherBelts", Extended: true, AllowType: ["One", "Two", "Three", "Four"] },
 			{ Name: "LeatherArmbinder", DefaultColor: "#404040", Extended: true, SelfBondage: false, SelfUnlock: false, Priority: 6, Value: 80, SetPose: ["BackElbowTouch"], Effect: ["Block", "Prone"], Block: ["ItemHands"], Time: 25, RemoveTime: 10, Difficulty: 10, AllowLock: true, RemoveItemOnRemove: [{ Name: "LeatherArmbinderStrap", Group: "ItemHidden" },{ Name: "LeatherArmbinderWrapStrap", Group: "ItemHidden"}] },
@@ -1281,8 +1314,14 @@ var AssetFemale3DCG = [
 					{ Name: "Flowers", AllowColorize: true }
 				]
 			},
-			{ Name: "Chains", Extended: true, SelfBondage: false, Value: 90, AllowLock: true, SetPose: ["BackBoxTie"], AllowType: ["Hogtied", "SuspensionHogtied"], BuyGroup: "Chains", Effect: ["Block", "Prone"], Time: 30, Difficulty: 5, RemoveItemOnRemove: [{ Name: "SuspensionChains", Group: "ItemHidden" }] },
+			{ Name: "Chains", Extended: true, SelfBondage: false, Value: 90, AllowLock: true, SetPose: ["BackBoxTie"], AllowType: ["Hogtied", "SuspensionHogtied", "AllFours"], BuyGroup: "Chains", Effect: ["Block", "Prone"], AllowEffect: ["Freeze", "Block", "Prone", "ForceKneel"], AllowBlock: ["ItemHands", "ItemLegs", "ItemFeet", "ItemBoots"], Time: 30, Difficulty: 5, RemoveItemOnRemove: [{ Name: "SuspensionChains", Group: "ItemHidden" }] },
 			{ Name: "ChainLeashHolding", Random: false, SelfBondage: false, Priority: 35, Value: -1, Time: 3, RemoveTime: 3, Difficulty: 1, Prerequisite: ["NotSuspended", "NotHogtied"] },
+			{
+			    Name: "PetCrawler", Random: false, Value: 80, SetPose: ["AllFours"], SelfBondage: false, Priority: 39, Effect: ["Block", "Prone", "ForceKneel"], Time: 20, Difficulty: 10, AllowLock: true,
+	            Hide: ["ItemBoots", "Suit", "Panties", "Bra"], 
+				HideItem: ["ItemButtRaccoonTailPlug", "TailStrapsRaccoonTailStrap", "ItemButtKittenTail1", "TailStrapsKittenTail1", "ItemNipplesPiercingsNippleChastityPiercing2", "ItemTorsoAdultBabyHarness", "ItemTorsoCorset2", "ItemTorsoCorset3", "ItemNipplesPiercingsNippleChastityPiercing1", "ItemNipplesChainTassles", "ItemNipplesHeartPasties", "ItemNipplesNippleTape", "ItemNipplesKittyPasties"],
+				Block: ["ItemLegs", "ItemFeet"],
+				Prerequisite: ["NoItemFeet", "NoItemLegs", "LegsOpen", "NotMounted", "NotHorse", "NotSuspended", "NotYoked", "NotKneelingSpread", "NoFeetSpreader", "StraitDressOpen" ] },
 			AssetSpankingToys
 		]
 	},
@@ -1290,7 +1329,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemHands",
 		ParentGroup: "BodyUpper",
-		Activity: ["Kiss", "Lick", "PoliteKiss", "Spank", "Caress", "Polish"],
+		Activity: ["Kiss", "Lick", "PoliteKiss", "Spank", "Caress"],
 		Category: "Item",
 		Priority: 34,
 		Default: false,
@@ -1298,14 +1337,14 @@ var AssetFemale3DCG = [
 		Color: ["Default"],
 		Zone: [[10, 400, 90, 200], [400, 400, 90, 200]],
 		Asset: [
-			{ Name: "PaddedMittens", DefaultColor: "#bbbbbb", SelfBondage: false, Value: 40, AllowPose: ["BackBoxTie", "BackElbowTouch", "BackCuffs", "Yoked"], Effect: ["Block", "Prone"], Extended: true, Time: 15, Difficulty: 4, AllowLock: true },
-			{ Name: "PawMittens", DefaultColor: "#bbbbbb", SelfBondage: false, Value: 50, AllowPose: ["BackBoxTie", "BackElbowTouch", "BackCuffs", "Yoked"], Effect: ["Block", "Prone"], Extended: true, Time: 15, Difficulty: 4, AllowLock: true },
-			{ Name: "LeatherMittens", SelfBondage: false, Value: 60, SetPose: ["TapedHands"], AllowPose: ["BackBoxTie", "BackElbowTouch", "BackCuffs", "Yoked"], Hide: ["Gloves"], Effect: ["Block", "Prone"], Time: 15, RemoveTime: 5, Difficulty: 5, AllowLock: true },
-			{ Name: "PaddedLeatherMittens", SelfBondage: false, Value: 70, SetPose: ["TapedHands"], AllowPose: ["BackBoxTie", "BackElbowTouch", "BackCuffs", "Yoked"], Hide: ["Gloves"], Effect: ["Block", "Prone"], Time: 15, RemoveTime: 5, Difficulty: 6, AllowLock: true },
-			{ Name: "PolishedMittens", SelfBondage: false, Value: 80, AllowPose: ["BackBoxTie", "BackElbowTouch", "BackCuffs", "Yoked"], Effect: ["Block", "Prone"], Time: 20, RemoveTime: 10, Difficulty: 8, AllowLock: true  },
-			{ Name: "DuctTape", SelfBondage: false, Value: 50, SetPose: ["TapedHands"], AllowPose: ["BackBoxTie", "BackElbowTouch", "BackCuffs", "Yoked"], Hide: ["Gloves"], Effect: ["Block", "Prone"], Time: 20, RemoveTime: 10, Difficulty: 5, BuyGroup: "DuctTape" },
+			{ Name: "PaddedMittens", DefaultColor: "#bbbbbb", SelfBondage: false, Value: 40, AllowPose: ["BackBoxTie", "BackElbowTouch", "BackCuffs", "Yoked", "AllFours"], Effect: ["Block", "Prone"], Extended: true, Time: 15, Difficulty: 4, AllowLock: true },
+			{ Name: "PawMittens", DefaultColor: "#bbbbbb", SelfBondage: false, Value: 50, AllowPose: ["BackBoxTie", "BackElbowTouch", "BackCuffs", "Yoked", "AllFours"], Effect: ["Block", "Prone"], Extended: true, Time: 15, Difficulty: 4, AllowLock: true },
+			{ Name: "LeatherMittens", SelfBondage: false, Value: 60, SetPose: ["TapedHands"], AllowPose: ["BackBoxTie", "BackElbowTouch", "BackCuffs", "Yoked", "AllFours"], Hide: ["Gloves"], Effect: ["Block", "Prone"], Time: 15, RemoveTime: 5, Difficulty: 5, AllowLock: true },
+			{ Name: "PaddedLeatherMittens", SelfBondage: false, Value: 70, SetPose: ["TapedHands"], AllowPose: ["BackBoxTie", "BackElbowTouch", "BackCuffs", "Yoked", "AllFours"], Hide: ["Gloves"], Effect: ["Block", "Prone"], Time: 15, RemoveTime: 5, Difficulty: 6, AllowLock: true },
+			{ Name: "PolishedMittens", SelfBondage: false, Value: 80, AllowPose: ["BackBoxTie", "BackElbowTouch", "BackCuffs", "Yoked", "AllFours"], Effect: ["Block", "Prone"], Time: 20, RemoveTime: 10, Difficulty: 8, AllowLock: true  },
+			{ Name: "DuctTape", SelfBondage: false, Value: 50, SetPose: ["TapedHands"], AllowPose: ["BackBoxTie", "BackElbowTouch", "BackCuffs", "Yoked", "AllFours"], Hide: ["Gloves"], Effect: ["Block", "Prone"], Time: 20, RemoveTime: 10, Difficulty: 5, BuyGroup: "DuctTape" },
 			{
-				Name: "SpankingToys", Priority: 46, Wear: true,  IsRestraint: false, Extended: true, Random: false, BuyGroup: "SpankingToys", AllowType: ["Crop", "Flogger", "Cane", "HeartCrop", "Paddle", "WhipPaddle", "Whip", "CattleProd", "TennisRacket"], IgnoreParentGroup: true, AllowPose: ["BackBoxTie", "BackElbowTouch", "BackCuffs", "Yoked"],
+				Name: "SpankingToys", Priority: 46, Wear: true,  IsRestraint: false, Extended: true, Random: false, BuyGroup: "SpankingToys", AllowType: ["Crop", "Flogger", "Cane", "HeartCrop", "Paddle", "WhipPaddle", "Whip", "CattleProd", "TennisRacket"], IgnoreParentGroup: true, AllowPose: ["BackBoxTie", "BackElbowTouch", "BackCuffs", "Yoked", "AllFours"],
 				DynamicDescription: () => { return ((InventoryIsWorn(CurrentCharacter, "SpankingToys", "ItemHands")) && (InventoryGet(CurrentCharacter, "ItemHands").Property != null)) ? InventoryGet(CurrentCharacter, "ItemHands").Property.Type : "Spanking Toy" },
 				DynamicPreviewIcon: () => { return ((InventoryIsWorn(CurrentCharacter, "SpankingToys", "ItemHands")) && (InventoryGet(CurrentCharacter, "ItemHands").Property != null)) ? InventoryGet(CurrentCharacter, "ItemHands").Property.Type : "Paddle" }
 			}, {
@@ -1342,10 +1381,11 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemNeck",
 		Category: "Item",
-		Activity: ["Kiss", "Lick", "Caress", "Massage", "Strangle", "Bite"],
+		Activity: ["Kiss", "Lick", "Caress", "MassageHands", "Strangle", "Bite"],
 		Priority: 33,
 		Default: false,
 		Color: ["Default"],
+		
 		Left: 185,
 		Top: 160,
 		Zone: [[200, 200, 100, 70]],
@@ -1429,19 +1469,19 @@ var AssetFemale3DCG = [
 		Top: 190,
 		Zone: [[300, 200, 100, 70]],
 		Asset: [
-			{ Name: "CollarChainLong", Value: 30, Random: false, Prerequisite: ["Collared", "NotSuspended", "NotHogtied"], Time: 5, Difficulty: 6, AllowLock: true, BuyGroup: "CollarChain", AllowPose: ["Kneel", "Horse", "KneelingSpread"], Effect: ["Tethered"], ExpressionTrigger: [{ Group: "Blush", Name: "Medium", Timer: 15 }], ParentGroup: ["BodyLower"] },
-			{ Name: "CollarChainShort", Value: -1, Random: false, Prerequisite: ["Collared", "NotSuspended", "NotHogtied", "NotMounted", "CanKneel"], Time: 5, Difficulty: 6, AllowLock: true, BuyGroup: "CollarChain", SetPose: ["Kneel"], Effect: ["Freeze", "ForceKneel"], ExpressionTrigger: [{ Group: "Blush", Name: "Medium", Timer: 15 }, { Group: "Eyebrows", Name: "Soft", Timer: 5 }] },
-			{ Name: "CollarLeash", Value: 20, Random: false, Prerequisite: "Collared", Time: 5, Difficulty: 6, AllowLock: true, ExpressionTrigger: [{ Group: "Blush", Name: "Medium", Timer: 15 }] },
-			{ Name: "CollarLeashTaken", Value: -1, Random: false, Prerequisite: "Collared", Time: 5, Difficulty: 6, AllowLock: true, Effect: ["Tethered"], ExpressionTrigger: [{ Group: "Blush", Name: "Medium", Timer: 15 }] },
-			{ Name: "ChainLeash", Value: 25, Random: false, Prerequisite: "Collared", Time: 5, Difficulty: 6, AllowLock: true, ExpressionTrigger: [{ Group: "Blush", Name: "Medium", Timer: 15 }] },
-			{ Name: "ChainLeashTaken", Value: -1, Random: false, Prerequisite: "Collared", Time: 5, Difficulty: 6, AllowLock: true, Effect: ["Tethered"], ExpressionTrigger: [{ Group: "Blush", Name: "Medium", Timer: 15 }] },
+			{ Name: "CollarChainLong", Value: 30, Random: false, Prerequisite: ["Collared", "NotSuspended", "NotHogtied"], Time: 5, Difficulty: 6, AllowLock: true, BuyGroup: "CollarChain", AllowPose: ["Kneel", "Horse", "KneelingSpread", "AllFours"], Effect: ["Tethered"], ExpressionTrigger: [{ Group: "Blush", Name: "Medium", Timer: 15 }], ParentGroup: ["BodyLower"] },
+			{ Name: "CollarChainShort", Value: -1, Random: false, Prerequisite: ["Collared", "AllFours", "NotSuspended", "NotHogtied", "NotMounted", "CanKneel"], Time: 5, Difficulty: 6, AllowLock: true, AllowPose: ["AllFours"], BuyGroup: "CollarChain", SetPose: ["Kneel"], Effect: ["Freeze", "ForceKneel"], ExpressionTrigger: [{ Group: "Blush", Name: "Medium", Timer: 15 }, { Group: "Eyebrows", Name: "Soft", Timer: 5 }] },
+			{ Name: "CollarLeash", Value: 20, Random: false, Prerequisite: "Collared", Time: 5, AllowPose: ["AllFours"], Difficulty: 6, AllowLock: true, ExpressionTrigger: [{ Group: "Blush", Name: "Medium", Timer: 15 }] },
+			{ Name: "CollarLeashTaken", Value: -1, Random: false, AllowPose: ["AllFours"], Prerequisite: "Collared", Time: 5, Difficulty: 6, AllowLock: true, Effect: ["Tethered"], ExpressionTrigger: [{ Group: "Blush", Name: "Medium", Timer: 15 }] },
+			{ Name: "ChainLeash", Value: 25, Random: false, AllowPose: ["AllFours"], Prerequisite: "Collared", Time: 5, Difficulty: 6, AllowLock: true, ExpressionTrigger: [{ Group: "Blush", Name: "Medium", Timer: 15 }] },
+			{ Name: "ChainLeashTaken", Value: -1, AllowPose: ["AllFours"], Random: false, Prerequisite: "Collared", Time: 5, Difficulty: 6, AllowLock: true, Effect: ["Tethered"], ExpressionTrigger: [{ Group: "Blush", Name: "Medium", Timer: 15 }] },
 		]
 	},
 
 	{
 		Group: "ItemMouth",
 		Category: "Item",
-		Activity: ["Kiss", "FrenchKiss", "PoliteKiss", "Lick", "Caress"],
+		Activity: ["Kiss", "FrenchKiss", "PoliteKiss", "Lick", "Bite", "Caress"],
 		Priority: 34,
 		Default: false,
 		IsRestraint: true,
@@ -1548,7 +1588,7 @@ var AssetFemale3DCG = [
 			},
 			{ Name: "ChloroformCloth", Random: false, Effect: ["GagVeryLight"], Value: 40, Time: 2, Hide: ["Mouth"], ExpressionTrigger: [{ Group: "Blush", Name: "High", Timer: 20 }, { Group: "Eyebrows", Name: "Soft", Timer: 180 }, { Group: "Eyes", Name: "Wink", Timer: 180 }] },
 			{ Name: "ScarfGag", Effect: ["GagLight"], Value: 15, Time: 10, Hide: ["Mouth"], BuyGroup: "ScarfGag", SetPose: ["GagFlat"], Prerequisite: "GagFlat" },
-			{ Name: "LewdGag", Random: false, Effect: ["GagLight"], Value: 70, Time: 10, AllowLock: true, Hide: ["Mouth"], ExpressionTrigger: [{ Group: "Blush", Name: "Light", Timer: 5 }, { Group: "Eyes", Name: "Closed", Timer: 5 }], SetPose: ["GagFlat"], Prerequisite: "GagFlat" },
+			{ Name: "LewdGag", Random: false, Effect: ["GagLight"], Value: 70, Time: 10, AllowLock: true, Hide: ["Mouth"], ExpressionTrigger: [{ Group: "Blush", Name: "Light", Timer: 5 }, { Group: "Eyes", Name: "Closed", Timer: 5 }], SetPose: ["GagFlat"], Prerequisite: "GagFlat", BuyGroup: "LewdGag" },
 			{ Name: "DeepthroatGag", Random: false, DefaultColor: "#404040", Difficulty: 5, Effect: ["GagHeavy"], Value: 55, Time: 15, AllowLock: true, Hide: ["Mouth"], ExpressionTrigger: [{ Group: "Eyebrows", Name: "Raised", Timer: 10 }], BuyGroup: "DeepthroatGag", SetPose: ["GagUnique"], Prerequisite: "GagUnique" },
 			{ Name: "LeatherCorsetCollar", Random: false, DefaultColor: "#404040", Priority: 34, Hide: ["Mouth"], BuyGroup: ["LeatherCorsetCollar"], Block: ["ItemNeck"], Value: 75, Time: 20, RemoveTime: 30, Difficulty: 50, AllowLock: true, BuyGroup: "LeatherCorsetCollar", SetPose: ["GagCorset"], Prerequisite: "GagCorset" },
 			{ Name: "LatexPostureCollar", Random: false, Priority: 34, Hide: ["Mouth"], BuyGroup: ["LatexPostureCollar"], Block: ["ItemNeck"], Value: 80, Time: 20, RemoveTime: 30, Difficulty: 50, AllowLock: true, BuyGroup: "LatexPostureCollar", SetPose: ["GagCorset"], Prerequisite: "GagCorset" },
@@ -1867,21 +1907,23 @@ var AssetFemale3DCG = [
 			{ Name: "WaterCell", RemoveAtLogin: true, Effect: ["Prone", "Enclose", "GagMedium", "Freeze"], SetPose: ["Suspension", "LegsClosed"], Block: ["ItemFeet"], Value: -1, Time: 15, RemoveTime: 15, Difficulty: 1 },
 			{ Name: "Cage", RemoveAtLogin: true,  Alpha: [[1, 80, 105, 900], [410, 80, 105, 900]], Effect: ["Prone", "Enclose", "Freeze"], Value: 120, Time: 15, RemoveTime: 10, Difficulty: 4, AllowLock: true, Prerequisite: ["NotKneeling", "NotSuspended"] },
 			{ Name: "LowCage", RemoveAtLogin: true, Alpha: [[1, 80, 75, 900], [400, 80, 95, 900]], SetPose: ["Kneel"], Effect: ["ForceKneel", "Prone", "Enclose", "Freeze"], Value: 80, Time: 15, RemoveTime: 10, Difficulty: 4, AllowLock: true, Prerequisite: ["NotSuspended", "NotHogtied", "NotMounted", "NotKneelingSpread", "NoFeetSpreader"] },
-			{ Name: "SaddleStand", RemoveAtLogin: true, Height: 30, Value: 100, Time: 10, Difficulty: -2, AllowLock: true, SetPose: ["LegsOpen"], Prerequisite: ["LegsOpen", "NotSuspended", "NotHogtied", "NotHorse", "NotKneeling", "NotKneelingSpread", "NotShackled", "StraitDressOpen"], Block: ["ItemPelvis", "ItemLegs", "ItemFeet"], Effect: ["Prone", "Freeze", "Mounted"] },
-			{ Name: "BurlapSack", SelfBondage: false, Priority : 29, Block: ["ItemArms", "ItemBreast", "ItemButt", "ItemFeet", "ItemHands", "ItemLegs", "ItemMisc", "ItemNipples", "ItemNipplesPiercings", "ItemPelvis", "ItemTorso", "ItemVulva", "ItemVulvaPiercings", "ItemBoots"], SetPose: ["Kneel", "BackElbowTouch"], Effect: ["ForceKneel", "Block", "Prone", "Freeze"], Hide: ["Cloth", "ClothLower", "Shoes", "ItemBoots", "ItemLegs", "ItemFeet", "ItemArms", "ItemButt", "TailStraps", "Wings", "BodyLower", "Socks", "ItemHidden", "ItemNipplesPiercings"], Difficulty: 5, Value: 35, Time: 15, RemoveTime: 6, Prerequisite: ["NotSuspended", "NotHogtied", "NotYoked", "NotMounted", "NotKneelingSpread", "NoFeetSpreader"] },
-			{ Name: "InflatableBodyBag", Priority: 32, Extended: true, SelfBondage: false, SelfUnlock: false, Block: ["ItemArms", "ItemBreast", "ItemButt", "ItemFeet", "ItemHands", "ItemLegs", "ItemMisc", "ItemNipples", "ItemNipplesPiercings", "ItemPelvis", "ItemTorso", "ItemVulva", "ItemVulvaPiercings", "ItemBoots"], SetPose: ["LegsClosed", "BackElbowTouch"], AllowPose: ["Kneel"], Effect: ["Block", "Prone", "Freeze"], Hide: ["Cloth", "Suit", "ClothLower", "SuitLower", "Shoes", "ItemBoots", "ItemLegs", "ItemFeet", "ItemArms", "ItemButt", "TailStraps", "Wings", "BodyLower", "Socks", "ItemNipplesPiercings"], AllowType: ["Light", "Inflated", "Bloated", "Max"], HideItem: ["ItemVulvaFullLatexSuitWand"], Difficulty: 1, Value: 225, Time: 30, RemoveTime: 50, AllowLock: true, Prerequisite: ["NotSuspended", "NotHogtied", "NotYoked", "NotMounted", "NotKneelingSpread", "NoFeetSpreader"] },
-			{ Name: "BondageBench", RemoveAtLogin: false, Priority: 1, Extended: true, SetPose: ["LegsClosed"], Effect: ["Block", "Prone", "Freeze"], Value: 250, Time: 10, RemoveTime: 10, Prerequisite: ["NotKneeling", "NotSuspended", "NotHogtied", "NotMounted", "NoFeetSpreader"] },
+			{ Name: "SaddleStand", RemoveAtLogin: true, Height: 30, Value: 100, Time: 10, Difficulty: -2, AllowLock: true, SetPose: ["LegsOpen"], Prerequisite: ["LegsOpen", "AllFours", "NotSuspended", "NotHogtied", "NotHorse", "NotKneeling", "NotKneelingSpread", "NotShackled", "StraitDressOpen"], Block: ["ItemPelvis", "ItemLegs", "ItemFeet"], Effect: ["Prone", "Freeze", "Mounted"] },
+			{ Name: "BurlapSack", SelfBondage: false, Priority : 29, Block: ["ItemArms", "ItemBreast", "ItemButt", "ItemFeet", "ItemHands", "ItemLegs", "ItemMisc", "ItemNipples", "ItemNipplesPiercings", "ItemPelvis", "ItemTorso", "ItemVulva", "ItemVulvaPiercings", "ItemBoots"], SetPose: ["Kneel", "BackElbowTouch"], Effect: ["ForceKneel", "Block", "Prone", "Freeze"], Hide: ["Cloth", "ClothLower", "Shoes", "ItemBoots", "ItemLegs", "ItemFeet", "ItemArms", "ItemButt", "TailStraps", "Wings", "BodyLower", "Socks", "ItemHidden", "ItemNipplesPiercings"], Difficulty: 5, Value: 35, Time: 15, RemoveTime: 6, Prerequisite: ["NotSuspended", "AllFours", "NotHogtied", "NotYoked", "NotMounted", "NotKneelingSpread", "NoFeetSpreader"] },
+			{ Name: "InflatableBodyBag", Priority: 32, Extended: true, SelfBondage: false, SelfUnlock: false, Block: ["ItemArms", "ItemBreast", "ItemButt", "ItemFeet", "ItemHands", "ItemLegs", "ItemMisc", "ItemNipples", "ItemNipplesPiercings", "ItemPelvis", "ItemTorso", "ItemVulva", "ItemVulvaPiercings", "ItemBoots"], SetPose: ["LegsClosed", "BackElbowTouch"], AllowPose: ["Kneel"], Effect: ["Block", "Prone", "Freeze"], Hide: ["Cloth", "Suit", "ClothLower", "SuitLower", "Shoes", "ItemBoots", "ItemLegs", "ItemFeet", "ItemArms", "ItemButt", "TailStraps", "Wings", "BodyLower", "Socks", "ItemNipplesPiercings"], AllowType: ["Light", "Inflated", "Bloated", "Max"], HideItem: ["ItemVulvaFullLatexSuitWand"], Difficulty: 1, Value: 225, Time: 30, RemoveTime: 50, AllowLock: true, Prerequisite: ["NotSuspended", "AllFours", "NotHogtied", "NotYoked", "NotMounted", "NotKneelingSpread", "NoFeetSpreader"] },
+			{ Name: "BondageBench", RemoveAtLogin: false, Priority: 1, Extended: true, SetPose: ["LegsClosed"], Effect: ["Block", "Prone", "Freeze"], Value: 250, Time: 10, RemoveTime: 10, Prerequisite: ["NotKneeling", "AllFours", "NotSuspended", "NotHogtied", "NotMounted", "NoFeetSpreader"] },
 			{ Name: "TeddyBear", RemoveAtLogin: true, Priority: 33, IsRestraint: false, Extended: true, Difficulty: -10, Value: 50, Time: 5, Effect: [], AllowPose: ["TapedHands", "BackBoxTie", "BackCuffs", "BackElbowTouch", "Bolero", "Horse", "StraitDressOpen", "Yoked"], AllowType: ["Bear", "Fox", "Kitty", "Pup", "Bunny", "Pony"] },
-			{ Name: "OneBarPrison", RemoveAtLogin: true, Priority: 17, Value: 75, Time: 20, Difficulty: 8, AllowLock: true, SetPose: ["LegsOpen"], Prerequisite: ["AccessVulva", "LegsOpen", "NotSuspended", "NotHogtied", "NotHorse", "NotKneeling", "NotChaste", "StraitDressOpen"], Block: ["ItemPelvis", "ItemLegs", "ItemVulva", "ItemFeet"], Effect: ["Prone", "Freeze", "Mounted"],
+			{ Name: "OneBarPrison", RemoveAtLogin: true, Priority: 17, Value: 75, Time: 20, Difficulty: 8, AllowLock: true, SetPose: ["LegsOpen"], Prerequisite: ["AccessVulva", "AllFours", "LegsOpen", "NotSuspended", "NotHogtied", "NotHorse", "NotKneeling", "NotChaste", "StraitDressOpen"], Block: ["ItemPelvis", "ItemLegs", "ItemVulva", "ItemFeet"], Effect: ["Prone", "Freeze", "Mounted"],
 				Layer: [
 					{ Name: "Bar", AllowColorize: true },
 					{ Name: "Pussy", AllowColorize: false }
 				]
 			},
-			{ Name: "TheDisplayFrame", RemoveAtLogin: true, Value: 100, Time: 10, Difficulty: 50, Priority: 46, AllowLock: true, SetPose: ["LegsClosed", "BackElbowTouch"], Prerequisite: ["DisplayFrame", "NotSuspended", "NotHogtied", "NotHorse", "NotKneeling"], Block: ["ItemArms", "ItemLegs", "ItemFeet", "ItemBoots", "ItemNeckAccessories"], Effect: ["Prone", "Freeze", "Block", "Mounted"] },
-			{ Name: "Sybian", RemoveAtLogin: true, IsRestraint: false, Value: 80, Time: 10, Difficulty: 1, Priority: 22, SetPose: ["KneelingSpread"], Prerequisite: ["AccessVulva", "NotKneeling", "LegsOpen", "NotSuspended", "NotHogtied", "NotShackled", "NotChaste", "StraitDressOpen", "NotHorse"], Block: ["ItemLegs", "ItemFeet", "ItemBoots", "ItemPelvis", "ItemButt", "ItemVulva"], Effect: ["Egged", "Freeze"], Hide: ["Shoes", "Socks", "ItemBoots", "ItemFeet", "ItemLegs", "ItemVulva"], HideItem: ["ClothLowerPajama1", "ClothLowerShorts1", "ClothLowerJeans1", "ClothLowerJeans2", "ClothLowerWaspie1", "ClothLowerWaspie2", "ClothLowerWaspie3", "ClothLowerLatexPants1", "ItemDevicesTeddyBear"] },
+			{ Name: "TheDisplayFrame", RemoveAtLogin: true, Value: 100, Time: 10, Difficulty: 50, Priority: 46, AllowLock: true, SetPose: ["LegsClosed", "BackElbowTouch"], Prerequisite: ["DisplayFrame", "AllFours", "NotSuspended", "NotHogtied", "NotHorse", "NotKneeling"], Block: ["ItemArms", "ItemLegs", "ItemFeet", "ItemBoots", "ItemNeckAccessories"], Effect: ["Prone", "Freeze", "Block", "Mounted"] },
+			{ Name: "Sybian", RemoveAtLogin: true, IsRestraint: false, Value: 80, Time: 10, Difficulty: 1, Priority: 22, SetPose: ["KneelingSpread"], Prerequisite: ["AccessVulva", "NotKneeling", "AllFours", "LegsOpen", "NotSuspended", "NotHogtied", "NotShackled", "NotChaste", "StraitDressOpen", "NotHorse"], Block: ["ItemLegs", "ItemFeet", "ItemBoots", "ItemPelvis", "ItemButt", "ItemVulva"], Effect: ["Egged", "Freeze"], Hide: ["Shoes", "Socks", "ItemBoots", "ItemFeet", "ItemLegs", "ItemVulva"], HideItem: ["ClothLowerPajama1", "ClothLowerShorts1", "ClothLowerJeans1", "ClothLowerJeans2", "ClothLowerWaspie1", "ClothLowerWaspie2", "ClothLowerWaspie3", "ClothLowerLatexPants1", "ItemDevicesTeddyBear"] },
 			{ Name: "StrapOnSmooth", IsRestraint: false, Value: 25, Time: 10, Difficulty: 1, Priority: 33 },
-			{ Name: "StrapOnStuds", IsRestraint: false, Value: 25, Time: 10, Difficulty: 1, Priority: 33 }	
+			{ Name: "StrapOnStuds", IsRestraint: false, Value: 25, Time: 10, Difficulty: 1, Priority: 33 },
+			{ Name: "DisplayCase", RemoveAtLogin: true, Alpha: [[1, 1, 70, 999], [420, 1, 80, 999]], Effect: ["Prone", "Enclose", "DeafLight", "GagLight", "Freeze"], Value: 60, Time: 15, RemoveTime: 10, Difficulty: -2, AllowLock: true, Prerequisite: ["NotSuspended"] },
+			{ Name: "SmallDisplayCase", RemoveAtLogin: true, Alpha: [[1, 1, 70, 999], [420, 1, 80, 999]], SetPose: ["Kneel"], Effect: ["ForceKneel", "Prone", "Enclose", "DeafLight", "GagLight", "Freeze"], Value: 40, Time: 15, RemoveTime: 10, Difficulty: -2, AllowLock: true, Prerequisite: ["NotSuspended", "NotHogtied", "NotMounted", "NotKneelingSpread", "NoFeetSpreader"] }	
 		]
 	},
 	
@@ -1903,7 +1945,7 @@ var AssetFemale3DCG = [
 	{
 		Group: "ItemBoots",
 		Category: "Item",
-		Activity: ["Kiss", "Lick", "Suck", "Tickle", "Spank", "Massage", "Polish"],
+		Activity: ["Kiss", "Lick", "Suck", "Tickle", "Spank", "MassageHands"],
 		Priority: 23,
 		ParentGroup: "BodyLower",
 		Default: false,
@@ -1920,7 +1962,8 @@ var AssetFemale3DCG = [
 			{ Name: "ToeCuffs", Value: 35, Time: 10, RemoveTime: 5, Difficulty: 4, Effect: ["Freeze", "Prone"], SetPose: ["LegsClosed"], AllowLock: true, Hide: ["Shoes"], Prerequisite: "ToeTied" },
 			{ Name: "LeatherToeCuffs", Value: 50, Time: 10, RemoveTime: 5, Difficulty: 3, Effect: ["Freeze", "Prone"], SetPose: ["LegsClosed"], AllowLock: true, Hide: ["Shoes"], Prerequisite: "ToeTied" },
 			{ Name: "ToeTie", DefaultColor: "#605020", Value: 15, Time: 10, RemoveTime: 5, Difficulty: 2, Effect: ["Freeze", "Prone"], SetPose: ["LegsClosed"], Hide: ["Shoes"], Prerequisite: "ToeTied" },
-			{ Name: "ThighHighLatexHeels", Height: 30, Value: -1, Time: 10, RemoveTime: 15, BuyGroup: "ThighHighLatexHeels", AllowLock: true, Alpha: [[75, 800, 140, 200], [290, 800, 140, 200]], Hide: ["Shoes"] }
+			{ Name: "ThighHighLatexHeels", Height: 30, Value: -1, Time: 10, RemoveTime: 15, BuyGroup: "ThighHighLatexHeels", AllowLock: true, Alpha: [[75, 800, 140, 200], [290, 800, 140, 200]], Hide: ["Shoes"] },
+			{ Name: "LockingHeels", Height: 15, Value: 40, Time: 10, RemoveTime: 15, Difficulty: 6, AllowLock: true, Hide: ["Shoes"]}
 		]
 	},
 	
@@ -1977,6 +2020,12 @@ var PoseFemale3DCG = [
 		Name: "SuspensionHogtied",
 		OverrideHeight: 0,
 		Hide: ["BodyLower", "Hands", "ClothLower", "Wings", "TailStraps", "Gloves", "Panties", "Pussy", "ItemHands", "ItemPelvis", "ItemVulva", "ItemVulvaPiercings", "ItemButt", "ItemLegs", "ItemFeet", "SuitLower"]
+	},
+	{
+		Name: "AllFours",
+		OverrideHeight: -560,
+		Hide: ["ItemFeet", "ClothLower", "SuitLower", "Nipples", "Pussy", "BodyLower", "Wings", "ItemPelvis", "ItemVulva", "ItemVulvaPiercings", "ItemLegs"],
+		MovePosition: [{ Group: "TailStraps", X: 0, Y: -300 }, { Group: "ItemButt", X: 0, Y: -300 } ]
 	}
 
 ];
@@ -1985,117 +2034,135 @@ var PoseFemale3DCG = [
 var ActivityFemale3DCG = [
 	{
 		Name: "Kiss",
+		MaxProgress: 50,
 		TargetSelf: ["ItemHands", "ItemArms", "ItemBoots"],
 		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "FrenchKiss",
+		MaxProgress: 70,
 		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "PoliteKiss",
+		MaxProgress: 30,
 		TargetSelf: ["ItemHands", "ItemArms", "ItemBoots"],
 		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "Lick",
+		MaxProgress: 90,
 		TargetSelf: ["ItemHands", "ItemArms", "ItemBoots"],
 		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "Suck",
+		MaxProgress: 60,
 		TargetSelf: ["ItemHands", "ItemArms", "ItemBoots"],
 		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "Bite",
+		MaxProgress: 40,
 		TargetSelf: ["ItemHands", "ItemArms", "ItemBoots"],
 		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "Whisper",
+		MaxProgress: 20,
 		Prerequisite: ["UseMouth"]
 	},
 	{
 		Name: "Tickle",
+		MaxProgress: 50,
 		TargetSelf: ["ItemTorso", "ItemPelvis", "ItemBreast", "ItemNipples", "ItemLegs", "ItemFeet", "ItemBoots", "ItemArms", "ItemHands"],
 		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Caress",
+		MaxProgress: 80,
 		TargetSelf: ["ItemTorso", "ItemPelvis", "ItemBreast", "ItemNipples", "ItemLegs", "ItemFeet", "ItemBoots", "ItemArms", "ItemHands", "ItemButt", "ItemVulva", "ItemHead"],
 		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Rub",
+		MaxProgress: 60,
 		TargetSelf: ["ItemTorso", "ItemPelvis", "ItemBreast", "ItemLegs", "ItemFeet", "ItemArms", "ItemHead"],
 		Prerequisite: ["UseFeet"]
 	},
 	{
 		Name: "Brush",
+		MaxProgress: 30,
 		TargetSelf: ["ItemHead"],
 		Prerequisite: ["UseHands"]
 	},
 	{
-		Name: "Massage",
+		Name: "MassageHands",
+		MaxProgress: 60,
 		TargetSelf: ["ItemTorso", "ItemPelvis", "ItemBreast", "ItemLegs", "ItemFeet", "ItemBoots", "ItemArms", "ItemHands", "ItemButt", "ItemVulva", "ItemHead"],
 		Prerequisite: ["UseHands"]
 	},
 	{
-		Name: "Polish",
-		TargetSelf: ["ItemHands", "ItemBoots"],
-		Prerequisite: ["UseHands"]
+		Name: "MassageFeet",
+		MaxProgress: 40,
+		Prerequisite: ["UseFeet"]
 	},
 	{
 		Name: "Grope",
+		MaxProgress: 50,
 		TargetSelf: ["ItemButt", "ItemBreast"],
 		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Pinch",
+		MaxProgress: 20,
 		TargetSelf: ["ItemNipples", "ItemEars"],
 		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Spank",
+		MaxProgress: 40,
 		TargetSelf: ["ItemButt", "ItemLegs"],
 		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Slap",
+		MaxProgress: 30,
 		TargetSelf: ["ItemBreast", "ItemHead"],
 		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Pull",
+		MaxProgress: 30,
 		TargetSelf: ["ItemHead"],
 		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "Strangle",
+		MaxProgress: 50,
 		TargetSelf: ["ItemNeck"],
 		Prerequisite: ["UseHands"]
 	},
 	{
 		Name: "MasturbateTongue",
-		Orgasm: true,
-		Prerequisite: ["UseMouth"]
+		MaxProgress: 100,
+		Prerequisite: ["UseMouth", "ZoneNaked"]
 	},
 	{
 		Name: "MasturbateHand",
 		TargetSelf: ["ItemBreast", "ItemVulva", "ItemButt"],
-		Orgasm: true,
-		Prerequisite: ["UseHands"]
+		MaxProgress: 100,
+		Prerequisite: ["UseHands", "ZoneNaked"]
 	},
 	{
 		Name: "MasturbateFist",
-		Orgasm: true,
-		Prerequisite: ["UseHands"]
+		MaxProgress: 100,
+		Prerequisite: ["UseHands", "ZoneNaked"]
 	},
 	{
 		Name: "MasturbateFoot",
-		Orgasm: true,
-		Prerequisite: ["UseFeet"]
+		MaxProgress: 100,
+		Prerequisite: ["UseFeet", "ZoneNaked"]
 	}
 	
 ]

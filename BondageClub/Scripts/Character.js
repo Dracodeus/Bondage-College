@@ -213,19 +213,19 @@ function CharacterLoadNPC(NPCType) {
 
 // Sets up the online character
 function CharacterOnlineRefresh(Char, data, SourceMemberNumber) {
-	if (Char.ID != 0) Char.Title = data.Title;
+	if ((Char.ID != 0) && (Char.MemberNumber == SourceMemberNumber)) Char.Title = data.Title;
 	Char.ActivePose = data.ActivePose;
 	Char.LabelColor = data.LabelColor;
 	Char.Creation = data.Creation;
-	if (Char.ID != 0) Char.ItemPermission = data.ItemPermission;
-	if (Char.ID != 0) Char.ArousalSettings = data.ArousalSettings;
+	if ((Char.ID != 0) && (Char.MemberNumber == SourceMemberNumber)) Char.ItemPermission = data.ItemPermission;
+	if ((Char.ID != 0) && (Char.MemberNumber == SourceMemberNumber)) Char.ArousalSettings = data.ArousalSettings;
 	Char.Ownership = data.Ownership;
 	Char.Lovership = data.Lovership;
 	Char.Reputation = (data.Reputation != null) ? data.Reputation : [];
 	Char.BlockItems = Array.isArray(data.BlockItems) ? data.BlockItems : [];
 	Char.Appearance = ServerAppearanceLoadFromBundle(Char, "Female3DCG", data.Appearance, SourceMemberNumber);
 	if (Char.ID == 0) LoginValidCollar();
-	if (Char.ID != 0) InventoryLoad(Char, data.Inventory);
+	if ((Char.ID != 0) && (Char.MemberNumber == SourceMemberNumber)) InventoryLoad(Char, data.Inventory);
 	CharacterLoadEffect(Char);
 	CharacterRefresh(Char);
 }
@@ -574,15 +574,4 @@ function CharacterResetFacialExpression(C) {
 // returns the current selected character
 function CharacterGetCurrent() {
 	return (Player.FocusGroup != null) ? Player : CurrentCharacter;
-}
-
-// Sets the character arousal level and validates the value
-function CharacterSetArousal(C, Progress) {
-	if ((Progress == null) || (Progress < 0)) Progress = 0;
-	if (Progress > 100) Progress = 100;
-	if ((C.ArousalSettings.Progress == null) || (C.ArousalSettings.Progress != Progress)) {
-		C.ArousalSettings.Progress = Progress;
-		if ((C.ID == 0) && (CurrentScreen == "ChatRoom"))
-			ChatRoomCharacterUpdate(Player);
-	}
 }

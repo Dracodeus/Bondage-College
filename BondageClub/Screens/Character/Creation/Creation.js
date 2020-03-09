@@ -68,6 +68,7 @@ function CreationResponse(data) {
 			Player.WhiteList = [];
 			Player.BlackList = [];
 			Player.FriendList = [];
+			Player.GhostList = [];
 
 			// Imports logs, inventory and Sarah status from the Bondage College
 			CreationMessage = "";
@@ -78,7 +79,7 @@ function CreationResponse(data) {
 
 			// Calls the preference init to make sure the preferences are loaded correctly
 			PreferenceInit(Player);
-			CharacterSetArousal(Player, 0);
+			ActivitySetArousal(Player, 0);
 
 			// Flush the controls and enters the main hall
 			ServerPlayerAppearanceSync();

@@ -36,6 +36,7 @@
 <script src="Scripts/Server.js"></script>
 <script src="Scripts/Element.js"></script>
 <script src="Scripts/Translation.js"></script>
+<script src="Scripts/Activity.js"></script>
 <script src="Scripts/socket.io/socket.io.js"></script>
 <script src="Assets/Female3DCG/Female3DCG.js"></script>
 <script src="Screens/Character/Login/Login.js"></script>
@@ -184,6 +185,7 @@
 <script src="Screens/Inventory/ItemHidden/LeatherArmbinderStrap/LeatherArmbinderStrap.js"></script>
 <script src="Screens/Inventory/ItemHidden/LeatherArmbinderWrapStrap/LeatherArmbinderWrapStrap.js"></script>
 <script src="Screens/Inventory/ItemArms/BitchSuit/BitchSuit.js"></script>
+<script src="Screens/Inventory/ItemVulva/ClitAndDildoVibratorbelt/ClitAndDildoVibratorbelt.js"></script>
 <script>
 
 /*
@@ -191,9 +193,27 @@
 	NEXT VERISON:
 	
 	OK - Fixes for Microsoft Edge & color picking (vsan)
-	TEST - New sound effects (aldaris)
+	OK - New sound effects (aldaris)
+	OK - Seamless catsuit (Kirsty)
+	OK - New All four pose & items (gatetrek)
+	OK - Crotch chain + Locking Heels + Two new display cases (Kirsty)
+	OK - Catsuit & See-through gloves - Gloves for All Fours position (gatetrek)
+	BUG SENT - Both egg and vibrator could work on different variables - Demon tail + Clit&Dildo Vibrating belt + See-through + See-through zip catsuits (gatetrek)
+	OK - Text is too close, move up - All fours rope + chain bondage (gatetrek)
+	BUG SENT - Use a device strap-on on a suspended girl, should be hidden (wildsj)
+
+	OK - Ghosting / Unghosting players from chat log /ghostadd /ghostremove
+	OK - New stuttering preferences
+	OK - New preference to show sexual activities in chat log
+	OK - Output orgasm text in chat log
+	OK - Manual arousal expression changes & orgasms
+	OK - Limit timer progress of some activities & zones that doesn't allow orgasms
+	OK - Doing activities on others can raise your own arousal
+	OK - Vibrating items should raise arousal slowly & give orgasms
+	TO DO - Orgasm resist popup & mini-game
+	TO DO - Pink filter and lock screen after an orgasm
 	
-	TO DO - Add a new preference screen to configure your sexual preferences.  First, there will be a master selection with these options to allow sexual contacts or not:
+	IN PROGRESS - Add a new preference screen to configure your sexual preferences.  First, there will be a master selection with these options to allow sexual contacts or not:
 	-	Disable all sexual contacts
 	-	Allow contacts without an arousal meter
 	-	Allow contacts with a manual arousal meter
@@ -249,7 +269,7 @@
 // When the code is loaded, we start the game engine
 window.onload = function() {
 	//CheatImport();
-	//ServerURL = "https://bondage-club-server.herokuapp.com/";
+	ServerURL = "https://bondage-club-server.herokuapp.com/";
 	CommonIsMobile = CommonDetectMobile();
 	TranslationLoad();
 	DrawLoad();

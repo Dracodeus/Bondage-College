@@ -73,6 +73,7 @@ function LoginLoad() {
 	CharacterLoadCSVDialog(Player);
 	LoginMessage = "";
 	if (LoginCredits == null) CommonReadCSV("LoginCredits", CurrentModule, CurrentScreen, "GameCredits");
+	ActivityDictionaryLoad();
 	ElementCreateInput("InputName", "text", "", "20");
 	ElementCreateInput("InputPassword", "password", "", "20");
 
@@ -246,13 +247,10 @@ function LoginResponse(C) {
 			Player.AudioSettings = C.AudioSettings;
 			Player.GameplaySettings = C.GameplaySettings;
 			Player.ArousalSettings = C.ArousalSettings;
-			Player.WhiteList = C.WhiteList;
-			Player.BlackList = C.BlackList;
-			Player.FriendList = C.FriendList;
-
-			// Calls the preference init to make sure the preferences are loaded correctly
-			PreferenceInit(Player);
-			CharacterSetArousal(Player, 0);
+			Player.WhiteList = ((C.WhiteList == null) || !Array.isArray(C.WhiteList)) ? [] : C.WhiteList;
+			Player.BlackList = ((C.BlackList == null) || !Array.isArray(C.BlackList)) ? [] : C.BlackList;
+			Player.FriendList = ((C.FriendList == null) || !Array.isArray(C.FriendList)) ? [] : C.FriendList;
+			Player.GhostList = ((C.GhostList == null) || !Array.isArray(C.GhostList)) ? [] : C.GhostList;
 
 			// Loads the player character model and data
 			Player.Appearance = ServerAppearanceLoadFromBundle(Player, C.AssetFamily, C.Appearance);
@@ -260,6 +258,13 @@ function LoginResponse(C) {
 			LogLoad(C.Log);
 			ReputationLoad(C.Reputation);
 			SkillLoad(C.Skill);
+
+			// Calls the preference init to make sure the preferences are loaded correctly
+			PreferenceInit(Player);
+			ActivitySetArousal(Player, 0);
+			ActivityTimerProgress(Player, 0);
+
+			// Loads the dialog and removes the login controls
 			CharacterLoadCSVDialog(Player);
 			PrivateCharacterMax = 4 + (LogQuery("Expansion", "PrivateRoom") ? 4 : 0) + (LogQuery("SecondExpansion", "PrivateRoom") ? 4 : 0);
 			CharacterRefresh(Player, false);

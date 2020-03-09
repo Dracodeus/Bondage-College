@@ -26,6 +26,7 @@ DisplayTimestamps,Display timestamps
 ColorNames,Color names
 ColorActions,Color actions
 ColorEmotes,Color emotes
+ShowActivities,Show sexual activities & orgasms
 AudioVolume,Audio volume
 AudioPlayBeeps,Audio alarm for beeps
 AudioPlayItem,Play item sounds in chatrooms
@@ -36,6 +37,8 @@ BlindDisableExamine,Disable examining people when blind
 DisableAutoRemoveLogin,Keep all of your restraints when relogging
 ForceFullHeight,Display all characters at maximum height
 EnableAfkTimer,Show AFK bubble if idle for 5 minutes
+ArousalShowOtherMeter,Show other characters meter
+ArousalAffectExpression,Affect your facial expressions
 ArousalActive,Activation:
 ArousalActiveInactive,Disable sexual activities
 ArousalActiveNoMeter,Allow without a meter
@@ -47,29 +50,6 @@ ArousalVisibleAll,Show arousal to everyone
 ArousalVisibleAccess,Show if they have access
 ArousalVisibleSelf,Show to yourself only
 ArousalActivity,Activity preferences:
-ArousalActivityTypeKiss,Kissing
-ArousalActivityTypeFrenchKiss,French Kissing
-ArousalActivityTypePoliteKiss,Polite Kissing
-ArousalActivityTypeLick,Licking
-ArousalActivityTypeTickle,Tickling
-ArousalActivityTypeSpank,Spanking
-ArousalActivityTypeCaress,Caressing
-ArousalActivityTypeMassage,Massaging
-ArousalActivityTypeGrope,Groping
-ArousalActivityTypeMasturbateTongue,Tongue Mastubation
-ArousalActivityTypeMasturbateHand,Hand Masturbation
-ArousalActivityTypeMasturbateFist,Fist Masturbation
-ArousalActivityTypeMasturbateFoot,Foot Masturbation
-ArousalActivityTypePinch,Pinching
-ArousalActivityTypeSuck,Sucking
-ArousalActivityTypePolish,Nail Polishing
-ArousalActivityTypeStrangle,Strangling
-ArousalActivityTypeBite,Biting
-ArousalActivityTypeSlap,Slapping
-ArousalActivityTypeBrush,Brushing
-ArousalActivityTypePull,Hair Pulling
-ArousalActivityTypeWhisper,Ear Whispering
-ArousalActivityTypeRub,Body Rubbing
 ArousalActivityLoveSelf,Done on yourself:
 ArousalActivityLoveOther,Doing it to others:
 ArousalActivityLove0,Forbid/Block it
@@ -100,3 +80,8 @@ ArousalZoneItemNeck,Neck
 ArousalZoneItemMouth,Mouth & Lips
 ArousalZoneItemHead,Head & Hair
 ArousalZoneItemEars,Ears
+ArousalStutter,Speech stuttering:
+ArousalStutterNone,Never stutter
+ArousalStutterArousal,When you're aroused
+ArousalStutterVibration,When you're vibrated
+ArousalStutterAll,Aroused & vibrated
