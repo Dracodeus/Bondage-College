@@ -110,7 +110,7 @@ function DrawArousalMeter(C, X, Y, Zoom) {
 					ActivitySetArousal(C, C.ArousalSettings.Progress);
 
 					// In orgasm mode, we only draw a pink rectangle
-					if ((C.ArousalSettings.OrgasmTimer != null) && (typeof C.ArousalSettings.OrgasmTimer === "number") && !isNaN(C.ArousalSettings.OrgasmTimer) && (C.ArousalSettings.OrgasmTimer > CurrentTime)) {
+					if ((C.ArousalSettings.OrgasmTimer != null) && (typeof C.ArousalSettings.OrgasmTimer === "number") && !isNaN(C.ArousalSettings.OrgasmTimer) && (C.ArousalSettings.OrgasmTimer > 0)) {
 						DrawRect(X + (400 * Zoom), Y + (325 * Zoom) - 2, (22 * Zoom) + 4, (250 * Zoom) + 4, (C.ArousalSettings.Active == "Automatic") ? "#FFD700" : "white");
 						DrawRect(X + (400 * Zoom) + 2, Y + (325 * Zoom), (22 * Zoom), (250 * Zoom), "pink");
 					} else {

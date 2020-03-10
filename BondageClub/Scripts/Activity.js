@@ -1,5 +1,10 @@
 "use strict";
 var ActivityDictionary = null;
+var ActivityOrgasmGameButtonX = 0;
+var ActivityOrgasmGameButtonY = 0;
+var ActivityOrgasmGameProgress = 0;
+var ActivityOrgasmGameDifficulty = 0;
+var ActivityOrgasmGameResistCount = 0;
 
 // Loads the activity dictionary that will be used throughout the game to output messages
 function ActivityDictionaryLoad() {
@@ -110,6 +115,7 @@ function ActivitySetArousal(C, Progress) {
 	if ((C.ArousalSettings.Progress == null) || (typeof C.ArousalSettings.Progress !== "number") || isNaN(C.ArousalSettings.Progress)) C.ArousalSettings.Progress = 0;
 	if ((Progress == null) || (Progress < 0)) Progress = 0;
 	if (Progress > 100) Progress = 100;
+	if (Progress == 0) C.ArousalSettings.OrgasmTimer = 0;
 	if (C.ArousalSettings.Progress != Progress) {
 		C.ArousalSettings.Progress = Progress;
 		C.ArousalSettings.ProgressTimer = 0;
@@ -142,20 +148,68 @@ function ActivitySetArousalTimer(C, Activity, Zone, Progress) {
 
 }
 
-// Triggers an orgasm for the player or an NPC which lasts from 5 to 15 seconds
-function ActivityOrgasm(C) {
-	if ((C.ID == 0) || (C.AccountName.substring(0, 4) == "NPC_") || (C.AccountName.substring(0, 4) == "NPC-")) {
+// Each time the player tries to resist, it slowly raises her willpower
+function ActivityOrgasmWillpowerProgress(C) {
+	if ((C.ID == 0) && (ActivityOrgasmGameProgress > 0)) {
+		SkillProgress("Willpower", ActivityOrgasmGameProgress);
+		ActivityOrgasmGameProgress = 0;
+	}
+}
 
-		// The orgasm can be outputted in the chatroom
+// The orgasm lasts between 5 and 15 seconds and can be outputted in the chatroom
+function ActivityOrgasmStart(C) {
+	if ((C.ID == 0) || (C.AccountName.substring(0, 4) == "NPC_") || (C.AccountName.substring(0, 4) == "NPC-")) {
+		if (C.ID == 0) ActivityOrgasmGameResistCount = 0;
+		ActivityOrgasmWillpowerProgress(C);
+		C.ArousalSettings.OrgasmTimer = CurrentTime + (Math.random() * 10000) + 5000;
+		C.ArousalSettings.OrgasmStage = 2;
 		if ((C.ID == 0) && (CurrentScreen == "ChatRoom")) {
 			var Dictionary = [];
 			Dictionary.push({Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber});
 			ServerSend("ChatRoomChat", {Content: "Orgasm" + (Math.floor(Math.random() * 10)).toString(), Type: "Activity", Dictionary: Dictionary});
 		}
+	}
+}
+
+// If we need to stop an orgasm
+function ActivityOrgasmStop(C, Progress) {
+	if ((C.ID == 0) || (C.AccountName.substring(0, 4) == "NPC_") || (C.AccountName.substring(0, 4) == "NPC-")) {
+		ActivityOrgasmWillpowerProgress(C);
+		C.ArousalSettings.OrgasmTimer = 0;
+		C.ArousalSettings.OrgasmStage = 0;
+		ActivitySetArousal(C, Progress);
+	}
+}
+
+// Generates an orgasm button and progresses in the mini-game
+function ActivityOrgasmGameGenerate(Progress) {
+
+	// If we must reset the mini-game
+	if (Progress == 0) {
+		Player.ArousalSettings.OrgasmStage = 1;
+		Player.ArousalSettings.OrgasmTimer = CurrentTime + 5000 + (SkillGetLevel(Player, "Willpower") * 1000);
+		ActivityOrgasmGameDifficulty = (6 + (ActivityOrgasmGameResistCount * 2)) * (CommonIsMobile ? 1.5 : 1);
+	}
+
+	// Runs the game or finish it if the threshold is reached
+	if (Progress >= ActivityOrgasmGameDifficulty) {
+		ActivityOrgasmGameResistCount++;
+		ActivityOrgasmStop(Player, 70);
+	} else {
+		ActivityOrgasmGameProgress = Progress;
+		ActivityOrgasmGameButtonX = 50 + Math.floor(Math.random() * 700);
+		ActivityOrgasmGameButtonY = 50 + Math.floor(Math.random() * 836);
+	}
+
+}
+
+// Triggers an orgasm for the player or an NPC which lasts from 5 to 15 seconds
+function ActivityOrgasmPrepare(C) {
+	if ((C.ID == 0) || (C.AccountName.substring(0, 4) == "NPC_") || (C.AccountName.substring(0, 4) == "NPC-")) {
 
 		// Starts the timer and exits from dialog if necessary
-		C.ArousalSettings.OrgasmTimer = CurrentTime + (Math.random() * 10000) + 5000;
-		ActivitySetArousal(C, 23);
+		C.ArousalSettings.OrgasmTimer = (C.ID == 0) ? CurrentTime + 5000 : CurrentTime + (Math.random() * 10000) + 5000;
+		C.ArousalSettings.OrgasmStage = (C.ID == 0) ? 0 : 2;
 		if ((CurrentCharacter != null) && (CurrentCharacter.ID == C.ID)) DialogLeave();
 
 		// If an NPC orgasmed, it will raise her love based on the horny trait
@@ -218,11 +272,11 @@ function ActivityTimerProgress(C, Progress) {
 
 	// Out of orgasm mode, it can affect facial expressions at every 10 steps
 	if ((C.ArousalSettings.OrgasmTimer == null) || (typeof C.ArousalSettings.OrgasmTimer !== "number") || isNaN(C.ArousalSettings.OrgasmTimer) || (C.ArousalSettings.OrgasmTimer < CurrentTime))
-		if (((C.ArousalSettings.AffectExpression == null) || C.ArousalSettings.AffectExpression) && (C.ArousalSettings.Progress % 10 == 0))
+		if (((C.ArousalSettings.AffectExpression == null) || C.ArousalSettings.AffectExpression) && ((C.ArousalSettings.Progress + ((Progress < 0) ? 1 : 0)) % 10 == 0))
 			ActivityExpression(C, C.ArousalSettings.Progress);
 
 	// Can trigger an orgasm
-	if (C.ArousalSettings.Progress == 100) ActivityOrgasm(C);
+	if (C.ArousalSettings.Progress == 100) ActivityOrgasmPrepare(C);
 
 }
 
