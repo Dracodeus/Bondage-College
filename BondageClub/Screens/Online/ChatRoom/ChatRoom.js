@@ -143,7 +143,7 @@ function ChatRoomDrawCharacter(DoClick) {
 								if (Arousal > 100) Arousal = 100;
 								if ((Player.ArousalSettings.AffectExpression == null) || Player.ArousalSettings.AffectExpression) ActivityExpression(Player, Arousal);
 								ActivitySetArousal(Player, Arousal);
-								if (Arousal == 100) ActivityOrgasm(Player);
+								if (Arousal == 100) ActivityOrgasmPrepare(Player);
 							}
 							return;
 						}
@@ -229,14 +229,39 @@ function ChatRoomRun() {
 	DrawButton(1701, 2, 120, 60, "", "White", "Icons/Rectangle/Character.png", TextGet("MenuProfile"));
 	DrawButton(1875, 2, 120, 60, "", "White", "Icons/Rectangle/Preference.png", TextGet("MenuAdmin"));
 
+	// In orgasm mode, we add a pink filter and different controls depending on the stage
+	if ((Player.ArousalSettings != null) && (Player.ArousalSettings.OrgasmTimer != null) && (typeof Player.ArousalSettings.OrgasmTimer === "number") && !isNaN(Player.ArousalSettings.OrgasmTimer) && (Player.ArousalSettings.OrgasmTimer > 0)) {
+		DrawRect(0, 0, 1003, 1000, "#FFB0B0B0");
+		DrawRect(1003, 0, 993, 63, "#FFB0B0B0");
+		if (Player.ArousalSettings.OrgasmStage == null) Player.ArousalSettings.OrgasmStage = 0;
+		if (Player.ArousalSettings.OrgasmStage == 0) {
+			DrawText(TextGet("OrgasmComing"), 500, 410, "White", "Black");
+			DrawButton(200, 532, 250, 64, TextGet("OrgasmTryResist"), "White");
+			DrawButton(550, 532, 250, 64, TextGet("OrgasmSurrender"), "White");
+		}
+		if (Player.ArousalSettings.OrgasmStage == 1) DrawButton(ActivityOrgasmGameButtonX, ActivityOrgasmGameButtonY, 200, 64, TextGet("OrgasmResist"), "White");
+		if (Player.ArousalSettings.OrgasmStage == 2) DrawText(TextGet("OrgasmRecovering"), 500, 500, "White", "Black");
+	}
+
 }
 
 // When the player clicks in the chat room
 function ChatRoomClick() {
 
+	// In orgasm mode, we do not allow any clicks expect the chat
+	if ((MouseX >= 1905) && (MouseX <= 1995) && (MouseY >= 910) && (MouseY <= 999)) ChatRoomSendChat();
+	if ((Player.ArousalSettings != null) && (Player.ArousalSettings.OrgasmTimer != null) && (typeof Player.ArousalSettings.OrgasmTimer === "number") && !isNaN(Player.ArousalSettings.OrgasmTimer) && (Player.ArousalSettings.OrgasmTimer > 0)) {
+
+		// On stage 0, the player can choose to resist the orgasm or not.  At 1, the player plays a mini-game to fight her orgasm
+		if ((MouseX >= 200) && (MouseX <= 450) && (MouseY >= 532) && (MouseY <= 600) && (Player.ArousalSettings.OrgasmStage == 0)) ActivityOrgasmGameGenerate(0);
+		if ((MouseX >= 550) && (MouseX <= 800) && (MouseY >= 532) && (MouseY <= 600) && (Player.ArousalSettings.OrgasmStage == 0)) ActivityOrgasmStart(Player);
+		if ((MouseX >= ActivityOrgasmGameButtonX) && (MouseX <= ActivityOrgasmGameButtonX + 200) && (MouseY >= ActivityOrgasmGameButtonY) && (MouseY <= ActivityOrgasmGameButtonY + 64) && (Player.ArousalSettings.OrgasmStage == 1)) ActivityOrgasmGameGenerate(ActivityOrgasmGameProgress + 1);
+		return;
+
+	}
+
 	// When the user chats or clicks on a character
 	if ((MouseX >= 0) && (MouseX < 1000) && (MouseY >= 0) && (MouseY < 1000)) ChatRoomDrawCharacter(true);
-	if ((MouseX >= 1905) && (MouseX <= 1995) && (MouseY >= 910) && (MouseY <= 999)) ChatRoomSendChat();
 
 	// When the user leaves
 	if ((MouseX >= 1005) && (MouseX < 1125) && (MouseY >= 0) && (MouseY <= 62) && ChatRoomCanLeave()) {
@@ -847,8 +872,10 @@ function ChatRoomSetRule(data) {
 
 		// Remote rules
 		if (data.Content == "OwnerRuleRemoteAllow") LogDelete("BlockRemote", "OwnerRule");
+		if (data.Content == "OwnerRuleRemoteAllowSelf") LogDelete("BlockRemoteSelf", "OwnerRule");
 		if (data.Content == "OwnerRuleRemoteConfiscate") InventoryConfiscateRemote();
 		if (data.Content == "OwnerRuleRemoteBlock") LogAdd("BlockRemote", "OwnerRule");
+		if (data.Content == "OwnerRuleRemoteBlockSelf") LogAdd("BlockRemoteSelf", "OwnerRule");
 
 		// Timer cell punishment
 		var TimerCell = 0;
