@@ -174,8 +174,9 @@ function PrivateRun() {
 			DrawButton(700, 532, 250, 64, TextGet("OrgasmTryResist"), "White");
 			DrawButton(1050, 532, 250, 64, TextGet("OrgasmSurrender"), "White");
 		}
-		if (Player.ArousalSettings.OrgasmStage == 1) DrawButton(ActivityOrgasmGameButtonX + 500, ActivityOrgasmGameButtonY, 200, 64, TextGet("OrgasmResist"), "White");
+		if (Player.ArousalSettings.OrgasmStage == 1) DrawButton(ActivityOrgasmGameButtonX + 500, ActivityOrgasmGameButtonY, 250, 64, ActivityOrgasmResistLabel, "White");
 		if (Player.ArousalSettings.OrgasmStage == 2) DrawText(TextGet("OrgasmRecovering"), 1000, 500, "White", "Black");
+		ActivityOrgasmProgressBar(550, 970);
 	}
 
 	// If we must save a character status after a dialog
@@ -380,6 +381,7 @@ function PrivateLoadCharacter(C) {
 	}
 
 	// We allow items on NPC if 25+ dominant reputation, not owner or restrained
+	if (PrivateCharacter[C].ArousalSettings == null) NPCArousal(PrivateCharacter[C]);
 	PrivateCharacter[C].AllowItem = (((ReputationGet("Dominant") + 25 >= NPCTraitGet(PrivateCharacter[C], "Dominant")) && !PrivateCharacter[C].IsOwner()) || PrivateCharacter[C].IsOwnedByPlayer() || PrivateCharacter[C].IsRestrained() || !PrivateCharacter[C].CanTalk());
 
 }
