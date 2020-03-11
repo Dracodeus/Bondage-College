@@ -250,7 +250,7 @@ function DialogMenuButtonBuild(C) {
 		if (Player.CanInteract()) DialogMenuButton.push("ColorPick");
 
 		// Make sure the target player zone is allowed for an activity
-		if ((C.FocusGroup.Activity != null) && !IsGroupBlocked && (Item == null) && ((CurrentScreen == "ChatRoom") || ((CurrentScreen == "Private") && LogQuery("RentRoom", "PrivateRoom"))) && (C.ArousalSettings != null) && (C.ArousalSettings.Zone != null) && (C.ArousalSettings.Active != null) && (C.ArousalSettings.Active != "Inactive"))
+		if ((C.FocusGroup.Activity != null) && !IsGroupBlocked && ActivityAllowed() && (C.ArousalSettings != null) && (C.ArousalSettings.Zone != null) && (C.ArousalSettings.Active != null) && (C.ArousalSettings.Active != "Inactive"))
 			for (var Z = 0; Z < C.ArousalSettings.Zone.length; Z++)
 				if ((C.ArousalSettings.Zone[Z].Name == C.FocusGroup.Name) && (C.ArousalSettings.Zone[Z].Factor != null) && (C.ArousalSettings.Zone[Z].Factor > 0))
 					DialogMenuButton.push("Activity");

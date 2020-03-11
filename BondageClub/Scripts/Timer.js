@@ -107,8 +107,8 @@ function TimerProcess(Timestamp) {
 		TimerPrivateOwnerBeep();
 	}
 
-	// Arousal events only occur in the chat or private rooms
-	if ((CurrentScreen == "ChatRoom") || (CurrentScreen == "Private")) {
+	// Arousal/Activity events only occur in allowed rooms
+	if (ActivityAllowed()) {
 
 		// Arousal can change every half a second, based on ProgressTimer
 		if ((TimerLastArousalProgress + 500 < CurrentTime) || (TimerLastArousalProgress - 500 > CurrentTime)) {
@@ -151,9 +151,9 @@ function TimerProcess(Timestamp) {
 							}
 							if ((Factor >= 4) && (TimerLastArousalProgressCount % 2 == 0)) ActivityTimerProgress(Character[C], 1);
 							if ((Factor == 3) && (TimerLastArousalProgressCount % 3 == 0)) ActivityTimerProgress(Character[C], 1);
-							if ((Factor == 2) && (TimerLastArousalProgressCount % 4 == 0)) ActivityTimerProgress(Character[C], 1);
-							if ((Factor == 1) && (TimerLastArousalProgressCount % 6 == 0) && (Character[C].ArousalSettings.Progress <= 67)) ActivityTimerProgress(Character[C], 1);
-							if ((Factor == 0) && (TimerLastArousalProgressCount % 8 == 0) && (Character[C].ArousalSettings.Progress <= 33)) ActivityTimerProgress(Character[C], 1);
+							if ((Factor == 2) && (TimerLastArousalProgressCount % 4 == 0) && (Character[C].ArousalSettings.Progress <= 95)) ActivityTimerProgress(Character[C], 1);
+							if ((Factor == 1) && (TimerLastArousalProgressCount % 6 == 0) && (Character[C].ArousalSettings.Progress <= 65)) ActivityTimerProgress(Character[C], 1);
+							if ((Factor == 0) && (TimerLastArousalProgressCount % 8 == 0) && (Character[C].ArousalSettings.Progress <= 35)) ActivityTimerProgress(Character[C], 1);
 						}
 
 					}
