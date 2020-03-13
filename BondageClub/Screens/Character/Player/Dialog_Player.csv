@@ -209,7 +209,7 @@ ServerMessageOwnerRuleKeyAllow,,,Your owner is now allowing you to have keys.  Y
 ServerMessageOwnerRuleKeyConfiscate,,,Your owner has confiscated your keys.  All your regular keys are lost.
 ServerMessageOwnerRuleKeyBlock,,,Your owner is now preventing you from getting new keys.  The club shop will not sell keys to you anymore.
 ServerMessageOwnerRuleRemoteAllow,,,Your owner is now allowing you to have remotes.  You can buy remotes from the club shop.
-ServerMessageOwnerRuleRemoteAllow,,,Your owner is now allowing you to use remotes on yourself.
+ServerMessageOwnerRuleRemoteAllowSelf,,,Your owner is now allowing you to use remotes on yourself.
 ServerMessageOwnerRuleRemoteConfiscate,,,Your owner has confiscated your remotes.  All your remotes are lost.
 ServerMessageOwnerRuleRemoteBlock,,,Your owner is now preventing you from getting new remotes.  The club shop will not sell remotes to you anymore.
 ServerMessageOwnerRuleRemoteBlockSelf,,,Your owner is now preventing you from using remotes on yourself.

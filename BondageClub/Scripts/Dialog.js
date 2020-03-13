@@ -711,8 +711,9 @@ function DialogItemClick(ClickItem) {
 						if (ClickItem.Asset.Name == "VibratorRemote" && InventoryItemHasEffect(InventoryGet(C, C.FocusGroup.Name), "Egged"))
 							DialogExtendItem(InventoryGet(C, C.FocusGroup.Name));
 
-						// Publishes the item action text
+						// Runs the activity arousal process if activated, & publishes the item action text to the chatroom
 						DialogPublishAction(C, ClickItem);
+						ActivityArousalItem(Player, C, ClickItem.Asset);
 
 					}
 				}

@@ -145,7 +145,7 @@ function TimerProcess(Timestamp) {
 							for (var A = 0; A < Character[C].Appearance.length; A++) {
 								var Item = Character[C].Appearance[A];
 								var ZoneFactor = PreferenceGetZoneFactor(Character[C], Item.Asset.Group.Name) - 2;
-								if (InventoryItemHasEffect(Item, "Egged", true) && (Item.Property != null) && (Item.Property.Intensity != null) && (typeof Item.Property.Intensity === "number") && !isNaN(Item.Property.Intensity) && (Item.Property.Intensity + ZoneFactor > Factor) && (ZoneFactor >= 0))
+								if (InventoryItemHasEffect(Item, "Egged", true) && (Item.Property != null) && (Item.Property.Intensity != null) && (typeof Item.Property.Intensity === "number") && !isNaN(Item.Property.Intensity) && (Item.Property.Intensity >= 0) && (ZoneFactor >= 0) && (Item.Property.Intensity + ZoneFactor > Factor))
 									if ((Character[C].ArousalSettings.Progress < 95) || PreferenceGetZoneOrgasm(Character[C], Item.Asset.Group.Name))
 										Factor = Item.Property.Intensity + ZoneFactor;
 							}
