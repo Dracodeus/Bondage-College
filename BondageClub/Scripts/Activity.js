@@ -310,21 +310,26 @@ function ActivityTimerProgress(C, Progress) {
 
 }
 
-// Launches a sexual activity (A) for character (C)
-function ActivityRun(C, A) {
+// If the player does the activity on someone else, we calculate the progress for the player right away
+function ActivityRunSelf(Source, Target, Activity) {
+	if (((Player.ArousalSettings.Active == "Hybrid") || (Player.ArousalSettings.Active == "Automatic")) && (Source.ID == 0) && (Target.ID != 0)) {
+		var Factor = (PreferenceGetActivityFactor(Player, Activity.Name, false) * 5) - 10; // Check how much the player likes the activity, from -10 to +10
+		Factor = Factor + Math.floor((Math.random() * 8)); // Random 0 to 7 bonus
+		if (Target.IsLoverOfPlayer()) Factor = Factor + Math.floor((Math.random() * 8)); // Another random 0 to 7 bonus if the target is the player's lover
+		ActivitySetArousalTimer(Player, Activity, "ActivityOnOther", Factor); // For activities on other, it cannot go over 2/3
+	}
+}
+
+// Launches a sexual activity for a character
+function ActivityRun(C, Activity) {
 
 	// If the player does the activity on herself or an NPC, we calculate the result right away
 	if ((C.ArousalSettings.Active == "Hybrid") || (C.ArousalSettings.Active == "Automatic"))
 		if ((C.ID == 0) || (C.AccountName.substring(0, 4) == "NPC_") || (C.AccountName.substring(0, 4) == "NPC-"))
-			ActivityEffect(Player, C, A, C.FocusGroup.Name);
+			ActivityEffect(Player, C, Activity, C.FocusGroup.Name);
 
-	// If the player does the activity on someone else, we calculate the result right away
-	if (((Player.ArousalSettings.Active == "Hybrid") || (Player.ArousalSettings.Active == "Automatic")) && (C.ID != 0)) {
-		var Factor = (PreferenceGetActivityFactor(Player, A.Name, false) * 5) - 10; // Check how much the player likes the activity, from -10 to +10
-		Factor = Factor + Math.floor((Math.random() * 8)); // Random 0 to 7 bonus
-		if (C.IsLoverOfPlayer()) Factor = Factor + Math.floor((Math.random() * 8)); // Another random 0 to 7 bonus if the target is the player's lover
-		ActivitySetArousalTimer(Player, A, "ActivityOnOther", Factor); // For activities on other, it cannot go over 2/3
-	}
+	// If the player does the activity on someone else, we calculate the progress for the player right away
+	ActivityRunSelf(Player, C, Activity);
 
 	// The text result can be outputted in the chatroom or in the NPC dialog
 	if (CurrentScreen == "ChatRoom") {
@@ -334,12 +339,31 @@ function ActivityRun(C, A) {
 		Dictionary.push({Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber});
 		Dictionary.push({Tag: "TargetCharacter", Text: C.Name, MemberNumber: C.MemberNumber});
 		Dictionary.push({Tag: "ActivityGroup", Text: C.FocusGroup.Name});
-		Dictionary.push({Tag: "ActivityName", Text: A.Name});
-		ServerSend("ChatRoomChat", {Content: ((C.ID == 0) ? "ChatSelf-" : "ChatOther-") + C.FocusGroup.Name + "-" + A.Name, Type: "Activity", Dictionary: Dictionary});
+		Dictionary.push({Tag: "ActivityName", Text: Activity.Name});
+		ServerSend("ChatRoomChat", {Content: ((C.ID == 0) ? "ChatSelf-" : "ChatOther-") + C.FocusGroup.Name + "-" + Activity.Name, Type: "Activity", Dictionary: Dictionary});
 
 		// Exits from dialog to see the result
 		DialogLeave();
 
 	}
 
+}
+
+// Some items such as vibrating wands and spanking toys can trigger arousal both the source and target character
+function ActivityArousalItem(Source, Target, Asset) {
+	if (Asset.Activity != null) {
+		var Activity = AssetGetActivity(Target.AssetFamily, Asset.Activity);
+		if ((Source.ID == 0) && (Target.ID != 0)) ActivityRunSelf(Source, Target, Activity);
+		if ((Target.ArousalSettings != null) && ((Target.ArousalSettings.Active == "Hybrid") || (Target.ArousalSettings.Active == "Automatic"))) {
+			if ((Target.ID == 0) || (Target.AccountName.substring(0, 4) == "NPC_") || (Target.AccountName.substring(0, 4) == "NPC-")) ActivityEffect(Source, Target, Asset.Activity, Asset.Group.Name);
+			if ((Target.ID != 0) && (CurrentScreen == "ChatRoom")) {
+				var Dictionary = [];
+				Dictionary.push({Tag: "SourceCharacter", Text: Source.Name, MemberNumber: Source.MemberNumber});
+				Dictionary.push({Tag: "TargetCharacter", Text: Target.Name, MemberNumber: Target.MemberNumber});
+				Dictionary.push({Tag: "ActivityGroup", Text: Asset.Group.Name});
+				Dictionary.push({Tag: "ActivityName", Text: Activity.Name});
+				ServerSend("ChatRoomChat", {Content: "ChatOther-" + Asset.Group.Name + "-" + Activity.Name, Type: "Activity", Dictionary: Dictionary});
+			}
+		}
+	}
 }
