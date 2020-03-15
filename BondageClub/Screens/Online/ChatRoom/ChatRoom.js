@@ -134,11 +134,15 @@ function ChatRoomDrawCharacter(DoClick) {
 			if ((MouseX >= (C % 5) * Space + X) && (MouseX <= (C % 5) * Space + X + 450 * Zoom) && (MouseY >= Y + Math.floor(C / 5) * 500) && (MouseY <= Y + Math.floor(C / 5) * 500 + 1000 * Zoom)) {
 				if ((MouseY <= Y + Math.floor(C / 5) * 500 + 900 * Zoom) && (Player.GameplaySettings && Player.GameplaySettings.BlindDisableExamine ? (!(Player.Effect.indexOf("BlindHeavy") >= 0) || ChatRoomCharacter[C].ID == Player.ID) : true)) {
 
+					// The arousal meter can be maximized or minimized by clicking on it
+					if ((MouseX >= (C % 5) * Space + X + 370 * Zoom) && (MouseX <= (C % 5) * Space + X + 470 * Zoom) && (MouseY >= Y + Math.floor(C / 5) * 500 + 400 * Zoom) && (MouseY <= Y + Math.floor(C / 5) * 500 + 500 * Zoom) && !ChatRoomCharacter[C].ArousalZoom) { ChatRoomCharacter[C].ArousalZoom = true; return; }
+					if ((MouseX >= (C % 5) * Space + X + 370 * Zoom) && (MouseX <= (C % 5) * Space + X + 470 * Zoom) && (MouseY >= Y + Math.floor(C / 5) * 500 + 615 * Zoom) && (MouseY <= Y + Math.floor(C / 5) * 500 + 700 * Zoom) && ChatRoomCharacter[C].ArousalZoom) { ChatRoomCharacter[C].ArousalZoom = false; return; }
+
 					// If the player can manually control her arousal, we set the progress manual and change the facial expression, it can trigger an orgasm at 100%
 					if ((ChatRoomCharacter[C].ID == 0) && (MouseX >= (C % 5) * Space + X + 400 * Zoom) && (MouseX <= (C % 5) * Space + X + 450 * Zoom) && (MouseY >= Y + Math.floor(C / 5) * 500 + 200 * Zoom) && (MouseY <= Y + Math.floor(C / 5) * 500 + 700 * Zoom))
 						if ((Player.ArousalSettings != null) && (Player.ArousalSettings.Active != null) && (Player.ArousalSettings.Progress != null)) {
 							if ((Player.ArousalSettings.Active == "Manual") || (Player.ArousalSettings.Active == "Hybrid")) {
-								var Arousal = Math.round((Y + (Math.floor(C / 5) * 500 + 675 * Zoom) - MouseY) / (4.5 * Zoom), 0);
+								var Arousal = Math.round((Y + (Math.floor(C / 5) * 500 + 625 * Zoom) - MouseY) / (4 * Zoom), 0);
 								if (Arousal < 0) Arousal = 0;
 								if (Arousal > 100) Arousal = 100;
 								if ((Player.ArousalSettings.AffectExpression == null) || Player.ArousalSettings.AffectExpression) ActivityExpression(Player, Arousal);
@@ -242,6 +246,9 @@ function ChatRoomRun() {
 		if (Player.ArousalSettings.OrgasmStage == 1) DrawButton(ActivityOrgasmGameButtonX, ActivityOrgasmGameButtonY, 250, 64, ActivityOrgasmResistLabel, "White");
 		if (Player.ArousalSettings.OrgasmStage == 2) DrawText(TextGet("OrgasmRecovering"), 500, 500, "White", "Black");
 		ActivityOrgasmProgressBar(50, 970);
+	} else if ((Player.ArousalSettings != null) && (Player.ArousalSettings.Progress != null) && (Player.ArousalSettings.Progress >= 91) && (Player.ArousalSettings.Progress <= 99)) {
+		DrawRect(0, 0, 1003, 1000, "#FFB0B0" + (Player.ArousalSettings.Progress - 90).toString() + "0");
+		DrawRect(1003, 0, 993, 63, "#FFB0B0" + (Player.ArousalSettings.Progress - 90).toString() + "0");
 	}
 
 }
