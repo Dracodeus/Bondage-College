@@ -160,6 +160,8 @@ function ActivityOrgasmProgressBar(X, Y) {
 	var Pos = 0;
 	if ((ActivityOrgasmGameTimer != null) && (ActivityOrgasmGameTimer > 0) && (CurrentTime < Player.ArousalSettings.OrgasmTimer))
 		Pos = ((Player.ArousalSettings.OrgasmTimer - CurrentTime) / ActivityOrgasmGameTimer) * 100;
+	if (Pos < 0) Pos = 0;
+	if (Pos > 100) Pos = 100;
 	DrawProgressBar(X, Y, 900, 25, Pos);
 }
 
