@@ -177,7 +177,7 @@ function PrivateRun() {
 		if (Player.ArousalSettings.OrgasmStage == 1) DrawButton(ActivityOrgasmGameButtonX + 500, ActivityOrgasmGameButtonY, 250, 64, ActivityOrgasmResistLabel, "White");
 		if (Player.ArousalSettings.OrgasmStage == 2) DrawText(TextGet("OrgasmRecovering"), 1000, 500, "White", "Black");
 		ActivityOrgasmProgressBar(550, 970);
-	}
+	} else if ((Player.ArousalSettings != null) && (Player.ArousalSettings.Progress != null) && (Player.ArousalSettings.Progress >= 91) && (Player.ArousalSettings.Progress <= 99)) DrawRect(0, 0, 2000, 1000, "#FFB0B0" + (Player.ArousalSettings.Progress - 90).toString() + "0");
 
 	// If we must save a character status after a dialog
 	if (PrivateCharacterToSave > 0) {
@@ -237,11 +237,15 @@ function PrivateClickCharacter() {
 		if ((MouseX >= X + (C - PrivateCharacterOffset) * 470) && (MouseX <= X + 470 + (C - PrivateCharacterOffset) * 470))
 			if ((NPCEventGet(PrivateCharacter[C], "SlaveMarketRent") <= CurrentTime) && (NPCEventGet(PrivateCharacter[C], "AsylumSent") <= CurrentTime)) {
 
+				// The arousal meter can be maximized or minimized by clicking on it
+				if ((MouseX >= X + (C - PrivateCharacterOffset) * 470 + 370) && (MouseX <= X + (C - PrivateCharacterOffset) * 470 + 470) && (MouseY >= 400) && (MouseY <= 500) && !PrivateCharacter[C].ArousalZoom) { PrivateCharacter[C].ArousalZoom = true; return; }
+				if ((MouseX >= X + (C - PrivateCharacterOffset) * 470 + 370) && (MouseX <= X + (C - PrivateCharacterOffset) * 470 + 470) && (MouseY >= 615) && (MouseY <= 715) && PrivateCharacter[C].ArousalZoom) { PrivateCharacter[C].ArousalZoom = false; return; }
+
 				// If the player can manually control her arousal or wants to fight her desire
-				if ((PrivateCharacter[C].ID == 0) && (MouseX >= X + (C - PrivateCharacterOffset) * 470 + 400) && (MouseX <= X + (C - PrivateCharacterOffset) * 470 + 450) && (MouseY >= 200) && (MouseY <= 700))
+				if ((PrivateCharacter[C].ID == 0) && (MouseX >= X + (C - PrivateCharacterOffset) * 470 + 370) && (MouseX <= X + (C - PrivateCharacterOffset) * 470 + 470) && (MouseY >= 200) && (MouseY <= 615) && PrivateCharacter[C].ArousalZoom)
 					if ((Player.ArousalSettings != null) && (Player.ArousalSettings.Active != null) && (Player.ArousalSettings.Progress != null)) {
 						if ((Player.ArousalSettings.Active == "Manual") || (Player.ArousalSettings.Active == "Hybrid")) {
-							var Arousal = Math.round((675 - MouseY) / 4.5, 0);
+							var Arousal = Math.round((625 - MouseY) / 4, 0);
 							if (Arousal < 0) Arousal = 0;
 							if (Arousal > 100) Arousal = 100;
 							if ((Player.ArousalSettings.AffectExpression == null) || Player.ArousalSettings.AffectExpression) ActivityExpression(Player, Arousal);
