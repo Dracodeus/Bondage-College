@@ -73,7 +73,7 @@ function ActivityDialogBuild(C) {
 						if ((Activity.Prerequisite[P] == "UseHands") && !Player.CanInteract()) Allow = false;
 						if ((Activity.Prerequisite[P] == "UseFeet") && !Player.CanWalk()) Allow = false;
 						if ((Activity.Prerequisite[P] == "ZoneNaked") && ((C.FocusGroup.Name == "ItemButt") || (C.FocusGroup.Name == "ItemVulva")) && ((InventoryPrerequisiteMessage(C, "AccessVulva") != "") || C.IsVulvaChaste())) Allow = false;
-						if ((Activity.Prerequisite[P] == "ZoneNaked") && (C.FocusGroup.Name == "ItemBreast") && ((InventoryPrerequisiteMessage(C, "AccessBreast") != "") || C.IsBreastChaste())) Allow = false;
+						if ((Activity.Prerequisite[P] == "ZoneNaked") && ((C.FocusGroup.Name == "ItemBreast") || (C.FocusGroup.Name == "ItemNipples")) && ((InventoryPrerequisiteMessage(C, "AccessBreast") != "") || C.IsBreastChaste())) Allow = false;
 						if ((Activity.Prerequisite[P] == "ZoneNaked") && (C.FocusGroup.Name == "ItemBoots") && (InventoryPrerequisiteMessage(C, "NakedFeet") != "")) Allow = false;
 						if ((Activity.Prerequisite[P] == "ZoneNaked") && (C.FocusGroup.Name == "ItemHands") && (InventoryPrerequisiteMessage(C, "NakedHands") != "")) Allow = false;
 					}
@@ -197,6 +197,8 @@ function ActivityOrgasmStop(C, Progress) {
 		C.ArousalSettings.OrgasmTimer = 0;
 		C.ArousalSettings.OrgasmStage = 0;
 		ActivitySetArousal(C, Progress);
+		ActivityTimerProgress(C, 0);
+		if (C.ID == 0) ChatRoomCharacterUpdate(Player);
 	}
 }
 
@@ -237,7 +239,7 @@ function ActivityOrgasmPrepare(C) {
 		C.ArousalSettings.OrgasmTimer = (C.ID == 0) ? CurrentTime + 5000 : CurrentTime + (Math.random() * 10000) + 5000;
 		C.ArousalSettings.OrgasmStage = (C.ID == 0) ? 0 : 2;
 		if (C.ID == 0) ActivityOrgasmGameTimer = C.ArousalSettings.OrgasmTimer - CurrentTime;
-		if ((CurrentCharacter != null) && (CurrentCharacter.ID == C.ID)) DialogLeave();
+		if ((CurrentCharacter != null) && ((C.ID == 0) || (CurrentCharacter.ID == C.ID))) DialogLeave();
 
 		// Sends the orgasm preparation to the chatroom, the bar turns pink
 		if ((C.ID == 0) && (CurrentScreen == "ChatRoom"))
