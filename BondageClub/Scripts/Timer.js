@@ -110,8 +110,8 @@ function TimerProcess(Timestamp) {
 	// Arousal/Activity events only occur in allowed rooms
 	if (ActivityAllowed()) {
 
-		// Arousal can change every half a second, based on ProgressTimer
-		if ((TimerLastArousalProgress + 500 < CurrentTime) || (TimerLastArousalProgress - 500 > CurrentTime)) {
+		// Arousal can change every 0.8 of a second, based on ProgressTimer
+		if ((TimerLastArousalProgress + 800 < CurrentTime) || (TimerLastArousalProgress - 800 > CurrentTime)) {
 			TimerLastArousalProgress = CurrentTime;
 			TimerLastArousalProgressCount++;
 			for (var C = 0; C < Character.length; C++) {
