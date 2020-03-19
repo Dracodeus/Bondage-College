@@ -13,10 +13,10 @@
 // Spanking Toys Asset
 var AssetSpankingToys = {
 	Name: "SpankingToys", Wear: false, Activity: "SpankItem", Random: false, BuyGroup: "SpankingToys", IgnoreParentGroup: true,
-	DynamicDescription: () => InventorySpankingToysGetType(),
-	DynamicPreviewIcon: () => InventorySpankingToysGetType(),
+	DynamicDescription: C => InventorySpankingToysGetDescription(C),
+	DynamicPreviewIcon: C => InventorySpankingToysGetType(C),
 	DynamicAllowInventoryAdd: () => InventoryIsWorn(Player, "SpankingToys", "ItemHands"),
-	DynamicExpressionTrigger: () => SpankingInventory.find(x => x.Name == InventorySpankingToysGetType()).ExpressionTrigger
+	DynamicExpressionTrigger: C => SpankingInventory.find(x => x.Name == InventorySpankingToysGetType(C)).ExpressionTrigger
 };
 
 // 3D Custom Girl based assets
@@ -1055,7 +1055,7 @@ var AssetFemale3DCG = [
 				AllowEffect: ["Chaste", "Egged", "Vibrating"],
 				AllowBlock: ["ItemVulva", "ItemButt", "ItemVulvaPiercings"],
 				AllowType: ["Open", "Closed", "Vibe", "Shock"],
-				DynamicExpressionTrigger: () => {
+				DynamicExpressionTrigger: C => {
 					if (InventoryItemPelvisLoveChastityBeltLastAction == "Open") {
 						return [{ Group: "Blush", Name: "Low", Timer: 10 }];
 					} else if (InventoryItemPelvisLoveChastityBeltLastAction == "Closed") {
@@ -1374,8 +1374,8 @@ var AssetFemale3DCG = [
 			{ Name: "DuctTape", SelfBondage: false, Value: 50, SetPose: ["TapedHands"], AllowPose: ["BackBoxTie", "BackElbowTouch", "BackCuffs", "Yoked", "AllFours"], Hide: ["Gloves"], Effect: ["Block", "Prone"], Time: 20, RemoveTime: 10, Difficulty: 5, BuyGroup: "DuctTape" },
 			{
 				Name: "SpankingToys", Priority: 46, Wear: true,  IsRestraint: false, Extended: true, Random: false, BuyGroup: "SpankingToys", AllowType: ["Crop", "Flogger", "Cane", "HeartCrop", "Paddle", "WhipPaddle", "Whip", "CattleProd", "TennisRacket"], IgnoreParentGroup: true, AllowPose: ["BackBoxTie", "BackElbowTouch", "BackCuffs", "Yoked", "AllFours"],
-				DynamicDescription: () => { return ((InventoryIsWorn(CurrentCharacter, "SpankingToys", "ItemHands")) && (InventoryGet(CurrentCharacter, "ItemHands").Property != null)) ? InventoryGet(CurrentCharacter, "ItemHands").Property.Type : "Spanking Toy" },
-				DynamicPreviewIcon: () => { return ((InventoryIsWorn(CurrentCharacter, "SpankingToys", "ItemHands")) && (InventoryGet(CurrentCharacter, "ItemHands").Property != null)) ? InventoryGet(CurrentCharacter, "ItemHands").Property.Type : "Paddle" }
+				DynamicDescription: C => { return ((InventoryIsWorn(C, "SpankingToys", "ItemHands")) && (InventoryGet(C, "ItemHands").Property != null)) ? InventoryGet(C, "ItemHands").Property.Type : "Spanking Toy" },
+				DynamicPreviewIcon: C => { return ((InventoryIsWorn(C, "SpankingToys", "ItemHands")) && (InventoryGet(C, "ItemHands").Property != null)) ? InventoryGet(C, "ItemHands").Property.Type : "Paddle" }
 			}, {
 				Name: "SpankingToysCrop", Value: 20, PrerequisiteBuyGroups: ["SpankingToys"], Random: false,
 				DynamicAllowInventoryAdd: () => { return false }

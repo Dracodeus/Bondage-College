@@ -97,7 +97,7 @@ function PreferenceGetFactorColor(Factor) {
 
 // Returns TRUE if we must active the preference controls
 function PreferenceArousalIsActive() {
-	return (PreferenceArousalActiveList[PreferenceArousalActiveIndex] == "Hybrid") || (PreferenceArousalActiveList[PreferenceArousalActiveIndex] == "Automatic");
+	return (PreferenceArousalActiveList[PreferenceArousalActiveIndex] != "Inactive");
 }
 
 // Loads the activity factor combo boxes based on the current activity selected
@@ -434,13 +434,6 @@ function PreferenceSubscreenArousalRun() {
 		DrawBackNextButton(900, 493, 500, 64, ActivityDictionaryText("Activity" + PreferenceArousalActivityList[PreferenceArousalActivityIndex]), "White", "", () => "", () => "");
 		DrawBackNextButton(900, 593, 300, 64, TextGet("ArousalActivityLove" + PreferenceArousalActivityFactorSelf), PreferenceGetFactorColor(PreferenceGetActivityFactor(Player, PreferenceArousalActivityList[PreferenceArousalActivityIndex], true)), "", () => "", () => "");
 		DrawBackNextButton(1605, 593, 300, 64, TextGet("ArousalActivityLove" + PreferenceArousalActivityFactorOther), PreferenceGetFactorColor(PreferenceGetActivityFactor(Player, PreferenceArousalActivityList[PreferenceArousalActivityIndex], false)), "", () => "", () => "");
-
-	} else if (PreferenceArousalActiveList[PreferenceArousalActiveIndex] == "Manual") {
-
-		// In manual, you can only select if the meter is visible to others or not
-		DrawText(TextGet("ArousalVisible"), 1240, 225, "Black", "Gray");
-		MainCanvas.textAlign = "center";
-		DrawBackNextButton(1505, 193, 400, 64, TextGet("ArousalVisible" + PreferenceArousalVisibleList[PreferenceArousalVisibleIndex]), "White", "", () => "", () => "");
 
 	}
 
