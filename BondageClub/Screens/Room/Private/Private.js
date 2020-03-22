@@ -925,7 +925,7 @@ function PrivateLoveYou() {
 		if (PrivateLoverActivity == "Naked") { CharacterNaked(Player); CharacterNaked(CurrentCharacter); }
 
 		// When the NPC equips an egg or a belt on the player
-		if (PrivateLoverActivity == "Egg") { InventoryWear(Player, "VibratingEgg", "ItemVulva"); InventoryGet(Player, "ItemVulva").Property = { Intensity: 0 }; }
+		if (PrivateLoverActivity == "EggInsert") { InventoryWear(Player, "VibratingEgg", "ItemVulva"); InventoryGet(Player, "ItemVulva").Property = { Intensity: 0 }; }
 		if (PrivateLoverActivity == "LockBelt") { InventoryWear(Player, CommonRandomItemFromList("", PrivateBeltList), "ItemPelvis"); InventoryLock(Player, "ItemPelvis", "LoversPadlock", null); }
 		if (PrivateLoverActivity == "UnlockBelt") InventoryRemove(Player, "ItemPelvis");
 

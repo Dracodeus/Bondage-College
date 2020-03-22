@@ -873,7 +873,7 @@ var AssetFemale3DCG = [
 			},
 			{ Name: "Zipties", Value: 20, Time: 5, Difficulty: 6, RemoveTime: 6, SetPose: ["LegsClosed"], BuyGroup: "Zipties" },	
 			{ Name: "Chains", Value: 90, Time: 20, RemoveTime: 15, Difficulty: 5, AllowLock: true, BuyGroup: "Chains", SetPose: ["LegsClosed"], Extended: true, AllowType: ["Strict"] },
-			{ Name: "FrogtieStraps", Value: 25, Time: 5, AllowLock: true, SetPose: ["Kneel"] },
+			{ Name: "FrogtieStraps", Value: 25, Time: 5, Random: false, AllowLock: true, SetPose: ["Kneel"] },
 			AssetSpankingToys
 		]
 	},
