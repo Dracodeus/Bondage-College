@@ -258,10 +258,10 @@ function ChatRoomRun() {
 			if (Player.ArousalSettings.OrgasmStage == 2) DrawText(TextGet("OrgasmRecovering"), 500, 500, "White", "Black");
 			ActivityOrgasmProgressBar(50, 970);
 		} else if ((Player.ArousalSettings.Progress != null) && (Player.ArousalSettings.Progress >= 91) && (Player.ArousalSettings.Progress <= 99)) {
-			if ((ChatRoomCharacter.length <= 2) || (ChatRoomCharacter.length >= 6)) DrawRect(0, 0, 1003, 1000, "#FFB0B060");
-			else if (ChatRoomCharacter.length == 3) DrawRect(0, 50, 1003, 900, "#FFB0B060");
-			else if (ChatRoomCharacter.length == 4) DrawRect(0, 150, 1003, 700, "#FFB0B060");
-			else if (ChatRoomCharacter.length == 5) DrawRect(0, 250, 1003, 500, "#FFB0B060");
+			if ((ChatRoomCharacter.length <= 2) || (ChatRoomCharacter.length >= 6)) DrawRect(0, 0, 1003, 1000, "#FFB0B040");
+			else if (ChatRoomCharacter.length == 3) DrawRect(0, 50, 1003, 900, "#FFB0B040");
+			else if (ChatRoomCharacter.length == 4) DrawRect(0, 150, 1003, 700, "#FFB0B040");
+			else if (ChatRoomCharacter.length == 5) DrawRect(0, 250, 1003, 500, "#FFB0B040");
 		}
 	}
 
@@ -722,6 +722,17 @@ function ChatRoomSync(data) {
 		// Keeps a copy of the previous version
 		ChatRoomData = data;
 
+	}
+}
+
+function ChatRoomSyncSingle(data) {
+	if (data == null) return;
+	if (typeof data !== "object") return;
+
+	for (var C = 0; C < ChatRoomCharacter.length; C++) {
+		if (ChatRoomCharacter[C].MemberNumber == data.Character.MemberNumber) {
+			ChatRoomCharacter[C] = CharacterLoadOnline(data.Character, data.SourceMemberNumber);
+		}
 	}
 }
 
