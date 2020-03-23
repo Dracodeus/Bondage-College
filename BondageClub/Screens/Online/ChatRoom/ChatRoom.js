@@ -725,15 +725,21 @@ function ChatRoomSync(data) {
 	}
 }
 
+// Updates a single character in the chatroom
 function ChatRoomSyncSingle(data) {
-	if (data == null) return;
-	if (typeof data !== "object") return;
-
-	for (var C = 0; C < ChatRoomCharacter.length; C++) {
-		if (ChatRoomCharacter[C].MemberNumber == data.Character.MemberNumber) {
+	
+	// Sets the chat room character data
+	if ((data == null) || (typeof data !== "object")) return;
+	if ((data.Character == null) || (typeof data.Character !== "object")) return;
+	for (var C = 0; C < ChatRoomCharacter.length; C++) 
+		if (ChatRoomCharacter[C].MemberNumber == data.Character.MemberNumber)
 			ChatRoomCharacter[C] = CharacterLoadOnline(data.Character, data.SourceMemberNumber);
-		}
-	}
+		
+	// Keeps a copy of the previous version
+	for (var C = 0; C < ChatRoomData.Character.length; C++) 
+		if (ChatRoomData.Character[C].MemberNumber == data.Character.MemberNumber)
+			ChatRoomData.Character[C] = data.Character;
+
 }
 
 // Refreshes the chat log element
