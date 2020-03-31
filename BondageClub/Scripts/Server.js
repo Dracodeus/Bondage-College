@@ -45,6 +45,7 @@ function ServerDisconnect(data) {
 			if (
 				(CurrentScreen == "ChatRoom")
 				|| (CurrentScreen == "ChatAdmin")
+				|| (CurrentScreen == "GameOptionLARP")
 				|| ((CurrentScreen == "Appearance") && (CharacterAppearanceReturnRoom == "ChatRoom"))
 				|| ((CurrentScreen == "InformationSheet") && (InformationSheetPreviousScreen == "ChatRoom"))
 				|| ((CurrentScreen == "Title") && (InformationSheetPreviousScreen == "ChatRoom"))

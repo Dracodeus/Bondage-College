@@ -30,12 +30,10 @@ function LARPClick() {
 	if ((MouseX >= 1885) && (MouseX < 1975) && (MouseY >= 25) && (MouseY <= 115)) CommonSetScreen("Room", "MainHall");
 	if ((MouseX >= 1885) && (MouseX < 1975) && (MouseY >= 145) && (MouseY <= 235)) InformationSheetLoadCharacter(Player);
 	if ((MouseX >= 1885) && (MouseX < 1975) && (MouseY >= 265) && (MouseY <= 355) && (ReputationGet("LARP") >= 1) && (Player.LARP != null) && (Player.LARP.Class != null)) {
-		ChatRoomSpace = "Battle";
-		ChatSearchBackground = "WrestlingRingDark";
-		ChatSearchLeaveRoom = "LARP";
-		ChatCreateBackgroundList = CommonBackgroundList.slice();
-		ChatCreateBackgroundList.unshift("WrestlingRing");
-		CommonSetScreen("Online", "ChatSearch");
+		Player.LARP.Team = "None";
+		var BG = CommonBackgroundList.slice();
+		BG.unshift("WrestlingRing");
+		ChatRoomStart("LARP", "LARP", "LARP", "WrestlingRingDark", BG);
 	}
 }
 
