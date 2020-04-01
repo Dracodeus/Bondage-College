@@ -118,7 +118,7 @@ function DrawArousalMeter(C, X, Y, Zoom) {
 // Draws the online game images needed on the characters
 function DrawOnlineGame(C, X, Y, Zoom) {
 	if ((CurrentModule == "Online") && (CurrentScreen == "ChatRoom") && (ChatRoomGame == "LARP"))
-		GameOptionLARPDrawIcon(C, X + 70 * Zoom, Y + 800 * Zoom, 0.6 * Zoom);
+		GameLARPDrawIcon(C, X + 70 * Zoom, Y + 800 * Zoom, 0.6 * Zoom);
 }
 
 // Refreshes the character if not all images are loaded and draw the character canvas on the main game screen

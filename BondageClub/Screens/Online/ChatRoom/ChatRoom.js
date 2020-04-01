@@ -333,7 +333,7 @@ function ChatRoomClick() {
 	if ((MouseX >= 1527) && (MouseX < 1647) && (MouseY >= 0) && (MouseY <= 62) && Player.CanChange() && (ChatRoomGame != "")) { 
 		document.getElementById("InputChat").style.display = "none";
 		document.getElementById("TextAreaChatLog").style.display = "none";
-		CommonSetScreen("Online", "GameOption" + ChatRoomGame);
+		CommonSetScreen("Online", "Game" + ChatRoomGame);
 	}
 	
 	// When the user checks her profile
@@ -576,7 +576,7 @@ function ChatRoomHTMLEntities(str) {
 function ChatRoomMessage(data) {
 
 	// Make sure the message is valid (needs a Sender and Content)
-	if ((data != null) && (typeof data === "object") && (data.Content != null) && (typeof data.Content === "string") && (data.Content != "") && (data.Sender != null) && (typeof data.Sender === "number") && (data.Sender > 0)) {
+	if ((data != null) && (typeof data === "object") && (data.Content != null) && (typeof data.Content === "string") && (data.Content != "") && (data.Sender != null) && (typeof data.Sender === "number")) {
 
 		// Exits right away if the sender is ghosted
 		if (Player.GhostList.indexOf(data.Sender) >= 0) return;
@@ -1030,4 +1030,9 @@ function ChatRoomPayQuest(data) {
 		CharacterChangeMoney(Player, M);
 		ChatRoomQuestGiven.splice(ChatRoomQuestGiven.indexOf(data.Sender), 1);
 	}
+}
+
+// When a game message comes in, we forward it to the current online game being played
+function ChatRoomGameResponse(data) {
+	if (ChatRoomGame == "LARP") GameLARPProcess(data);
 }
