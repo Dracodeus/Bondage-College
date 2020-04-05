@@ -1,8 +1,25 @@
+LARPItemSelect,Select the item to use
+LARPItemNext,Next
+LARPItemCancel,Cancel
 LARPTimerNA,NA
 LARPTurnStart,TargetName (TargetNumber) plays first and starts the game.
-LARPTurnSkip,"The turn is skipped, TargetName (TargetNumber) plays next."
+LARPTurnSkip,The turn is skipped.  TargetName (TargetNumber) plays.
+LARPTurnNext,TargetName (TargetNumber) plays.
 LARPBackToCharacters,Back to characters
 LARPOptionStrip,Strip her (OptionOdds %)
+LARPOptionStripSuccess,SourceName (SourceNumber) successfully strips TargetName (TargetNumber).  [ActionOdds >= ActionRNG]
+LARPOptionStripFail,SourceName (SourceNumber) fails to strip TargetName (TargetNumber).  [ActionOdds < ActionRNG]
 LARPOptionRestrainArms,Restrain arms (OptionOdds %)
+LARPOptionRestrainArmsSuccess,SourceName (SourceNumber) successfully restrains TargetName (TargetNumber) arms using ItemDesc.  [ActionOdds >= ActionRNG]
+LARPOptionRestrainArmsFail,SourceName (SourceNumber) fails to restrain TargetName (TargetNumber) arms using ItemDesc.  [ActionOdds < ActionRNG]
 LARPOptionRestrainLegs,Restrain legs (OptionOdds %)
+LARPOptionRestrainLegsSuccess,SourceName (SourceNumber) successfully restrains TargetName (TargetNumber) legs using ItemDesc.  [ActionOdds >= ActionRNG]
+LARPOptionRestrainLegsFail,SourceName (SourceNumber) fails to restrain TargetName (TargetNumber) legs using ItemDesc.  [ActionOdds < ActionRNG]
 LARPOptionRestrainMouth,Gag her (OptionOdds %)
+LARPOptionRestrainMouthSuccess,SourceName (SourceNumber) successfully gags TargetName (TargetNumber) using ItemDesc.  [ActionOdds >= ActionRNG]
+LARPOptionRestrainMouthFail,SourceName (SourceNumber) fails to gag TargetName (TargetNumber) using ItemDesc.  [ActionOdds < ActionRNG]
+LARPOptionTighten,Tighten (OptionOdds %)
+LARPOptionTightenSuccess,SourceName (SourceNumber) tightens TargetName (TargetNumber) bondage.
+LARPOptionStruggle,Struggle (OptionOdds %)
+LARPOptionStruggleSuccess,TargetName (TargetNumber) struggles out successfully and frees her arms.  [ActionOdds >= ActionRNG]
+LARPOptionStruggleFail,TargetName (TargetNumber) tries to struggle out but fails.  [ActionOdds < ActionRNG]

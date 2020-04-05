@@ -231,14 +231,12 @@ function InventoryRemove(C, AssetGroup) {
 				if ((C.Appearance[E].Asset.RemoveItemOnRemove[R].Name == "") || ((C.Appearance[E].Asset.RemoveItemOnRemove[R].Name != "") && (InventoryGet(C, C.Appearance[E].Asset.RemoveItemOnRemove[R].Group) != null) && (InventoryGet(C, C.Appearance[E].Asset.RemoveItemOnRemove[R].Group).Asset.Name == C.Appearance[E].Asset.RemoveItemOnRemove[R].Name)))
 					InventoryRemove(C, C.Appearance[E].Asset.RemoveItemOnRemove[R].Group);
 
-			// Removes the item itself
+			// Removes the item itself and refreshes the character
 			C.Appearance.splice(E, 1);
-			E--;
+			CharacterRefresh(C);
+			return;
 
 		}
-
-	// Refreshes the character
-	CharacterRefresh(C);
 
 }
 

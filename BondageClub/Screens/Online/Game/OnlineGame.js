@@ -54,7 +54,7 @@ function OnlineGameClick() {
 // Run the online game scripts
 function OnlineGameRun() {
 	
-	// In LARP, the player turn can be skipped by an administrator after 15 seconds
+	// In LARP, the player turn can be skipped by an administrator after 20 seconds
 	if (OnlineGameName == "LARP") GameLARPRunProcess();
 	
 }
@@ -78,7 +78,7 @@ function OnlineGameDrawCharacter(C, X, Y, Zoom) {
 		if ((GameLARPPlayer.length > 0) && (C.MemberNumber == GameLARPPlayer[GameLARPTurnPosition].MemberNumber) && (GameLARPStatus == "Running") && (GameLARPTurnFocusCharacter == null)) {
 			MainCanvas.font = "72px Arial";
 			var Time = Math.round((GameLARPTurnTimer - CurrentTime) / 1000);
-			DrawText(((Time < 0) || (Time > 15)) ? OnlineGameDictionaryText("TimerNA") : Time.toString(), X + 250 * Zoom, Y + 830 * Zoom, "Red", "Black");
+			DrawText(((Time < 0) || (Time > 20)) ? OnlineGameDictionaryText("TimerNA") : Time.toString(), X + 250 * Zoom, Y + 830 * Zoom, "Red", "Black");
 			MainCanvas.font = "36px Arial";
 		}
 	}
