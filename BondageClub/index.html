@@ -40,6 +40,7 @@
 <script src="Scripts/Translation.js"></script>
 <script src="Scripts/Activity.js"></script>
 <script src="Scripts/socket.io/socket.io.js"></script>
+<script src="Scripts/LZString.js"></script>
 <script src="Assets/Female3DCG/Female3DCG.js"></script>
 <script src="Screens/Character/Login/Login.js"></script>
 <script src="Screens/Character/Appearance/Appearance.js"></script>
@@ -209,18 +210,24 @@
 	OK - Fixes for the All-Four position (Gatetrek)
 	OK - Admiral suit & Crotch chain fixes (Kirsty)
 	OK - Gloves & Taped Hands fixes (CthulhuDancing)
-
 	OK - Validate improper item properties (Sekkmer)
 	OK - New button to clear all expressions (Sekkmer)
 	OK - HobbleSkirt fixes & lots of assets priority fixes (Atasly)
-	OK - Remove collar accessory with collar in kidnap mini-game (elliesec)
-	
+	OK - Remove collar accessory with collar in kidnap mini-game (elliesec)	
 	OK - Remove the TailStrap physical zone (Sekkmer)
 	OK - New setting to only play sound if the player is involved (Atasly)
 	OK - Chat room entry/leave room refresh correction (Sekkmer)
-	OK - Yes, average speed is now faster - Optimization for DrawGL (Sekkmer)
+	OK - Yes, average speed is now faster - Optimization for DrawGL (Sekkmer)	
+	OK - Typo fixes in Magic Theater (elliesec)
+	OK - Gag swap bug fix (elliesec)
+	OK - VibeHeart fixes, Pony fixes, Lover Key can unlock everything but owner locked items (Atasly)
+	OK - Two new ties with Arms Hemp Rope & Chains (Nina-1474)
+	OK - Collar restraint removal in kidnap (elliesec)
+	OK - Mouth stuffing color (Nina-1474)
+	OK - Collar/Prone/Catsuit/Text fixes (Atasly)
+	OK - Many new locking piercings (Atasly)
 	
-	STRANGE BEHAVIOR SENT - VibeHeart fixes, Pony fixes, Lover Key can unlock everything but owner locked items (Atasly)
+	CLIPPING ISSUE SENT - Rope cuffs / Chain cuffs position (Ayesha-678)
 			
 IN PROGRESS - Build a new room with an NPC to explain how the LARP system and Bondage Battles works:
 -	Every girl must follow the LARP rules and play fair.  When they lose a battle, they need to submit and go along with it.
@@ -285,7 +292,7 @@ Sacrifice: Nobody in your team can be targeted but you, until your next turn.
 // When the code is loaded, we start the game engine
 window.onload = function() {
 	//CheatImport();
-	//ServerURL = "https://bondage-club-server.herokuapp.com/";
+	ServerURL = "https://bondage-club-server.herokuapp.com/";
 	CommonIsMobile = CommonDetectMobile();
 	TranslationLoad();
 	DrawLoad();

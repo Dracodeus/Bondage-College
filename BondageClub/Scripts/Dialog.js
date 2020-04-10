@@ -86,6 +86,7 @@ function DialogPrerequisite(D) {
 
 // Searches for an item in the player inventory to unlock a specific item
 function DialogCanUnlock(C, Item) {
+	if ((C.ID != 0) && !Player.CanInteract()) return false;
 	if ((Item != null) && (Item.Asset != null) && (Item.Asset.OwnerOnly == true)) return Item.Asset.Enable && C.IsOwnedByPlayer();
 	if ((Item != null) && (Item.Asset != null) && (Item.Asset.LoverOnly == true)) return Item.Asset.Enable && C.IsLoverOfPlayer();
 	if ((Item != null) && (Item.Asset != null) && (Item.Asset.SelfUnlock != null) && (Item.Asset.SelfUnlock == false) && !Player.CanInteract()) return false;
@@ -95,7 +96,7 @@ function DialogCanUnlock(C, Item) {
 	var UnlockName = "Unlock-" + Item.Asset.Name;
 	if ((Item != null) && (Item.Property != null) && (Item.Property.LockedBy != null)) UnlockName = "Unlock-" + Item.Property.LockedBy;
 	for (var I = 0; I < Player.Inventory.length; I++)
-		if (InventoryItemHasEffect(Player.Inventory[I], UnlockName) && Player.CanInteract()) {
+		if (InventoryItemHasEffect(Player.Inventory[I], UnlockName)) {
 			var Lock = InventoryGetLock(Item);
 			if (Lock != null) {
 				if (Lock.Asset.LoverOnly && !C.IsLoverOfPlayer()) return false;
@@ -247,8 +248,8 @@ function DialogMenuButtonBuild(C) {
 		if ((Item != null) && !IsItemLocked && InventoryItemHasEffect(Item, "Mounted", true) && Player.CanInteract() && InventoryAllow(C, Item.Asset.Prerequisite) && !IsGroupBlocked) DialogMenuButton.push("Dismount");
 		if ((Item != null) && !IsItemLocked && InventoryItemHasEffect(Item, "Enclose", true) && Player.CanInteract() && InventoryAllow(C, Item.Asset.Prerequisite) && !IsGroupBlocked) DialogMenuButton.push("Escape");
 		if (InventoryItemHasEffect(Item, "Egged") && InventoryAvailable(Player, "VibratorRemote", "ItemVulva") && Player.CanInteract() && !(LogQuery("BlockRemoteSelf", "OwnerRule") && (C.ID == 0))) DialogMenuButton.push("Remote");
-		if ((Item != null) && Item.Asset.Extended && Player.CanInteract() && !IsGroupBlocked && (!Item.Asset.OwnerOnly || (C.IsOwnedByPlayer())) && (!Item.Asset.LoverOnly || (C.IsLoverOfPlayer()))) DialogMenuButton.push("Use");
-		if (Player.CanInteract()) DialogMenuButton.push("ColorPick");
+		if ((Item != null) && Item.Asset.Extended && ((Player.CanInteract()) || (CurrentScreen == "Photographic")) && !IsGroupBlocked && (!Item.Asset.OwnerOnly || (C.IsOwnedByPlayer())) && (!Item.Asset.LoverOnly || (C.IsLoverOfPlayer()))) DialogMenuButton.push("Use");
+		if ((Player.CanInteract()) || (CurrentScreen == "Photographic")) DialogMenuButton.push("ColorPick");
 
 		// Make sure the target player zone is allowed for an activity
 		if ((C.FocusGroup.Activity != null) && !IsGroupBlocked && ActivityAllowed() && (C.ArousalSettings != null) && (C.ArousalSettings.Zone != null) && (C.ArousalSettings.Active != null) && (C.ArousalSettings.Active != "Inactive"))
@@ -703,7 +704,7 @@ function DialogItemClick(ClickItem) {
 						// Prevent two unique gags being equipped. Also check if selfbondage is allowed for the item if used on self
 						if (ClickItem.Asset.Prerequisite == "GagUnique" && C.Pose.indexOf("GagUnique") >= 0) DialogSetText("CanOnlyEquipOneOfThisGag");
 						else if (ClickItem.Asset.Prerequisite == "GagCorset" && C.Pose.indexOf("GagCorset") >= 0) DialogSetText("CannotUseMultipleCorsetGags");
-						else if (ClickItem.Asset.SelfBondage || (C.ID != 0)) DialogProgressStart(C, CurrentItem, ClickItem);
+						else if (ClickItem.Asset.SelfBondage || (C.ID != 0) || (CurrentScreen == "Photographic")) DialogProgressStart(C, CurrentItem, ClickItem);
 						else DialogSetText("CannotUseOnSelf");
 
 					} else {

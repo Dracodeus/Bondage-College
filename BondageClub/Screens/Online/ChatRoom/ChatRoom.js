@@ -253,10 +253,10 @@ function ChatRoomRun() {
 
 	// Draws the top button, in red if they aren't enabled
 	DrawButton(1005, 2, 120, 60, "", (ChatRoomCanLeave()) ? "White" : "Pink", "Icons/Rectangle/Exit.png", TextGet("MenuLeave"));
-	DrawButton(1179, 2, 120, 60, "", "White", "Icons/Rectangle/Cut.png", TextGet("MenuCut"));
+	if (OnlineGameName == "") DrawButton(1179, 2, 120, 60, "", "White", "Icons/Rectangle/Cut.png", TextGet("MenuCut"));
+	else DrawButton(1179, 2, 120, 60, "", "White", "Icons/Rectangle/GameOption.png", TextGet("MenuGameOption"));
 	DrawButton(1353, 2, 120, 60, "", (Player.CanKneel()) ? "White" : "Pink", "Icons/Rectangle/Kneel.png", TextGet("MenuKneel"));
-	if (OnlineGameName == "") DrawButton(1527, 2, 120, 60, "", (Player.CanChange()) ? "White" : "Pink", "Icons/Rectangle/Dress.png", TextGet("MenuDress"));
-	else DrawButton(1527, 2, 120, 60, "", "White", "Icons/Rectangle/GameOption.png", TextGet("MenuGameOption"));
+	DrawButton(1527, 2, 120, 60, "", (Player.CanChange() && OnlineGameAllowChange()) ? "White" : "Pink", "Icons/Rectangle/Dress.png", TextGet("MenuDress"));
 	DrawButton(1701, 2, 120, 60, "", "White", "Icons/Rectangle/Character.png", TextGet("MenuProfile"));
 	DrawButton(1875, 2, 120, 60, "", "White", "Icons/Rectangle/Preference.png", TextGet("MenuAdmin"));
 
@@ -314,11 +314,18 @@ function ChatRoomClick() {
 	}
 
 	// When the user wants to remove the top part of his chat to speed up the screen, we only keep the last 20 entries
-	if ((MouseX >= 1179) && (MouseX < 1299) && (MouseY >= 2) && (MouseY <= 62)) {
+	if ((MouseX >= 1179) && (MouseX < 1299) && (MouseY >= 2) && (MouseY <= 62) && (OnlineGameName == "")) {
 		var L = document.getElementById("TextAreaChatLog");
 		while (L.childElementCount > 20)
 			L.removeChild(L.childNodes[0]);
 		ElementScrollToEnd("TextAreaChatLog");
+	}
+
+	// The cut button can become the game option button if there's an online game going on
+	if ((MouseX >= 1179) && (MouseX < 1299) && (MouseY >= 0) && (MouseY <= 62) && (OnlineGameName != "")) {
+		document.getElementById("InputChat").style.display = "none";
+		document.getElementById("TextAreaChatLog").style.display = "none";
+		CommonSetScreen("Online", "Game" + OnlineGameName);
 	}
 
 	// When the user character kneels
@@ -329,19 +336,12 @@ function ChatRoomClick() {
 	}
 
 	// When the user wants to change clothes
-	if ((MouseX >= 1527) && (MouseX < 1647) && (MouseY >= 0) && (MouseY <= 62) && Player.CanChange() && (OnlineGameName == "")) { 
+	if ((MouseX >= 1527) && (MouseX < 1647) && (MouseY >= 0) && (MouseY <= 62) && Player.CanChange() && OnlineGameAllowChange()) {
 		document.getElementById("InputChat").style.display = "none";
 		document.getElementById("TextAreaChatLog").style.display = "none";
 		CharacterAppearanceReturnRoom = "ChatRoom"; 
 		CharacterAppearanceReturnModule = "Online";
 		CharacterAppearanceLoadCharacter(Player);
-	}
-
-	// The change cloth button can become the game option button
-	if ((MouseX >= 1527) && (MouseX < 1647) && (MouseY >= 0) && (MouseY <= 62) && (OnlineGameName != "")) { 
-		document.getElementById("InputChat").style.display = "none";
-		document.getElementById("TextAreaChatLog").style.display = "none";
-		CommonSetScreen("Online", "Game" + OnlineGameName);
 	}
 	
 	// When the user checks her profile
