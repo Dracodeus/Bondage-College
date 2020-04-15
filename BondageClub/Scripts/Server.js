@@ -19,8 +19,10 @@ function ServerInit() {
 	ServerSocket.on("ChatRoomCreateResponse", function (data) { ChatCreateResponse(data); });
 	ServerSocket.on("ChatRoomUpdateResponse", function (data) { ChatAdminResponse(data); });
 	ServerSocket.on("ChatRoomSync", function (data) { ChatRoomSync(data); });
+	ServerSocket.on("ChatRoomSyncSingle", function (data) { ChatRoomSyncSingle(data); });
 	ServerSocket.on("ChatRoomMessage", function (data) { ChatRoomMessage(data); });
 	ServerSocket.on("ChatRoomAllowItem", function (data) { ChatRoomAllowItem(data); });
+	ServerSocket.on("ChatRoomGameResponse", function (data) { ChatRoomGameResponse(data); });
 	ServerSocket.on("PasswordResetResponse", function (data) { PasswordResetResponse(data); });
 	ServerSocket.on("AccountQueryResult", function (data) { ServerAccountQueryResult(data); });
 	ServerSocket.on("AccountBeep", function (data) { ServerAccountBeep(data); });
@@ -44,6 +46,7 @@ function ServerDisconnect(data) {
 			if (
 				(CurrentScreen == "ChatRoom")
 				|| (CurrentScreen == "ChatAdmin")
+				|| (CurrentScreen == "GameLARP")
 				|| ((CurrentScreen == "Appearance") && (CharacterAppearanceReturnRoom == "ChatRoom"))
 				|| ((CurrentScreen == "InformationSheet") && (InformationSheetPreviousScreen == "ChatRoom"))
 				|| ((CurrentScreen == "Title") && (InformationSheetPreviousScreen == "ChatRoom"))
@@ -239,6 +242,9 @@ function ServerValidateProperties(C, Item) {
 		if ((Item.Asset.AllowType == null) || (Item.Asset.AllowType.indexOf(Item.Property.Type) < 0))
 			delete Item.Property.Type;
 
+	// Remove impossible combinations
+	if ((Item.Property != null) && (Item.Property.Type == null) && (Item.Property.Restrain == null))
+		["SetPose", "Difficulty", "SelfUnlock", "Hide"].forEach(P => delete Item.Property[P]);
 }
 
 // Loads the appearance assets from a server bundle that only contains the main info (no assets)
@@ -316,7 +322,7 @@ function ServerAppearanceLoadFromBundle(C, AssetFamily, Bundle, SourceMemberNumb
 	for (var A = 0; A < Bundle.length; A++) {
 
 		// Skip blocked items
-		if (InventoryIsPermissionBlocked(C, Bundle[A].Name, Bundle[A].Group)) continue;
+		if (InventoryIsPermissionBlocked(C, Bundle[A].Name, Bundle[A].Group) && OnlineGameAllowBlockItems()) continue;
 
 		// Cycles in all assets to find the correct item to add (do not add )
 		for (var I = 0; I < Asset.length; I++)
@@ -402,7 +408,7 @@ function ServerAppearanceLoadFromBundle(C, AssetFamily, Bundle, SourceMemberNumb
 function ServerPlayerAppearanceSync() {
 
 	// Creates a big parameter string of every appearance items and sends it to the server
-	if ((Player.AccountName != "") && (CurrentScreen != "Photographic")) {
+	if (Player.AccountName != "") {
 		var D = {};
 		D.AssetFamily = Player.AssetFamily;
 		D.Appearance = ServerAppearanceBundle(Player.Appearance);
@@ -441,7 +447,7 @@ function ServerPrivateCharacterSync() {
 function ServerAccountQueryResult(data) {
 	if ((data != null) && (typeof data === "object") && !Array.isArray(data) && (data.Query != null) && (typeof data.Query === "string") && (data.Result != null)) {
 		if (data.Query == "OnlineFriends") FriendListLoadFriendList(data.Result);
-		if (data.Query == "EmailStatus") ElementValue(data.Result ? "InputEmailOld" : "InputEmailNew", TextGet(data.Result ? "UpdateEmailLinked" : "UpdateEmailEmpty"));
+		if (data.Query == "EmailStatus") document.getElementById(data.Result ? "InputEmailOld" : "InputEmailNew").placeholder = TextGet(data.Result ? "UpdateEmailLinked" : "UpdateEmailEmpty");
 		if (data.Query == "EmailUpdate") ElementValue("InputEmailNew", TextGet(data.Result ? "UpdateEmailSuccess" : "UpdateEmailFailure"));
 	}
 }

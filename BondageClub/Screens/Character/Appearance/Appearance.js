@@ -191,7 +191,10 @@ function CharacterAppearanceSort(AP) {
 	var Arr = [];
 	for (var P = 0; P < 50; P++)
 		for (var A = 0; A < AP.length; A++)
-			if (AP[A].Asset.DrawingPriority != null) {
+			if (AP[A].Property != null && AP[A].Property.OverridePriority != null) {
+				if (AP[A].Property.OverridePriority == P)
+					Arr.push(AP[A]);
+			} else if (AP[A].Asset.DrawingPriority != null) {
 				if (AP[A].Asset.DrawingPriority == P)
 					Arr.push(AP[A]);
 			} else
@@ -702,7 +705,7 @@ function CharacterAppearanceReady(C) {
 	// If there's no error, we continue to the login or main hall if already logged
 	if (C.AccountName != "") {
 		ServerPlayerAppearanceSync();
-		if (CharacterAppearanceReturnRoom == "ChatRoom") {
+		if ((CharacterAppearanceReturnRoom == "ChatRoom") && (C.ID != 0)) {
 			var Dictionary = [];
 			Dictionary.push({Tag: "DestinationCharacter", Text: C.Name, MemberNumber: C.MemberNumber});
 			Dictionary.push({Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber});

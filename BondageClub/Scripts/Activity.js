@@ -73,7 +73,7 @@ function ActivityDialogBuild(C) {
 						if ((Activity.Prerequisite[P] == "UseHands") && !Player.CanInteract()) Allow = false;
 						if ((Activity.Prerequisite[P] == "UseFeet") && !Player.CanWalk()) Allow = false;
 						if ((Activity.Prerequisite[P] == "ZoneNaked") && ((C.FocusGroup.Name == "ItemButt") || (C.FocusGroup.Name == "ItemVulva")) && ((InventoryPrerequisiteMessage(C, "AccessVulva") != "") || C.IsVulvaChaste())) Allow = false;
-						if ((Activity.Prerequisite[P] == "ZoneNaked") && (C.FocusGroup.Name == "ItemBreast") && ((InventoryPrerequisiteMessage(C, "AccessBreast") != "") || C.IsBreastChaste())) Allow = false;
+						if ((Activity.Prerequisite[P] == "ZoneNaked") && ((C.FocusGroup.Name == "ItemBreast") || (C.FocusGroup.Name == "ItemNipples")) && ((InventoryPrerequisiteMessage(C, "AccessBreast") != "") || C.IsBreastChaste())) Allow = false;
 						if ((Activity.Prerequisite[P] == "ZoneNaked") && (C.FocusGroup.Name == "ItemBoots") && (InventoryPrerequisiteMessage(C, "NakedFeet") != "")) Allow = false;
 						if ((Activity.Prerequisite[P] == "ZoneNaked") && (C.FocusGroup.Name == "ItemHands") && (InventoryPrerequisiteMessage(C, "NakedHands") != "")) Allow = false;
 					}
@@ -160,6 +160,8 @@ function ActivityOrgasmProgressBar(X, Y) {
 	var Pos = 0;
 	if ((ActivityOrgasmGameTimer != null) && (ActivityOrgasmGameTimer > 0) && (CurrentTime < Player.ArousalSettings.OrgasmTimer))
 		Pos = ((Player.ArousalSettings.OrgasmTimer - CurrentTime) / ActivityOrgasmGameTimer) * 100;
+	if (Pos < 0) Pos = 0;
+	if (Pos > 100) Pos = 100;
 	DrawProgressBar(X, Y, 900, 25, Pos);
 }
 
@@ -195,6 +197,8 @@ function ActivityOrgasmStop(C, Progress) {
 		C.ArousalSettings.OrgasmTimer = 0;
 		C.ArousalSettings.OrgasmStage = 0;
 		ActivitySetArousal(C, Progress);
+		ActivityTimerProgress(C, 0);
+		if (C.ID == 0) ChatRoomCharacterUpdate(Player);
 	}
 }
 
@@ -235,7 +239,7 @@ function ActivityOrgasmPrepare(C) {
 		C.ArousalSettings.OrgasmTimer = (C.ID == 0) ? CurrentTime + 5000 : CurrentTime + (Math.random() * 10000) + 5000;
 		C.ArousalSettings.OrgasmStage = (C.ID == 0) ? 0 : 2;
 		if (C.ID == 0) ActivityOrgasmGameTimer = C.ArousalSettings.OrgasmTimer - CurrentTime;
-		if ((CurrentCharacter != null) && (CurrentCharacter.ID == C.ID)) DialogLeave();
+		if ((CurrentCharacter != null) && ((C.ID == 0) || (CurrentCharacter.ID == C.ID))) DialogLeave();
 
 		// Sends the orgasm preparation to the chatroom, the bar turns pink
 		if ((C.ID == 0) && (CurrentScreen == "ChatRoom"))
@@ -256,24 +260,24 @@ function ActivityExpression(C, Progress) {
 	Progress = Math.floor(Progress / 10) * 10;
 	
 	// The blushes goes to red progressively
-	var Blush = "";
+	var Blush = null;
 	if ((Progress == 10) || (Progress == 30) || (Progress == 50) || (Progress == 70)) Blush = "Low";
 	if ((Progress == 60) || (Progress == 80) || (Progress == 90)) Blush = "Medium";
 	if (Progress == 100) Blush = "High";
 
 	// The eyebrows position changes
-	var Eyebrows = "";
+	var Eyebrows = null;
 	if ((Progress == 20) || (Progress == 30)) Eyebrows = "Raised";
 	if ((Progress == 50) || (Progress == 60)) Eyebrows = "Lowered";
 	if ((Progress == 80) || (Progress == 90)) Eyebrows = "Soft";
 
 	// Drool can activate at a few stages
-	var Fluids = "";
+	var Fluids = null;
 	if ((Progress == 40) || (C.ArousalSettings.Progress == 70)) Fluids = "DroolLow";
 	if (Progress == 100) Fluids = "DroolMedium";
 
 	// Eyes can activate at a few stages
-	var Eyes = "";
+	var Eyes = null;
 	if (Progress == 20) Eyes = "Dazed";
 	if (Progress == 70) Eyes = "Horny";
 	if (Progress == 90) Eyes = "Surprised";

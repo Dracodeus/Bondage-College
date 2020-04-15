@@ -43,6 +43,7 @@ Cloth,Gown2Top,Hobble Gown
 Cloth,Gown3,Shiny Gown
 Cloth,MaidApron1,Maid Apron
 Cloth,MaidApron2,Exposed Maid Apron
+Cloth,AdmiralTop,Admiral Top
 ClothAccessory,,Cloth Accessory
 ClothAccessory,StudentOutfit3Scarf,Student Scarf
 ClothAccessory,StudentOutfit3Bow1,Student Bow 1
@@ -74,6 +75,7 @@ ClothLower,ClothSkirt1,Patterned Skirt
 ClothLower,Jeans2,Ripped Jeans
 ClothLower,ChineseSkirt1,Chinese Skirt
 ClothLower,Gown2Skirt,Hobble Gown Skirt
+ClothLower,AdmiralSkirt,Admiral Skirt
 SuitLower,,Suit Lower
 SuitLower,Catsuit,Catsuit
 SuitLower,SeamlessCatsuit, Seamless Catsuit
@@ -231,6 +233,8 @@ HairAccessory1,PuppyEars2,Floppy Puppy Ears
 HairAccessory1,RaccoonEars1,Raccoon Ears
 HairAccessory1,WeddingVeil1,Wedding Veil
 HairAccessory1,HairFeathers1,Feathers
+HairAccessory1,MouseEars1,Mouse Ears 1
+HairAccessory1,MouseEars2,Mouse Ears 2
 HairAccessory2,,Hair Accessory
 HairAccessory2,Ears1,Ears Small
 HairAccessory2,Ears2,Ears Large
@@ -261,6 +265,8 @@ HairAccessory2,PuppyEars2,Floppy Puppy Ears
 HairAccessory2,RaccoonEars1,Raccoon Ears
 HairAccessory2,WeddingVeil1,Wedding Veil
 HairAccessory2,HairFeathers1,Feathers
+HairAccessory2,MouseEars1,Mouse Ears 1
+HairAccessory2,MouseEars2,Mouse Ears 2
 Gloves,,Gloves
 Gloves,Gloves1,Short Gloves
 Gloves,Gloves2,Long Gloves
@@ -283,6 +289,7 @@ Glasses,Mask1,Venetian Mask
 Glasses,Mask2,Domino Mask
 Glasses,ButterflyMask1,Butterfly Mask
 Glasses,EyePatch1,Eye Patch
+Glasses,ShinobiMask,Shinobi Mask
 TailStraps,,Tail Strap
 TailStraps,TailStrap,Kitty Tail Strap
 TailStraps,HorseTailStrap,Horse Tail Strap
@@ -302,6 +309,8 @@ TailStraps,WolfTailStrap1,Wolf Large Tail Strap
 TailStraps,WolfTailStrap2,Wolf Small Tail Strap
 TailStraps,WolfTailStrap3,Wolf White Tail Strap
 TailStraps,DemonPlug,Demon Tail
+TailStraps,MouseTailStrap1,Mouse Tail Strap 1
+TailStraps,MouseTailStrap2,Mouse Tail Strap 2
 Wings,,Wings
 Wings,SuccubusFeather,Succubus Feather 
 Wings,SuccubusWings,Succubus Wings
@@ -489,6 +498,8 @@ ItemButt,WolfTail1,Wolf Tail Large
 ItemButt,WolfTail2,Wolf Tail Small
 ItemButt,WolfTail3,Wolf Tail White
 ItemButt,DemonPlug,Demon Tail Plug
+ItemButt,MouseTail1,Mouse Tail 1
+ItemButt,MouseTail2,Mouse Tail 2
 ItemPelvis,,Pelvis
 ItemPelvis,StraponPanties,Strap-On Panties
 ItemPelvis,LeatherChastityBelt,Leather Chastity Belt
@@ -703,6 +714,7 @@ ItemMouth,DildoPlugGag,Dildo Plug Gag
 ItemMouth,SteelMuzzleGag,Steel Muzzle Gag
 ItemMouth,StitchedMuzzleGag,Stitched Muzzle Gag
 ItemMouth,LatexBallMuzzleGag,Latex Ball Muzzle Gag
+ItemMouth,SockStuffing,Sock Stuffing
 ItemMouth2,,Mouth
 ItemMouth2,ClothGag,Cloth Gag
 ItemMouth2,WiffleGag,Wiffle Ball Gag
@@ -774,6 +786,9 @@ ItemHead,ClothBlindfold,Cloth Blindfold
 ItemHead,LeatherBlindfold,Leather Blindfold
 ItemHead,LeatherHood,Leather Hood
 ItemHead,LeatherHoodOpenEyes,Leather Hood Eyes
+ItemHead,LeatherSlimMask,Slim Leather Mask
+ItemHead,LeatherSlimMaskOpenMouth,Open Mouth Slim Mask
+ItemHead,LeatherSlimMaskOpenEyes,Open Eyes Mouth Slim Mask
 ItemHead,StuddedBlindfold,Studded Blindfold
 ItemHead,KittyBlindfold,Kitty Blindfold
 ItemHead,DuctTape,Duct Tape
@@ -833,6 +848,8 @@ ItemDevices,StrapOnSmooth,Smooth Strap On
 ItemDevices,StrapOnStuds,Studded Strap On
 ItemDevices,DisplayCase,Display Case
 ItemDevices,SmallDisplayCase,Small Display Case 
+ItemDevices,WoodenBoxOpenHead,Exposed Head Wooden Box
+ItemDevices,SmallWoodenBoxOpenHead,Exposed Head Small Wooden Box
 ItemAddon,,Body
 ItemAddon,BondageBenchStraps,Leather Belt Straps
 ItemBoots,,Feet

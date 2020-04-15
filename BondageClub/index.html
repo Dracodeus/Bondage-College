@@ -14,6 +14,8 @@
 	<link rel="stylesheet" href="CSS/Styles.css">
 </head>
 
+<script src="Scripts/webgl/resources/m4.js"></script>
+<script src="Scripts/GLDraw.js"></script>
 <script src="Scripts/Common.js"></script>
 <script src="Scripts/Drawing.js"></script>
 <script src="Scripts/Timer.js"></script>
@@ -38,6 +40,7 @@
 <script src="Scripts/Translation.js"></script>
 <script src="Scripts/Activity.js"></script>
 <script src="Scripts/socket.io/socket.io.js"></script>
+<script src="Scripts/LZString.js"></script>
 <script src="Assets/Female3DCG/Female3DCG.js"></script>
 <script src="Screens/Character/Login/Login.js"></script>
 <script src="Screens/Character/Appearance/Appearance.js"></script>
@@ -74,6 +77,7 @@
 <script src="Screens/Room/CollegeTheater/CollegeTheater.js"></script>
 <script src="Screens/Room/CollegeDetention/CollegeDetention.js"></script>
 <script src="Screens/Room/CollegeTeacher/CollegeTeacher.js"></script>
+<script src="Screens/Room/LARP/LARP.js"></script>
 <script src="Screens/Room/Gambling/Gambling.js"></script>
 <script src="Screens/Room/Prison/Prison.js"></script>
 <script src="Screens/Room/Photographic/Photographic.js"></script>
@@ -98,6 +102,8 @@
 <script src="Screens/Online/ChatCreate/ChatCreate.js"></script>
 <script src="Screens/Online/ChatRoom/ChatRoom.js"></script>
 <script src="Screens/Online/ChatAdmin/ChatAdmin.js"></script>
+<script src="Screens/Online/Game/OnlineGame.js"></script>
+<script src="Screens/Online/GameLARP/GameLARP.js"></script>
 <script src="Screens/Inventory/ItemMouth/PumpGag/PumpGag.js"></script>
 <script src="Screens/Inventory/ItemVulva/VibratingEgg/VibratingEgg.js"></script>
 <script src="Screens/Inventory/ItemVulva/VibratingLatexPanties/VibratingLatexPanties.js"></script>
@@ -173,6 +179,8 @@
 <script src="Screens/Inventory/ItemNipplesPiercings/RoundPiercing/RoundPiercing.js"></script>
 <script src="Screens/Inventory/ItemNipplesPiercings/WeightedPiercing/WeightedPiercing.js"></script>
 <script src="Screens/Inventory/ItemDevices/Sybian/Sybian.js"></script>
+<script src="Screens/Inventory/ItemDevices/SmallWoodenBoxOpenHead/SmallWoodenBoxOpenHead.js"></script>
+<script src="Screens/Inventory/ItemDevices/WoodenBoxOpenHead/WoodenBoxOpenHead.js"></script>
 <script src="Screens/Inventory/ItemDevices/BondageBench/BondageBench.js"></script>
 <script src="Screens/Inventory/ItemAddon/BondageBenchStraps/BondageBenchStraps.js"></script>
 <script src="Screens/Inventory/ItemButt/AnalHook/AnalHook.js"></script>
@@ -194,76 +202,91 @@
 
 	NEXT VERISON:
 	
-	OK - Fixes for Microsoft Edge & color picking (vsan)
-	OK - New sound effects (aldaris)
-	OK - Seamless catsuit + Mermaid suit (Kirsty)
-	OK - New All four pose & items (gatetrek)
-	OK - Crotch chain + Locking Heels + Two new display cases (Kirsty)
-	OK - Catsuit & See-through gloves - Gloves for All Fours position (gatetrek)
 	BUG SENT - Both egg and vibrator could work on different variables - Demon tail + Clit&Dildo Vibrating belt + See-through + See-through zip catsuits (gatetrek)
-	OK - Text is too close, move up - All fours rope + chain bondage (gatetrek)
 	BUG SENT - Use a device strap-on on a suspended girl, should be hidden (wildsj)
-	BUG - Vibrating wand shows over wedding dress
-	BUG - Spanking toys doesn't output good item name when swapped
-	OK - New "Use Vibrator" rule for slaves (Atasly)
-	MOVE MENU - Email update system (Atasly)
-	OK - New bell clamps & piercings + Taped Vibrating Clit Egg + Frog-Tie Straps (Ayesha-678)
-
-	OK - Ghosting / Unghosting players from chat log /ghostadd /ghostremove
-	OK - New stuttering preferences
-	OK - New preference to show sexual activities in chat log
-	OK - Output orgasm text in chat log
-	OK - Manual arousal expression changes & orgasms
-	OK - Limit timer progress of some activities & zones that doesn't allow orgasms
-	OK - Doing activities on others can raise your own arousal
-	OK - Vibrating items should raise arousal slowly & give orgasms
-	OK - Orgasm resist popup & mini-game
-	OK - Pink filter and lock screen after an orgasm
-	OK - Add missing activity texts
-	OK - Items such as the vibrating wand / spanking toys should affect the arousal
-	TO DO - NPC lovers will masturbate the player or put a vibrating egg inside, random with "I LOVE YOU" dialog
-	TO DO - NPC owners will lock the player in chastity with a vibrating egg inside
 	
-	IN PROGRESS - Add a new preference screen to configure your sexual preferences.  First, there will be a master selection with these options to allow sexual contacts or not:
-	-	Disable all sexual contacts
-	-	Allow contacts without an arousal meter
-	-	Allow contacts with a manual arousal meter
-	-	Allow contacts with an automatic arousal meter
-	Second, the player could select who can see the meter:
-	-	Everyone can see the meter
-	-	Only people with access can see the meter
-	-	Only you can see the meter
-	If you select the fourth option, you’ll be able to select which body parts are the most erogenous for you and will raise your arousal meter.  These are the body parts I’ve listed so far:
-	-	Clitoris (can trigger an orgasm)
-	-	Vagina (can trigger an orgasm)
-	-	Mouth
-	-	Breast (can trigger an orgasm)
-	-	Ass/Anal (can trigger an orgasm)
-	-	Neck
-	-	Feet
-	Each one of these body parts could have these selections:
-	-	Big turn-off (will lower arousal a lot)
-	-	Turn-off (will lower arousal a little)
-	-	Indifferent (will not change arousal)
-	-	Turn-on (will increase arousal a little and can trigger an orgasm)
-	-	Big turn-on (will increase arousal a lot and can trigger an orgasm)
-	All NPCs in your private room will have the arousal meter activated and their erogenous zones will be setup at random, it should be fun to discover them.  Players that have the arousal meter activated & visible will have it somewhere below their name.  The meter should slide from blue (cold) to red (hot), letting others know how horny you are.
-	When you click on an NPC in your private room or on an online player, you’ll have options to play with her, if you have permissions for her items.  These would be the possible options:
-	-	Kiss her (if you’re not gagged)
-	-	Lick her (if you’re not gagged, can trigger an orgasm)
-	-	Tickle her (if you’re not bound)
-	-	Spank her (if you’re not bound)
-	-	Caress/massage/fondle her (if you’re not bound)
-	-	Masturbate her (if you’re not bound, can trigger an orgasm)
-	-	Rub against her (if you can move)
-	After selecting your action, you would need to select on which body part you want to do it.  For example, licking someone clitoris that’s erogenous would trigger a message: (X slowly licks Y clitoris, making her moan of pleasure.).  Masturbating someone ass that’s not erogenous would trigger a message: (X masturbates Y ass, but she stays cold.).  Some actions could not be done on some body parts of course.  Zones that are blocked with clothes or devices won’t be available in there.
-	If you allow sexual actions without an arousal meter, a short message will pop but the reactions will be regular roleplay between players, there won’t be any automatic orgasm.
-	With a manual meter, the player will be able to select its own arousal level manually, using a slider.  And will be able to trigger her orgasms manually.
-	With an automatic meter, the player won’t control her arousal level, it will increase/decrease based on what happens in the room and her parameters.  At a certain level and with certain acts, an automatic orgasm will be triggered, giving a message to everyone.  Then the arousal meter will drop back to a certain value.
-	Items such as vibrators, plugs and spanking toys would affect the arousal meter, some of them could trigger automatic orgasms.  So a girl set on an automatic meter, with a locked/vibrating chastity belt could possibly cum over and over every X minutes without any control over it.
-	For an orgasm, I was thinking that the screen could turn somewhat red and the player would lose all controls for a few seconds.
-	Self-masturbation could also be added when you click on yourself, using the same logic.
-			
+	OK - Seam & Opacity fixes for suits (Atasly)
+	OK - Fixes for the All-Four position (Gatetrek)
+	OK - Admiral suit & Crotch chain fixes (Kirsty)
+	OK - Gloves & Taped Hands fixes (CthulhuDancing)
+	OK - Validate improper item properties (Sekkmer)
+	OK - New button to clear all expressions (Sekkmer)
+	OK - HobbleSkirt fixes & lots of assets priority fixes (Atasly)
+	OK - Remove collar accessory with collar in kidnap mini-game (elliesec)	
+	OK - Remove the TailStrap physical zone (Sekkmer)
+	OK - New setting to only play sound if the player is involved (Atasly)
+	OK - Chat room entry/leave room refresh correction (Sekkmer)
+	OK - Yes, average speed is now faster - Optimization for DrawGL (Sekkmer)	
+	OK - Typo fixes in Magic Theater (elliesec)
+	OK - Gag swap bug fix (elliesec)
+	OK - VibeHeart fixes, Pony fixes, Lover Key can unlock everything but owner locked items (Atasly)
+	OK - Two new ties with Arms Hemp Rope & Chains (Nina-1474)
+	OK - Collar restraint removal in kidnap (elliesec)
+	OK - Mouth stuffing color (Nina-1474)
+	OK - Collar/Prone/Catsuit/Text fixes (Atasly)
+	OK - Many new locking piercings (Atasly)
+	OK - Improved photo room (git4nick)
+	
+	OK - Rope cuffs / Rope Wrist Elbow Harness Tie / Chain cuffs position (Ayesha-678)
+	OK - Priority property for item clipping (Nina-1474)
+	OK - Sock Stuffing gag (Nina-1474)
+	
+	OK - Nine new backgrounds (Aldarris & EmilyFox)
+	OK - Activity typo fixes (elliesec)
+	OK - Full mummy tape adjustments (fleisch11)
+
+	OK - Remove server whisper block on blacklist.
+	OK - Adding someone to your ghostlist will also add it to your blacklist.  
+	TO DO - Use LZString to Compress wardrobe data, when ready for release
+	TO DO - Comment Inventory.js for JS Documentation / setup VS Code
+	
+IN PROGRESS - Build a new room with an NPC to explain how the LARP system and Bondage Battles works:
+-	Every girl must follow the LARP rules and play fair.  When they lose a battle, they need to submit and go along with it.
+-	Every girl needs to select a class to play in the LARP.  Each class can use the strip and restrain abilities and has three special abilities that can be used only once per battle, listed below.
+-	Can join Bondage Battles from that new room.  Bondage Battle rooms are like regular chat rooms where you can chat and emote but cannot restrain until the battle is over.
+-	Before the fight, each girl in the Bondage Battle room must select a team/color or be an observer.  The battle can be a free-for-all if everyone selects a different team/color.
+-	Once everyone has selected a team and clicked on “Ready”, the battle begins.
+-	Each girl act when her turn comes, the turn order is random, picked by the server.  Once every girl has acted, we start again with the reversed turn order.
+-	When a girl turn begins, she must select an ability to do and a target.  If the ability works (see the ability description), the target gets stripped, restrained, etc.
+-	A girl cannot act if her arms or hands are restrained, her turn is skipped automatically.
+-	If only one team can act, the fight is over, the winners are announced, and the rooms come back to normal.  The winners can enjoy their spoils of war normally.
+
+Here are the abilities that everyone can use, all the time:
+Strip: Can only be used if the target is clothed (upper cloth slot is checked).  The odds of successfully striping is: 50% + player offensive bonus - target defensive bonus.  The random % is rolled on the server.  If the % succeeds, the target is stripped to her underwear.
+Restrain: Can only be used if the target isn’t clothed.  The odds of successfully restraining is: 50% + player offensive bonus - target defensive bonus.  The random % is rolled on the server.  If the % succeeds, the player can apply a restrain on target zone: Legs/Thighs or Head/Mouth.  If the zones are already restrained, apply a restraint on Arms/Hands to prevent that target from acting, removing her from the game.
+
+Matron (Offensive bonus: 30%, Defensive bonus: 0%)
+Control: Nobody can use any special ability until your next turn.  Must be able to talk.
+Detain: Regular restrain ability, but you automatically win the %.
+Charge: Everyone in your team gets a +30% offensive bonus until your next turn.  Must be able to walk.  This bonus can raise/lower the odds to 100% or 0%.
+
+Seducer (Offensive bonus: 20%, Defensive bonus: 10%)
+Seduce: Target girl skips her next turn, must be able to talk.
+Expose: Regular strip ability, but you automatically win the %.
+Inspire: Target girl can use her three special abilities once again.
+
+Trickster (Offensive bonus: 20%, Defensive bonus: 10%)
+Hide: Cannot be targeted by anyone until your next turn, must be able to walk.
+Confuse: Target girl loses all class bonuses and cannot use special abilities until your next turn, must be able to talk.
+Gamble:  The server rolls 50% odds:
+-	If you win, you get released from all restrains
+-	If you lose, you get fully bound at random and are out of the game
+
+Servant (Offensive bonus: 10%, Defensive bonus: 20%)
+Rescue: Remove a restraint from any girl, must be able to walk.
+Yield: Skip your turn and give it to a target.
+Support: Everyone in your team gets a +30% defensive bonus until your next turn.  Must be able to talk.  This bonus can raise/lower the odds to 100% or 0%.
+
+Artist (Offensive bonus: 10%, Defensive bonus: 20%)
+Evasion: Can remove a restraint from yourself.
+Cheer: Target girl gets an extra +30% offensive and defensive bonus until your next turn, must be able to talk.  This bonus can raise/lower the odds to 100% or 0%.
+Costume: Target girl dress back up, must be able to walk.
+
+Protector (Offensive bonus: 0%, Defensive bonus: 30%)
+Dress: You dress back up.
+Cover: Target girl cannot be targeted by anyone until your next turn, must be able to walk.
+Sacrifice: Nobody in your team can be targeted but you, until your next turn.
+
 	TO DO - Each restraint will have different ways (mini-games) to try to struggle out of it:
 		1. Go Berserk (Duct Tape, Cages & Boxes, Mittens, Chastity Items, Body Harnesses, Gags with harness, Hoods) - Click the circles quickly before they disappear (Asylum)
 		2. Use Strength (Duct Tape, Yokes, Cuffs & Manacles, Belts, One Bar & Bench & Bag, Armbinders, Gags without harness) - Key Speed Game: A + S (Current)
@@ -271,7 +294,7 @@
 		4. Use Dexterity (Rope, Jackets & Suits, One Bar & Bench & Bag, Mittens, Body Harnesses, Gags with harness, Collars) - Timing Game: Stop the moving object at the right position
 		5. Be Supple (Jackets & Suits, Belts, Chastity Items, Gags without harness, Armbinders, Locking Boots, Hoods) - Guess the right number between 1 and 100, a few tries, tells you if higher or lower	
 		6. Pick the Lock (For anything that locks or when a lock is added) - Precision Game - Don't touch the walls that are scrolling toward you
-
+		
 	TO DO - Proof Read
 	TO DO - Patreon Import/Update
 
