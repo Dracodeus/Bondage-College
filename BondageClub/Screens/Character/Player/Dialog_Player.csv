@@ -1,5 +1,7 @@
 SelectItem,,,Select an item to use.
+SelectItemGroup,,,Select an item to use on the GroupName.
 SelectActivity,,,Select an activity.
+SelectActivityGroup,,,Select an activity to use on the GroupName.
 CannotUseOnSelf,,,Cannot use on yourself.
 RemoveClothesForItem,,,Remove some clothes first.
 UnZipSuitForItem,,,Unzip the suit first.
@@ -42,6 +44,7 @@ Remote,,,Use your remote
 DialogNormalMode,,,Exit permission mode
 DialogPermissionMode,,,Edit item permissions
 Activity,,,Sexual activities
+UpPosition,,,Show all zones
 ButtPump,,,Use the butt plug's pump
 ColorPick,,,Color of next item
 ColorSelect,,,Use this color
