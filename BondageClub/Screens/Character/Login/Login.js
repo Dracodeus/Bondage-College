@@ -232,7 +232,7 @@ function LoginResponse(C) {
 			Player.Game = C.Game;
 			Player.Description = C.Description;
 			Player.Creation = C.Creation;
-			Player.Wardrobe = C.Wardrobe;
+			Player.Wardrobe = CharacterDecompressWardrobe(C.Wardrobe);
 			WardrobeFixLength();
 			Player.OnlineID = C.ID.toString();
 			Player.MemberNumber = C.MemberNumber;
