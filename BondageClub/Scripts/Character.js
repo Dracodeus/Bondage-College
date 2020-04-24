@@ -548,8 +548,11 @@ function CharacterSetFacialExpression(C, AssetGroup, Expression, Timer) {
 				if (!C.Appearance[A].Property) C.Appearance[A].Property = {};
 				if (C.Appearance[A].Property.Expression != Expression) {
 					C.Appearance[A].Property.Expression = Expression;
-					CharacterRefresh(C);
-					ChatRoomCharacterUpdate(C);
+					CharacterRefresh(C, false);
+					if (CurrentScreen == "ChatRoom") {
+						if (C.ID == 0) ServerSend("ChatRoomCharacterExpressionUpdate", { Name: Expression, Group: AssetGroup });
+						else ChatRoomCharacterUpdate(C);
+					}
 				}
 				if (Timer != null) TimerInventoryRemoveSet(C, AssetGroup, Timer);
 				return;

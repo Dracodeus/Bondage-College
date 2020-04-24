@@ -342,7 +342,7 @@ function ChatRoomClick() {
 	if ((MouseX >= 1353) && (MouseX < 1473) && (MouseY >= 0) && (MouseY <= 62) && Player.CanKneel()) {
 		ServerSend("ChatRoomChat", { Content: (Player.ActivePose == null) ? "KneelDown": "StandUp", Type: "Action", Dictionary: [{Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber}]} );
 		CharacterSetActivePose(Player, (Player.ActivePose == null) ? "Kneel" : null);
-		ChatRoomCharacterUpdate(Player);
+		ServerSend("ChatRoomCharacterPoseUpdate", { Pose: Player.ActivePose });
 	}
 
 	// When the user wants to change clothes
@@ -579,7 +579,7 @@ function ChatRoomCharacterUpdate(C) {
 	var data = {
 		ID: (C.ID == 0) ? Player.OnlineID : C.AccountName.replace("Online-", ""),
 		ActivePose: C.ActivePose,
-		Appearance: ServerAppearanceBundle(C.Appearance),
+		Appearance: ServerAppearanceBundle(C.Appearance)
 	};
 	if (C.ID == 0) data.ArousalSettings = C.ArousalSettings;
 	ServerSend("ChatRoomCharacterUpdate", data);
@@ -791,19 +791,64 @@ function ChatRoomSync(data) {
 
 // Updates a single character in the chatroom
 function ChatRoomSyncSingle(data) {
-	
+
 	// Sets the chat room character data
 	if ((data == null) || (typeof data !== "object")) return;
 	if ((data.Character == null) || (typeof data.Character !== "object")) return;
-	for (var C = 0; C < ChatRoomCharacter.length; C++) 
+	for (var C = 0; C < ChatRoomCharacter.length; C++)
 		if (ChatRoomCharacter[C].MemberNumber == data.Character.MemberNumber)
 			ChatRoomCharacter[C] = CharacterLoadOnline(data.Character, data.SourceMemberNumber);
-		
+
 	// Keeps a copy of the previous version
-	for (var C = 0; C < ChatRoomData.Character.length; C++) 
+	for (var C = 0; C < ChatRoomData.Character.length; C++)
 		if (ChatRoomData.Character[C].MemberNumber == data.Character.MemberNumber)
 			ChatRoomData.Character[C] = data.Character;
 
+}
+
+// Updates a single character expression in the chatroom
+function ChatRoomSyncExpression(data) {
+	if ((data == null) || (typeof data !== "object") || (data.Group == null) || (typeof data.Group !== "string")) return;
+	for (var C = 0; C < ChatRoomCharacter.length; C++)
+		if (ChatRoomCharacter[C].MemberNumber == data.MemberNumber) {
+
+			// Changes the facial expression
+			for (var A = 0; A < ChatRoomCharacter[C].Appearance.length; A++)
+				if ((ChatRoomCharacter[C].Appearance[A].Asset.Group.Name == data.Group) && (ChatRoomCharacter[C].Appearance[A].Asset.Group.AllowExpression))
+					if ((data.Name == null) || (ChatRoomCharacter[C].Appearance[A].Asset.Group.AllowExpression.indexOf(data.Name) >= 0)) {
+						if (!ChatRoomCharacter[C].Appearance[A].Property) ChatRoomCharacter[C].Appearance[A].Property = {};
+						if (ChatRoomCharacter[C].Appearance[A].Property.Expression != data.Name) {
+							ChatRoomCharacter[C].Appearance[A].Property.Expression = data.Name;
+							CharacterRefresh(ChatRoomCharacter[C], false);
+						}
+					}
+
+			// Keeps a copy of the previous version
+			for (var C = 0; C < ChatRoomData.Character.length; C++)
+				if (ChatRoomData.Character[C].MemberNumber == data.MemberNumber)
+					ChatRoomData.Character[C].Appearance = ChatRoomCharacter[C].Appearance;
+			return;
+
+		}
+}
+
+// Updates a single character pose in the chatroom
+function ChatRoomSyncPose(data) {
+	if ((data == null) || (typeof data !== "object")) return;
+	for (var C = 0; C < ChatRoomCharacter.length; C++)
+		if (ChatRoomCharacter[C].MemberNumber == data.MemberNumber) {
+
+			// Sets the active pose
+			ChatRoomCharacter[C].ActivePose = data.Pose;
+			CharacterRefresh(ChatRoomCharacter[C], false);
+
+			// Keeps a copy of the previous version
+			for (var C = 0; C < ChatRoomData.Character.length; C++)
+				if (ChatRoomData.Character[C].MemberNumber == data.MemberNumber)
+					ChatRoomData.Character[C].ActivePose = data.Pose;
+			return;
+
+		}
 }
 
 // Refreshes the chat log element
