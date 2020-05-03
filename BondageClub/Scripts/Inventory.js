@@ -513,7 +513,7 @@ function InventoryLockRandom(C, Item, FromOwner) {
 	if (Item.Asset.AllowLock) {
 		var List = [];
 		for (var A = 0; A < Asset.length; A++)
-			if (Asset[A].IsLock && (FromOwner || !Asset[A].OwnerOnly))
+			if (Asset[A].IsLock && Asset[A].Random && !Asset[A].LoverOnly && (FromOwner || !Asset[A].OwnerOnly))
 				List.push(Asset[A]);
 		if (List.length > 0) {
 			var Lock = { Asset: List[Math.floor(Math.random() * List.length)] };
