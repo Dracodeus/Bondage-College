@@ -7,7 +7,7 @@ function InventoryItemPelvisMetalChastityBeltLoad() {
 
 // Draw the item extension screen
 function InventoryItemPelvisMetalChastityBeltDraw() {
-	
+
 	// Draw the header and item
 	DrawButton(1885, 25, 90, 90, "", "White", "Icons/Exit.png");
 	DrawRect(1387, 125, 225, 275, "white");
@@ -16,18 +16,18 @@ function InventoryItemPelvisMetalChastityBeltDraw() {
 
 	// Draw the possible poses
 	if (!InventoryItemHasEffect(DialogFocusItem, "Lock", true)) {
-	DrawText(DialogFind(Player, "SelectBackShield"), 1500, 500, "white", "gray");
-	DrawButton(1250, 575, 250, 65, DialogFind(Player, "ChastityOpenBack"), (DialogFocusItem.Property.Restrain == null) ? "#888888" : "White");
-	DrawButton(1500, 575, 250, 65, DialogFind(Player, "ChastityClosedBack"), ((DialogFocusItem.Property.Restrain != null) && (DialogFocusItem.Property.Restrain == "ClosedBack")) ? "#888888" : "White");
+		DrawText(DialogFind(Player, "SelectBackShield"), 1500, 550, "white", "gray");
+		DrawButton(1200, 675, 250, 65, DialogFind(Player, "ChastityOpenBack"), (DialogFocusItem.Property.Restrain == null) ? "#888888" : "White");
+		DrawButton(1550, 675, 250, 65, DialogFind(Player, "ChastityClosedBack"), ((DialogFocusItem.Property.Restrain != null) && (DialogFocusItem.Property.Restrain == "ClosedBack")) ? "#888888" : "White");
 	} 
-	else DrawText(DialogFind(Player, "CantChangeWhileLocked"), 1500, 500, "white", "gray");
+	else DrawText(DialogFind(Player, "CantChangeWhileLocked"), 1500, 550, "white", "gray");
 }
 
 // Catches the item extension clicks
 function InventoryItemPelvisMetalChastityBeltClick() {
 	if ((MouseX >= 1885) && (MouseX <= 1975) && (MouseY >= 25) && (MouseY <= 110)) DialogFocusItem = null;
-	if ((MouseX >= 1250) && (MouseX <= 1475) && (MouseY >= 550) && (MouseY <= 775) && (DialogFocusItem.Property.Restrain != null)) InventoryItemPelvisMetalChastityBeltSetPose(null);
-	if ((MouseX >= 1500) && (MouseX <= 1725) && (MouseY >= 550) && (MouseY <= 775) && (DialogFocusItem.Property.Restrain == null)) InventoryItemPelvisMetalChastityBeltSetPose("ClosedBack");
+	if ((MouseX >= 1200) && (MouseX <= 1450) && (MouseY >= 675) && (MouseY <= 740) && !InventoryItemHasEffect(DialogFocusItem, "Lock", true) && (DialogFocusItem.Property.Restrain != null)) InventoryItemPelvisMetalChastityBeltSetPose(null);
+	if ((MouseX >= 1550) && (MouseX <= 1800) && (MouseY >= 675) && (MouseY <= 740) && !InventoryItemHasEffect(DialogFocusItem, "Lock", true) && (DialogFocusItem.Property.Restrain == null)) InventoryItemPelvisMetalChastityBeltSetPose("ClosedBack");
 }
 
 // Sets the Shield position (OpenBack, ClosedBack)
@@ -40,13 +40,10 @@ function InventoryItemPelvisMetalChastityBeltSetPose(NewPose) {
 		InventoryItemPelvisMetalChastityBeltLoad();
 	}
 
-	// Sets the new pose with it's effects
+	// Sets the restrain with it's effects
 	DialogFocusItem.Property.Restrain = NewPose;
-	if (NewPose == null) {
-		delete DialogFocusItem.Property.Block;
-	} else {
-		if (NewPose == "ClosedBack") DialogFocusItem.Property.Block = ["ItemButt"];
-	}
+	if (NewPose == null) delete DialogFocusItem.Property.Block;
+	else if (NewPose == "ClosedBack") DialogFocusItem.Property.Block = ["ItemButt"];
 
 	// Adds the lock effect back if it was padlocked
 	if ((DialogFocusItem.Property.LockedBy != null) && (DialogFocusItem.Property.LockedBy != "")) {
