@@ -53,7 +53,7 @@ RopeBondageDiamond,,,(You use the ropes and create a diamond harness around her 
 0,10,Will you tie me up?,"Of course, with practice you will become a true escape artist.  Should I go easy on you or make it tight?",,AllowPlayerBondage(),
 0,,(Spank her on the butt.),"(You spank her on the butt as she dangles on the rope.)  Ow!  Miss, I'm not a masochist.",Spank(),AllowSpank(),
 0,40,Can I train with you?,"Yes, you can, but there's a hefty price.  Would you like to get better at using restraints or escaping from them?",,!Player.IsRestrained(),
-0,40,Can I train with you?,(She looks at you and giggles.)  Your training session will be to get out of that.,,Player.IsRestrained(),
+0,,Can I train with you?,(She looks at you and giggles.)  Your training session will be to get out of that.,,Player.IsRestrained(),
 0,,Let's talk later.  (Leave her.),,DialogLeave(),,
 10,20,Please go easy on me.,Sure.  (She picks a hemp rope and restrain your arms loosely.)  Try to free yourself.,RestrainPlayer(1),,
 10,20,A regular tie I guess.,Of course.  (She picks a few hemp ropes and restrain your arms and legs.)  Time to struggle.,RestrainPlayer(2),,

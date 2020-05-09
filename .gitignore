@@ -4,3 +4,5 @@
 #system temp file
 .DS_Store
 node_modules/
+
+/BondageClub/node_modules
