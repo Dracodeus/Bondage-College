@@ -607,3 +607,16 @@ function InventoryCheckLimitedPermission(C, Item) {
 	if ((C.ItemPermission < 3) && !(C.WhiteList.indexOf(Player.MemberNumber) < 0)) return true;
 	return false;
 }
+
+/**
+ * Returns TRUE if the item is a key, having the effect of unlocking other items
+ * @param {Item} Item - The item to validate
+ * @returns {Boolean} - TRUE if item is a key
+ */
+function InventoryIsKey(Item) {
+	if ((Item == null) || (Item.Asset == null) || (Item.Asset.Effect == null)) return false;
+	for (var E = 0; E < Item.Asset.Effect.length; E++)
+		if (Item.Asset.Effect[E].substr(0, 7) == "Unlock-")
+			return true;
+	return false;
+}

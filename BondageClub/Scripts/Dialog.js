@@ -85,6 +85,7 @@ function DialogPrerequisite(D) {
 
 // Searches for an item in the player inventory to unlock a specific item
 function DialogCanUnlock(C, Item) {
+	if (LogQuery("KeyDeposit", "Cell")) return false;
 	if ((C.ID != 0) && !Player.CanInteract()) return false;
 	if ((Item != null) && (Item.Asset != null) && (Item.Asset.OwnerOnly == true)) return Item.Asset.Enable && C.IsOwnedByPlayer();
 	if ((Item != null) && (Item.Asset != null) && (Item.Asset.LoverOnly == true)) return Item.Asset.Enable && C.IsLoverOfPlayer();
@@ -188,6 +189,9 @@ function DialogInventoryAdd(C, NewInv, NewInvWorn, SortOrder) {
 	// Make sure we do not add owner/lover only items for invalid characters
 	if (NewInv.Asset.OwnerOnly && !NewInvWorn && !C.IsOwnedByPlayer()) return;
 	if (NewInv.Asset.LoverOnly && !NewInvWorn && !C.IsLoverOfPlayer()) return;
+	
+	// Do not show keys if they are in the depoist
+	if (LogQuery("KeyDeposit", "Cell") && InventoryIsKey(NewInv)) return false;
 
 	// Make sure we do not duplicate the non-blocked item
 	for (var I = 0; I < DialogInventory.length; I++)
