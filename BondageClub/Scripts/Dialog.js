@@ -187,10 +187,14 @@ function DialogLeaveItemMenu() {
 // Adds the item in the dialog list
 function DialogInventoryAdd(C, NewInv, NewInvWorn, SortOrder) {
 
-	// Make sure we do not add owner/lover only items for invalid characters
-	if (NewInv.Asset.OwnerOnly && !NewInvWorn && !C.IsOwnedByPlayer()) return;
-	if (NewInv.Asset.LoverOnly && !NewInvWorn && !C.IsLoverOfPlayer()) return;
-	
+	// Make sure we do not add owner/lover only items for invalid characters, owner/lover locks can be applied on the player by the player for self-bondage
+	if (NewInv.Asset.OwnerOnly && !NewInvWorn && !C.IsOwnedByPlayer())
+		if ((C.ID != 0) || ((C.Owner == "") && (C.Ownership == null)) || !NewInv.Asset.IsLock)
+			return;
+	if (NewInv.Asset.LoverOnly && !NewInvWorn && !C.IsLoverOfPlayer())
+		if ((C.ID != 0) || ((C.Lover == "") && (C.Lovership == null)) || !NewInv.Asset.IsLock)
+			return;
+
 	// Do not show keys if they are in the depoist
 	if (LogQuery("KeyDeposit", "Cell") && InventoryIsKey(NewInv)) return false;
 
