@@ -1,6 +1,18 @@
 SelectItem,,,Select an item to use.
+SelectItemGroup,,,Select an item to use on the GroupName.
 SelectActivity,,,Select an activity.
+SelectActivityGroup,,,Select an activity to use on the GroupName.
 CannotUseOnSelf,,,Cannot use on yourself.
+RequireSelfBondage1,,,Require self-bondage 1.
+RequireSelfBondage2,,,Require self-bondage 2.
+RequireSelfBondage3,,,Require self-bondage 3.
+RequireSelfBondage4,,,Require self-bondage 4.
+RequireSelfBondage5,,,Require self-bondage 5.
+RequireSelfBondage6,,,Require self-bondage 6.
+RequireSelfBondage7,,,Require self-bondage 7.
+RequireSelfBondage8,,,Require self-bondage 8.
+RequireSelfBondage9,,,Require self-bondage 9.
+RequireSelfBondage10,,,Require self-bondage 10.
 RemoveClothesForItem,,,Remove some clothes first.
 UnZipSuitForItem,,,Unzip the suit first.
 RemoveSuspensionForItem,,,Remove the suspension first.
@@ -21,6 +33,7 @@ LegsCannotClose,,,Legs cannot close.
 MustBeAbleToKneel,,,Must be able to kneel.
 MustStandUpFirst,,,Must stand up first.
 MustFreeFeetFirst,,,Must free feet first.
+MustFreeArmsFirst,,,Must free arms first.
 MustFreeLegsFirst,,,Must free legs first.
 MustFreeHandsFirst,,,Must free hands first.
 RemoveShacklesFirst,,,Must remove shackles first.
@@ -42,6 +55,7 @@ Remote,,,Use your remote
 DialogNormalMode,,,Exit permission mode
 DialogPermissionMode,,,Edit item permissions
 Activity,,,Sexual activities
+UpPosition,,,Show all zones
 ButtPump,,,Use the butt plug's pump
 ColorPick,,,Color of next item
 ColorSelect,,,Use this color
@@ -254,7 +268,7 @@ ServerShuffle,,,SourceCharacter shuffles the position of everyone in the room ra
 ServerPromoteAdmin,,,TargetCharacterName was promoted to administrator by SourceCharacter.
 ServerDemoteAdmin,,,TargetCharacterName was demoted from administration by SourceCharacter.
 ServerUpdateRoom,,,SourceCharacter updated the room. Name: ChatRoomName. Limit: ChatRoomLimit.  ChatRoomPrivacy.  ChatRoomLocked.
-ChatRoomHelp,,,"Commands available : * or /me : write an emote, ** or /action : write an action, click on someone's name on the left to whisper, /coin : flip a coin, /dice Y or XdY : roll X dice with Y-sides (from 2 to 100 sides), /friendlistadd [ID], /friendlistremove [ID], /whitelistadd [ID], /whitelistremove [ID], /blacklistadd [ID], /blacklistremove [ID], /ghostadd [ID], /ghostremove [ID], /kick [ID], /ban [ID], /unban [ID], /promote [ID], /demote [ID]"
+ChatRoomHelp,,,"Commands available : /help : show this help text, * or /me : write an emote, ** or /action : write an action, click on someone's name on the left to whisper, PgUp/PgDn keys to navigate chat input history, /coin : flip a coin, /dice Y or XdY : roll X dice with Y-sides (from 2 to 100 sides), /friendlistadd [ID], /friendlistremove [ID], /whitelistadd [ID], /whitelistremove [ID], /blacklistadd [ID], /blacklistremove [ID], /ghostadd [ID], /ghostremove [ID], /kick [ID], /ban [ID], /unban [ID], /promote [ID], /demote [ID]"
 ActionSwap,,,SourceCharacter swaps a PrevAsset for a NextAsset on DestinationCharacter FocusAssetGroup.
 ActionUse,,,SourceCharacter uses a NextAsset on DestinationCharacter FocusAssetGroup.
 ActionChangeColor,,,SourceCharacter changes the color of NextAsset on DestinationCharacter FocusAssetGroup.
@@ -293,6 +307,9 @@ RestartTimer,,,Restart Timer
 TimerAddTime,,,SourceCharacter adds TimerTime TimerUnit to the padlock on DestinationCharacter FocusAssetGroup.
 TimerRemoveTime,,,SourceCharacter removes TimerTime TimerUnit to the padlock on DestinationCharacter FocusAssetGroup.
 TimerAddRemoveUnknownTime,,,an unknown amount of time
+CombinationFail,,,SourceCharacter tries the code CombinationNumber but fails to open the padlock on DestinationCharacter FocusAssetGroup.
+CombinationChangeSuccess,,,SourceCharacter changes the code of the padlock on DestinationCharacter FocusAssetGroup.
+CombinationChangeFail,,,SourceCharacter tries to change the code of the padlock on DestinationCharacter FocusAssetGroup but fails.
 EnableRandomInput,,,Enable random input of time from everyone else
 AddTimerTimeMinutes,,,Add TimerTime minutes to the Timer
 AddTimerTime,,,Add
@@ -303,6 +320,12 @@ ShowItemWithTimerRemaining,,,Show the time remaining/being added
 Random,,,Random
 Minutes,,,minutes
 Hours,,,hours
+CombinationOld,,,Current Code :
+CombinationNew,,,New Code :
+CombinationEnter,,,Open lock
+CombinationChange,,,Change code
+CombinationError,,,Wrong code
+CombinationErrorInput,,,Use 4 digits as a code
 SelectBondagePosition,,,Select the bondage position
 SelectTapeWrapping,,,Select the tape wrapping
 SelectAttachmentState,,,Select an item attachment
@@ -311,6 +334,7 @@ CannotUnlockIfElbowBound,,,A victim cannot unlock herself if her elbows are boun
 ItemMiscMetalPadlockIntro,,,"""From your friendly hardware store"""
 ItemMiscIntricatePadlockIntro,,,"""To keep your loved one secure"""
 ItemMiscTimerPadlockIntro,,,You can restart the timer but cannot unlock
+ItemMiscCombinationPadlockIntro,,,"""If at first, you don't succeed..."""
 ItemMiscOwnerPadlockIntro,,,"""Never forget who you belong to"""
 ItemMiscOwnerPadlockDetail,,,Can only be locked or unlocked by her owner
 ItemMiscOwnerTimerPadlockIntro,,,"""Never forget who you belong to"""
@@ -321,6 +345,8 @@ ItemMiscLoversTimerPadlockIntro,,,"""A loving embrace"""
 ItemMiscLoversTimerPadlockDetail,,,Can only be unlocked or extended by her lover
 ItemMiscMistressPadlockIntro,,,Can only be locked or unlocked by a Club Mistress
 ItemMiscMistressTimerPadlockIntro,,,Can only be unlocked or extended by a Club Mistress
+ItemMiscExclusivePadlockIntro,,,"""Keeping you safe from yourself"""
+ItemMiscExclusivePadlockDetail,,,Can be opened by anyone but the wearer
 LeatherCuffsPoseNone,,,Detached
 LeatherCuffsPoseWrist,,,Bind wrists
 LeatherCuffsPoseElbow,,,Bind elbows
@@ -647,6 +673,21 @@ BeltIncreaseTo0,,,DestinationCharacterName vibrating wand starts teasing her lig
 BeltIncreaseTo1,,,DestinationCharacterName vibrating wand builds up to a moderate pace.
 BeltIncreaseTo2,,,DestinationCharacterName vibrating wand starts buzzing strongly!
 BeltIncreaseTo3,,,DestinationCharacterName vibrating wand jumps up to maximum intensity!
+HempRopeBeltecreaseTo0,,,DestinationCharacterName vibrating wand slows down into a light tease.
+HempRopeBeltDecreaseTo1,,,DestinationCharacterName vibrating wand returns to a moderate pace.
+HempRopeBeltDecreaseTo2,,,DestinationCharacterName vibrating wand slows down a tiny bit.
+HempRopeBeltIncreaseTo0,,,DestinationCharacterName vibrating wand starts teasing her lightly.
+HempRopeBeltIncreaseTo1,,,DestinationCharacterName vibrating wand builds up to a moderate pace.
+HempRopeBeltIncreaseTo2,,,DestinationCharacterName vibrating wand starts buzzing strongly!
+HempRopeBeltsIncreaseTo3,,,DestinationCharacterName vibrating wand jumps up to maximum intensity!
+SpreaderVibratingDildoBarDecreaseTo-1,,,The dildo on DestinationCharacterName Vibrating Spreader Dildo Bar stops vibrating.
+SpreaderVibratingDildoBarDecreaseTo0,,,The dildo on DestinationCharacterName Vibrating Spreader Dildo Bar slows down into a light tease.
+SpreaderVibratingDildoBarDecreaseTo1,,,The dildo on DestinationCharacterName Vibrating Spreader Dildo Bar returns to a moderate pace.
+SpreaderVibratingDildoBarDecreaseTo2,,,The dildo on DestinationCharacterName Vibrating Spreader Dildo Bar slows down a tiny bit.
+SpreaderVibratingDildoBarIncreaseTo0,,,The dildo on DestinationCharacterName Vibrating Spreader Dildo Bar starts teasing her lightly.
+SpreaderVibratingDildoBarIncreaseTo1,,,The dildo on DestinationCharacterName Vibrating Spreader Dildo Bar builds up to a moderate pace.
+SpreaderVibratingDildoBarIncreaseTo2,,,The dildo on DestinationCharacterName Vibrating Spreader Dildo Bar starts buzzing strongly!
+SpreaderVibratingDildoBarIncreaseTo3,,,The dildo on DestinationCharacterName Vibrating Spreader Dildo Bar jumps up to maximum intensity!
 BPumpsdeflatesTo0,,,SourceCharacter deflates DestinationCharacter butt pump till it's empty.
 BPumpsdeflatesTo1,,,SourceCharacter deflates DestinationCharacter butt pump till only slighty filled.
 BPumpsdeflatesTo2,,,SourceCharacter deflates DestinationCharacter butt pump till it's half full.
@@ -976,6 +1017,7 @@ ChainBondageHogtied,,,Hogtie
 ChainBondageSuspension,,,Suspension Tie
 ChainBondageSuspensionHogtied,,,Suspension Hogtie
 ChainBondageWristElbowTie,,,Wrist and Elbow Tie
+ChainBondageWristElbowHarnessTie,,,Wrist and Elbow Harness Tie
 ChainBondageWristTie,,,Wrist Tie
 ChainBondageChainCuffs,,,Chain Cuffs
 ChainBondageAllFours,,,All Fours
@@ -989,7 +1031,13 @@ ArmsChainSetWristElbowTie,,,SourceCharacter uses the chain on TargetCharacter to
 ArmsChainSetWristTie,,,SourceCharacter uses the chain on TargetCharacter to tie her wrists together behind her back.
 ArmsChainSetChainCuffs,,,SourceCharacter uses the chain on TargetCharacter to tie chain cuffs on her wrists.
 ArmsChainSetAllFours,,,SourceCharacter uses the chain on TargetCharacter to have her crawling on all fours.
+ArmsChainSetWristElbowHarnessTie,,,SourceCharacter uses the chain on TargetCharacter to tie her wrists and elbows in a harness behind her back.
 MermaidSuitTypeZipped,,,Zipped Up
 MermaidSuitTypeUnZip,,,Unzipped
 MermaidSuitSetZipped,,,SourceCharacter zips up TargetCharacter suit.
 MermaidSuitSetUnZip,,,SourceCharacter unzips TargetCharacter suit.
+SelectBackShield,,,Selected chastity belt backing
+ChastityOpenBack,,,Open Back
+ChastityClosedBack,,,Closed Back
+ChastityBeltBackShieldOpenBack,,,SourceCharacter removes the shield from the back of DestinationCharacter's belt.
+ChastityBeltBackShieldClosedBack,,,SourceCharacter adds the shield to the back of DestinationCharacter's belt.
