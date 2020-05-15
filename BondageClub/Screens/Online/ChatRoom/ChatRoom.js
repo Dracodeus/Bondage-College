@@ -585,9 +585,10 @@ function ChatRoomCharacterItemUpdate(C, Group) {
 // Publishes a custom action to the chat
 function ChatRoomPublishCustomAction(msg, LeaveDialog, Dictionary) {
 	if (CurrentScreen == "ChatRoom") {
-		ServerSend("ChatRoomChat", { Content: msg, Type: "Action", Dictionary: Dictionary} );
-		ChatRoomCharacterItemUpdate(CurrentCharacter);
-		if (LeaveDialog && (CurrentCharacter != null)) DialogLeave();
+		ServerSend("ChatRoomChat", { Content: msg, Type: "Action", Dictionary: Dictionary });
+		var C = CharacterGetCurrent();
+		ChatRoomCharacterItemUpdate(C);
+		if (LeaveDialog && (C != null)) DialogLeave();
 	}
 }
 
@@ -1034,6 +1035,8 @@ function ChatRoomListManage(Operation, ListType) {
 		var data = {};
 		data[ListType] = Player[ListType];
 		ServerSend("AccountUpdate", data);
+		CommonWait(1000);
+		ChatRoomCharacterUpdate(Player);
 	}
 	if (ListType == "GhostList") ChatRoomListManage(Operation, "BlackList");
 }
@@ -1045,6 +1048,8 @@ function ChatRoomListManipulation(Add, Remove, Message) {
 		if ((Add != null) && (Add.indexOf(C) < 0)) Add.push(C);
 		if ((Remove != null) && (Remove.indexOf(C) >= 0)) Remove.splice(Remove.indexOf(C), 1);
 		ServerSend("AccountUpdate", { FriendList: Player.FriendList, GhostList: Player.GhostList, WhiteList: Player.WhiteList, BlackList: Player.BlackList });
+		CommonWait(1000);
+		ChatRoomCharacterUpdate(Player);
 	}
 }
 
