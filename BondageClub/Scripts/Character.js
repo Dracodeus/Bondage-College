@@ -505,6 +505,13 @@ function CharacterRelease(C) {
 	CharacterRefresh(C);
 }
 
+// Removes all locks that matches LockName from a character
+function CharacterReleaseFromLock(C, LockName) {
+	for (var A = 0; A < C.Appearance.length; A++)
+		if ((C.Appearance[A].Property != null) && (C.Appearance[A].Property.LockedBy == LockName))
+			InventoryUnlock(C, C.Appearance[A]);
+}
+
 // Removes any binding item from the character if there's no specific padlock on it
 function CharacterReleaseNoLock(C) {
 	for (var E = 0; E < C.Appearance.length; E++)

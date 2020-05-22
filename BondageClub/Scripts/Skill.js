@@ -122,6 +122,13 @@ function SkillProgress(SkillType, SkillProgress) {
 
 }
 
+// The player bondage skill can change based on a preference ratio
+function SkillGetPlayerBondage() {
+	if (DialogBondageRatio < 0) DialogBondageRatio = 0;
+	if (DialogBondageRatio > 1) DialogBondageRatio = 1;
+	return Math.round(SkillGetLevel(Player, "Bondage") * DialogBondageRatio);
+}
+
 // Alters the current skill modifier for the player
 function SkillModifierChange(Change) {
 	SkillModifier = SkillModifier + Change;

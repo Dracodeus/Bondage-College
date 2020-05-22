@@ -29,6 +29,7 @@ var DialogItemPermissionMode = false;
 var DialogExtendedMessage = "";
 var DialogActivityMode = false;
 var DialogActivity = [];
+var DialogBondageRatio = 1;
 
 function DialogReputationLess(RepType, Value) { return (ReputationGet(RepType) <= Value); } // Returns TRUE if a specific reputation type is less or equal than a given value
 function DialogReputationGreater(RepType, Value) { return (ReputationGet(RepType) >= Value); } // Returns FALSE if a specific reputation type is greater or equal than a given value
@@ -370,6 +371,7 @@ function DialogProgressGetOperation(C, PrevItem, NextItem) {
 	if ((PrevItem != null) && InventoryItemHasEffect(PrevItem, "Mounted", true)) return DialogFind(Player, "Dismounting");
 	if ((PrevItem != null) && InventoryItemHasEffect(PrevItem, "Enclose", true)) return DialogFind(Player, "Escaping");
 	if (PrevItem != null) return DialogFind(Player, "Removing");
+	if ((PrevItem == null) && (NextItem != null) && (DialogBondageRatio != 1)) return DialogFind(Player, "Adding" + (DialogBondageRatio * 100).toString());
 	if (InventoryItemHasEffect(NextItem, "Lock", true)) return DialogFind(Player, "Locking");
 	if ((PrevItem == null) && (NextItem != null)) return DialogFind(Player, "Adding");
 	return "...";
@@ -1112,7 +1114,7 @@ function DialogDrawItemMenu(C) {
 			InventoryRemove(C, C.FocusGroup.Name);
 			if (InventoryGet(C, "ItemNeck") == null) InventoryRemove(C, "ItemNeckAccessories");
 			if (InventoryGet(C, "ItemNeck") == null) InventoryRemove(C, "ItemNeckRestraints");
-			if (DialogProgressNextItem != null) InventoryWear(C, DialogProgressNextItem.Asset.Name, DialogProgressNextItem.Asset.Group.Name, (DialogColorSelect == null) ? "Default" : DialogColorSelect, SkillGetLevel(Player, "Bondage"));
+			if (DialogProgressNextItem != null) InventoryWear(C, DialogProgressNextItem.Asset.Name, DialogProgressNextItem.Asset.Group.Name, (DialogColorSelect == null) ? "Default" : DialogColorSelect, SkillGetPlayerBondage());
 
 			// The player can use another item right away, for another character we jump back to her reaction
 			if (C.ID == 0) {
@@ -1270,4 +1272,9 @@ function DialogDrawExpressionMenu() {
 		DrawButton(355, OffsetY, 90, 90, "", (FE.MenuExpression4 == FE.CurrentExpression ? "Pink" : "White"), "Assets/Female3DCG/" + FE.Appearance.Asset.Group.Name + (FE.MenuExpression4 ? "/" + FE.MenuExpression4 : "") + "/Icon.png");
 
 	}
+}
+
+// Sets the bondage ratio for the player, will be a 100% applied to the bondage skill
+function DialogSetBondageRatio(NewRatio) {
+	DialogBondageRatio = parseInt(NewRatio) / 100;
 }
