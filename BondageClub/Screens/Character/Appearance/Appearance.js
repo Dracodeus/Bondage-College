@@ -744,6 +744,7 @@ function CharacterAppearanceExit(C) {
 	else CommonSetScreen("Character", "Login");
 	CharacterAppearanceReturnRoom = "MainHall";
 	CharacterAppearanceReturnModule = "Room";
+	CharacterAppearanceHeaderText = "";
 }
 
 // When the player is ready, we make sure she at least has an outfit

@@ -539,7 +539,7 @@ function DialogMenuButtonClick() {
 						DialogItemToLock = Item;
 						for (var A = 0; A < Player.Inventory.length; A++)
 							if ((Player.Inventory[A].Asset != null) && Player.Inventory[A].Asset.IsLock)
-								DialogInventoryAdd(C, Player.Inventory[A], false, 1);
+								DialogInventoryAdd(C, Player.Inventory[A], false, 2);
 						DialogInventorySort();
 					}
 				} else {
