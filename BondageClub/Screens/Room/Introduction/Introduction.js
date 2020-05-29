@@ -12,7 +12,7 @@ var IntroductionRescueScenarioList = ["LatexWoman", "Newcomer", "MaidFight", "Sa
 var IntroductionJobList = ["DomPuppy", "DomLock", "DomKidnap", "DomTrainer", "SubSearch", "SubDojo", "SubActivity", "SubMaid"];
 var IntroductionJobCurrent = "";
 var IntroductionJobCount = 1;
-var IntroductionJobLock = null;
+var IntroductionJobParam = null;
 var IntroductionJobLockList = ["MetalPadlock", "IntricatePadlock", "TimerPadlock", "CombinationPadlock", "ExclusivePadlock"];
 var IntroductionJobMember = [];
 
@@ -147,6 +147,7 @@ function IntroductionJobDone(JobName) {
 	CharacterChangeMoney(Player, 100);
 	var NextDay = Math.floor(CurrentTime / (24 * 60 * 60 * 1000)) + 1;
 	LogAdd("DailyJobDone", "Introduction", NextDay * 24 * 60 * 60 * 1000);
+	IntroductionJobCurrent = "";
 }
 
 // Returns TRUE if a specific daily job is available for the player, each job is available in a rotating fashion
@@ -172,8 +173,10 @@ function IntroductionJobAnyAvailable() {
 function IntroductionJobStart(JobName, JobCount) {
 	IntroductionJobCurrent = JobName;
 	IntroductionJobCount = parseInt(JobCount);
-	var Day = Math.floor(CurrentTime / (24 * 60 * 60 * 1000));
-	IntroductionJobLock = IntroductionJobLockList[Day % IntroductionJobLockList.length];
+	if (JobName == "DomLock") {
+		var Day = Math.floor(CurrentTime / (24 * 60 * 60 * 1000));
+		IntroductionJobParam = IntroductionJobLockList[Day % IntroductionJobLockList.length];
+	} else IntroductionJobParam = null;
 	IntroductionJobMember = [];
 }
 
@@ -186,6 +189,12 @@ function IntroductionJobGiveUp() {
 
 // Shows the lock description that the player must apply
 function IntroductionJobLockType() {
-	var Item = AssetGet(Player.AssetFamily, "ItemMisc", IntroductionJobLock);
+	var Item = AssetGet(Player.AssetFamily, "ItemMisc", IntroductionJobParam);
 	if (Item != null) IntroductionMaid.CurrentDialog = DialogFind(IntroductionMaid, "JobLockType").replace("LockType", Item.Description);
+}
+
+// When a possible progress is registered, we check if it counts toward the daily job
+function IntroductionJobProgress(JobName, Param) {
+	if ((IntroductionJobCurrent == JobName) && (IntroductionJobParam == Param))
+		IntroductionJobCount--;
 }

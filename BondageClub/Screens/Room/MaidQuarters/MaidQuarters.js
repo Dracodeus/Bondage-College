@@ -136,12 +136,15 @@ function MaidQuartersMiniGamePay() {
 	if (MiniGameDifficulty == "Hard") M = M * 2;
 	MaidQuartersMaid.CurrentDialog = MaidQuartersMaid.CurrentDialog.replace("REPLACEMONEY", M.toString());
 	CharacterChangeMoney(Player, M);
+	IntroductionJobProgress("SubMaid");
 }
 
-function MaidQuartersMiniGamePayAdvanced(){
+// When the music mini game is successful, the player gets paid
+function MaidQuartersMiniGamePayAdvanced() {
 	ReputationProgress("Maid", 4);
 	MaidQuartersMaid.CurrentDialog = MaidQuartersMaid.CurrentDialog.replace("REPLACEMONEY", MiniGameAdvancedPayment.toString());
 	CharacterChangeMoney(Player, MiniGameAdvancedPayment);
+	IntroductionJobProgress("SubMaid");
 }
 
 // When the rescue is successful, the player gets paid
@@ -151,6 +154,7 @@ function MaidQuartersRescuePay() {
 	var M = 10 + Math.floor(Math.random() * 11);
 	MaidQuartersMaid.CurrentDialog = MaidQuartersMaid.CurrentDialog.replace("REPLACEMONEY", M.toString());
 	CharacterChangeMoney(Player, M);
+	IntroductionJobProgress("SubMaid");
 }
 
 // When the maid releases the player
@@ -275,6 +279,7 @@ function MaidQuartersOnlineDrinkPay() {
 	if (!MaidQuartersOnlineDrinkFromOwner) CharacterChangeMoney(Player, M);
 	else ChatRoomMoneyForOwner = M;
 	ReputationProgress("Maid", 4);
+	IntroductionJobProgress("SubMaid");
 }
 
 // Flags the maid drink as not from the player owner
