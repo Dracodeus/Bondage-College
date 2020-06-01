@@ -667,7 +667,7 @@ function DialogPublishAction(C, ClickItem) {
 	}
 
 	// Publishes the item result
-	if (CurrentScreen == "ChatRoom" && !InventoryItemHasEffect(ClickItem)) {
+	if ((CurrentScreen == "ChatRoom") && !InventoryItemHasEffect(ClickItem)) {
 		InventoryExpressionTrigger(C, ClickItem);
 		ChatRoomPublishAction(C, null, ClickItem, true);
 	}
@@ -710,10 +710,11 @@ function DialogItemClick(ClickItem) {
 	// If the item is limited for that character, based on item permissions
 	if (!InventoryCheckLimitedPermission(C, ClickItem)) return;
 
-	// If we must apply a lock to an item
+	// If we must apply a lock to an item (can trigger a daily job)
 	if (DialogItemToLock != null) {
 		if ((CurrentItem != null) && CurrentItem.Asset.AllowLock) {
 			InventoryLock(C, CurrentItem, ClickItem, Player.MemberNumber);
+			IntroductionJobProgress("DomLock", ClickItem.Asset.Name, true);
 			DialogItemToLock = null;
 			DialogInventoryBuild(C);
 			ChatRoomPublishAction(C, CurrentItem, ClickItem, true);
@@ -817,6 +818,7 @@ function DialogClick() {
 
 				// If this specific activity is clicked, we run it
 				if ((MouseX >= X) && (MouseX < X + 225) && (MouseY >= Y) && (MouseY < Y + 275)) {
+					IntroductionJobProgress("SubActivity", DialogActivity[A].MaxProgress.toString(), true);
 					ActivityRun((Player.FocusGroup != null) ? Player : CurrentCharacter, DialogActivity[A]);
 					return;
 				}

@@ -173,10 +173,12 @@ function IntroductionJobAnyAvailable() {
 function IntroductionJobStart(JobName, JobCount) {
 	IntroductionJobCurrent = JobName;
 	IntroductionJobCount = parseInt(JobCount);
+	IntroductionJobParam = null;
 	if (JobName == "DomLock") {
 		var Day = Math.floor(CurrentTime / (24 * 60 * 60 * 1000));
 		IntroductionJobParam = IntroductionJobLockList[Day % IntroductionJobLockList.length];
-	} else IntroductionJobParam = null;
+	}
+	if (JobName == "SubActivity") IntroductionJobParam = "100";
 	IntroductionJobMember = [];
 }
 
@@ -194,7 +196,19 @@ function IntroductionJobLockType() {
 }
 
 // When a possible progress is registered, we check if it counts toward the daily job
-function IntroductionJobProgress(JobName, Param) {
-	if ((IntroductionJobCurrent == JobName) && (IntroductionJobParam == Param))
+function IntroductionJobProgress(JobName, Param, UniqueMember) {
+	if ((UniqueMember == true) && (CurrentScreen != "ChatRoom")) return;
+	if ((IntroductionJobCurrent == JobName) && (IntroductionJobParam == Param)) {
+		if ((UniqueMember == true) && ((CurrentCharacter == null) || (CurrentCharacter.ID == 0) || (CurrentCharacter.MemberNumber == null) || (CurrentCharacter.MemberNumber < 1) || (IntroductionJobMember.indexOf(CurrentCharacter.MemberNumber) >= 0))) return;
+		if (UniqueMember == true) IntroductionJobMember.push(CurrentCharacter.MemberNumber);
 		IntroductionJobCount--;
+	}
+}
+
+// When the daily kidnapping job starts
+function IntroductionJobBouncerStart() {
+	CommonSetScreen("Room", "DailyJob");
+	CharacterSetCurrent(DailyJobOpponent);
+	CharacterRelease(DailyJobOpponent);
+	DailyJobOpponent.CurrentDialog = DialogFind(IntroductionMaid, "JobKidnapIntro" + DailyJobOpponent.Stage.toString() + Math.floor(Math.random() * 4).toString());
 }
