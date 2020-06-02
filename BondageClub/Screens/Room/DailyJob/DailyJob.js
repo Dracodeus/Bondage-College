@@ -20,6 +20,29 @@ function DailyJobRun() {
 function DailyJobClick() {
 }
 
+// In search mission, we add an extra button
+function DailyJobSubSearchRun() {
+	if (IntroductionJobCurrent == "SubSearch") {
+		DrawButton(1885, 885, 90, 90, "", "White", "Icons/Search.png");
+		if (DailyJobSubSearchIsActive() && (IntroductionJobCount > 0) && (IntroductionJobPosition.ClickScreen == CurrentScreen)) DrawEmptyRect(IntroductionJobPosition.ClickX - 100, IntroductionJobPosition.ClickY - 100, 200, 200, "Cyan", 3);
+		if (DailyJobSubSearchIsActive() && (IntroductionJobCount <= 0)) DrawImage("Screens/Room/DailyJob/Jewelry.png", 730, 290);
+	}
+}
+
+// In search mission
+function DailyJobSubSearchClick() {
+	if (IntroductionJobCurrent == "SubSearch") {
+		if (DailyJobSubSearchIsActive() && (MouseX >= IntroductionJobPosition.X - 100) && (MouseX <= IntroductionJobPosition.X + 100) && (MouseY >= IntroductionJobPosition.Y - 100) && (MouseY <= IntroductionJobPosition.Y + 100)) IntroductionJobProgress("SubSearch", CurrentScreen);
+		if (DailyJobSubSearchIsActive() && (IntroductionJobCount > 0) && (MouseX <= 1900)) { IntroductionJobPosition.ClickX = MouseX; IntroductionJobPosition.ClickY = MouseY; IntroductionJobPosition.ClickScreen = CurrentScreen; }
+		if ((MouseX >= 1885) && (MouseX <= 1975) && (MouseY >= 885) && (MouseY <= 975)) IntroductionJobPosition.Active = !IntroductionJobPosition.Active;
+	}
+}
+
+// Returns TRUE if the job search is active
+function DailyJobSubSearchIsActive() {
+	return ((IntroductionJobCurrent == "SubSearch") && IntroductionJobPosition.Active);
+}
+
 // When the kidnap daily job fight starts
 function DailyJobKidnapStart() {
 	KidnapStart(DailyJobOpponent, "MainHallDark", 7, "DailyJobKidnapEnd()");

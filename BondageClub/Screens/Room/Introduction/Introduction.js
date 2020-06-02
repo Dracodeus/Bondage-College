@@ -13,7 +13,9 @@ var IntroductionJobList = ["DomPuppy", "DomLock", "DomKidnap", "DomTrainer", "Su
 var IntroductionJobCurrent = "";
 var IntroductionJobCount = 1;
 var IntroductionJobParam = null;
+var IntroductionJobPosition = { Active: false, X: 1000, Y: 1000 };
 var IntroductionJobLockList = ["MetalPadlock", "IntricatePadlock", "TimerPadlock", "CombinationPadlock", "ExclusivePadlock"];
+var IntroductionJobSearchList = ["MaidQuarters", "LARP", "KidnapLeague", "SlaveMarket"];
 var IntroductionJobMember = [];
 
 // Returns TRUE if the dialog situation is allowed
@@ -179,6 +181,10 @@ function IntroductionJobStart(JobName, JobCount) {
 		IntroductionJobParam = IntroductionJobLockList[Day % IntroductionJobLockList.length];
 	}
 	if (JobName == "SubActivity") IntroductionJobParam = "100";
+	if (JobName == "SubSearch") {
+		IntroductionJobParam = IntroductionJobSearchList[Math.floor(Math.random() * IntroductionJobSearchList.length)];
+		IntroductionJobPosition = { Active: false, X: Math.floor(Math.random() * 1700) + 100, Y: Math.floor(Math.random() * 800) + 100 };
+	}
 	IntroductionJobMember = [];
 }
 
