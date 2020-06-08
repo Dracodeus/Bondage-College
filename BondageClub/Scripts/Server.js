@@ -85,9 +85,7 @@ function ServerSend(Message, Data) {
 
 // Syncs some player information to the server
 function ServerPlayerSync() {
-	var D = { Money: Player.Money, Owner: Player.Owner };
-	D.Lover = Player.Lover;
-	ServerSend("AccountUpdate", D);
+	ServerSend("AccountUpdate", { Money: Player.Money, Owner: Player.Owner, Lover: Player.Lover });
 }
 
 // Syncs the full player inventory to the server, it's compressed as a stringify array using LZString
