@@ -6,6 +6,7 @@ var DailyJobPuppy1 = null;
 var DailyJobPuppy2 = null;
 var DailyJobPuppy3 = null;
 var DailyJobPuppy4 = null;
+var DailyJobDojoTeacher = null;
 
 function DailyJobPlayerFullRestrain() { CharacterFullRandomRestrain(Player, "ALL") };
 
@@ -23,19 +24,26 @@ function DailyJobPuppyLoad(GirlNum) {
 	return C;
 }
 
-// Loads the daily job room screen
+// Loads the daily job room screen characters
 function DailyJobLoad() {
-	if (DailyJobOpponent == null) {
+	DailyJobBackground = "MainHall";
+	if ((DailyJobOpponent == null) && (IntroductionJobCurrent == "DomKidnap")) {
 		DailyJobOpponent = CharacterLoadNPC("NPC_DailyJob_Opponent");
 		DailyJobOpponent.AllowItem = false;
 	}
-	if (DailyJobPuppyMistress == null) {
+	if ((DailyJobPuppyMistress == null) && (IntroductionJobCurrent == "DomPuppy")) {
 		DailyJobPuppyMistress = CharacterLoadNPC("NPC_DailyJob_PuppyMistress");
 		DailyJobPuppyMistress.AllowItem = false;
 		DailyJobPuppy1 = DailyJobPuppyLoad("1");
 		DailyJobPuppy2 = DailyJobPuppyLoad("2");
 		DailyJobPuppy3 = DailyJobPuppyLoad("3");
 		DailyJobPuppy4 = DailyJobPuppyLoad("4");
+	}
+	if ((DailyJobPuppyMistress == null) && (IntroductionJobCurrent == "SubDojo")) {
+		DailyJobDojoTeacher = CharacterLoadNPC("NPC_DailyJob_DojoTeacher");
+		CharacterNaked(DailyJobDojoTeacher);
+		InventoryWear(DailyJobDojoTeacher, "ChineseDress" + (Math.floor(Math.random() * 2) + 1).toString(), "Cloth");
+		InventoryWear(DailyJobDojoTeacher, "Ribbons4", "HairAccessory1");
 	}
 }
 
@@ -127,4 +135,14 @@ function DailyJobEnd() {
 // When the player is turned into a puppy by the Mistress
 function DailyJobPuppyPlayer() {
 	DailyJobPuppyLoad("0");
+}
+
+// When the player is turned into a puppy by the Mistress
+function DailyJobDojoRestrainPlayer() {
+	InventoryWear(Player, "HempRope", "ItemArms", "Default", 7);
+}
+
+// When the dojo struggle game starts
+function DailyJobDojoGameStart() {
+	MiniGameStart("DojoStruggle", 0, "DailyJobDojoGameEnd");
 }

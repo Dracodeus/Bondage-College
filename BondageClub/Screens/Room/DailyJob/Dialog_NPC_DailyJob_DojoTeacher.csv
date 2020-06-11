@@ -1,0 +1,32 @@
+PlayerGagged,,,Being quiet is a good quality for students.,
+StruggleVictory,,,Victory!,
+StruggleDefeat,,,Defeat!,
+0,10,I'm here for the money.,I guess it will do.  Our group today wish to learn the fine art of evasion.  Come here girls!  (Many students come in.),
+0,10,I'm ready for anything!,Great spirit!  Our group today wish to learn the fine art of evasion.  Come here girls!  (Many students come in.),"DialogChangeReputation(""Dominant"", 2)"
+0,10,What's the event?,This is perfect.  Our group today wish to learn the fine art of evasion.  Come here girls!  (Many students come in.),
+0,10,Should I be scared?,Don't worry girl.  Our group today wish to learn the fine art of evasion.  Come here girls!  (Many students come in.),"DialogChangeReputation(""Dominant"", -2)"
+10,20,It's a public event?,"Yes, I hope you're not prude.  You will be naked and restrained in front of our students.  Onegaishimasu strip.",
+10,20,What should I do?,"It's really easy, you will be naked and restrained in front of our students.  Onegaishimasu strip.",
+10,20,How can I help?,"I'll explain everything, you will be naked and restrained in front of our students.  Onegaishimasu strip.",
+20,,Are you serious?,"Absolutely.  Onegaishimasu, strip for our class.",DialogRemove()
+20,30,This is not cool.  (Strip reluctantly.),(You strip as she nods politely.)  Arigato.  Now turn around and give me your hands.,"DialogNaked(""Player"")"
+20,30,(Stay silent and strip.),(You strip as she nods politely.)  Arigato.  Now turn around and give me your hands.,"DialogNaked(""Player"")"
+30,,It's really necessary?,"(She nods and stays silent, showing your anatomy to her students.)",DialogRemove()
+30,40,Make it tight!,"(She ties you up very slowly in a strange fashion, showing every knots she does to her students.)",DojoRestrainPlayer()
+30,40,Don't go crazy.,"(She ties you up very slowly in a strange fashion, showing every knots she does to her students.)",DojoRestrainPlayer()
+30,40,(Stay silent.),"(She ties you up very slowly in a strange fashion, showing every knots she does to her students.)",DojoRestrainPlayer()
+40,50,Miss!  This is very tight.,It's an intriguing Shibari isn't it?  You'll have three chances to escape from it.  Please show every movements to our class.,"DialogChangeReputation(""Dominant"", -2)"
+40,50,I can escape from any rope.,This will be your evasion challenge!  You'll have three tries.  Please show every movements to our class.,"DialogChangeReputation(""Dominant"", 2)"
+40,50,(Struggle a little.),You'll have three chances to escape from this Shibari.  Please show every movements to our class.,
+50,,(Start to struggle.),,DojoGameStart()
+100,110,TO DO,TO DO,
+100,110,TO DO,TO DO,
+100,110,TO DO,TO DO,
+100,110,TO DO,TO DO,
+110,,Thank you!  (Leave her.),,End()
+110,,(Take the money and leave her.),,End()
+200,210,TO DO,TO DO,
+200,210,TO DO,TO DO,
+200,210,TO DO,TO DO,
+200,210,TO DO,TO DO,
+210,220,(Leave her.),,End()

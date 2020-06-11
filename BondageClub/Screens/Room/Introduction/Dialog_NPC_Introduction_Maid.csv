@@ -62,6 +62,10 @@ JobPuppyIntro300,,,You again?  You think you can do it now?,,
 JobPuppyIntro301,,,(The Mistress gives you a stern look.)  I must be crazy to give you my pets again.  Can you do it now?,,
 JobPuppyIntro302,,,(The Mistress seems to be in a hurry.)  You're lucky I haven't found anyone else.  Can you do it now?,,
 JobPuppyIntro303,,,I hope you've learned your lesson girl.  Can you do it or not?,,
+JobDojoIntro00,,,(You head to the Dojo and a Shujin comes to greet you.)   Konichiwa!  I trust you are here for our special event.,,
+JobDojoIntro01,,,"(You get to the Dojo and a Shibari teacher greets you.)  It's an honor to meet you, you're here for the event?",,
+JobDojoIntro02,,,(A Shibari Shujin comes to greet you as soon as you enter.)  Konichiwa!  You're right on time for the event.,,
+JobDojoIntro03,,,(You're warmly greeted by a Shibari teacher.)  Welcome!  The event could not start without you.,,
 0,,,Greetings Mistress DialogPlayerName.  Welcome to the introduction class.  (She does curtsies for you.),,"DialogLogQuery(""ClubMistress"", ""Management"")"
 0,,,Greetings head maid DialogPlayerName.  Welcome to the introduction class.  (She does curtsies for you.),,IsHeadMaid
 0,,,(She stares at you.)  Hello naked girl.  Welcome to the introduction class.,,Player.IsNaked()
@@ -257,9 +261,9 @@ JobPuppyIntro303,,,I hope you've learned your lesson girl.  Can you do it or not
 511,400,I give up.  I cannot do it.,"(She sighs.)  Too bad, is there anything else you'd like to know about our special jobs?  (She shows you a notepad.)",JobGiveUp(),!JobIsComplete()
 511,500,The job is done!,Congratulations!  Here's your money.  (She gives you 100$)  Well done.,JobDone(),JobIsComplete()
 511,,I'll be back later.  (Leave her.),,DialogLeave(),
-520,521,I'll do it!,Wonderful!  Let me go get the Shibari Dojo Shujin.  She will give you the instructions.,"JobStart(""SubDojo"", 1)",
+520,521,I'll do it!,Wonderful!  You will meet the Shujin at the Shibari Dojo.  She will give you the instructions.,"JobStart(""SubDojo"", 1)",
 520,400,Let me think about it.,"Of course, is there anything else you'd like to know about our special jobs?  (She shows you a notepad.)",,
-521,,(Wait for the Shujin.),TO DO,,
+521,,(Go see the Shujin.),,JobDojoStart(),
 530,531,I'll do it!,The chat rooms will get crowded for sure.  You'll need to masturbate at least five different members and come back to me.,"JobStart(""SubActivity"", 5)",
 530,400,Let me think about it.,"Of course, is there anything else you'd like to know about our special jobs?  (She shows you a notepad.)",,
 531,,,You need to masturbate at least five different chat room members and come back to me.,,
