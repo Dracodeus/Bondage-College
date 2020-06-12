@@ -146,3 +146,7 @@ function DailyJobDojoRestrainPlayer() {
 function DailyJobDojoGameStart() {
 	MiniGameStart("DojoStruggle", 0, "DailyJobDojoGameEnd");
 }
+
+// When the dojo mini game ends
+function DailyJobDojoGameEnd() {
+}
