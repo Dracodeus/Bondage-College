@@ -1,11 +1,12 @@
 "use strict";
 var DojoStruggleBackground = "Shibari";
-var DojoStrugglePosition = 500;
+var DojoStrugglePosition = 450;
 var DojoStruggleImpulse = 0;
 var DojoStruggleRope = [];
 
 // Loads the dojo struggle mini game and prepare the rope walls
 function DojoStruggleLoad() {
+	DojoStrugglePosition = 450;
 	if (MiniGameProgress < 0) MiniGameProgress = 0;
 	DojoStruggleRope = [];
 	for (var P = 0; P < 25; P++)
@@ -16,7 +17,7 @@ function DojoStruggleLoad() {
 function DojoStruggleRun() {
 
 	// Draw the character
-	DrawCharacter(Player, 850, -350, 3);
+	DrawCharacter(Player, 850, -400, 3, false);
 	MiniGameTimer = MiniGameTimer + Math.round(TimerRunInterval);
 
 	// Draw the check boxes to show the number of tries
@@ -29,6 +30,7 @@ function DojoStruggleRun() {
 
 		// The game ends after 71 seconds with a victory
 		if (MiniGameTimer >= 71000) {
+			CharacterRelease(Player);
 			MiniGameVictory = true;
 			MiniGameEnded = true;
 		} else {
@@ -47,15 +49,15 @@ function DojoStruggleRun() {
 				if (X < 150) C--;
 				if ((X > 0) && (X < 1200) && (DojoStruggleRope[P] > 150)) DrawImageZoomCanvas("Screens/MiniGame/DojoStruggle/RopeVertical.png", MainCanvas, 0, 0, 50, DojoStruggleRope[P] - 150, X, 0, 50, DojoStruggleRope[P] - 150);
 				if ((X > 0) && (X < 1200) && (DojoStruggleRope[P] < 850)) DrawImageZoomCanvas("Screens/MiniGame/DojoStruggle/RopeVertical.png", MainCanvas, 0, 0, 50, 900, X, DojoStruggleRope[P] + 150, 50, 900);
-				if ((X > 150) && (X < 300) && ((DojoStrugglePosition < DojoStruggleRope[P] - 125) || (DojoStrugglePosition > DojoStruggleRope[P] + 125))) {
+				if ((X >= 200) && (X <= 250) && ((DojoStrugglePosition < DojoStruggleRope[P] - 125) || (DojoStrugglePosition > DojoStruggleRope[P] + 125))) {
 
 					// When the player rope hits another rope, it resets the game 3 times before failing
 					MiniGameTimer = 0;
 					MiniGameProgress++;
+					DojoStruggleLoad();
 					if (MiniGameProgress >= 3) {
 						MiniGameVictory = false;
 						MiniGameEnded = true;
-						DojoStruggleLoad();
 					}
 
 				}
