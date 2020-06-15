@@ -486,7 +486,7 @@ function InventoryLock(C, Item, Lock, MemberNumber) {
 		Item.Property.LockedBy = Lock.Asset.Name;
 		if (MemberNumber != null) Item.Property.LockMemberNumber = MemberNumber;
 		if ((C.ID == 0) && Lock.Asset.OwnerOnly && (C.Ownership != null) && (C.Ownership.MemberNumber != null)) Item.Property.LockMemberNumber = Player.MemberNumber;
-		if ((C.ID == 0) && Lock.Asset.LoverOnly && (C.Lovership != null) && (C.Lovership.MemberNumber != null)) Item.Property.LockMemberNumber = Player.MemberNumber;
+		if ((C.ID == 0) && Lock.Asset.LoverOnly && (C.Lovership.length > 0) ) Item.Property.LockMemberNumber = Player.MemberNumber;
 		if (Lock.Asset.RemoveTimer > 0) TimerInventoryRemoveSet(C, Item.Asset.Group.Name, Lock.Asset.RemoveTimer);
 		CharacterRefresh(C);
 	}
@@ -608,7 +608,7 @@ function InventoryIsPermissionLimited(C, AssetName, AssetGroup) {
  */
 function InventoryCheckLimitedPermission(C, Item) {
 	if (!InventoryIsPermissionLimited(C, Item.Asset.Name, Item.Asset.Group.Name)) return true;
-	if ((C.ID == 0) || ((C.Lovership != null) && (C.Lovership.MemberNumber == Player.MemberNumber)) || ((C.Ownership != null) && (C.Ownership.MemberNumber == Player.MemberNumber))) return true;
+	if ((C.ID == 0) || C.IsLoverOfPlayer() || C.IsOwnedByPlayer()) return true;
 	if ((C.ItemPermission < 3) && !(C.WhiteList.indexOf(Player.MemberNumber) < 0)) return true;
 	return false;
 }
