@@ -11,6 +11,7 @@ function Draw3DLoad() {
 	camera = new THREE.PerspectiveCamera(45, 2, 0.1, 1000);
 	renderer = new THREE.WebGLRenderer({ alpha: true });
 	renderer.setSize(2000, 1000);
+	renderer.domElement.style.visibility = Draw3DEnabled ? "visible" : "hidden";
 	//renderer.setClearColor(0x000000, 0);
 	document.body.appendChild(renderer.domElement);
 
@@ -50,6 +51,7 @@ function Draw3DKeyDown(event) {
 
 function Draw3DEnable(Enable) {
 	Draw3DEnabled = Enable;
+	renderer.domElement.style.visibility = Enable ? "visible" : "hidden";
 	renderer.clear();
 }
 
