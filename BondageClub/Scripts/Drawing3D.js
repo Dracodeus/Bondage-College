@@ -12,20 +12,23 @@ function Draw3DLoad() {
 	// 									,"neck", "pantie", "shoes", "skin", "skirt", "socks", "Tail"
 	// 									, "top"	];
 	init();
-	MainCanvas.canvas.appendChild(renderer.domElement);
+	document.body.appendChild(renderer.domElement);
+	renderer.domElement.style.display = "none";
 }
 
-function Draw3DKeyDown(event) {
+function Draw3DKeyDown() {
 	if ((KeyPress == 51) && (CurrentScreen == "MainHall") && (CurrentCharacter == null)) Draw3DEnable(!Draw3DEnabled);
-	if ((KeyPress == 37) && Draw3DEnabled) model.rotation.y -= 0.1;
-	if ((KeyPress == 39) && Draw3DEnabled) model.rotation.y += 0.1;
-	if ((KeyPress == 38) && Draw3DEnabled) model.rotation.x -= 0.1;
-	if ((KeyPress == 40) && Draw3DEnabled) model.rotation.x += 0.1;
+	if (Draw3DEnabled) {
+		if ((KeyPress == 81) || (KeyPress == 113)) model.rotation.y -= 0.1;
+		if ((KeyPress == 69) || (KeyPress == 101)) model.rotation.y += 0.1;
+		if ((KeyPress == 65) || (KeyPress == 97)) model.position.x -= 1;
+		if ((KeyPress == 68) || (KeyPress == 100)) model.position.x += 1;
+		if ((KeyPress == 87) || (KeyPress == 119)) model.position.z -= 1;
+		if ((KeyPress == 83) || (KeyPress == 115)) model.position.z += 1;
+	}
 }
 
 function init(){
-	scene = new THREE.Scene();
-	camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight,1, 1000);
 // 	Google Chrome newest version.
 // Version 83.0.4103.116 Offical Build) (64-Bit)
 //
@@ -44,29 +47,30 @@ function init(){
 // i bet my model isn't working but i'm curious if your model works.
 // when your model works( something must be with my model.)
 
+	scene = new THREE.Scene();
+	camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 1000);
 	renderer = new THREE.WebGLRenderer({  alpha : true });
 	renderer.setPixelRatio(window.devicePixelRatio); //add
 	renderer.setSize(window.innerWidth, window.innerHeight);
 
-	let light = new THREE.DirectionalLight( 0xffffff, 0.5); //add
+	let light = new THREE.DirectionalLight( 0xbbbbbb, 0.5); //add
 	light.position.set( 0, 2000, 100 );//add
 	light.castShadow = true;//add
 	scene.add( light );//add
 
-	let light1 = new THREE.PointLight(0xffffff);
+	let light1 = new THREE.PointLight(0xbbbbbb);
 	light1.castShadow = true;
 	scene.add(light1);
 
-	let ambientLight = new THREE.AmbientLight(0xffffff,1);
-  ambientLight.castShadow = true;
-  ambientLight.position.set(200,2000,200);
-  scene.add(ambientLight);
+	let ambientLight = new THREE.AmbientLight(0xffffff, 1);
+	ambientLight.castShadow = true;
+	ambientLight.position.set(200, 2000, 200);
+	scene.add(ambientLight);
 
     let loader = new THREE.FBXLoader();
     loader.load('Assets/3D/fbx/pmd/0intro/intro1.fbx',
 				function( object ) {
 					model = object;
-
 					scene.add(model);
     			},
 				undefined,
@@ -78,22 +82,23 @@ function init(){
 
 function Draw3DEnable(Enable) {
 	Draw3DEnabled = Enable;
-	renderer.clear();
+	renderer.domElement.style.display = (Enable) ? "" : "none";
 }
 
 function Draw3DProcess() {
 	if (Draw3DEnabled && (model != null)) {
-		if (CurrentScreen != "MainHall") Draw3DEnable(false);
-		if (CurrentCharacter != null) Draw3DEnable(false);
+		if (document.activeElement.id != "MainCanvas") MainCanvas.canvas.focus();
+		if (CurrentScreen != "MainHall") return Draw3DEnable(false);
+		if (CurrentCharacter != null) return Draw3DEnable(false);
 		if (renderer.domElement.style.width != "100%") {
 			renderer.domElement.style.width = "100%";
 			renderer.domElement.style.height = "";
 
 		}
-		if (Draw3DEnabled) renderer.render(scene, camera);
+		renderer.render(scene, camera);
 	}
 }
 
 function Draw3DCharacter(C, X, Y, Zoom, IsHeightResizeAllowed) {
-	camera.position.set(0, 90, 250);
+	camera.position.set(0, 80, 300);
 }
