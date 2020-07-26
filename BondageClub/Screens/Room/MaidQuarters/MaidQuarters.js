@@ -211,7 +211,6 @@ function MaidQuartersMiniGameEnd() {
 	MaidQuartersMaid.CurrentDialog = DialogFind(MaidQuartersMaid, MiniGameType + (MiniGameVictory ? "Victory" : "Defeat"));
 }
 
-
 /**
  * When an ordinary  mini game / maid chore is successful, the player gets paid and the maid reputation increases
  * @returns {void} - Nothing
