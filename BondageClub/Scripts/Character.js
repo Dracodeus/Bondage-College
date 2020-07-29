@@ -84,7 +84,7 @@ function CharacterReset(CharacterID, CharacterAssetFamily) {
 		IsLoverPrivate: function () { return ((NPCEventGet(this, "Girlfriend") > 0) || (Player.GetLoversNumbers().indexOf("NPC-" + this.Name) >= 0)); },
 		IsKneeling: function () { return ((this.Pose != null) && (this.Pose.indexOf("Kneel") >= 0)) },
 		IsNaked: function () { return CharacterIsNaked(this); },
-		IsDeaf: function () { return ((this.Effect.indexOf("DeafLight") >= 0) || (this.Effect.indexOf("DeafNormal") >= 0) || (this.Effect.indexOf("DeafHeavy") >= 0)) },
+		IsDeaf: function () { return this.GetDeafLevel() > 0 },
 		HasNoItem: function () { return CharacterHasNoItem(this); }
 	};
 

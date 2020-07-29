@@ -496,7 +496,7 @@ function ChatRoomSendChat() {
 
 		}
 		else if (m.indexOf("/help") == 0) ServerSend("ChatRoomChat", { Content: "ChatRoomHelp", Type: "Action", Target: Player.MemberNumber});
-		else if (m.indexOf("/safeword") == 0) ChatRoomSafewordRevert();
+		else if (m.indexOf("/safeword") == 0) ChatRoomSafewordChatCommand();
 		else if (m.indexOf("/friendlistadd ") == 0) ChatRoomListManipulation(Player.FriendList, null, msg);
 		else if (m.indexOf("/friendlistremove ") == 0) ChatRoomListManipulation(null, Player.FriendList, msg);
 		else if (m.indexOf("/ghostadd ") == 0) { ChatRoomListManipulation(Player.GhostList, null, msg); ChatRoomListManipulation(Player.BlackList, Player.WhiteList, msg); }
@@ -931,8 +931,9 @@ function ChatRoomSyncArousal(data) {
 	for (var C = 0; C < ChatRoomCharacter.length; C++)
 		if ((ChatRoomCharacter[C].MemberNumber == data.MemberNumber) && (ChatRoomCharacter[C].ArousalSettings != null)) {
 
-			// Sets the active pose
+			// Sets the orgasm count & progress
 			ChatRoomCharacter[C].ArousalSettings.OrgasmTimer = data.OrgasmTimer;
+			ChatRoomCharacter[C].ArousalSettings.OrgasmCount = data.OrgasmCount;
 			ChatRoomCharacter[C].ArousalSettings.Progress = data.Progress;
 			ChatRoomCharacter[C].ArousalSettings.ProgressTimer = data.ProgressTimer;
 			if ((ChatRoomCharacter[C].ArousalSettings.AffectExpression == null) || ChatRoomCharacter[C].ArousalSettings.AffectExpression) ActivityExpression(ChatRoomCharacter[C], ChatRoomCharacter[C].ArousalSettings.Progress);
@@ -941,6 +942,7 @@ function ChatRoomSyncArousal(data) {
 			for (var C = 0; C < ChatRoomData.Character.length; C++)
 				if (ChatRoomData.Character[C].MemberNumber == data.MemberNumber) {
 					ChatRoomData.Character[C].ArousalSettings.OrgasmTimer = data.OrgasmTimer;
+					ChatRoomData.Character[C].ArousalSettings.OrgasmCount = data.OrgasmCount;
 					ChatRoomData.Character[C].ArousalSettings.Progress = data.Progress;
 					ChatRoomData.Character[C].ArousalSettings.ProgressTimer = data.ProgressTimer;
 					ChatRoomData.Character[C].Appearance = ChatRoomCharacter[C].Appearance;
@@ -950,13 +952,24 @@ function ChatRoomSyncArousal(data) {
 		}
 }
 
-// Return TRUE if we can allow to change the item properties, when this item is owner/lover locked
+/**
+ * Determines whether or not an owner/lover exclusive item can be modified by a non-owner/lover
+ * @param {object} Data - The item data received from the server which defines the modification being made to the item
+ * @param Item - The currently equipped item
+ * @return {boolean} - Returns true if the defined modification is permitted, false otherwise.
+ */
 function ChatRoomAllowChangeLockedItem(Data, Item) {
+	// Slave collars cannot be modified
 	if (Item.Asset.Name == "SlaveCollar") return false;
+	// Items with AllowRemoveExclusive can always be removed
+	if (Data.Item.Name == null && Item.Asset.AllowRemoveExclusive) return true;
+	// Otherwise non-owners/lovers cannot remove/change the item
 	if ((Data.Item.Name == null) || (Data.Item.Name == "") || (Data.Item.Name != Item.Asset.Name)) return false;
+	// Lock member numbers cannot be modified
 	if ((Data.Item.Property == null) || (Data.Item.Property.LockedBy == null) || (Data.Item.Property.LockedBy != Item.Property.LockedBy) || (Data.Item.Property.LockMemberNumber == null) || (Data.Item.Property.LockMemberNumber != Item.Property.LockMemberNumber)) return false;
 	return true;
 }
+
 
 // Updates a single character item in the chatroom
 function ChatRoomSyncItem(data) {
@@ -1007,8 +1020,8 @@ function ChatRoomRefreshChatSettings(C) {
 	if (C.ChatSettings) {
 		for (var property in C.ChatSettings)
 			ElementSetDataAttribute("TextAreaChatLog", property, C.ChatSettings[property]);
-		if (C.GameplaySettings && (C.GameplaySettings.SensDepChatLog == "SensDepNames" || C.GameplaySettings.SensDepChatLog == "SensDepTotal") && (C.Effect.indexOf("DeafHeavy") >= 0) && (C.Effect.indexOf("BlindHeavy") >= 0)) ElementSetDataAttribute("TextAreaChatLog", "EnterLeave", "Hidden");
-		if (C.GameplaySettings && (C.GameplaySettings.SensDepChatLog == "SensDepTotal") && (C.Effect.indexOf("DeafHeavy") >= 0) && (C.Effect.indexOf("BlindHeavy") >= 0)) {
+		if (C.GameplaySettings && (C.GameplaySettings.SensDepChatLog == "SensDepNames" || C.GameplaySettings.SensDepChatLog == "SensDepTotal") && (C.GetDeafLevel() >= 3) && (C.Effect.indexOf("BlindHeavy") >= 0)) ElementSetDataAttribute("TextAreaChatLog", "EnterLeave", "Hidden");
+		if (C.GameplaySettings && (C.GameplaySettings.SensDepChatLog == "SensDepTotal") && (C.GetDeafLevel() >= 3) && (C.Effect.indexOf("BlindHeavy") >= 0)) {
 			ElementSetDataAttribute("TextAreaChatLog", "DisplayTimestamps", "false");
 			ElementSetDataAttribute("TextAreaChatLog", "ColorNames", "false");
 			ElementSetDataAttribute("TextAreaChatLog", "ColorActions", "false");
@@ -1277,6 +1290,17 @@ function ChatRoomPayQuest(data) {
 // When a game message comes in, we forward it to the current online game being played
 function ChatRoomGameResponse(data) {
 	if (OnlineGameName == "LARP") GameLARPProcess(data);
+}
+
+// When the player uses the /safeword command, we revert the character if safewords are enabled, and display a warning in chat if not
+function ChatRoomSafewordChatCommand() {
+	if(DialogChatRoomCanSafeword())
+		ChatRoomSafewordRevert();
+	else if(CurrentScreen == "ChatRoom") {
+		var msg = {Sender: Player.MemberNumber, Content: "SafewordDisabled", Type: "Action"}
+		ChatRoomMessage(msg);
+	}
+
 }
 
 // When the player activates her safeword to revert, we swap her appearance to the state when she entered the chat room lobby, minimum permission becomes whitelist and up

@@ -148,7 +148,7 @@ function ActivityEffect(S, C, A, Z) {
  */
 function ActivityChatRoomArousalSync(C) {
 	if ((C.ID == 0) && (CurrentScreen == "ChatRoom"))
-		ServerSend("ChatRoomCharacterArousalUpdate", { OrgasmTimer: C.ArousalSettings.OrgasmTimer, Progress: C.ArousalSettings.Progress, ProgressTimer: C.ArousalSettings.ProgressTimer });
+		ServerSend("ChatRoomCharacterArousalUpdate", { OrgasmTimer: C.ArousalSettings.OrgasmTimer, Progress: C.ArousalSettings.Progress, ProgressTimer: C.ArousalSettings.ProgressTimer, OrgasmCount: C.ArousalSettings.OrgasmCount });
 }
 
 /**
@@ -237,6 +237,7 @@ function ActivityOrgasmStart(C) {
 		ActivityOrgasmWillpowerProgress(C);
 		C.ArousalSettings.OrgasmTimer = CurrentTime + (Math.random() * 10000) + 5000;
 		C.ArousalSettings.OrgasmStage = 2;
+		C.ArousalSettings.OrgasmCount = (C.ArousalSettings.OrgasmCount == null) ? 1 : C.ArousalSettings.OrgasmCount + 1;
 		ActivityOrgasmGameTimer = C.ArousalSettings.OrgasmTimer - CurrentTime;
 		if ((C.ID == 0) && (CurrentScreen == "ChatRoom")) {
 			var Dictionary = [];
