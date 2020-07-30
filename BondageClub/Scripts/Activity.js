@@ -39,7 +39,7 @@ function ActivityDictionaryLoad() {
 		// If a translation file is available, we open the txt file and keep it in cache
 		var TranslationPath = FullPath.replace(".csv", "_" + TranslationLanguage + ".txt");
 		if (TranslationAvailable(TranslationPath))
-			CommonGet(TranslationPath, function() {
+			CommonGet(TranslationPath, function () {
 				if (this.status == 200) TranslationCache[TranslationPath] = TranslationParseTXT(this.responseText);
 			});
 
@@ -124,19 +124,23 @@ function ActivityDialogBuild(C) {
  * @param {Character} C - The character on which the activity is performed
  * @param {string} A - The activity performed
  * @param {string} Z - The group/zone name where the activity was performed
+ * @param {number} [count=1] - If the activity is done repeatedly, this defines the number of times, the activity is done. 
+ * If you don't want an activity to modify arousal, set this parameter to '0'
  * @return {void} - Nothing
  */
-function ActivityEffect(S, C, A, Z) {
+function ActivityEffect(S, C, A, Z, Count) {
 
 	// Converts from activity name to the activity object
 	if (typeof A === "string") A = AssetGetActivity(C.AssetFamily, A);
 	if ((A == null) || (typeof A === "string")) return;
+	if ((Count == null) || (Count == undefined) || (Count == 0)) Count = 1;
 
 	// Calculates the next progress factor
 	var Factor = (PreferenceGetActivityFactor(C, A.Name, (C.ID == 0)) * 5) - 10; // Check how much the character likes the activity, from -10 to +10
 	Factor = Factor + (PreferenceGetZoneFactor(C, Z) * 5) - 10; // The zone used also adds from -10 to +10
 	Factor = Factor + Math.floor((Math.random() * 8)); // Random 0 to 7 bonus
 	if ((C.ID != S.ID) && (((C.ID != 0) && C.IsLoverOfPlayer()) || ((C.ID == 0) && S.IsLoverOfPlayer()))) Factor = Factor + Math.floor((Math.random() * 8)); // Another random 0 to 7 bonus if the target is the player's lover
+	Factor = Factor + Math.round(Factor * (Count - 1) / 3); // if the action is done repeatedly, we apply a multiplication factor based on the count
 	ActivitySetArousalTimer(C, A, Z, Factor);
 
 }
@@ -241,8 +245,8 @@ function ActivityOrgasmStart(C) {
 		ActivityOrgasmGameTimer = C.ArousalSettings.OrgasmTimer - CurrentTime;
 		if ((C.ID == 0) && (CurrentScreen == "ChatRoom")) {
 			var Dictionary = [];
-			Dictionary.push({Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber});
-			ServerSend("ChatRoomChat", {Content: "Orgasm" + (Math.floor(Math.random() * 10)).toString(), Type: "Activity", Dictionary: Dictionary});
+			Dictionary.push({ Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber });
+			ServerSend("ChatRoomChat", { Content: "Orgasm" + (Math.floor(Math.random() * 10)).toString(), Type: "Activity", Dictionary: Dictionary });
 			ActivityChatRoomArousalSync(C);
 		}
 	}
@@ -284,8 +288,8 @@ function ActivityOrgasmGameGenerate(Progress) {
 	if (Progress >= ActivityOrgasmGameDifficulty) {
 		if (CurrentScreen == "ChatRoom") {
 			var Dictionary = [];
-			Dictionary.push({Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber});
-			ServerSend("ChatRoomChat", {Content: "OrgasmResist" + (Math.floor(Math.random() * 10)).toString(), Type: "Activity", Dictionary: Dictionary});
+			Dictionary.push({ Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber });
+			ServerSend("ChatRoomChat", { Content: "OrgasmResist" + (Math.floor(Math.random() * 10)).toString(), Type: "Activity", Dictionary: Dictionary });
 		}
 		ActivityOrgasmGameResistCount++;
 		ActivityOrgasmStop(Player, 70);
@@ -331,7 +335,7 @@ function ActivityExpression(C, Progress) {
 
 	// Floors the progress to the nearest 10 to pick the expression
 	Progress = Math.floor(Progress / 10) * 10;
-	
+
 	// The blushes goes to red progressively
 	var Blush = null;
 	if ((Progress == 10) || (Progress == 30) || (Progress == 50) || (Progress == 70)) Blush = "Low";
@@ -430,11 +434,11 @@ function ActivityRun(C, Activity) {
 
 		// Publishes the activity to the chatroom
 		var Dictionary = [];
-		Dictionary.push({Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber});
-		Dictionary.push({Tag: "TargetCharacter", Text: C.Name, MemberNumber: C.MemberNumber});
-		Dictionary.push({Tag: "ActivityGroup", Text: C.FocusGroup.Name});
-		Dictionary.push({Tag: "ActivityName", Text: Activity.Name});
-		ServerSend("ChatRoomChat", {Content: ((C.ID == 0) ? "ChatSelf-" : "ChatOther-") + C.FocusGroup.Name + "-" + Activity.Name, Type: "Activity", Dictionary: Dictionary});
+		Dictionary.push({ Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber });
+		Dictionary.push({ Tag: "TargetCharacter", Text: C.Name, MemberNumber: C.MemberNumber });
+		Dictionary.push({ Tag: "ActivityGroup", Text: C.FocusGroup.Name });
+		Dictionary.push({ Tag: "ActivityName", Text: Activity.Name });
+		ServerSend("ChatRoomChat", { Content: ((C.ID == 0) ? "ChatSelf-" : "ChatOther-") + C.FocusGroup.Name + "-" + Activity.Name, Type: "Activity", Dictionary: Dictionary });
 
 		// Exits from dialog to see the result
 		DialogLeave();
