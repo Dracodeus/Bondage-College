@@ -88,6 +88,7 @@ function ActivityDialogBuild(C) {
 						else if ((Activity.Prerequisite[P] == "UseHands") && !Player.CanInteract()) Allow = false;
 						else if ((Activity.Prerequisite[P] == "UseFeet") && !Player.CanWalk()) Allow = false;
 						else if ((Activity.Prerequisite[P] == "TargetCanUseTongue") && C.IsMouthBlocked()) Allow = false;
+						else if ((Activity.Prerequisite[P] == "WearingPenetrationItem") && (!CharacterHasItemForActivity(Player, "Penetrate") || Player.IsEnclose())) Allow = false;
 						else if ((Activity.Prerequisite[P] == "ZoneNaked") && (C.FocusGroup.Name == "ItemButt") && ((InventoryPrerequisiteMessage(C, "AccessButt") != "") || C.IsPlugged())) Allow = false;
 						else if ((Activity.Prerequisite[P] == "ZoneNaked") && (C.FocusGroup.Name == "ItemVulva") && ((InventoryPrerequisiteMessage(C, "AccessVulva") != "") || C.IsVulvaChaste())) Allow = false;
 						else if ((Activity.Prerequisite[P] == "ZoneNaked") && ((C.FocusGroup.Name == "ItemBreast") || (C.FocusGroup.Name == "ItemNipples")) && ((InventoryPrerequisiteMessage(C, "AccessBreast") != "") || C.IsBreastChaste())) Allow = false;
@@ -140,6 +141,7 @@ function ActivityEffect(S, C, A, Z, Count) {
 	Factor = Factor + (PreferenceGetZoneFactor(C, Z) * 5) - 10; // The zone used also adds from -10 to +10
 	Factor = Factor + Math.floor((Math.random() * 8)); // Random 0 to 7 bonus
 	if ((C.ID != S.ID) && (((C.ID != 0) && C.IsLoverOfPlayer()) || ((C.ID == 0) && S.IsLoverOfPlayer()))) Factor = Factor + Math.floor((Math.random() * 8)); // Another random 0 to 7 bonus if the target is the player's lover
+	Factor = Factor + ActivityFetishFactor(C) * 2; // Adds a fetish factor based on the character preferences
 	Factor = Factor + Math.round(Factor * (Count - 1) / 3); // if the action is done repeatedly, we apply a multiplication factor based on the count
 	ActivitySetArousalTimer(C, A, Z, Factor);
 
@@ -449,7 +451,7 @@ function ActivityRun(C, Activity) {
 
 /**
  * Checks if a used asset should trigger an activity/arousal progress on the target character
- * @param {Character} Source- The character who used the item
+ * @param {Character} Source - The character who used the item
  * @param {Character} Target - The character on which the item was used
  * @param {object} Asset - Asset used
  * @return {void} - Nothing
@@ -462,4 +464,36 @@ function ActivityArousalItem(Source, Target, Asset) {
 		if (((Target.ArousalSettings != null) && ((Target.ArousalSettings.Active == "Hybrid") || (Target.ArousalSettings.Active == "Automatic"))) && ((Target.ID == 0) || (Target.AccountName.substring(0, 4) == "NPC_") || (Target.AccountName.substring(0, 4) == "NPC-")))
 			ActivityEffect(Source, Target, AssetActivity, Asset.Group.Name);
 	}
+}
+
+/**
+ * Checks if the character is wearing an item tagged with the fetish type name and returns the love factor for it
+ * @param {Character} C - The character to validate
+ * @param {string} Type - The fetish type name
+ * @return {number} - From -2 (hate it) to 2 (adore it) based on the player preferences
+ */
+function ActivityFetishItemFactor(C, Type) {
+	var Factor = (PreferenceGetFetishFactor(C, Type) - 2);
+	if (Factor != 0)
+		for (var A = 0; A < C.Appearance.length; A++)
+			if ((C.Appearance[A].Asset != null) && (C.Appearance[A].Asset.Fetish != null))
+				if (C.Appearance[A].Asset.Fetish.indexOf(Type) >= 0)
+					return Factor;
+	return 0;
+}
+
+/**
+ * Loops in all fetishes for a character and calculates the total fetish factor
+ * @param {Character} C - The character to validate
+ * @return {number} - The negative/positive number will have negative/positive impact on arousal
+ */
+function ActivityFetishFactor(C) {
+	var Factor = 0;
+	if ((C.ArousalSettings != null) && (C.ArousalSettings.Fetish != null))
+		for (var A = 0; A < C.ArousalSettings.Fetish.length; A++)
+			if (C.ArousalSettings.Fetish[A].Factor != 2)
+				for (var F = 0; F < FetishFemale3DCG.length; F++)
+					if (FetishFemale3DCG[F].Name == C.ArousalSettings.Fetish[A].Name)
+						Factor = Factor + FetishFemale3DCG[F].GetFactor(C);
+	return Factor;
 }
