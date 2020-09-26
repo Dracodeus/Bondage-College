@@ -488,6 +488,17 @@ function InventoryItemHasEffect(Item, Effect, CheckProperties) {
 }
 
 /**
+ * Returns the value of a given property of an appearance item, prioritizes the Property object.
+ * @param {object} Item - The appearance item to scan 
+ * @param {string} PropertyName - The property name to get.
+ * @returns {any} - The value of the requested property for the given item. Returns undefined if the property or the item itself does not exist.
+ */
+function InventoryGetItemProperty(Item, PropertyName) {
+    if (!Item || !PropertyName || !Item.Asset) return;
+    return (Item.Property && typeof Item.Property[PropertyName] !== "undefined" ? Item.Property : Item.Asset)[PropertyName];
+}
+
+/**
 * Check if we must trigger an expression for the character after an item is used/applied
 * @param {Character} C - The character that we must validate
 * @param {AppearanceItem} Item - The item from appearance that we must validate
