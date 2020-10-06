@@ -56,6 +56,7 @@ ClothAccessory,StudentOutfit3Bow3,Student Bow 3
 ClothAccessory,Bouquet,Bouquet of flowers
 ClothAccessory,FrillyApron,Frilly Apron
 ClothAccessory,BunnyCollarCuffs,Bunny Girl Accessories
+ClothAccessory,Camera1,Camera
 Necklace,,Necklace
 Necklace,Necklace1,Fancy Necklace
 Necklace,Necklace2,Beaded Necklace
@@ -327,6 +328,7 @@ Glasses,Glasses5,Style 5
 Glasses,Glasses6,Style 6
 Glasses,SunGlasses1,Sunglasses 1
 Glasses,SunGlasses2,Sunglasses 2
+Glasses,SunGlassesClear,Clear Sunglasses
 Glasses,EyePatch1,Eye Patch
 Mask,,Mask
 Mask,VenetianMask,Venetian Mask
@@ -342,6 +344,7 @@ Mask,KittyMask2,Kitty Mask Whiskers
 Mask,KittyMask3,Full Kitty Mask
 Mask,LaceMask1,Bat Mask
 Mask,LaceMask2,Venice Festival Mask
+Mask,FuturisticVisor,Futuristic Visor
 TailStraps,,Tail Strap
 TailStraps,TailStrap,Kitty Tail Strap
 TailStraps,HorseTailStrap,Horse Tail Strap
@@ -624,6 +627,7 @@ ItemTorso,,Torso
 ItemTorso,NylonRopeHarness,Nylon Rope
 ItemTorso,HempRopeHarness,Hemp Rope
 ItemTorso,LeatherHarness,Leather Harness
+ItemTorso,LeatherStrapHarness,Leather Strap Body Harness
 ItemTorso,AdultBabyHarness,Adult Baby Harness
 ItemTorso,HarnessBra1,Bondage Harness
 ItemTorso,HarnessBra2,Leather Strap Harness
@@ -833,6 +837,8 @@ ItemMouth,KittyGag,Kitty Mask Gag
 ItemMouth,KittenHarnessPanelGag,Kitty Harness Gag
 ItemMouth,CarrotGag,Rubber Carrot Gag
 ItemMouth,MuzzleGag,Muzzle Gag
+ItemMouth,FuturisticPanelGag,Futuristic Panel Gag
+ItemMouth,FuturisticHarnessPanelGag,Futuristic Harness Panel Gag
 ItemMouth,RegularSleepingPill,Sleeping Pill
 ItemMouth,PantiesMask,Panties Mask
 ItemMouth,PlugGag,Plug Gag
