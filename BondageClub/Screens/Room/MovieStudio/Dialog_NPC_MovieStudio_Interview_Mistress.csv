@@ -14,9 +14,9 @@ PlayerGagged,,,"Girl, I'm not going to try to translate your mumbles.",,
 10,20,I will be doing that interview.,Oh really?  And for which company are you working for?,,
 10,30,I guess I should go then.,Not so fast young lady.  You and the maid must be punished first.,,
 10,30,I'm sorry Miss.,"Sorry or not, you and the maid are getting punished.",,
+20,30,The Daily Planet.,Very funny young lady.  You and the maid will be punished for that.,,
 20,1000,City News.,"Very good, sorry about that, lets get you back in your clothes.",,!Player.IsRestrained()
 20,1000,City News.,"Very good, sorry about that, lets get you back in your clothes.  (She releases you from your restraints.)","DoActivity(""InterviewMistressReleasePlayer"")",Player.IsRestrained()
-20,30,The Daily Planet.,Very funny young lady.  You and the maid will be punished for that.,,
 20,30,The Daily Bugle.,Very funny young lady.  You and the maid will be punished for that.,,
 20,30,I forgot the name.,You're a horrible liar young lady.  You and the maid will be punished for that.,,
 30,40,You can't punish us!,I can and I will.  You two need to learn about strict discipline.,"DialogChangeReputation(""Dominant"", 2)",
@@ -90,6 +90,22 @@ PunishmentChastity,400,Steel undies?,You know what I'm talking about.  You will 
 PunishmentChastity,400,What are you talking about?,You know what I'm talking about.  You will both be locked into chastity belts.,,
 PunishmentChastity,400,Not a chastity belt!,Damn right.  You will both be locked into chastity belts.,,
 400,,(TO DO),(TO DO),,
+500,,,(She seems furious at you two.)  How dare you?  Release me now or you'll be in trouble for years!,,
+500,501,Calm down girl.  I'm in charge now.,(She struggles but fails to get free.)  I'm not calming down.  You two will be punished severly.,"DialogChangeReputation(""Dominant"", 4)",
+500,501,Are you comfy on that cross?,(She struggles but fails to get out.)  Do I look comfy?  You two will be punished severly.,,
+500,501,You're the one in trouble.,(She struggles but fails to get out.)  Wait until I get out.  You two will be punished severly.,"DialogChangeReputation(""Dominant"", 2)",
+500,,(Leave her.),,DialogLeave(),
+501,,,(She struggles in vain.)  You two will be punished for years.,,
+501,,(Gag her.),(The maid cheers and gives you a gag to use on her.),"DoActivity(""InterviewMistressGag"")","CanDoActivity(""InterviewMistressGag"")"
+501,,(Ungag her.),"(You remove her gag but she's still furious.)  Cherish your freedom girls, it will end very soon.","DoActivity(""InterviewMistressUngag"")","!CanDoActivity(""InterviewMistressGag"")"
+501,,(Tease her.),"(You rub yourself against her, caress her and kiss her slowly.  She bites her lips not to moan.)","DoActivity(""InterviewMistressTease"")",
+501,,(Spank her.),(You both take turns to spank her butt as she struggles madly.)  You two are getting deeper in trouble.,"DoActivity(""InterviewMistressSpank"")",
+501,,(Use the crop on her.),(You both hit her pretty hard using your crops.)  Ow!  Stop it!,"DoActivity(""InterviewMistressCrop"")","CanDoActivity(""InterviewMistressCrop"")"
+501,,(Use the whip on her.),(You take turns to whip her as she screams with each lashes.)  Aaargh!  Get me out and I'll show you how to use a whip.,"DoActivity(""InterviewMistressWhip"")","CanDoActivity(""InterviewMistressWhip"")"
+501,,(Use the cattle prod on her.),(You and the maid zap her with the cattle prod as the camera zooms in.)  Careful with these!,"DoActivity(""InterviewMistressProd"")","CanDoActivity(""InterviewMistressProd"")"
+501,,(Masturbate in front of her.),(You masturbate and moan in front of her as she gets angrier.)  Get me out now!,"DoActivity(""InterviewMistressMasturbate"")",
+501,,(Make out with the maid.),(You and the maid starts to make out in front of her as she trashes in her bondage.),"DoActivity(""InterviewMistressMakeOut"")",
+501,,(Leave her.),,DialogLeave(),
 1000,1010,"It's fine, I can do the interview like that.",Well aren't you a kinky journalist?  (She spanks your butt.)  Let's do that interview.,"DoActivity(""InterviewMistressSpankPlayer"")",
 1000,1010,"Yes, I should dress back up.",(You dress back up slowly as the camera follows your moves.)  Let's do that interview.,"DoActivity(""InterviewMistressChangePlayerBack"")",
 1010,1020,What about the maid?,She will get punished after the interview.  (She ponders.)  Unless you want to witness her punishment while we talk.,,

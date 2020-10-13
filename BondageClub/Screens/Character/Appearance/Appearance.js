@@ -522,7 +522,7 @@ function AppearanceRun() {
 				var Color = CharacterAppearanceGetCurrentValue(C, AssetGroup[A].Name, "Color", "");
 				const ColorButtonText = ItemColorGetColorButtonText(Color);
 				const ColorButtonColor = ColorButtonText.startsWith("#") ? ColorButtonText : "#fff";
-				const CanCycleColors = !!Item && WardrobeGroupAccessible(C, AssetGroup[A]);
+				const CanCycleColors = !!Item && WardrobeGroupAccessible(C, AssetGroup[A]) && Item.Asset.ColorableLayerCount > 0;
 				const CanPickColor = CanCycleColors && AssetGroup[A].AllowColorize;
 				const ColorIsSimple = ItemColorIsSimple(Item);
 				DrawButton(1725, 145 + (A - CharacterAppearanceOffset) * 95, 160, 65, ColorButtonText, CanCycleColors ? ColorButtonColor : "#aaa", null, null, !CanCycleColors);
@@ -551,6 +551,9 @@ function AppearanceRun() {
 
 	// In item coloring mode
 	if (CharacterAppearanceMode == "Color") {
+		// Leave the color picker if the item is gone.
+		if (!InventoryGet(CharacterAppearanceSelection, CharacterAppearanceColorPickerGroupName)) ItemColorExit();
+		// Draw the color picker
 	    ItemColorDraw(CharacterAppearanceSelection, CharacterAppearanceColorPickerGroupName, 1300, 25, 675, 950);
 	}
 
@@ -787,28 +790,35 @@ function AppearanceClick() {
 						} else CharacterAppearanceNextItem(C, AssetGroup[A].Name, (MouseX > 1500));
 		}
 
+
 		// If we must switch to the next color in the assets
 		if ((MouseX >= 1725) && (MouseX < 1885) && (MouseY >= 145) && (MouseY < 975))
-			for (let A = CharacterAppearanceOffset; A < AssetGroup.length && A < CharacterAppearanceOffset + CharacterAppearanceNumPerPage; A++)
-				if ((AssetGroup[A].Family == C.AssetFamily) && (AssetGroup[A].Category == "Appearance") && WardrobeGroupAccessible(C, AssetGroup[A]))
+			for (let A = CharacterAppearanceOffset; A < AssetGroup.length && A < CharacterAppearanceOffset + CharacterAppearanceNumPerPage; A++) {
+				const Item = InventoryGet(C, AssetGroup[A].Name);
+				if ((AssetGroup[A].Family == C.AssetFamily) && (AssetGroup[A].Category == "Appearance") &&
+				    WardrobeGroupAccessible(C, AssetGroup[A]) && Item && Item.Asset.ColorableLayerCount > 0)
 					if ((MouseY >= 145 + (A - CharacterAppearanceOffset) * 95) && (MouseY <= 210 + (A - CharacterAppearanceOffset) * 95))
 						CharacterAppearanceNextColor(C, AssetGroup[A].Name);
+			}
 
 		// If we must open the color panel
 		if (MouseIn(1910, 145, 65, 830))
-			for (let A = CharacterAppearanceOffset; A < AssetGroup.length && A < CharacterAppearanceOffset + CharacterAppearanceNumPerPage; A++)
-				if ((AssetGroup[A].Family == C.AssetFamily) && (AssetGroup[A].Category == "Appearance") && WardrobeGroupAccessible(C, AssetGroup[A]) && AssetGroup[A].AllowColorize)
+			for (let A = CharacterAppearanceOffset; A < AssetGroup.length && A < CharacterAppearanceOffset + CharacterAppearanceNumPerPage; A++) {
+				const Item = InventoryGet(C, AssetGroup[A].Name);
+				if ((AssetGroup[A].Family == C.AssetFamily) && (AssetGroup[A].Category == "Appearance") &&
+				    WardrobeGroupAccessible(C, AssetGroup[A]) && AssetGroup[A].AllowColorize && Item && Item.Asset.ColorableLayerCount > 0)
 					if ((MouseY >= 145 + (A - CharacterAppearanceOffset) * 95) && (MouseY <= 210 + (A - CharacterAppearanceOffset) * 95)) {
-					    const Item = InventoryGet(C, AssetGroup[A].Name);
-					    if (Item) {
-                            // Keeps the previous color in backup and creates a text box to enter the color
-                            CharacterAppearanceMode = "Color";
-                            CharacterAppearanceColorPickerGroupName = AssetGroup[A].Name;
-                            CharacterAppearanceColorPickerBackup = CharacterAppearanceGetCurrentValue(C, CharacterAppearanceColorPickerGroupName, "Color");
-                            ItemColorLoad(C, Item, 1300, 25, 675, 950);
-                            ItemColorOnExit(() => CharacterAppearanceMode = "");
-                        }
+						if (Item) {
+							// Keeps the previous color in backup and creates a text box to enter the color
+							CharacterAppearanceMode = "Color";
+							CharacterAppearanceColorPickerGroupName = AssetGroup[A].Name;
+							CharacterAppearanceColorPickerBackup =
+								CharacterAppearanceGetCurrentValue(C, CharacterAppearanceColorPickerGroupName, "Color");
+							ItemColorLoad(C, Item, 1300, 25, 675, 950);
+							ItemColorOnExit(() => CharacterAppearanceMode = "");
+						}
 					}
+			}
 
 		// If we must set back the default outfit or set a random outfit
 		if ((MouseX >= 1183) && (MouseX < 1273) && (MouseY >= 25) && (MouseY < 115) && (C.ID == 0) && !LogQuery("Wardrobe", "PrivateRoom")) CharacterAppearanceSetDefault(C);
