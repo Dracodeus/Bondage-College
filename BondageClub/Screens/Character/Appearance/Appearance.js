@@ -37,9 +37,8 @@ function CharacterAppearanceBuildAssets(C) {
 
 }
 
-// 
 /**
- * Makes sure the character appearance is valid from inventory and asset requirement
+ * Makes sure the character appearance is valid from inventory and asset requirement. This function is called during the login process.
  * @param {Character} C - The character whose appearance is checked
  * @returns {void} - Nothing
  */
@@ -54,7 +53,7 @@ function CharacterAppearanceValidate(C) {
 		}
 
 	// Remove items flagged as "Remove At Login"
-	if (!Player.GameplaySettings || !Player.GameplaySettings.DisableAutoRemoveLogin)
+	if (LogQuery("Committed", "Asylum") || !Player.GameplaySettings || !Player.GameplaySettings.DisableAutoRemoveLogin)
 		for (let A = C.Appearance.length - 1; A >= 0; A--)
 			if (C.Appearance[A].Asset.RemoveAtLogin) {
 				C.Appearance.splice(A, 1);
