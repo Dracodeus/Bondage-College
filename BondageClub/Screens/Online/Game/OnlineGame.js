@@ -110,6 +110,18 @@ function OnlineGameLoadStatus() {
 }
 
 /**
+ * Returns TRUE if the MemberPlayer supplied is still in the current chat room
+ * @param {number} MemberNumber - The number to validate
+ * @returns {boolean} - Returns TRUE if that number is still in the room
+ */
+function OnlineGameCharacterInChatRoom(MemberNumber) {
+	for (let C = 0; C < ChatRoomCharacter.length; C++)
+		if (ChatRoomCharacter[C].MemberNumber == MemberNumber)
+			return true;
+	return false;
+}
+ 
+/**
  * Draws the online game images/text needed on the characters
  * @param {Character} C - Character to draw the info for
  * @param {number} X - Position of the character the X axis
