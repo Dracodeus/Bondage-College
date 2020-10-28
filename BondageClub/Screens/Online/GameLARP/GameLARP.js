@@ -33,6 +33,7 @@ var GameLARPClass = [
 	},
 ];
 var GameLARPTeamList = ["None", "Red", "Green", "Blue", "Yellow", "Cyan", "Purple", "Orange", "White", "Gray", "Black"];
+var GameLARPTimerDelay = [20, 60];
 var GameLARPEntryClass = "";
 var GameLARPEntryTeam = "";
 var GameLARPStatus = "";
@@ -46,6 +47,7 @@ var GameLARPTurnAdmin = 0;
 var GameLARPTurnPosition = 0;
 var GameLARPTurnAscending = true;
 var GameLARPTurnTimer = null;
+var GameLARPTurnTimerDelay = GameLARPTimerDelay[0];
 var GameLARPTurnFocusCharacter = null;
 var GameLARPTurnFocusGroup = null;
 
@@ -83,6 +85,7 @@ function GameLARPLoad() {
 	if (Player.Game.LARP == null) Player.Game.LARP = {};
 	if (Player.Game.LARP.Class == null) Player.Game.LARP.Class = GameLARPClass[0].Name;
 	if (Player.Game.LARP.Team == null) Player.Game.LARP.Team = GameLARPTeamList[0];
+	if (Player.Game.LARP.TimerDelay == null) Player.Game.LARP.TimerDelay = GameLARPTimerDelay[0];
 	GameLARPEntryClass = Player.Game.LARP.Class;
 	GameLARPEntryTeam = Player.Game.LARP.Team;
 	if (GameLARPStatus == "") GameLARPProgress = [];
@@ -110,7 +113,8 @@ function GameLARPRun() {
 	if (GameLARPStatus == "") DrawBackNextButton(900, 193, 400, 64, TextGet("Class" + Player.Game.LARP.Class), "White", "", () => "", () => "");
 	if (GameLARPStatus == "") DrawBackNextButton(900, 393, 400, 64, TextGet("Color" + Player.Game.LARP.Team), "White", "", () => "", () => "");
 	GameLARPDrawIcon(Player, 1400, 225, 2);
-	if (GameLARPCanLaunchGame()) DrawButton(550, 600, 400, 65, TextGet("StartGame"), "White");
+	if (GameLARPCanLaunchGame()) DrawBackNextButton(550, 600, 400, 65, TextGet("TimerDelay" + Player.Game.LARP.TimerDelay), "White", "", () => "", () => "");
+	if (GameLARPCanLaunchGame()) DrawButton(1050, 600, 400, 65, TextGet("StartGame"), "White");
 
 }
 
@@ -121,8 +125,8 @@ function GameLARPRun() {
 function GameLARPRunProcess() {
 
 	// If the player is an admin, she can make player skip their turns
-	if ((GameLARPStatus == "Running") && (CurrentTime > GameLARPTurnTimer) && GameLARPIsAdmin(Player)) {
-		GameLARPTurnTimer = CurrentTime + 20000;
+	if ((GameLARPStatus == "Running") && (TimerGetTime() > GameLARPTurnTimer) && GameLARPIsAdmin(Player)) {
+		GameLARPTurnTimer = TimerGetTime() + (GameLARPTurnTimerDelay * 1000);
 		ServerSend("ChatRoomGame", { GameProgress: "Skip" });
 	}
 
@@ -167,8 +171,8 @@ function GameLARPRunProcess() {
 
 			// Draw the timer
 			MainCanvas.font = "108px Arial";
-			var Time = Math.ceil((GameLARPTurnTimer - CurrentTime) / 1000);
-			DrawText(((Time < 0) || (Time > 20)) ? OnlineGameDictionaryText("TimerNA") : Time.toString(), 250, 800, "Red", "White");
+			var Time = Math.ceil((GameLARPTurnTimer - TimerGetTime()) / 1000);
+			DrawText(((Time < 0) || (Time > GameLARPTimerDelay[GameLARPTimerDelay.length - 1])) ? OnlineGameDictionaryText("TimerNA") : Time.toString(), 250, 800, "Red", "White");
 			MainCanvas.font = "36px Arial";
 
 		}
@@ -261,8 +265,8 @@ function GameLARPClickProcess() {
  */
 function GameLARPStartProcess() {
 	
-	// Gives a 20 seconds
-	GameLARPTurnTimer = CurrentTime + 20000;
+	// Gives a delay in seconds, based on the player preference
+	GameLARPTurnTimer = TimerGetTime() + (GameLARPTurnTimerDelay * 1000);
 
 	// Notices everyone in the room that the game starts
 	var Dictionary = [];
@@ -301,9 +305,19 @@ function GameLARPClick() {
 		if (MouseX <= 1100) Player.Game.LARP.Team = (GameLARPTeamList.indexOf(Player.Game.LARP.Team) <= 0) ? GameLARPTeamList[GameLARPTeamList.length - 1] : GameLARPTeamList[GameLARPTeamList.indexOf(Player.Game.LARP.Team) - 1];
 		else Player.Game.LARP.Team = (GameLARPTeamList.indexOf(Player.Game.LARP.Team) >= GameLARPTeamList.length - 1) ? GameLARPTeamList[0] : GameLARPTeamList[GameLARPTeamList.indexOf(Player.Game.LARP.Team) + 1];
 	}
+
+	// When the user selects a new timer delay
+	if (MouseIn(550, 600, 400, 65) && GameLARPCanLaunchGame()) {
+		if (MouseX <= 750) Player.Game.LARP.TimerDelay = (GameLARPTimerDelay.indexOf(Player.Game.LARP.TimerDelay) <= 0) ? GameLARPTimerDelay[GameLARPTimerDelay.length - 1] : GameLARPTimerDelay[GameLARPTimerDelay.indexOf(Player.Game.LARP.TimerDelay) - 1];
+		else Player.Game.LARP.TimerDelay = (GameLARPTimerDelay.indexOf(Player.Game.LARP.TimerDelay) >= GameLARPTimerDelay.length - 1) ? GameLARPTimerDelay[0] : GameLARPTimerDelay[GameLARPTimerDelay.indexOf(Player.Game.LARP.TimerDelay) + 1];
+	}
 	
 	// If the administrator wants to start the game
-	if (MouseIn(550, 600, 400, 65) && GameLARPCanLaunchGame()) {
+	if (MouseIn(1050, 600, 400, 65) && GameLARPCanLaunchGame()) {
+
+		// Updates the player data
+		ServerSend("AccountUpdate", { Game: Player.Game });
+		ChatRoomCharacterUpdate(Player);
 
 		// Shuffles all players in the chat room
 		for (let C = 0; C < ChatRoomCharacter.length; C++) {
@@ -313,7 +327,7 @@ function GameLARPClick() {
 			}
 		}
 
-		// Give time for the server to shuffle the room.
+		// Give time for the server to shuffle the room
 		setTimeout(GameLARPStartProcess, 4000);
 		CommonSetScreen("Online", "ChatRoom");
 
@@ -769,10 +783,10 @@ function GameLARPAddChatLog(Msg, Source, Target, Description, RNG, Odds, Color) 
  */
 function GameLARPNewTurnPublish(NewPlayerPosition, Ascending, Msg) {
 
-	// Sets the new position and turn order, the timer is 20 seconds (10 seconds if arms are restrained), then publish in the chat log
+	// Sets the new position and turn order, the timer is divided by 2 if the are restrained, then publish in the chat log
 	GameLARPTurnPosition = NewPlayerPosition;
 	GameLARPTurnAscending = Ascending;
-	GameLARPTurnTimer = CurrentTime + (GameLARPPlayer[GameLARPTurnPosition].CanInteract() ? 20000 : 10000);
+	GameLARPTurnTimer = TimerGetTime() + (GameLARPTurnTimerDelay * (GameLARPPlayer[GameLARPTurnPosition].CanInteract() ? 1000 : 500));
 	GameLARPAddChatLog(Msg, Player, GameLARPPlayer[GameLARPTurnPosition], "", 0, 0);
 
 }
@@ -934,6 +948,10 @@ function GameLARPProcess(P) {
 			GameLARPTurnAscending = true;
 			GameLARPBuildPlayerList();
 			GameLARPProgress = [];
+			for (let C = 0; C < GameLARPPlayer.length; C++)
+				if (ChatRoomData.Admin.indexOf(GameLARPPlayer[C].MemberNumber) >= 0)
+					GameLARPTurnTimerDelay = GameLARPPlayer[C].Game.LARP.TimerDelay;
+			if ((typeof GameLARPTurnTimerDelay !== "number") || (GameLARPTurnTimerDelay < GameLARPTimerDelay[0]) || (GameLARPTurnTimerDelay > GameLARPTimerDelay[GameLARPTimerDelay.length - 1])) GameLARPTurnTimerDelay = GameLARPTimerDelay[0];
 			GameLARPNewTurn("TurnStart");
 		}
 
