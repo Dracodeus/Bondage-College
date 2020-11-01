@@ -5,7 +5,7 @@ var PreferenceSafewordConfirm = false;
 var PreferenceMaidsButton = true;
 var PreferenceColorPick = "";
 var PreferenceSubscreen = "";
-var PreferenceSubscreenList = ["General", "Chat", "Audio", "Arousal", "Security", "Online", "Visibility"];
+var PreferenceSubscreenList = ["General", "Chat", "Audio", "Arousal", "Security", "Online", "Visibility", "Graphics"];
 var PreferenceChatColorThemeSelected = "";
 var PreferenceChatColorThemeList = ["Light", "Dark"];
 var PreferenceChatColorThemeIndex = 0;
@@ -17,6 +17,8 @@ var PreferenceChatMemberNumbersList = ["Always", "Never", "OnMouseover"];
 var PreferenceChatMemberNumbersIndex = 0;
 var PreferenceSettingsSensDepList = ["Normal", "SensDepNames", "SensDepTotal"];
 var PreferenceSettingsSensDepIndex = 0;
+var PreferenceSettingsVFXList = ["VFXInactive", "VFXSolid", "VFXAnimatedTemp", "VFXAnimated"];
+var PreferenceSettingsVFXIndex = 0;
 var PreferenceSettingsVolumeList = [1, 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9];
 var PreferenceSettingsVolumeIndex = 0;
 var PreferenceEmailStatusReceived = false;
@@ -206,6 +208,8 @@ function PreferenceInit(C) {
 	if (C.ChatSettings.ShowAutomaticMessages == null) C.ChatSettings.ShowAutomaticMessages = false;
 	if (C.ChatSettings.WhiteSpace == null) C.ChatSettings.WhiteSpace = "Preserve";
 	if (C.ChatSettings.ColorActivities == null) C.ChatSettings.ColorActivities = true;
+	if (C.ChatSettings.AutoOOC == null) C.ChatSettings.AutoOOC = false;
+	if (C.ChatSettings.OOCWhispers == null) C.ChatSettings.OOCWhispers = false;
 	if (!C.VisualSettings) C.VisualSettings = { ForceFullHeight: false };
 
 	// Sets the default audio settings
@@ -216,12 +220,13 @@ function PreferenceInit(C) {
 	if (typeof C.AudioSettings.PlayItemPlayerOnly !== "boolean") C.AudioSettings.PlayItemPlayerOnly = false;
 
 	// Sets the default arousal settings
-	if (!C.ArousalSettings) C.ArousalSettings = { Active: "Hybrid", Visible: "Access", ShowOtherMeter: true, AffectExpression: true, AffectStutter: "All", Progress: 0, ProgressTimer: 0, Activity: [], Zone: [] };
+	if (!C.ArousalSettings) C.ArousalSettings = { Active: "Hybrid", Visible: "Access", ShowOtherMeter: true, AffectExpression: true, AffectStutter: "All", Progress: 0, ProgressTimer: 0, VibratorLevel: 0, VFX: "VFXAnimatedTemp", ChangeTime: CommonTime(), Activity: [], Zone: [] };
 	if (typeof C.ArousalSettings.Active !== "string") C.ArousalSettings.Active = "Hybrid";
 	if (typeof C.ArousalSettings.Visible !== "string") C.ArousalSettings.Visible = "Access";
 	if (typeof C.ArousalSettings.ShowOtherMeter !== "boolean") C.ArousalSettings.ShowOtherMeter = true;
 	if (typeof C.ArousalSettings.AffectExpression !== "boolean") C.ArousalSettings.AffectExpression = true;
 	if (typeof C.ArousalSettings.AffectStutter !== "string") C.ArousalSettings.AffectStutter = "All";
+	if (typeof C.ArousalSettings.VFX !== "string") C.ArousalSettings.VFX = "VFXAnimatedTemp";
 	if ((typeof C.ArousalSettings.Progress !== "number") || isNaN(C.ArousalSettings.Progress)) C.ArousalSettings.Progress = 0;
 	if ((typeof C.ArousalSettings.ProgressTimer !== "number") || isNaN(C.ArousalSettings.ProgressTimer)) C.ArousalSettings.ProgressTimer = 0;
 	if ((C.ArousalSettings.Activity == null) || !Array.isArray(C.ArousalSettings.Activity)) C.ArousalSettings.Activity = [];
@@ -330,6 +335,7 @@ function PreferenceLoad() {
 	PreferenceSettingsSensDepIndex = (PreferenceSettingsSensDepList.indexOf(Player.GameplaySettings.SensDepChatLog) < 0) ? 0 : PreferenceSettingsSensDepList.indexOf(Player.GameplaySettings.SensDepChatLog);
 	PreferenceSettingsVolumeIndex = (PreferenceSettingsVolumeList.indexOf(Player.AudioSettings.Volume) < 0) ? 0 : PreferenceSettingsVolumeList.indexOf(Player.AudioSettings.Volume);
 	PreferenceArousalActiveIndex = (PreferenceArousalActiveList.indexOf(Player.ArousalSettings.Active) < 0) ? 0 : PreferenceArousalActiveList.indexOf(Player.ArousalSettings.Active);
+	PreferenceSettingsVFXIndex = (PreferenceSettingsVFXList.indexOf(Player.ArousalSettings.VFX) < 0) ? 0 : PreferenceSettingsVFXList.indexOf(Player.ArousalSettings.VFX);
 	PreferenceArousalVisibleIndex = (PreferenceArousalVisibleList.indexOf(Player.ArousalSettings.Visible) < 0) ? 0 : PreferenceArousalVisibleList.indexOf(Player.ArousalSettings.Visible);
 	PreferenceArousalAffectStutterIndex = (PreferenceArousalAffectStutterList.indexOf(Player.ArousalSettings.AffectStutter) < 0) ? 0 : PreferenceArousalAffectStutterList.indexOf(Player.ArousalSettings.AffectStutter);
 	PreferenceChatColorThemeSelected = PreferenceChatColorThemeList[PreferenceChatColorThemeIndex];
@@ -399,11 +405,12 @@ function PreferenceSubscreenGeneralRun() {
 	DrawCheckbox(500, 712, 64, 64, TextGet(PreferenceSafewordConfirm ? "ConfirmSafeword" : "EnableSafeword"), Player.GameplaySettings.EnableSafeword);
 	DrawCheckbox(500, 792, 64, 64, TextGet("DisableAutoMaid"), !Player.GameplaySettings.DisableAutoMaid);
 
+
 	MainCanvas.textAlign = "center";
 	DrawBackNextButton(500, 392, 250, 64, TextGet(Player.GameplaySettings.SensDepChatLog), "White", "",
 		() => TextGet(PreferenceSettingsSensDepList[(PreferenceSettingsSensDepIndex + PreferenceSettingsSensDepList.length - 1) % PreferenceSettingsSensDepList.length]),
 		() => TextGet(PreferenceSettingsSensDepList[(PreferenceSettingsSensDepIndex + 1) % PreferenceSettingsSensDepList.length]));
-
+		
 	// Draw the player & controls
 	DrawCharacter(Player, 50, 50, 0.9);
 	DrawButton(1815, 75, 90, 90, "", "White", "Icons/Exit.png");
@@ -547,6 +554,8 @@ function PreferenceSubscreenChatRun() {
 	DrawCheckbox(1200, 492, 64, 64, TextGet("ShowAutomaticMessages"), Player.ChatSettings.ShowAutomaticMessages);
 	DrawCheckbox(1200, 572, 64, 64, TextGet("PreserveWhitespace"), Player.ChatSettings.WhiteSpace == "Preserve");
 	DrawCheckbox(1200, 652, 64, 64, TextGet("ColorActivities"), Player.ChatSettings.ColorActivities);
+	DrawCheckbox(1200, 732, 64, 64, TextGet("AutoOOC"), Player.ChatSettings.AutoOOC);
+	DrawCheckbox(1200, 812, 64, 64, TextGet("OOCWhispers"), Player.ChatSettings.OOCWhispers);
 	MainCanvas.textAlign = "center";
 	DrawBackNextButton(1000, 190, 350, 70, TextGet(PreferenceChatColorThemeSelected), "White", "",
 		() => TextGet((PreferenceChatColorThemeIndex == 0) ? PreferenceChatColorThemeList[PreferenceChatColorThemeList.length - 1] : PreferenceChatColorThemeList[PreferenceChatColorThemeIndex - 1]),
@@ -696,6 +705,51 @@ function PreferenceSubscreenVisibilityRun() {
 }
 
 /**
+ * Sets the graphical preferences for a player. Redirected to from the main Run function if the player is in the visibility settings subscreen
+ * @returns {void} - Nothing
+ */
+function PreferenceSubscreenGraphicsRun() {
+	DrawCharacter(Player, 50, 50, 0.9);
+
+	// Exit button
+	DrawButton(1815, 75, 90, 90, "", "White", "Icons/Exit.png");
+
+	// Left-aligned text controls
+	MainCanvas.textAlign = "left";
+	DrawText(TextGet("VFXPreferences"), 500, 125, "Black", "Gray");
+	DrawText(TextGet("VFX"), 800, 246, "Black", "Gray");
+	
+	MainCanvas.textAlign = "center";
+	DrawBackNextButton(500, 212, 250, 64, TextGet(Player.ArousalSettings.VFX), "White", "",
+		() => TextGet(PreferenceSettingsVFXList[(PreferenceSettingsVFXIndex + PreferenceSettingsVFXList.length - 1) % PreferenceSettingsVFXList.length]),
+		() => TextGet(PreferenceSettingsVFXList[(PreferenceSettingsVFXIndex + 1) % PreferenceSettingsVFXList.length]));
+
+}
+
+/**
+ * Handles click events for the audio preference settings. 
+ * Redirected to from the main Click function if the player is in the audio settings subscreen
+ * @returns {void} - Nothing
+ */
+function PreferenceSubscreenGraphicsClick() {
+
+	// If the user clicked the exit icon to return to the main screen
+	if ((MouseX >= 1815) && (MouseX < 1905) && (MouseY >= 75) && (MouseY < 165)) {
+		PreferenceSubscreen = "";
+	}
+
+	if (MouseIn(500, 212, 250, 64)) {
+		if (MouseX <= 625) PreferenceSettingsVFXIndex = (PreferenceSettingsVFXList.length + PreferenceSettingsVFXIndex - 1) % PreferenceSettingsVFXList.length;
+		else PreferenceSettingsVFXIndex = (PreferenceSettingsVFXIndex + 1) % PreferenceSettingsVFXList.length;
+		Player.ArousalSettings.VFX = PreferenceSettingsVFXList[PreferenceSettingsVFXIndex];
+	}
+
+
+}
+
+
+
+/**
  * Handles click events for the audio preference settings. 
  * Redirected to from the main Click function if the player is in the audio settings subscreen
  * @returns {void} - Nothing
@@ -738,9 +792,13 @@ function PreferenceSubscreenChatClick() {
 		if (MouseYIn(812, 64)) Player.ChatSettings.ShowActivities = !Player.ChatSettings.ShowActivities;
 	}
 
-	if (MouseIn(1200, 492, 64, 64)) Player.ChatSettings.ShowAutomaticMessages = !Player.ChatSettings.ShowAutomaticMessages;
-	if (MouseIn(1200, 572, 64, 64)) Player.ChatSettings.WhiteSpace = Player.ChatSettings.WhiteSpace == "Preserve" ? "" : "Preserve";
-	if (MouseIn(1200, 652, 64, 64)) Player.ChatSettings.ColorActivities = !Player.ChatSettings.ColorActivities;
+	if (MouseXIn(1200, 64)) {
+		if (MouseYIn(492, 64)) Player.ChatSettings.ShowAutomaticMessages = !Player.ChatSettings.ShowAutomaticMessages;
+		if (MouseYIn(572, 64)) Player.ChatSettings.WhiteSpace = Player.ChatSettings.WhiteSpace == "Preserve" ? "" : "Preserve";
+		if (MouseYIn(652, 64)) Player.ChatSettings.ColorActivities = !Player.ChatSettings.ColorActivities;
+		if (MouseYIn(732, 64)) Player.ChatSettings.AutoOOC = !Player.ChatSettings.AutoOOC;
+		if (MouseYIn(812, 64)) Player.ChatSettings.OOCWhispers = !Player.ChatSettings.OOCWhispers;
+	}
 
 	// If the user used one of the BackNextButtons
 	if ((MouseX >= 1000) && (MouseX < 1350) && (MouseY >= 190) && (MouseY < 270)) {
