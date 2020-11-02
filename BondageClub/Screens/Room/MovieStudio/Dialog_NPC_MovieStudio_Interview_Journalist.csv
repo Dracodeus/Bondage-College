@@ -1,0 +1,4 @@
+PlayerGagged,,,(She looks at your gag and giggles.),,
+2000,,,"(A club member is restrained in your room.  She struggles in her cuffs.)  Hello there, I think I got in trouble.",,CurrentCharacter.IsRestrained()
+2000,,,"(A club member restrained a maid in your room.)  Hello there.  As you can see, this maid seems to enjoy trouble.",,!CurrentCharacter.IsRestrained()
+2000,,(Leave her.),,DialogLeave(),

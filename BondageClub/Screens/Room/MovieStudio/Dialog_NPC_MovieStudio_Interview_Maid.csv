@@ -160,3 +160,6 @@ PlayerGagged,,,That gag looks great on you.  It sounds good also.  (She laughs.)
 501,,The whip.,(She nods and gets two whips.  She then turns around to the Mistress with a grin.),"DoActivity(""InterviewMaidGetWhip"")","CanDoActivity(""InterviewMaidGetWhip"")"
 501,,The cattle prod.,(She nods and gets two cattle prods.  She then turns around to the Mistress with a wicked smile.),"DoActivity(""InterviewMaidGetProd"")","CanDoActivity(""InterviewMaidGetProd"")"
 501,,(Leave her.),,DialogLeave(),
+2000,,,(A maid is restrained in your room.  She makes pleading eyes to you.)  I'm sorry Mistress.  I was kidnapped.,,CurrentCharacter.IsRestrained()
+2000,,,(A maid is playing with a restrained club member in your room.  She doesn't dare to look at you.)  Greetings Mistress.  How can I serve you?,,!CurrentCharacter.IsRestrained()
+2000,,(Leave her.),,DialogLeave(),
