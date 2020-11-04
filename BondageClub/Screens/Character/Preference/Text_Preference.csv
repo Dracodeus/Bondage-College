@@ -7,6 +7,7 @@ SecurityPreferences,- Security Preferences -
 VisibilityPreferences,- Item Preferences -
 VFXPreferences,- Graphical Preferences -
 OnlinePreferences,- Online Preferences -
+ImmersionPreferences,- Immersion Preferences -
 HomepageGeneral,General
 HomepageChat,Chat
 HomepageAudio,Audio
@@ -14,6 +15,7 @@ HomepageArousal,Arousal
 HomepageSecurity,Security
 HomepageVisibility,Item Visibility
 HomepageOnline,Online
+HomepageImmersion,Immersion
 HomepageGraphics,Graphics
 CharacterLabelColor,Character label color:
 ItemPermission,Item permission:
@@ -54,9 +56,12 @@ AudioVolume,Audio volume
 AudioPlayBeeps,Audio alarm for beeps
 AudioPlayItem,Play item sounds in chatrooms
 AudioPlayItemPlayerOnly,Only play item sounds if you're involved
+ImmersionLockSetting,Lock this menu while bound
+BlockGaggedOOC,Prevent Out-Of-Character chat while gagged
 SensDepSetting,Sensory deprivation setting
 SensDepNames,Hide names
 SensDepTotal,Total
+SensDepExtreme,Total (no whispers)
 DisableAutoMaid,Maids come automatically when restrained
 BlindDisableExamine,Disable examining people when blind
 DisableAutoRemoveLogin,Keep all of your restraints when relogging

@@ -306,8 +306,12 @@ function ChatRoomDrawCharacter(DoClick) {
 					CharacterSetCurrent(ChatRoomCharacter[C]);
 
 				} else
-					if (!LogQuery("BlockWhisper", "OwnerRule") || (Player.Ownership == null) || (Player.Ownership.Stage != 1) || (Player.Ownership.MemberNumber == ChatRoomCharacter[C].MemberNumber) || !ChatRoomOwnerInside())
+					if ((!LogQuery("BlockWhisper", "OwnerRule") || (Player.Ownership == null) || (Player.Ownership.Stage != 1) || (Player.Ownership.MemberNumber == ChatRoomCharacter[C].MemberNumber) || !ChatRoomOwnerInside())
+						&& !(Player.GameplaySettings && (Player.GameplaySettings.SensDepChatLog == "SensDepExtreme") && (Player.Effect.indexOf("BlindHeavy") >= 0)))
 						ChatRoomTargetMemberNumber = ((ChatRoomTargetMemberNumber == ChatRoomCharacter[C].MemberNumber) || (ChatRoomCharacter[C].ID == 0)) ? null : ChatRoomCharacter[C].MemberNumber;
+						
+					else if (Player.GameplaySettings && (Player.GameplaySettings.SensDepChatLog == "SensDepExtreme") && (Player.Effect.indexOf("BlindHeavy") >= 0))
+						ChatRoomTargetMemberNumber = null
 				break;
 			}
 		}
@@ -667,6 +671,7 @@ function ChatRoomSendChat() {
 			if (msg != "") ServerSend("ChatRoomChat", { Content: msg, Type: "Action", Dictionary: Dictionary });
 
 		} else if ((m.indexOf("*") == 0) || (m.indexOf("/me ") == 0) || (m.indexOf("/action ") == 0)) {
+			
 
 			// The player can emote an action using * or /me (for those IRC or Skype users), it doesn't garble
 			// The command /action or ** does not add the player's name to it
@@ -692,7 +697,7 @@ function ChatRoomSendChat() {
 		else if (m.indexOf("/promote ") == 0) ChatRoomAdminChatAction("Promote", msg);
 		else if (m.indexOf("/demote ") == 0) ChatRoomAdminChatAction("Demote", msg);
 		else if (m.indexOf("/afk") == 0) CharacterSetFacialExpression(Player, "Emoticon", "Afk");
-		else if (msg != "") {
+		else if (msg != "" && !((m.indexOf("(") == 0 || m.indexOf("/ooc") == 0) && Player.ImmersionSettings && Player.ImmersionSettings.BlockGaggedOOC && !Player.CanTalk())) {
 
 			// If player whispers and wants all whispers to be OOC
 			if (ChatRoomTargetMemberNumber != null && Player.ChatSettings.OOCWhispers && !msg.startsWith("(")) {
@@ -733,9 +738,10 @@ function ChatRoomSendChat() {
 					if (Refocus) ElementFocus("InputChat");
 				}
 			}
-
+		}	else {
+				// Throw an error message
+				ChatRoomMessage({ Content: "ChatRoomBlockGaggedOOC", Type: "Action", Sender: Player.MemberNumber });
 		}
-
 		// Clears the chat text message
 		ElementValue("InputChat", "");
 
@@ -1303,8 +1309,8 @@ function ChatRoomRefreshChatSettings(C) {
 	if (C.ChatSettings) {
 		for (let property in C.ChatSettings)
 			ElementSetDataAttribute("TextAreaChatLog", property, C.ChatSettings[property]);
-		if (C.GameplaySettings && (C.GameplaySettings.SensDepChatLog == "SensDepNames" || C.GameplaySettings.SensDepChatLog == "SensDepTotal") && (C.GetDeafLevel() >= 3) && (C.Effect.indexOf("BlindHeavy") >= 0)) ElementSetDataAttribute("TextAreaChatLog", "EnterLeave", "Hidden");
-		if (C.GameplaySettings && (C.GameplaySettings.SensDepChatLog == "SensDepTotal") && (C.GetDeafLevel() >= 3) && (C.Effect.indexOf("BlindHeavy") >= 0)) {
+		if (C.GameplaySettings && (C.GameplaySettings.SensDepChatLog == "SensDepNames" || C.GameplaySettings.SensDepChatLog == "SensDepTotal" || C.GameplaySettings.SensDepChatLog == "SensDepExtreme") && (C.GetDeafLevel() >= 3) && (C.Effect.indexOf("BlindHeavy") >= 0)) ElementSetDataAttribute("TextAreaChatLog", "EnterLeave", "Hidden");
+		if (C.GameplaySettings && (C.GameplaySettings.SensDepChatLog == "SensDepTotal" || C.GameplaySettings.SensDepChatLog == "SensDepExtreme") && (C.GetDeafLevel() >= 3) && (C.Effect.indexOf("BlindHeavy") >= 0)) {
 			ElementSetDataAttribute("TextAreaChatLog", "DisplayTimestamps", "false");
 			ElementSetDataAttribute("TextAreaChatLog", "ColorNames", "false");
 			ElementSetDataAttribute("TextAreaChatLog", "ColorActions", "false");
