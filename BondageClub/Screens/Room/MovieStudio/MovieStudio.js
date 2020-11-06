@@ -202,14 +202,14 @@ function MovieStudioChange(Cloth) {
 		InventoryWear(Player, "Glasses1", "Glasses", "#333333");
 		InventoryWear(Player, "Socks5", "Socks", "#444458");
 		InventoryWear(Player, "Shoes2", "Shoes", "#111111");
-		InventoryRemove(Player, "ItemHead");
-		InventoryRemove(Player, "ItemArms");
-		InventoryRemove(Player, "ItemHands");
-		InventoryRemove(Player, "ItemLegs");
-		InventoryRemove(Player, "ItemFeet");
-		InventoryRemove(Player, "ItemBoots");
 	}
 	if (Cloth == "Mistress") CharacterArchetypeClothes(Player, "Mistress");
+	InventoryRemove(Player, "ItemHead");
+	InventoryRemove(Player, "ItemArms");
+	InventoryRemove(Player, "ItemHands");
+	InventoryRemove(Player, "ItemLegs");
+	InventoryRemove(Player, "ItemFeet");
+	InventoryRemove(Player, "ItemBoots");
 }
 
 /**
@@ -498,6 +498,30 @@ function MovieStudioDoActivity(Activity) {
 		CharacterSetFacialExpression(MovieStudioActor1, "Eyes", "Closed", 5);
 		CharacterSetFacialExpression(MovieStudioActor1, "Eyes2", "Closed", 5);
 	}
+	if (Activity == "InterviewMistressPinchCheek") {
+		CharacterSetFacialExpression(MovieStudioActor2, "Blush", "Medium", 5);
+		CharacterSetFacialExpression(MovieStudioActor2, "Eyes", "Angry", 5);
+		CharacterSetFacialExpression(MovieStudioActor2, "Eyes2", "Angry", 5);
+	}
+	if (Activity == "InterviewMistressSpankLazyMaid") {
+		CharacterSetFacialExpression(MovieStudioActor1, "Blush", "Medium", 5);
+		CharacterSetFacialExpression(MovieStudioActor1, "Eyes", "Closed", 5);
+		CharacterSetFacialExpression(MovieStudioActor1, "Eyes2", "Closed", 5);
+	}
+	if (Activity == "InterviewMistressStartTrial") {
+		MovieStudioActor1.CanTurnTables = false;
+		MovieStudioActor1.Stage = "2100";
+		MovieStudioActor2.Stage = "2100";
+		InventoryWear(Player, "SpankingToys", "ItemHands");
+		InventoryGet(Player, "ItemHands").Property = { Type: "Gavel" };
+		CharacterRefresh(Player);
+		DialogLeave();
+	}
+	if (Activity == "InterviewMistressSkipTrial") {
+		MovieStudioActor1.CanTurnTables = true;
+		MovieStudioActor1.Stage = "2200";
+		MovieStudioActor2.Stage = "2200";
+	}
 
 	// Check for decay
 	MovieStudioProcessDecay();
@@ -557,6 +581,17 @@ function MovieStudioCanDoActivity(Activity) {
 function MovieStudioGetCamera() {
 	InventoryAdd(Player, "Camera1", "ClothAccessory");
 	InventoryWear(Player, "Camera1", "ClothAccessory", "Default");
+}
+
+/**
+ * Adds the gavel to the player inventory
+ * @returns {void} - Nothing
+ */
+function MovieStudioGetGavel() {
+	InventoryAdd(Player, "SpankingToysGavel", "ItemHands");
+	InventoryWear(Player, "SpankingToys", "ItemHands");
+	InventoryGet(Player, "ItemHands").Property = { Type: "Gavel" };
+	CharacterRefresh(Player);
 }
 
 /**

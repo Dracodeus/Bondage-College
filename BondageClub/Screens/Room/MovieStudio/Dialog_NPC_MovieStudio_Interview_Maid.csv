@@ -162,4 +162,29 @@ PlayerGagged,,,That gag looks great on you.  It sounds good also.  (She laughs.)
 501,,(Leave her.),,DialogLeave(),
 2000,,,(A maid is restrained in your room.  She makes pleading eyes to you.)  I'm sorry Mistress.  I was kidnapped.,,CurrentCharacter.IsRestrained()
 2000,,,(A maid is playing with a restrained club member in your room.  She doesn't dare to look at you.)  Greetings Mistress.  How can I serve you?,,!CurrentCharacter.IsRestrained()
-2000,,(Leave her.),,DialogLeave(),
+2000,2010,What's going on here?,(She blushes.)  I came to clean the room for your meeting and was seduced into cuffs by this Dominant woman.,,CurrentCharacter.IsRestrained()
+2000,2010,What's going on here?,I came to clean the room for your meeting and found this girl playing with restraints.  I helped her a little I guess.,,!CurrentCharacter.IsRestrained()
+2000,2010,Why are you restrained?,(She blushes.)  I came to clean the room for your meeting and was seduced into cuffs by this Dominant woman.,,CurrentCharacter.IsRestrained()
+2000,2010,Why did you restrain her?,I came to clean the room for your meeting and found this girl playing with restraints.  I helped her a little I guess.,,!CurrentCharacter.IsRestrained()
+2000,,(Check the room.),,DialogLeave(),
+2010,2020,The place isn't clean girl.,"(She nods.)  I'm sorry Miss.  If you forgive me, I will finish cleaning up for your meeting.",,
+2010,2020,You're a lazy maid?,"(She shakes her head no.)  I'm sorry Miss.  If you forgive me, I will finish cleaning up for your meeting.",,
+2010,2020,Why is the sorority paying you?,"(She seems nervous.)  I'm sorry Miss.  If you forgive me, I will finish cleaning up for your meeting.",,
+2010,2020,(Spank her.)  You play while you clean?,"(She jumps as you spank her.)  I'm sorry Miss.  If you forgive me, I will finish cleaning up for your meeting.","DoActivity(""InterviewMistressSpankLazyMaid"")",
+2020,,,"If you forgive me, I will finish cleaning up for your meeting.",,
+2020,2030,I don't forgive that easily.,Please Mistress!  There's no need to enforce the club rules.,,
+2020,2030,Maybe I should punish you.,Please Mistress!  There's no need to enforce the club rules.,,
+2020,,(Check the room.),,DialogLeave(),
+2030,2040,Rules are important.,I know Miss.  I will accept a BDSM trial if I must.  Are you sure this is necessary?,,
+2030,2040,We need to follow procedures.,I know Miss.  I will accept a BDSM trial if I must.  Are you sure this is necessary?,,
+2030,2040,I will put you on trial.,Very well Miss.  I will accept a BDSM trial if I must.  Are you sure this is necessary?,,
+2040,,,I will accept a BDSM trial if I must.  Are you sure this is necessary?,,
+2040,2100,Let's do a trial.  (Go get a gavel.),,"DoActivity(""InterviewMistressStartTrial"")",
+2040,2200,There won't be any trial.,(She seems disappointed.)  I can't plead for myself?  BDSM can be so unfair.,"DoActivity(""InterviewMistressSkipTrial"")",
+2040,,(Check the room.),,DialogLeave(),
+2100,,,I hope you will hear us and have a fair judgment Miss.,,
+2100,,TO DO,TO DO,,
+2100,,(Check the room.),,DialogLeave(),
+2200,,,(She seems disappointed.)  I can't plead for myself?  BDSM can be so unfair.,,
+2200,,TO DO,TO DO,,
+2200,,(Check the room.),,DialogLeave(),
