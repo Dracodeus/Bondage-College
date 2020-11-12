@@ -219,3 +219,6 @@ PlayerGagged,,,That gag looks great on you.  It sounds good also.  (She laughs.)
 2210,,(Slap her.),(You slap her on the face a few times as she bows her head and stays silent.),"DoActivity(""InterviewMistressPunishSlap"")",
 2210,,(Hit her with the gavel.),(You hit her body a few times with the gavel as she whimpers.)  I won't break the rules again Miss.,"DoActivity(""InterviewMistressPunishGavel"")","CanDoActivity(""InterviewMistressPunishGavel"")"
 2210,,(Check the room.),,DialogLeave(),
+2300,,,"(She looks at you and giggles.)  I know we will get in trouble Miss, but this is worth it.",,
+2300,,TO DO,TO DO,,
+2300,,(Check the room.),,DialogLeave(),

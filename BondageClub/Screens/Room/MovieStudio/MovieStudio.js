@@ -562,6 +562,17 @@ function MovieStudioDoActivity(Activity) {
 	if ((Activity == "InterviewMistressInterviewReleaseJournalist") || (Activity == "InterviewMistressPunishRelease")) {
 		CharacterSetActivePose(CurrentCharacter, null, true);
 		CharacterRelease(CurrentCharacter);
+		if (!MovieStudioActor1.IsRestrained() && !MovieStudioActor2.IsRestrained() && !MovieStudioActor1.TrialDone) {
+			MovieStudioActor1.Stage = "2300";
+			MovieStudioActor2.Stage = "2250";
+			CharacterSetCurrent(MovieStudioActor2);
+			CharacterSetFacialExpression(MovieStudioActor2, "Blush", "Medium", 8);
+			CharacterSetFacialExpression(MovieStudioActor2, "Eyes", "Angry", 8);
+			CharacterSetFacialExpression(MovieStudioActor2, "Eyes2", "Angry", 8);
+			CharacterSetFacialExpression(Player, "Eyes", "Closed", 8);
+			CharacterSetFacialExpression(Player, "Eyes2", "Closed", 8);
+			MovieStudioActor2.CurrentDialog = TextGet("InterviewMistressTurnTablesOnPlayer");
+		}
 	}
 	if ((Activity == "InterviewMistressInterviewFlirt") || (Activity == "InterviewMistressPunishSlap")) {
 		CharacterSetFacialExpression(CurrentCharacter, "Blush", "Medium", 8);
@@ -580,6 +591,8 @@ function MovieStudioDoActivity(Activity) {
 		CharacterSetFacialExpression(CurrentCharacter, "Eyes", "Angry", 8);
 		CharacterSetFacialExpression(CurrentCharacter, "Eyes2", "Angry", 8);
 	}
+	if (Activity == "InterviewMistressTurnTablesArms") InventoryWearRandom(Player, "ItemArms");
+	if (Activity == "InterviewMistressTurnTablesLegs") { InventoryWearRandom(Player, "ItemFeet"); InventoryWearRandom(Player, "ItemLegs"); }
 
 	// Check for decay
 	MovieStudioProcessDecay();
