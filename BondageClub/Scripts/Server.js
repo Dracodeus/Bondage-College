@@ -240,7 +240,7 @@ function ServerValidateProperties(C, Item) {
 			var Effect = Item.Property.Effect[E];
 			if ((Effect == "Lock") && ((Item.Asset.AllowLock == null) || (Item.Asset.AllowLock == false) || (InventoryGetLock(Item) == null) || (InventoryIsPermissionBlocked(C, Item.Property.LockedBy, "ItemMisc"))) &&
 				// Check if a lock on the items sub type is allowed
-				!(Item.Asset.Extended && Item.Property && Item.Property.AllowLock && Item.Asset.AllowLockType.indexOf(Item.Property.Type) >= 0)) {
+				!(Item.Asset.Extended && Item.Property && Item.Property.AllowLock !== false && Item.Asset.AllowLockType.indexOf(Item.Property.Type) >= 0)) {
 				delete Item.Property.LockedBy;
 				delete Item.Property.LockMemberNumber;
 				delete Item.Property.CombinationNumber;

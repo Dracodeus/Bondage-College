@@ -589,7 +589,7 @@ function DialogMenuButtonBuild(C) {
 		if (IsItemLocked && !Player.IsBlind() && (Item.Property != null) && (Item.Property.LockedBy != null) && (Item.Property.LockedBy != "")) DialogMenuButton.push("InspectLock");
 		if ((Item != null) && !IsItemLocked && Player.CanInteract() && InventoryAllow(C, Item.Asset.Prerequisite) && !IsGroupBlocked) {
 			if ((Item.Asset.AllowLock) ||
-				(Item.Asset.Extended && Item.Property && Item.Property.AllowLock && Item.Asset.AllowLockType.indexOf(Item.Property.Type) >= 0)) {
+				(Item.Asset.Extended && Item.Property && Item.Property.AllowLock !== false && Item.Asset.AllowLockType.indexOf(Item.Property.Type) >= 0)) {
 				DialogMenuButton.push("Lock");
 			}
 		} 
@@ -1124,7 +1124,7 @@ function DialogItemClick(ClickItem) {
 	// If we must apply a lock to an item (can trigger a daily job)
 	if (DialogItemToLock != null) {
 		if ((CurrentItem != null) &&
-			(CurrentItem.Asset.AllowLock || CurrentItem.Asset.Extended && CurrentItem.Property && CurrentItem.Property.AllowLock && CurrentItem.Asset.AllowLockType.indexOf(CurrentItem.Property.Type)>=0)) {
+			(CurrentItem.Asset.AllowLock || CurrentItem.Asset.Extended && CurrentItem.Property && CurrentItem.Property.AllowLock !== false && CurrentItem.Asset.AllowLockType.indexOf(CurrentItem.Property.Type)>=0)) {
 			InventoryLock(C, CurrentItem, ClickItem, Player.MemberNumber);
 			IntroductionJobProgress("DomLock", ClickItem.Asset.Name, true);
 			DialogItemToLock = null;

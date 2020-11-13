@@ -6,6 +6,7 @@ var InventoryItemDevicesBondageBenchOptions = [
 		Property: {
 			Type: null,
 			Difficulty: 0,
+			AllowLock: false,
 			SetPose: ["LegsClosed"],
 			Effect: ["Mounted"],
 		},
@@ -17,7 +18,6 @@ var InventoryItemDevicesBondageBenchOptions = [
 		Property: {
 			Type: "Light",
 			Difficulty: 2,
-			AllowLock: true,
 			SetPose: ["LegsClosed", "BaseUpper"],
 			Effect: ["Block", "Prone", "Freeze", "Mounted"],
 			Hide: ["HairBack", "Wings", "TailStraps", "ItemButt"],
@@ -30,7 +30,6 @@ var InventoryItemDevicesBondageBenchOptions = [
 		Property: {
 			Type: "Normal",
 			Difficulty: 3,
-			AllowLock: true,
 			SetPose: ["LegsClosed", "BaseUpper"],
 			Effect: ["Block", "Prone", "Freeze", "Mounted"],
 			Hide: ["HairBack", "Wings", "TailStraps", "ItemButt"],
@@ -43,7 +42,6 @@ var InventoryItemDevicesBondageBenchOptions = [
 		Property: {
 			Type: "Heavy",
 			Difficulty: 6,
-			AllowLock: true,
 			SetPose: ["LegsClosed", "BaseUpper"],
 			Effect: ["Block", "Prone", "Freeze", "Mounted"],
 			Hide: ["HairBack", "Wings", "TailStraps", "ItemButt"],
@@ -56,7 +54,6 @@ var InventoryItemDevicesBondageBenchOptions = [
 		Property: {
 			Type: "Full",
 			Difficulty: 9,
-			AllowLock: true,
 			SetPose: ["LegsClosed", "BaseUpper"],
 			Effect: ["Block", "Prone", "Freeze", "Mounted"],
 			Hide: ["HairBack", "Wings", "TailStraps", "ItemButt"],
