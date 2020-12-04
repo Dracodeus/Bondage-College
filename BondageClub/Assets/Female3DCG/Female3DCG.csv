@@ -184,6 +184,7 @@ Panties,ChinesePanties1,Chinese Panties
 Panties,LeatherStrapPanties1,Leather Strap Panties
 Panties,CowPrintedPanties,Cow Printed Panties
 Panties,LatexPanties2,Latex Panties
+Panties,PilotPanties,Pilot Panties
 Socks,,Socks
 Socks,Socks0,Ankle
 Socks,Socks1,Short
@@ -704,6 +705,7 @@ ItemNipplesPiercings,NippleChastityPiercing1,Chastity Guard Shield
 ItemNipplesPiercings,NippleChastityPiercing2,Chastity Cross Shield
 ItemNipplesPiercings,VibeHeartPiercings,Vibrating Heart Piercings
 ItemNipplesPiercings,BellPiercing,Nipple Bell Piercings
+ItemNipplesPiercings,CrossedStraightPiercing,Crossed Straight Piercings
 ItemBreast,,Breasts
 ItemBreast,MetalChastityBra,Metal Chastity Bra
 ItemBreast,PolishedChastityBra,Polished Chastity Bra
@@ -771,6 +773,7 @@ ItemHands,,Hands
 ItemHands,PaddedMittens,Padded Mittens
 ItemHands,PawMittens,Paw Mittens
 ItemHands,LeatherMittens,Leather Mittens
+ItemHands,FuturisticMittens,Futuristic Mittens
 ItemHands,PaddedLeatherMittens,Padded Leather Mittens
 ItemHands,PolishedMittens,Polished Steel Mittens
 ItemHands,DuctTape,Duct Tape
@@ -1033,6 +1036,7 @@ ItemNose,NoseHook,Nose Hook
 ItemNose,NoseRing,Nose Ring
 ItemNose,DuctTape,Duct Tape
 ItemNose,NosePlugs,Nose Plugs
+ItemNose,BarbelPiercing,Barbel Piercing
 ItemHood,,Head
 ItemHood,LeatherHoodSealed,Sealed Leather Hood
 ItemHood,PolishedSteelHood,Polished Steel Hood
@@ -1064,6 +1068,7 @@ ItemMisc,MetalPadlock,Metal Padlock
 ItemMisc,IntricatePadlock,Intricate Padlock
 ItemMisc,TimerPadlock,Five Minutes Padlock
 ItemMisc,CombinationPadlock,Combination Padlock
+ItemMisc,PasswordPadlock,Password Lock
 ItemMisc,OwnerPadlock,Owner Padlock
 ItemMisc,OwnerTimerPadlock,Owner Timer Padlock
 ItemMisc,LoversPadlock,Lovers Padlock
