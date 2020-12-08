@@ -532,6 +532,34 @@ var AssetFemale3DCG = [
 		],
 		Color: ["Default", "#cccccc", "#aaaaaa", "#888888", "#666666", "#444444", "#222222", "#aa8080", "#80aa80", "#8080aa", "#aaaa80", "#80aaaa", "#aa80aa", "#cc3333", "#33cc33", "#3333cc", "#cccc33", "#33cccc", "#cc33cc"]
 	},
+	{
+		Group: "RightAnklet",
+		ParentGroup: "BodyLower",
+		Priority: 22,
+		Clothing: true,
+		Left: 115,
+		Top: 500,
+		AllowPose: ["LegsClosed", "Kneel", "Hogtied", "Spread"],
+		Asset: [
+			{ Name: "BandAnklet", BuyGroup: ["BandAnklet"]}
+	
+		],
+		Color: ["Default", "#bbbbbb", "#808080", "#202020", "#aa8080", "#80aa80", "#8080aa", "#aaaa80", "#80aaaa", "#aa80aa", "#cc3333", "#33cc33", "#3333cc", "#cccc33", "#33cccc", "#cc33cc"]
+	},	{
+		Group: "LeftAnklet",
+		ParentGroup: "BodyLower",
+		Priority: 22,
+		Clothing: true,
+		Left: 115,
+		Top: 500,
+		AllowPose: ["LegsClosed", "Spread"],
+		Asset: [
+			{ Name: "BandAnklet", BuyGroup: ["BandAnklet"]}
+
+			
+		],
+		Color: ["Default", "#bbbbbb", "#808080", "#202020", "#aa8080", "#80aa80", "#8080aa", "#aaaa80", "#80aaaa", "#aa80aa", "#cc3333", "#33cc33", "#3333cc", "#cccc33", "#33cccc", "#cc33cc"]
+	},
 
 	{
 		Group: "Shoes",
@@ -549,11 +577,22 @@ var AssetFemale3DCG = [
 			{ Name: "Sneakers2", Height: 3 },
 			{ Name: "Heels1", Height: 15 },
 			{ Name: "Heels2", Height: 15 },
-			{ Name: "Boots1", Height: 9 },
+			{ Name: "Boots1", Height: 9,
+				Layer: [
+				{ Name: "Shoes", AllowColorize: true},
+				{ Name: "Sides", AllowColorize: true},
+				{ Name: "Laces", AllowColorize: true}
+				]
+			},
 			{ Name: "MistressBoots", Fetish: ["Leather"], Value: -1, HideItem: ["SocksSocks4", "SocksSocks5"], Alpha: [{ Group: ["BodyLower", "Socks", "SuitLower"], Masks: [[75, 875, 350, 200]] }], Height: 35	},
 			{ Name: "PonyBoots", Fetish: ["Pony"], Value: -1, Alpha: [{ Group: ["BodyLower", "Socks", "SuitLower"], Masks: [[75, 875, 350, 200]] }], Height: 35},
 			{ Name: "Sandals", Priority: 22, Value: 30, HideItem: ["SocksSocks0", "SocksSocks1", "SocksSocks2", "SocksSocks3", "SocksSocks4", "SocksSocks5", "SocksSocks6", "SocksSocksFur"], Height: 3 },
-			{ Name: "SandalsRS", Priority: 22, Value: 25, HideItem: ["SocksSocks0", "SocksSocks1", "SocksSocks2", "SocksSocks3", "SocksSocks4", "SocksSocks5", "SocksSocks6", "SocksSocksFur"], Height: 1 },
+			{ Name: "SandalsRS", Priority: 22, Value: 30, DefaultColor:["#AA9977", "#999999"], HideItem: ["SocksSocks0", "SocksSocks1", "SocksSocks2", "SocksSocks3", "SocksSocks4", "SocksSocks5", "SocksSocks6", "SocksSocksFur"], Height: 1, Alpha: [{ Group: ["BodyUpper"], Pose: ["Hogtied"], Masks: [[0, 0, 500, 70]] }],
+				Layer: [
+					{ Name: "Soles",  Priority: 6 },
+					{ Name: "Top",  Priority: 22 } 
+				]
+			},
 			{ Name: "PawBoots", Fetish: ["Pet"], Value: 45, Height: 3 },
 			{ Name: "WoollyBootsTall", Fetish: ["Pet"], Value: 60, Height: 9 },
 			{ Name: "ThighHighLatexHeels", Fetish: ["Latex"], Value: 80, BuyGroup: "ThighHighLatexHeels", Alpha: [
@@ -561,7 +600,8 @@ var AssetFemale3DCG = [
 					{ Group: ["BodyLower", "Socks", "SuitLower"], Pose: ["LegsClosed"], Masks: [[75, 650, 350, 350]] },
 				], Height: 30
 			},
-			{ Name: "Heels3", Height: 15, Value: 30 }
+			{ Name: "Heels3", Height: 15, Value: 30 },
+			{ Name: "BarefootSandals1", Hide: ["Socks"], Value: 10, BuyGroup: ["BarefootSandals"] }
 		],
 		Color: ["Default", "#bbbbbb", "#808080", "#202020", "#aa8080", "#80aa80", "#8080aa", "#aaaa80", "#80aaaa", "#aa80aa", "#cc3333", "#33cc33", "#3333cc", "#cccc33", "#33cccc", "#cc33cc"]
 	},
@@ -637,7 +677,8 @@ var AssetFemale3DCG = [
 			{ Name: "SmallHat1", Value: 30 },
 			{ Name: "Veil1", Fetish: ["Lingerie"], Value: 40 },
 			{ Name: "Veil2", Fetish: ["Lingerie"], Value: 40 },
-			{ Name: "BakerBoyHat", Value: 40, }
+			{ Name: "BakerBoyHat", Value: 40, },
+			{ Name: "ReindeerBand", Value: 10 },
 		],
 		Color: ["Default", "#202020", "#808080", "#bbbbbb", "#aa8080", "#80aa80", "#8080aa", "#aaaa80", "#80aaaa", "#aa80aa", "#cc3333", "#33cc33", "#3333cc", "#cccc33", "#33cccc", "#cc33cc"]
 	},
@@ -3033,6 +3074,13 @@ var AssetFemale3DCG = [
 					{ Name: "Strap" },
 				]
 			},
+			{
+				Name: "CageMuzzle", Fetish: ["Pet", "Metal"], Value: 30, Difficulty: 4, Time: 20, Random: false, AllowLock: true, Effect: ["BlockMouth"],
+				Layer: [
+					{ Name: "Strap" },
+					{ Name: "Muzzle" },
+				]
+			},
 		],
 		Color: ["Default", "#202020", "#808080", "#bbbbbb", "#aa8080", "#80aa80", "#8080aa", "#aaaa80", "#80aaaa", "#aa80aa", "#cc3333", "#33cc33", "#3333cc", "#cccc33", "#33cccc", "#cc33cc"]
 	},
@@ -3333,7 +3381,7 @@ var AssetFemale3DCG = [
 			{ Name: "Vacbed", Fetish: ["Latex"], ParentGroup: "BodyUpper", Value: 200, Difficulty: 50, Priority:36, SelfBondage: 3, Time: 10, Prerequisite: ["NotKneeling", "AllFours", "NotSuspended", "NotHogtied", "NotKneelingSpread", "NoItemArms", "LegsOpen", "NoItemHands", "NoItemLegs", "NoHorse", "NoItemFeet"], Hide: ["ItemNeckAccessories", "ItemNeckRestraints", "HairBack"], SetPose: ["Yoked", "BaseLower"], Effect: ["Prone", "Freeze", "Block", "Mounted"], Alpha: [{ Masks: [[1, 1, 70, 999], [420, 1, 80, 999]] }], Block: ["ItemArms", "ItemBoots", "ItemBreast", "ItemButt", "ItemFeet", "ItemHands", "ItemLegs", "ItemMisc", "ItemAddon", "ItemNeck", "ItemNeckAccessories", "ItemNeckRestraints", "ItemNipples", "ItemNipplesPiercings", "ItemPelvis", "ItemTorso", "ItemVulva", "ItemVulvaPiercings"], RemoveAtLogin: true },
 			{ Name: "Crib", Category: ["ABDL"], Fetish: ["ABDL"], Priority: 1, Value: 100, Difficulty: 0, SelfBondage: 1, Time: 15, RemoveTime: 10, IsRestraint: true, AllowLock: true, Left: -30, Top: -235, Effect: ["Freeze"], RemoveAtLogin: true, Prerequisite: ["AllFours", "NotSuspended", "NotHogtied", "NoFeetSpreader"], Extended: true, AllowType: ["Open", "Closed", "Stuffed"], SetPose: ["BaseLower"] },
 			{
-				Name: "Bed", Value: 100, Priority: 1, Difficulty: -20, SelfBondage: 0, Time: 5, RemoveTime: 5, BuyGroup: "Bed", RemoveItemOnRemove: [{ Name: "Covers", Group: "ItemAddon" }], 
+				Name: "Bed", Value: 100, Priority: 1, Difficulty: -20, SelfBondage: 0, Time: 5, RemoveTime: 5, DefaultColor: ["#523629", "#888990", "#808284"], BuyGroup: "Bed", RemoveItemOnRemove: [{ Name: "Covers", Group: "ItemAddon" }], 
 				Effect: ["Freeze", "Mounted"],
 				Prerequisite: ["NotKneeling", "AllFours", "NotSuspended", "NotHogtied", "NoFeetSpreader"],
 				SetPose: ["BaseLower"],
@@ -3417,7 +3465,7 @@ var AssetFemale3DCG = [
 		Zone: [[400, 0, 90, 100]],
 		Asset: [
 			{
-				Name: "Covers", Value: -1, Difficulty: 1, SelfBondage: 0, Prerequisite: "OnBed", BuyGroup: "Bed",
+				Name: "Covers", Value: -1, Difficulty: 1, SelfBondage: 0, DefaultColor: ["#99A2AB", "Default"], Prerequisite: "OnBed", BuyGroup: "Bed",
 				Layer: [
 					{ Name: "Outer" },
 					{ Name: "Inner" },

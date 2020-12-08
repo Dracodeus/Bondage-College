@@ -1370,9 +1370,11 @@ function ChatRoomSyncItem(data) {
 			if ((data.Item.Name == null) || (data.Item.Name == "")) {
 				InventoryRemove(ChatRoomCharacter[C], data.Item.Group);
 			} else {
+				var Color = data.Item.Color;
+				if (!CommonColorIsValid(Color)) Color = "Default";
 
 				// Wear the item and applies locks and properties if we need to
-				InventoryWear(ChatRoomCharacter[C], data.Item.Name, data.Item.Group, data.Item.Color, data.Item.Difficulty);
+				InventoryWear(ChatRoomCharacter[C], data.Item.Name, data.Item.Group, Color, data.Item.Difficulty);
 				if (data.Item.Property != null) {
 					var Item = InventoryGet(ChatRoomCharacter[C], data.Item.Group);
 					if (Item != null) {
