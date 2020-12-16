@@ -195,7 +195,7 @@ function InventoryItemNeckFuturisticCollarLockdown(C, LockType) {
 		var Message;
 		var Dictionary = [
 			{ Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber },
-			{ Tag: "DestinationCharacter", Text: C.Name, MemberNumber: C.MemberNumber },
+			{ Tag: "DestinationCharacterName", Text: C.Name, MemberNumber: C.MemberNumber },
 		];
 
 		Message = "FuturisticCollarTriggerLockdown";
@@ -219,7 +219,7 @@ function InventoryItemNeckFuturisticCollarUnlock(C) {
 		var Message;
 		var Dictionary = [
 			{ Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber },
-			{ Tag: "DestinationCharacter", Text: C.Name, MemberNumber: C.MemberNumber },
+			{ Tag: "DestinationCharacterName", Text: C.Name, MemberNumber: C.MemberNumber },
 		];
 
 		Message = "FuturisticCollarTriggerUnlock";
@@ -259,7 +259,7 @@ function InventoryItemNeckFuturisticCollarColor(C, Item) {
 		var Message;
 		var Dictionary = [
 			{ Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber },
-			{ Tag: "DestinationCharacter", Text: C.Name, MemberNumber: C.MemberNumber },
+			{ Tag: "DestinationCharacterName", Text: C.Name, MemberNumber: C.MemberNumber },
 		];
 
 		Message = "FuturisticCollarTriggerColor";
@@ -282,7 +282,7 @@ function InventoryItemNeckFuturisticCollarTogglePermission(C, Item) {
 			var Message;
 			var Dictionary = [
 				{ Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber },
-				{ Tag: "DestinationCharacter", Text: C.Name, MemberNumber: C.MemberNumber },
+				{ Tag: "DestinationCharacterName", Text: C.Name, MemberNumber: C.MemberNumber },
 			];
 
 			Message = "FuturisticCollarSetOpenPermission";
