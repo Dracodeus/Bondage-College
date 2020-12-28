@@ -1968,7 +1968,7 @@ var AssetFemale3DCG = [
 				Effect: ["Block", "Prone"],
 				Block: ["ItemPelvis", "ItemTorso", "ItemBreast", "ItemHands", "ItemFeet", "ItemNipples", "ItemNipplesPiercings", "ItemLegs"],
 				AllowActivePose: ["Kneel"],
-				Alpha: [{Group: ["BodyLower"], Masks: [[135, 462, 75, 120], [290, 462, 75, 120], [135, 582, 230, 418]]}],
+				Alpha: [{Masks: [[0, 362, 500, 100], [0, 462, 210, 120], [290, 462, 210, 120], [0, 582, 500, 418]]}],
 				Layer: [
 					{ Name: "Latex" },
 					{ Name: "Belts" }

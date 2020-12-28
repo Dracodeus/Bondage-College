@@ -219,13 +219,15 @@ VisibilityLocked,All items are forced visible under the Extreme difficulty mode
 LeaveSave,Accept changes
 LeaveNoSave,Cancel changes
 GraphicsFont,Game Font
+GraphicsFontDisclaimer,Fallback fonts will be used if your chosen font is unsupported on your device.
 Arial,Arial
-Times New Roman,Times New Roman
+TimesNewRoman,Times New Roman
 Papyrus,Papyrus
-Comic Sans,Comic Sans
+ComicSans,Comic Sans
 Impact,Impact
 Verdana,Verdana
-Century Gothic,Century Gothic
+HelveticaNeue,Helvetica Neue
+CenturyGothic,Century Gothic
 Georgia,Georgia
-Courier New,Courier New
+CourierNew,Courier New
 Copperplate,Copperplate

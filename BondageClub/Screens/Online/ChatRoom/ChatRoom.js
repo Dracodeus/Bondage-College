@@ -180,26 +180,28 @@ function ChatRoomCanBeLeashed(C) {
  * @returns {boolean} - TRUE if the player can be leashed
  */
 function ChatRoomCanBeLeashedBy(sourceMemberNumber, C) {
-	// Have to not be tethered, and need a leash
-	var canLeash = false
-	var isTrapped = false
-	var neckLock = null
-	for (let A = 0; A < C.Appearance.length; A++)
-		if ((C.Appearance[A].Asset != null) && (C.Appearance[A].Asset.Group.Family == C.AssetFamily)) {
-			if (InventoryItemHasEffect(C.Appearance[A], "Leash", true)) {
-				canLeash = true
-				if (C.Appearance[A].Asset.Group.Name == "ItemNeckRestraints")
-					neckLock = InventoryGetLock(C.Appearance[A])
-			} else if (InventoryItemHasEffect(C.Appearance[A], "Tethered", true) || InventoryItemHasEffect(C.Appearance[A], "Mounted", true) || InventoryItemHasEffect(C.Appearance[A], "Enclose", true)){
-				isTrapped = true
+	if ((ChatRoomData && ChatRoomData.BlockCategory.indexOf("Leashing") < 0) || !ChatRoomData) {
+		// Have to not be tethered, and need a leash
+		var canLeash = false
+		var isTrapped = false
+		var neckLock = null
+		for (let A = 0; A < C.Appearance.length; A++)
+			if ((C.Appearance[A].Asset != null) && (C.Appearance[A].Asset.Group.Family == C.AssetFamily)) {
+				if (InventoryItemHasEffect(C.Appearance[A], "Leash", true)) {
+					canLeash = true
+					if (C.Appearance[A].Asset.Group.Name == "ItemNeckRestraints")
+						neckLock = InventoryGetLock(C.Appearance[A])
+				} else if (InventoryItemHasEffect(C.Appearance[A], "Tethered", true) || InventoryItemHasEffect(C.Appearance[A], "Mounted", true) || InventoryItemHasEffect(C.Appearance[A], "Enclose", true)){
+					isTrapped = true
+				}
 			}
-		}
 
-	if (canLeash && !isTrapped) {
-		if (!neckLock || (!neckLock.Asset.OwnerOnly && !neckLock.Asset.LoverOnly) ||
-			(neckLock.Asset.OwnerOnly && C.IsOwnedByMemberNumber(sourceMemberNumber)) ||
-			(neckLock.Asset.LoverOnly && C.IsLoverOfMemberNumber(sourceMemberNumber))) {
-			return true
+		if (canLeash && !isTrapped) {
+			if (!neckLock || (!neckLock.Asset.OwnerOnly && !neckLock.Asset.LoverOnly) ||
+				(neckLock.Asset.OwnerOnly && C.IsOwnedByMemberNumber(sourceMemberNumber)) ||
+				(neckLock.Asset.LoverOnly && C.IsLoverOfMemberNumber(sourceMemberNumber))) {
+				return true
+			}
 		}
 	}
 	return false

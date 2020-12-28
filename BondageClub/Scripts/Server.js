@@ -468,10 +468,10 @@ function ServerAppearanceLoadFromBundle(C, AssetFamily, Bundle, SourceMemberNumb
 			if ((Asset[I].Name == Bundle[A].Name) && (Asset[I].Group.Name == Bundle[A].Group) && (Asset[I].Group.Family == AssetFamily)) {
 
 				// OwnerOnly items can only get update if it comes from owner
-				if (Asset[I].OwnerOnly && (C.ID == 0) && !FromOwner) break;
+				if (SourceMemberNumber != null && Asset[I].OwnerOnly && (C.ID == 0) && !FromOwner) break;
 
 				// LoverOnly items can only get update if it comes from lover
-				if (Asset[I].LoverOnly && (C.ID == 0) && !FromLoversOrOwner) break;
+				if (SourceMemberNumber != null && Asset[I].LoverOnly && (C.ID == 0) && !FromLoversOrOwner) break;
 
 				var ColorSchema = Asset[I].Group.ColorSchema;
 				var Color = Bundle[A].Color;

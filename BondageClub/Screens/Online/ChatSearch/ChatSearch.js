@@ -46,7 +46,7 @@ function ChatSearchRun() {
 	
 	// Draw the bottom controls
 	if (ChatSearchMessage == "") ChatSearchMessage = "EnterName";
-	DrawText(TextGet(ChatSearchMessage), 255, 935, "White", "Gray");
+	DrawTextFit(TextGet(ChatSearchMessage), 255, 935, 490, "White", "Gray");
 	ElementPosition("InputSearch",  740, 926, 470);
 	DrawButton(980, 898, 280, 64, TextGet("SearchRoom"), "White");
 	DrawButton(1280, 898, 280, 64, TextGet("CreateRoom"), "White");
