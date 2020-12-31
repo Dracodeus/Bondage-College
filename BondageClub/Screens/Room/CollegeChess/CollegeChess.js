@@ -47,8 +47,81 @@ function CollegeChessClick() {
 function CollegeChessGameStart(Difficulty, Bet) {
 	CollegeChessDifficulty = parseInt(Difficulty);
 	CollegeChessBet = Bet;
-	if (Bet == "Money") CharacterChangeMoney(Player, (CollegeChessDifficulty + 1) * -10);
-	//MiniGameStart("Chess", Difficulty, "CollegeChessGameEnd");
+	if (Bet == "Money") CharacterChangeMoney(Player, CollegeChessDifficulty * -10);
+	ChessCharacterLeft = Player;
+	ChessCharacterRight = CollegeChessOpponent;
+	MiniGameStart("Chess", CollegeChessDifficulty, "CollegeChessGameEnd");
+}
+
+/**
+ * In strip or bondage chess, a player can lose one piece of cloth
+ * @returns {void} - Nothing, the returns are quick exit short cuts
+ */
+function CollegeChessStrip(C) {
+	if (InventoryGet(C, "Shoes") != null) return InventoryRemove(C, "Shoes");
+	if (InventoryGet(C, "Socks") != null) return InventoryRemove(C, "Socks");
+	if (InventoryGet(C, "Cloth") != null) return InventoryRemove(C, "Cloth");
+	if (InventoryGet(C, "Bra") != null) return InventoryRemove(C, "Bra");
+	if (InventoryGet(C, "Panties") != null) return InventoryRemove(C, "Panties");
+}
+
+/**
+ * In bondage chess, a player can get restrained progressively
+ * @returns {void} - Nothing, the returns are quick exit short cuts
+ */
+function CollegeChessRestrain(C) {
+	if (InventoryGet(C, "ItemLegs") == null) return InventoryWearRandom(C, "ItemLegs");
+	if (InventoryGet(C, "ItemFeet") == null) return InventoryWearRandom(C, "ItemFeet");
+	if (InventoryGet(C, "ItemNeck") == null) return InventoryWearRandom(C, "ItemNeck");
+	if (InventoryGet(C, "Cloth") != null) return;
+	if (InventoryGet(C, "ItemTorso") == null) return InventoryWearRandom(C, "ItemTorso");
+	if (InventoryGet(C, "ItemBreast") == null) return InventoryWearRandom(C, "ItemBreast");
+	if (InventoryGet(C, "ItemPelvis") == null) return InventoryWearRandom(C, "ItemPelvis");
+}
+
+/**
+ * Called from the chess game to see if we must apply changes (strip or restrain) any opponent
+ * @returns {void} - Nothing
+ */
+function CollegeChessGameProgress() {
+	if ((CollegeChessBet != "Strip") && (CollegeChessBet != "Bondage")) return;
+	if (MiniGameEnded || (MiniGameChessGame.board() == null)) return;
+	if (MiniGameChessGame.in_checkmate() && (MiniGameChessGame.turn() == "b") && (CollegeChessBet == "Strip")) return CharacterNaked(ChessCharacterRight);
+	if (MiniGameChessGame.in_checkmate() && (MiniGameChessGame.turn() == "w") && (CollegeChessBet == "Strip")) return CharacterNaked(ChessCharacterLeft);
+	if (MiniGameChessGame.in_checkmate() && (MiniGameChessGame.turn() == "b") && (CollegeChessBet == "Bondage")) return InventoryWearRandom(ChessCharacterRight, "ItemArms", 5);
+	if (MiniGameChessGame.in_checkmate() && (MiniGameChessGame.turn() == "w") && (CollegeChessBet == "Bondage")) return InventoryWearRandom(ChessCharacterLeft, "ItemArms", 5);
+	let MinorWhite = 0;
+	let MajorWhite = 0;
+	let MinorBlack = 0;
+	let MajorBlack = 0;
+	let Board = MiniGameChessGame.board();
+	for (let X = 0; X < Board.length; X++)
+		for (let Y = 0; Y < Board[X].length; Y++)
+			if (Board[X][Y] != null) {
+				if ((Board[X][Y].color == "b") && (Board[X][Y].type == "p")) MinorWhite++;
+				if ((Board[X][Y].color == "b") && (Board[X][Y].type != "p")) MajorWhite++;
+				if ((Board[X][Y].color == "w") && (Board[X][Y].type == "p")) MinorBlack++;
+				if ((Board[X][Y].color == "w") && (Board[X][Y].type != "p")) MajorBlack++;
+			}
+	if ((ChessMinorPieceWhite > MinorWhite) && (CollegeChessBet == "Bondage")) CollegeChessStrip(ChessCharacterRight);
+	if ((ChessMinorPieceBlack > MinorBlack) && (CollegeChessBet == "Bondage")) CollegeChessStrip(ChessCharacterLeft);
+	if ((ChessMajorPieceWhite > MajorWhite) && (CollegeChessBet == "Strip")) CollegeChessStrip(ChessCharacterRight);
+	if ((ChessMajorPieceBlack > MajorBlack) && (CollegeChessBet == "Strip")) CollegeChessStrip(ChessCharacterLeft);
+	if ((ChessMajorPieceWhite > MajorWhite) && (CollegeChessBet == "Bondage")) CollegeChessRestrain(ChessCharacterRight);
+	if ((ChessMajorPieceBlack > MajorBlack) && (CollegeChessBet == "Bondage")) CollegeChessRestrain(ChessCharacterLeft);
+	ChessMinorPieceWhite = MinorWhite;
+	ChessMajorPieceWhite = MajorWhite;
+	ChessMinorPieceBlack = MinorBlack;
+	ChessMajorPieceBlack = MajorBlack;
+}
+
+/**
+ * Called from the chess game when the player concedes, the AI never concedes
+ * @returns {void} - Nothing
+ */
+function CollegeChessGameConcede() {
+	if (CollegeChessBet == "Strip") CharacterNaked(Player);
+	if (CollegeChessBet == "Bondage") InventoryWearRandom(Player, "ItemArms", 5);
 }
 
 /**
@@ -57,5 +130,9 @@ function CollegeChessGameStart(Difficulty, Bet) {
  */
 function CollegeChessGameEnd() {
 	CommonSetScreen("Room", "CollegeChess");
+	if ((CollegeChessBet == "Money") && (ChessEndStatus == "Draw")) CharacterChangeMoney(Player, CollegeChessDifficulty * 10);
+	if ((CollegeChessBet == "Money") && (ChessEndStatus == "Victory")) CharacterChangeMoney(Player, CollegeChessDifficulty * 20);
+	CollegeChessOpponent.Stage = "Result" + ChessEndStatus + CollegeChessBet;
+	CollegeChessOpponent.CurrentDialog = DialogFind(CollegeChessOpponent, "Intro" + ChessEndStatus + CollegeChessBet);
 	CharacterSetCurrent(CollegeChessOpponent);
 }

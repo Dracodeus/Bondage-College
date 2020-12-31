@@ -681,7 +681,6 @@ function ServerAccountBeep(data) {
 		} else if (data.BeepType == "Leash" && ChatRoomLeashPlayer == data.MemberNumber && data.ChatRoomName) {
 			if (Player.OnlineSharedSettings && Player.OnlineSharedSettings.AllowPlayerLeashing != false && ( CurrentScreen != "ChatRoom" || !ChatRoomData || (CurrentScreen == "ChatRoom" && ChatRoomData.Name != data.ChatRoomName))) {
 				if (ChatRoomCanBeLeashedBy(data.MemberNumber, Player)) {
-					
 					ChatRoomJoinLeash = data.ChatRoomName
 					
 					DialogLeave()
@@ -691,7 +690,6 @@ function ServerAccountBeep(data) {
 						CommonSetScreen("Online", "ChatSearch");
 					}
 					else ChatRoomStart("", "", "MainHall", "IntroductionDark", BackgroundsTagList) //CommonSetScreen("Room", "ChatSearch")
-					
 				} else {
 					ChatRoomLeashPlayer = null
 				}
