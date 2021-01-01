@@ -3,6 +3,8 @@ var CollegeChessBackground = "CollegeClass";
 var CollegeChessOpponent = null;
 var CollegeChessDifficulty = 0;
 var CollegeChessBet = "";
+var CollegeChessPlayerAppearance = null;
+var CollegeChessOpponentAppearance = null;
 
 /**
  * Loads the college chest screen by generating the opponent.
@@ -13,7 +15,9 @@ function CollegeChessLoad() {
 		CollegeChessOpponent = CharacterLoadNPC("NPC_CollegeChess_Opponent");
 		CollegeChessOpponent.AllowItem = false;
 		CollegeEntranceWearStudentClothes(CollegeChessOpponent);
+		CollegeChessOpponentAppearance = CollegeChessOpponent.Appearance.slice(0);
 	}
+	if (CollegeChessPlayerAppearance == null) CollegeChessPlayerAppearance = Player.Appearance.slice(0);
 }
 
 /**
@@ -132,7 +136,19 @@ function CollegeChessGameEnd() {
 	CommonSetScreen("Room", "CollegeChess");
 	if ((CollegeChessBet == "Money") && (ChessEndStatus == "Draw")) CharacterChangeMoney(Player, CollegeChessDifficulty * 10);
 	if ((CollegeChessBet == "Money") && (ChessEndStatus == "Victory")) CharacterChangeMoney(Player, CollegeChessDifficulty * 20);
+	if (((CollegeChessBet == "Bondage") || (CollegeChessBet == "Strip")) && (ChessEndStatus == "Draw")) CollegeChessRestoreAppearance();
 	CollegeChessOpponent.Stage = "Result" + ChessEndStatus + CollegeChessBet;
 	CollegeChessOpponent.CurrentDialog = DialogFind(CollegeChessOpponent, "Intro" + ChessEndStatus + CollegeChessBet);
 	CharacterSetCurrent(CollegeChessOpponent);
+}
+
+/**
+ * When both the player and the opponent should dress back up, we restore the backup appearance
+ * @returns {void} - Nothing
+ */
+function CollegeChessRestoreAppearance() {
+	CollegeChessOpponent.Appearance = CollegeChessOpponentAppearance.slice(0);
+	CharacterRefresh(CollegeChessOpponent);
+	Player.Appearance = CollegeChessPlayerAppearance.slice(0);
+	CharacterRefresh(Player, true);
 }
