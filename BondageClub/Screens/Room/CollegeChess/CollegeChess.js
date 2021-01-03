@@ -6,6 +6,11 @@ var CollegeChessBet = "";
 var CollegeChessPlayerAppearance = null;
 var CollegeChessOpponentAppearance = null;
 
+// Quick functions for player interactions with the chess opponent
+function CollegeChessCanStripPlayer() { return !CharacterIsNaked(Player) }
+function CollegeChessCanStripOpponent() { return !CharacterIsNaked(CollegeChessOpponent) }
+function CollegeChessCanMakeLove() { return (CharacterIsNaked(Player) && CharacterIsNaked(CollegeChessOpponent) && !Player.IsChaste()) }
+
 /**
  * Loads the college chest screen by generating the opponent.
  * @returns {void} - Nothing
@@ -36,7 +41,6 @@ function CollegeChessRun() {
  * @returns {void} - Nothing
  */
 function CollegeChessClick() {
-	if (MouseIn(500, 0, 500, 1000)) CharacterSetCurrent(Player);
 	if (MouseIn(1000, 0, 500, 1000)) CharacterSetCurrent(CollegeChessOpponent);
 	if (MouseIn(1885, 25, 90, 90) && Player.CanWalk()) CommonSetScreen("Room", "CollegeEntrance");
 	if (MouseIn(1885, 145, 90, 90)) InformationSheetLoadCharacter(Player);
@@ -74,13 +78,13 @@ function CollegeChessStrip(C) {
  * @returns {void} - Nothing, the returns are quick exit short cuts
  */
 function CollegeChessRestrain(C) {
-	if (InventoryGet(C, "ItemLegs") == null) return InventoryWearRandom(C, "ItemLegs");
-	if (InventoryGet(C, "ItemFeet") == null) return InventoryWearRandom(C, "ItemFeet");
-	if (InventoryGet(C, "ItemNeck") == null) return InventoryWearRandom(C, "ItemNeck");
+	if ((InventoryGet(C, "ItemLegs") == null) && !InventoryGroupIsBlocked(C, "ItemLegs")) return InventoryWearRandom(C, "ItemLegs");
+	if ((InventoryGet(C, "ItemFeet") == null) && !InventoryGroupIsBlocked(C, "ItemFeet")) return InventoryWearRandom(C, "ItemFeet");
+	if ((InventoryGet(C, "ItemNeck") == null) && !InventoryGroupIsBlocked(C, "ItemNeck")) return InventoryWearRandom(C, "ItemNeck");
 	if (InventoryGet(C, "Cloth") != null) return;
-	if (InventoryGet(C, "ItemTorso") == null) return InventoryWearRandom(C, "ItemTorso");
-	if (InventoryGet(C, "ItemBreast") == null) return InventoryWearRandom(C, "ItemBreast");
-	if (InventoryGet(C, "ItemPelvis") == null) return InventoryWearRandom(C, "ItemPelvis");
+	if ((InventoryGet(C, "ItemTorso") == null) && !InventoryGroupIsBlocked(C, "ItemTorso")) return InventoryWearRandom(C, "ItemTorso");
+	if ((InventoryGet(C, "ItemBreast") == null) && !InventoryGroupIsBlocked(C, "ItemBreast")) return InventoryWearRandom(C, "ItemBreast");
+	if ((InventoryGet(C, "ItemPelvis") == null) && !InventoryGroupIsBlocked(C, "ItemPelvis")) return InventoryWearRandom(C, "ItemPelvis");
 }
 
 /**
@@ -151,4 +155,13 @@ function CollegeChessRestoreAppearance() {
 	CharacterRefresh(CollegeChessOpponent);
 	Player.Appearance = CollegeChessPlayerAppearance.slice(0);
 	CharacterRefresh(Player, true);
+	CollegeChessOpponent.AllowItem = false;
+}
+
+/**
+ * A few activities can trigger a medium blush for the opponent
+ * @returns {void} - Nothing
+ */
+function CollegeChessOpponentBlush() {
+	CharacterSetFacialExpression(CollegeChessOpponent, "Blush", "Medium", 10);
 }
