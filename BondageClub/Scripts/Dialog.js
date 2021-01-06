@@ -1163,7 +1163,7 @@ function DialogItemClick(ClickItem) {
 
 	// Cannot change item if the previous one is locked or blocked by another group
 	if ((CurrentItem == null) || !InventoryItemHasEffect(CurrentItem, "Lock", true)) {
-		if (!InventoryGroupIsBlocked(C))
+		if (!InventoryGroupIsBlocked(C, null, true) && !ClickItem.Worn)
 			if (InventoryAllow(C, ClickItem.Asset.Prerequisite) && InventoryChatRoomAllow(ClickItem.Asset.Category))
 				if ((CurrentItem == null) || (CurrentItem.Asset.Name != ClickItem.Asset.Name)) {
 					if (ClickItem.Asset.Wear) {
@@ -1229,16 +1229,12 @@ function DialogClick() {
 		DialogLeaveItemMenu();
 		DialogLeaveFocusItem();
 		var C = (MouseX < 500) ? Player : CurrentCharacter;
-		var X = (MouseX < 500) ? 0 : 500;
-		var HeightRatio = CharacterAppearanceGetCurrentValue(C, "Height", "Zoom");
-		if ((Player != null) && (Player.VisualSettings != null) && (Player.VisualSettings.ForceFullHeight != null) && Player.VisualSettings.ForceFullHeight) HeightRatio = 1.0;
-		var XOffset = 500 * (1 - HeightRatio) / 2;
-		var YOffset = ((C.Pose.indexOf("Suspension") < 0) && (C.Pose.indexOf("SuspensionHogtied") < 0)) ? 1000 * (1 - HeightRatio) : 0;
+		let X = CharacterAppearanceXOffset(C, C.HeightRatio) + (MouseX < 500 ? 0 : 500);
+		let Y = CharacterAppearanceYOffset(C, C.HeightRatio);
 		for (let A = 0; A < AssetGroup.length; A++)
 			if ((AssetGroup[A].Category == "Item") && (AssetGroup[A].Zone != null))
 				for (let Z = 0; Z < AssetGroup[A].Zone.length; Z++)
-					if (((C.Pose.indexOf("Suspension") < 0) && (MouseX - X >= ((AssetGroup[A].Zone[Z][0] * HeightRatio) + XOffset)) && (MouseY >= (((AssetGroup[A].Zone[Z][1] - C.HeightModifier) * HeightRatio) + YOffset)) && (MouseX - X <= (((AssetGroup[A].Zone[Z][0] + AssetGroup[A].Zone[Z][2]) * HeightRatio) + XOffset)) && (MouseY <= (((AssetGroup[A].Zone[Z][1] + AssetGroup[A].Zone[Z][3] - C.HeightModifier) * HeightRatio) + YOffset)))
-						|| ((C.Pose.indexOf("Suspension") >= 0) && (MouseX - X >= ((AssetGroup[A].Zone[Z][0] * HeightRatio) + XOffset)) && (MouseY >= HeightRatio * ((1000 - (AssetGroup[A].Zone[Z][1] + AssetGroup[A].Zone[Z][3])) - C.HeightModifier)) && (MouseX - X <= (((AssetGroup[A].Zone[Z][0] + AssetGroup[A].Zone[Z][2]) * HeightRatio) + XOffset)) && (MouseY <= HeightRatio * (1000 - ((AssetGroup[A].Zone[Z][1])) - C.HeightModifier)))) {
+					if (DialogClickedInZone(C, AssetGroup[A].Zone[Z], C.HeightRatio, X, Y)) {
 						C.FocusGroup = AssetGroup[A];
 						DialogItemToLock = null;
 						DialogFocusItem = null;
@@ -1251,7 +1247,7 @@ function DialogClick() {
 	// If the user clicked anywhere outside the current character item zones, ensure the position is corrected
 	if (CharacterAppearanceForceUpCharacter == CurrentCharacter.MemberNumber && ((MouseX < 500) || (MouseX > 1000) || (CurrentCharacter.FocusGroup == null))) {
 		CharacterAppearanceForceUpCharacter = 0;
-		CharacterApperanceSetHeightModifier(CurrentCharacter);
+		CharacterAppearanceSetHeightModifiers(CurrentCharacter);
 	}
 
 	// In activity mode, we check if the user clicked on an activity box
@@ -1299,7 +1295,7 @@ function DialogClick() {
 			if ((MouseX >= 1000) && (MouseX < 2000) && (MouseY >= 15) && (MouseY <= 105)) DialogMenuButtonClick();
 
 			// If the user clicks on one of the items
-			if ((MouseX >= 1000) && (MouseX <= 1975) && (MouseY >= 125) && (MouseY <= 1000) && ((DialogItemPermissionMode && (Player.FocusGroup != null)) || (Player.CanInteract() && !InventoryGroupIsBlocked((Player.FocusGroup != null) ? Player : CurrentCharacter))) && (DialogProgress < 0) && (DialogColor == null)) {
+			if ((MouseX >= 1000) && (MouseX <= 1975) && (MouseY >= 125) && (MouseY <= 1000) && ((DialogItemPermissionMode && (Player.FocusGroup != null)) || (Player.CanInteract() && !InventoryGroupIsBlocked((Player.FocusGroup != null) ? Player : CurrentCharacter, null, true))) && (DialogProgress < 0) && (DialogColor == null)) {
 
 				// For each items in the player inventory
 				var X = 1000;
@@ -1367,6 +1363,23 @@ function DialogClick() {
 			DialogSelfMenuSelected.Click();
 	}
 
+}
+
+/**
+ * Returns whether the clicked co-ordinates are inside the asset zone
+ * @param {Character} C - The character the click is on
+ * @param {Array} Zone - The 4 part array of the rectangular asset zone on the character's body: [X, Y, Width, Height]
+ * @param {number} X - The X co-ordinate of the click
+ * @param {number} Y - The Y co-ordinate of the click
+ * @param {number} Zoom - The amount the character has been zoomed
+ * @returns {boolean} - If TRUE the click is inside the zone
+ */
+function DialogClickedInZone(C, Zone, Zoom, X, Y) {
+	let Left = X + Zone[0] * Zoom;
+	let Top = CharacterAppearsInverted(C) ? 1000 - (Y + (Zone[1] + Zone[3]) * Zoom) : Y + Zone[1] * Zoom;
+	let Width = Zone[2] * Zoom;
+	let Height = Zone[3] * Zoom;
+	return MouseIn(Left, Top, Width, Height);
 }
 
 /**
@@ -1511,10 +1524,21 @@ function DialogDrawItemMenu(C) {
 	} else ColorPickerHide();
 
 	// In item permission mode, the player can choose which item he allows other users to mess with.  Allowed items have a green background.  Disallowed have a red background. Limited have an orange background
-	if ((DialogItemPermissionMode && (C.ID == 0) && (DialogProgress < 0)) || (Player.CanInteract() && (DialogProgress < 0) && !InventoryGroupIsBlocked(C))) {
+	if ((DialogItemPermissionMode && (C.ID == 0) && (DialogProgress < 0)) || (Player.CanInteract() && (DialogProgress < 0) && !InventoryGroupIsBlocked(C, null, true))) {
+
+		
+		if (DialogInventory == null) DialogInventoryBuild(C);
+
+		//If only activities are allowed, only add items to the DialogInventory, which can be used for interactions
+		if (InventoryGroupIsBlocked(C)) {
+			var tempDialogInventory = [];
+			for (let I = 0; I < DialogInventory.length; I++) {
+				if ((DialogInventory[I].Asset.Name == "SpankingToys") || DialogInventory[I].Worn) tempDialogInventory.push(DialogInventory[I]);
+			}
+			DialogInventory = tempDialogInventory;
+		}
 
 		// Draw all possible items in that category (12 per screen)
-		if (DialogInventory == null) DialogInventoryBuild(C);
 		var X = 1000;
 		var Y = 125;
 		for (let I = DialogInventoryOffset; (I < DialogInventory.length) && (I < DialogInventoryOffset + 12); I++) {
@@ -1539,7 +1563,8 @@ function DialogDrawItemMenu(C) {
 				Y = Y + 300;
 			}
 		}
-		return;
+
+		if (DialogInventory.length > 0) return;
 	}
 
 	// If the player is progressing
@@ -1608,7 +1633,7 @@ function DialogDrawItemMenu(C) {
 			// Reset the the character's position
 			if (CharacterAppearanceForceUpCharacter == C.MemberNumber) {
 				CharacterAppearanceForceUpCharacter = 0;
-				CharacterApperanceSetHeightModifier(C);
+				CharacterAppearanceSetHeightModifiers(C);
 			}
 
 			// Rebuilds the menu
