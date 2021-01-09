@@ -708,10 +708,9 @@ function CharacterRefresh(C, Push) {
 		if (DialogColor != null) {
 			const FocusItem = C && C.FocusGroup ? InventoryGet(C, C.FocusGroup.Name) : null;
 			if ((ItemColorItem && !FocusItem) || (!ItemColorItem && FocusItem) || InventoryGetItemProperty(ItemColorItem, "Name") !== InventoryGetItemProperty(FocusItem, "Name")) {
-				ItemColorExit();
+				ItemColorCancelAndExit();
 				DialogColor = null;
 				DialogColorSelect = null;
-				ElementRemove("InputColor");
 				DialogMenuButtonBuild(C);
 			}
 		}
