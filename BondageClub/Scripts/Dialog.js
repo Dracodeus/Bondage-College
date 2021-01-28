@@ -2059,7 +2059,7 @@ function DialogDrawItemMenu(C) {
 		if (InventoryGroupIsBlocked(C)) {
 			var tempDialogInventory = [];
 			for (let I = 0; I < DialogInventory.length; I++) {
-				if ((DialogInventory[I].Asset.Name == "SpankingToys")) tempDialogInventory.push(DialogInventory[I]);
+				if ((DialogInventory[I].Asset.Name == "SpankingToys") && (C.FocusGroup.Name != "ItemHands")) tempDialogInventory.push(DialogInventory[I]);
 			}
 			if (tempDialogInventory.length > 0) {
 				for (let I = 0; I < DialogInventory.length; I++) {
