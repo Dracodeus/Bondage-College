@@ -885,14 +885,13 @@ function AppearanceClick() {
 	// When there is an extended item
 	if (DialogFocusItem != null) {
 		CommonDynamicFunction("Inventory" + DialogFocusItem.Asset.Group.Name + DialogFocusItem.Asset.Name + "Click()");
-		return;
 	}
 
 	// Selecting a button in the row at the top
-	if (MouseYIn(25, 90)) AppearanceMenuClick(C);
+	else if (MouseYIn(25, 90)) AppearanceMenuClick(C);
 	
 	// In regular dress-up mode
-	if (CharacterAppearanceMode == "") {
+	else if (CharacterAppearanceMode == "") {
 
 		// If we must remove/restore to default the item
 		if ((MouseX >= 1210) && (MouseX < 1275) && (MouseY >= 145) && (MouseY < 975))
@@ -912,6 +911,7 @@ function AppearanceClick() {
 							DialogInventoryBuild(C);
 							CharacterAppearanceCloth = InventoryGet(C, C.FocusGroup.Name);
 							CharacterAppearanceMode = "Cloth";
+							return;
 						} else CharacterAppearanceNextItem(C, AssetGroup[A].Name, (MouseX > 1500));
 		}
 
@@ -939,7 +939,7 @@ function AppearanceClick() {
 	}
 
 	// In wardrobe mode
-	if (CharacterAppearanceMode == "Wardrobe") {
+	else if (CharacterAppearanceMode == "Wardrobe") {
 
 		// In warehouse mode, we draw the 12 possible warehouse slots for the character to save & load
 		if ((MouseX >= 1300) && (MouseX < 1800) && (MouseY >= 430) && (MouseY < 970))
@@ -963,12 +963,12 @@ function AppearanceClick() {
 	}
 
 	// In item coloring mode
-	if (CharacterAppearanceMode == "Color") {
+	else if (CharacterAppearanceMode == "Color") {
 		ItemColorClick(CharacterAppearanceSelection, CharacterAppearanceColorPickerGroupName, 1200, 25, 775, 950, true);
 	}
 
 	// In cloth selection mode
-	if (CharacterAppearanceMode == "Cloth") {
+	else if (CharacterAppearanceMode == "Cloth") {
 
 		// Prepares a 3x3 square of clothes to present all the possible options
 		var X = 1250;
@@ -976,9 +976,6 @@ function AppearanceClick() {
 		for (let I = DialogInventoryOffset; (I < DialogInventory.length) && (I < DialogInventoryOffset + 9); I++) {
 			if ((MouseX >= X) && (MouseX < X + 225) && (MouseY >= Y) && (MouseY < Y + 275)) {
 				var Item = DialogInventory[I];
-				var Block = InventoryIsPermissionBlocked(C, Item.Asset.DynamicName(Player), Item.Asset.DynamicGroupName);
-				var CreatedItem = InventoryItemCreate(C, Item.Asset.Group.Name, Item.Asset.Name);
-				var Limited = !InventoryCheckLimitedPermission(C, CreatedItem);
 				// In permission mode, we toggle the settings for an item
 				if (DialogItemPermissionMode) {
 					
@@ -988,7 +985,7 @@ function AppearanceClick() {
 					InventoryTogglePermission(Item, null);
 					
 				} else {
-					if (Block || Limited) return;
+					if (InventoryBlockedOrLimited(C, Item)) return;
 					if (InventoryAllow(C, Item.Asset.Prerequisite)) {
 						CharacterAppearanceSetItem(C, C.FocusGroup.Name, DialogInventory[I].Asset);
 						AppearanceMenuBuild(C);
