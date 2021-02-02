@@ -697,7 +697,7 @@ function CharacterRefresh(C, Push) {
 	C.HasScriptedAssets = !!C.Appearance.find(CA => CA.Asset.DynamicScriptDraw);
 	
 	if ((C.ID == 0) && (C.OnlineID != null) && ((Push == null) || (Push == true))) {
-		ChatRoomRefreshChatSettings(C);
+		ChatRoomRefreshChatSettings();
 		ServerPlayerAppearanceSync();
 	}
 	// Also refresh the current dialog menu if the refreshed character is the current character.
@@ -1190,4 +1190,13 @@ function CharacterCanKneel(C) {
 	if (C.Pose == null) return true;
 	if (C.Pose.includes("Suspension") || C.Pose.includes("Hogtied")) return false;
 	return C.CanChangeToPose("Kneel");
+}
+
+function CharacterGetDarkFactor(C) {
+	let DarkFactor = 1.0;
+	if (C.GetBlindLevel() >= 3) DarkFactor = 0.0;
+	else if (CommonPhotoMode) DarkFactor = 1.0;
+	else if (C.GetBlindLevel() == 2) DarkFactor = 0.15;
+	else if (C.GetBlindLevel() == 1) DarkFactor = 0.3;
+	return DarkFactor;
 }

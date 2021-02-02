@@ -180,7 +180,7 @@ function ExtendedItemClick(Options, IsCloth, OptionsPerPage, ShowImages = true) 
 	OptionsPerPage = OptionsPerPage || Math.min(Options.length, XYPositions.length - 1);
 
 	// Exit button
-	if (MouseIn(1885, 25, 90, 85)) {
+	if (MouseIn(1885, 25, 90, 90)) {
 		DialogFocusItem = null;
 		if (ExtendedItemPermissionMode && CurrentScreen == "ChatRoom") ChatRoomCharacterUpdate(Player);
 		ExtendedItemPermissionMode = false;

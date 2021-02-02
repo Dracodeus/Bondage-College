@@ -49,13 +49,10 @@ function InventoryItemMiscHighSecurityPadlockPlayerHasKeys(C, Item) {
 
 // Draw the extension screen
 function InventoryItemMiscHighSecurityPadlockDraw() {
-	
 	var C = CharacterGetCurrent();
-	
-	DrawRect(1387, 225, 225, 275, "white");
-	DrawImageResize("Assets/" + DialogFocusItem.Asset.Group.Family + "/" + DialogFocusItem.Asset.Group.Name + "/Preview/" + DialogFocusItem.Asset.Name + ".png", 1389, 227, 221, 221);
-	DrawTextFit(DialogFocusItem.Asset.Description, 1500, 475, 221, "black");
-	if ((DialogFocusSourceItem != null) && (DialogFocusSourceItem.Property != null) && (DialogFocusSourceItem.Property.LockMemberNumber != null)) 
+
+	DrawAssetPreview(1387, 225, DialogFocusItem.Asset);
+	if ((DialogFocusSourceItem != null) && (DialogFocusSourceItem.Property != null) && (DialogFocusSourceItem.Property.LockMemberNumber != null))
 		DrawText(DialogFindPlayer("LockMemberNumber") + " " + DialogFocusSourceItem.Property.LockMemberNumber.toString(), 1500, 650, "white", "gray");
 	
 	if (!InventoryGroupIsBlocked(C, C.FocusGroup.Name)&& (DialogFocusSourceItem != null && ((DialogFocusSourceItem.Property.MemberNumberListKeys && CommonConvertStringToArray("" + DialogFocusSourceItem.Property.MemberNumberListKeys).indexOf(Player.MemberNumber) >= 0)))) {
@@ -74,7 +71,6 @@ function InventoryItemMiscHighSecurityPadlockDraw() {
 			DrawText(DialogFindPlayer("HighSecurityWarning"), 1500, 550, "red", "gray");
 		}
 	} else {
-		
 		DrawText(DialogFindPlayer(DialogFocusItem.Asset.Group.Name + DialogFocusItem.Asset.Name + "Intro"), 1500, 600, "white", "gray");
 	}
 }
