@@ -841,6 +841,7 @@ function InventoryConfiscateRemote() {
 	InventoryDelete(Player, "VibratorRemote", "ItemVulva");
 	InventoryDelete(Player, "VibratorRemote", "ItemNipples");
 	InventoryDelete(Player, "LoversVibratorRemote", "ItemVulva");
+	InventoryDelete(Player, "SpankingToysVibeRemote", "ItemHands");
 }
 
 /**
