@@ -653,14 +653,14 @@ function DialogMenuButtonBuild(C) {
 							break;
 						}
 			}
-			if (IsItemLocked && !Player.IsBlind() && (Item.Property != null) && (Item.Property.LockedBy != null) && (Item.Property.LockedBy != ""))
+			if (IsItemLocked && (Item.Property != null) && (Item.Property.LockedBy != null) && (Item.Property.LockedBy != "" && (!Player.IsBlind() || Item.Property.LockedBy == "SafewordPadlock")))
 				DialogMenuButton.push("InspectLock");
 			
 		} else {
 		  if ((DialogInventory != null) && (DialogInventory.length > 12) && ((Player.CanInteract() && !IsGroupBlocked) || DialogItemPermissionMode)) DialogMenuButton.push("Next");
 				if (C.FocusGroup.Name == "ItemMouth" || C.FocusGroup.Name == "ItemMouth2" || C.FocusGroup.Name == "ItemMouth3") DialogMenuButton.push("ChangeLayersMouth");
 				if (IsItemLocked && DialogCanUnlock(C, Item) && InventoryAllow(C, Item.Asset.Prerequisite) && !IsGroupBlocked && ((C.ID != 0) || Player.CanInteract())) {  DialogMenuButton.push("Remove"); }
-				if (IsItemLocked && (!Player.IsBlind() || (InventoryAllow(C, Item.Asset.Prerequisite) && !IsGroupBlocked && !InventoryGroupIsBlocked(Player, "ItemHands") && InventoryItemIsPickable(Item))  && (C.ID == 0 || (C.OnlineSharedSettings && !C.OnlineSharedSettings.DisablePickingLocksOnSelf)))
+				if (IsItemLocked && ((!Player.IsBlind() || (Item.Property && Item.Property.LockedBy == "SafewordPadlock")) || (InventoryAllow(C, Item.Asset.Prerequisite) && !IsGroupBlocked && !InventoryGroupIsBlocked(Player, "ItemHands") && InventoryItemIsPickable(Item))  && (C.ID == 0 || (C.OnlineSharedSettings && !C.OnlineSharedSettings.DisablePickingLocksOnSelf)))
 					&& (Item.Property != null) && (Item.Property.LockedBy != null) && (Item.Property.LockedBy != ""))
 					DialogMenuButton.push("LockMenu");
 				if ((Item != null) && (C.ID == 0) && (!Player.CanInteract() || (IsItemLocked && !DialogCanUnlock(C, Item))) && (DialogMenuButton.indexOf("Unlock") < 0) && InventoryAllow(C, Item.Asset.Prerequisite) && !IsGroupBlocked) DialogMenuButton.push("Struggle");
@@ -1890,14 +1890,6 @@ function DialogChatRoomAdminAction(ActionType, Publish) {
 }
 
 /**
- * Checks if a chat room player swap is in progress
- * @returns {boolean} - Returns true, if a swap is in progress, false otherwise
- */
-function DialogChatRoomHasSwapTarget() {
-	return ChatRoomHasSwapTarget();
-}
-
-/**
  * Leave the dialog and revert back to a safe state, when the player uses her safe word
  * @returns {void} - Nothing
  */
@@ -1910,7 +1902,7 @@ function DialogChatRoomSafewordRevert() {
  * Leave the dialog and release the player of all restraints before returning them to the Main Lobby
  * @returns {void} - Nothing
  */
- function DialogChatRoomSafewordRelease() {
- 	DialogLeave();
- 	ChatRoomSafewordRelease();
- }
+function DialogChatRoomSafewordRelease() {
+	DialogLeave();
+	ChatRoomSafewordRelease();
+}

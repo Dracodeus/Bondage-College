@@ -14,7 +14,7 @@ var ChatRoomMoneyForOwner = 0;
 var ChatRoomQuestGiven = [];
 var ChatRoomSpace = "";
 var ChatRoomGame = "";
-var ChatRoomSwapTarget = null;
+var ChatRoomMoveTarget = null;
 var ChatRoomHelpSeen = false;
 var ChatRoomAllowCharacterUpdate = true;
 var ChatRoomStruggleAssistBonus = 0;
@@ -164,11 +164,6 @@ function ChatRoomPlayerIsAdmin() { return ((ChatRoomData != null && ChatRoomData
  * @returns {boolean} - TRUE if the current character is an admin.
  */
 function ChatRoomCurrentCharacterIsAdmin() { return ((CurrentCharacter != null) && (ChatRoomData.Admin != null) && (ChatRoomData.Admin.indexOf(CurrentCharacter.MemberNumber) >= 0)) }
-/**
- * Checks if the player is currently swapping between two characters.
- * @returns {boolean} - TRUE if the player is in a swap operation.
- */
-function ChatRoomHasSwapTarget() { return (ChatRoomSwapTarget != null) }
 /**
  * Checks if the room allows the photograph feature to be used.
  * @returns {boolean} - TRUE if the player can take a photo.
@@ -539,7 +534,7 @@ function ChatRoomDrawCharacter(DoClick) {
 		}
 		if (DoClick) {
 			if (MouseIn(CharX, CharY, Space, 1000 * Zoom)) {
-				return ChatRoomClickCharacter(ChatRoomCharacter[C], CharX, CharY, Zoom, (MouseX - CharX) / Zoom, (MouseY - CharY) / Zoom);
+				return ChatRoomClickCharacter(ChatRoomCharacter[C], CharX, CharY, Zoom, (MouseX - CharX) / Zoom, (MouseY - CharY) / Zoom, C);
 			}
 		} else {
 
@@ -553,7 +548,7 @@ function ChatRoomDrawCharacter(DoClick) {
 			DrawCharacter(ChatRoomCharacter[C], CharX, CharY, Zoom);
 
 			if (ChatRoomCharacter[C].MemberNumber != null) {
-				ChatRoomDrawCharacterOverlay(ChatRoomCharacter[C], CharX, CharY, Zoom);
+				ChatRoomDrawCharacterOverlay(ChatRoomCharacter[C], CharX, CharY, Zoom, C);
 			}
 		}
 	}
@@ -565,8 +560,9 @@ function ChatRoomDrawCharacter(DoClick) {
  * @param {number} CharX Character's X position on canvas
  * @param {number} CharY Character's Y position on canvas
  * @param {number} Zoom Room zoom
+ * @param {number} Pos Index of target character
  */
-function ChatRoomDrawCharacterOverlay(C, CharX, CharY, Zoom) {
+function ChatRoomDrawCharacterOverlay(C, CharX, CharY, Zoom, Pos) {
 	// Draw the ghostlist/friendlist, whitelist/blacklist, admin icons
 	if (ChatRoomHideIconState == 0) {
 		if (Player.WhiteList.includes(C.MemberNumber)) {
@@ -587,6 +583,29 @@ function ChatRoomDrawCharacterOverlay(C, CharX, CharY, Zoom) {
 	if (ChatRoomTargetMemberNumber == C.MemberNumber && ChatRoomHideIconState <= 1) {
 		DrawImage("Icons/Small/Whisper.png", CharX + 75 * Zoom, CharY + 950 * Zoom);
 	}
+
+	if (ChatRoomMoveTarget !== null) {
+		const MoveTargetPos = ChatRoomCharacter.findIndex(c => c.MemberNumber === ChatRoomMoveTarget);
+		if (MoveTargetPos < 0) {
+			ChatRoomMoveTarget = null;
+		} else {
+			if (ChatRoomMoveTarget === C.MemberNumber) {
+				DrawButton(CharX + 200 * Zoom, CharY + 750 * Zoom, 90 * Zoom, 90 * Zoom, "", "White");
+				DrawImageResize("Icons/Remove.png", CharX + 202 * Zoom, CharY + 752 * Zoom, 86 * Zoom, 86 * Zoom);
+			} else {
+				if (Pos < MoveTargetPos) {
+					DrawButton(CharX + 100 * Zoom, CharY + 750 * Zoom, 90 * Zoom, 90 * Zoom, "", "White");
+					DrawImageResize("Icons/Here.png", CharX + 102 * Zoom, CharY + 752 * Zoom, 86 * Zoom, 86 * Zoom);
+				}
+				DrawButton(CharX + 200 * Zoom, CharY + 750 * Zoom, 90 * Zoom, 90 * Zoom, "", "White");
+				DrawImageResize("Icons/Swap.png", CharX + 202 * Zoom, CharY + 752 * Zoom, 86 * Zoom, 86 * Zoom);
+				if (Pos > MoveTargetPos) {
+					DrawButton(CharX + 300 * Zoom, CharY + 750 * Zoom, 90 * Zoom, 90 * Zoom, "", "White");
+					DrawImageResize("Icons/Here.png", CharX + 302 * Zoom, CharY + 752 * Zoom, 86 * Zoom, 86 * Zoom);
+				}
+			}
+		}
+	}
 }
 
 /**
@@ -597,8 +616,9 @@ function ChatRoomDrawCharacterOverlay(C, CharX, CharY, Zoom) {
  * @param {number} Zoom Room zoom
  * @param {number} ClickX Click X postion relative to character, without zoom
  * @param {number} ClickY Click Y postion relative to character, without zoom
+ * @param {number} Pos Index of target character
  */
-function ChatRoomClickCharacter(C, CharX, CharY, Zoom, ClickX, ClickY) {
+function ChatRoomClickCharacter(C, CharX, CharY, Zoom, ClickX, ClickY, Pos) {
 
 	// Click on name
 	if (ClickY > 900) {
@@ -617,6 +637,48 @@ function ChatRoomClickCharacter(C, CharX, CharY, Zoom, ClickX, ClickY) {
 		}
 		ChatRoomSetTarget(C.MemberNumber);
 		return;
+	}
+
+	// Moving character inside room
+	if (ChatRoomMoveTarget !== null) {
+		const MoveTargetPos = ChatRoomCharacter.findIndex(c => c.MemberNumber === ChatRoomMoveTarget);
+		if (MoveTargetPos < 0) {
+			ChatRoomMoveTarget = null;
+		} else {
+			if (Pos < MoveTargetPos && MouseIn(CharX + 100 * Zoom, CharY + 750 * Zoom, 90 * Zoom, 90 * Zoom)) {
+				// Move left
+				for (let i = 0; i < MoveTargetPos - Pos; i++) {
+					ServerSend("ChatRoomAdmin", {
+						MemberNumber: ChatRoomMoveTarget,
+						Action: "MoveLeft",
+						Publish: i === 0
+					});
+				}
+				ChatRoomMoveTarget = null
+			} else if (MouseIn(CharX + 200 * Zoom, CharY + 750 * Zoom, 90 * Zoom, 90 * Zoom)) {
+				// Swap or cancel
+				if (ChatRoomMoveTarget !== C.MemberNumber) {
+					ServerSend("ChatRoomAdmin", {
+						MemberNumber: Player.ID,
+						TargetMemberNumber: ChatRoomMoveTarget,
+						DestinationMemberNumber: C.MemberNumber,
+						Action: "Swap"
+					});
+				}
+				ChatRoomMoveTarget = null;
+			} else if ( Pos > MoveTargetPos && MouseIn(CharX + 300 * Zoom, CharY + 750 * Zoom, 90 * Zoom, 90 * Zoom)) {
+				// Move right
+				for (let i = 0; i < Pos - MoveTargetPos; i++) {
+					ServerSend("ChatRoomAdmin", {
+						MemberNumber: ChatRoomMoveTarget,
+						Action: "MoveRight",
+						Publish: i === 0
+					});
+				}
+				ChatRoomMoveTarget = null;
+			}
+			return;
+		}
 	}
 
 	// Disable examining when blind setting
@@ -653,12 +715,6 @@ function ChatRoomClickCharacter(C, CharX, CharY, Zoom, ClickX, ClickY) {
 			// Don't do anything if the thermometer is clicked without access to it
 			if (MouseIn(CharX + 50 * Zoom, CharY + 200 * Zoom, 100 * Zoom, 415 * Zoom) && C.ArousalZoom) return;
 		}
-	}
-
-	// If a character to swap was selected, we can complete the swap with the second character
-	if (ChatRoomHasSwapTarget() && ChatRoomSwapTarget !== C.MemberNumber) {
-		ChatRoomCompleteSwap(C.MemberNumber);
-		return;
 	}
 
 	// Intercepts the online game character clicks if we need to
@@ -2174,38 +2230,13 @@ function ChatRoomStopLeave(){
  */
 function ChatRoomAdminAction(ActionType, Publish) {
 	if ((CurrentCharacter != null) && (CurrentCharacter.MemberNumber != null) && ChatRoomPlayerIsAdmin()) {
-		if ((ActionType == "Swap") || (ActionType == "SwapCancel")) {
-			ChatRoomSwapTarget = (ActionType == "Swap") ? CurrentCharacter.MemberNumber : null;
-			DialogLeave();
-			return;
+		if (ActionType == "Move") {
+			ChatRoomMoveTarget = CurrentCharacter.MemberNumber;
+		} else {
+			ServerSend("ChatRoomAdmin", { MemberNumber: CurrentCharacter.MemberNumber, Action: ActionType, Publish: ((Publish == null) || (Publish != "false")) });
 		}
-		ServerSend("ChatRoomAdmin", { MemberNumber: CurrentCharacter.MemberNumber, Action: ActionType, Publish: ((Publish == null) || (Publish != "false")) });
-		if ((ActionType == "MoveLeft") || (ActionType == "MoveRight")) {
-			var Pos = ChatRoomCharacter.indexOf(CurrentCharacter);
-			if (ActionType == "MoveRight") Pos = Pos + 2;
-			if (Pos < 1) Pos = 1;
-			if (Pos > ChatRoomCharacter.length) Pos = ChatRoomCharacter.length;
-			CurrentCharacter.CurrentDialog = CurrentCharacter.CurrentDialog.replace("CharacterPosition", Pos.toString());
-		} else DialogLeave();
+		DialogLeave();
 	}
-}
-
-/**
- * Swaps the current swap target's position with a given character, then publish the action.
- * @param {number} MemberNumber - Member number of the character to swap with.
- * @returns {void} - Nothing
- */
-function ChatRoomCompleteSwap(MemberNumber) {
-	if (ChatRoomSwapTarget == null) return;
-	ServerSend("ChatRoomAdmin",
-		{
-			MemberNumber: Player.ID,
-			TargetMemberNumber: ChatRoomSwapTarget,
-			DestinationMemberNumber: MemberNumber,
-			Action: "Swap",
-			Publish: true
-		});
-	ChatRoomSwapTarget = null;
 }
 
 /**

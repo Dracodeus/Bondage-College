@@ -62,9 +62,11 @@ PlayerGagged,,,(She looks at your gag and giggles.),,
 190,,(Clean the journalist.),(She giggles as you dust her.  She takes a few pictures of you in your bondage.),"DoActivity(""InterviewMaidCleanJournalist"")",
 190,,(Struggle for the camera.),(You struggle sensually for the camera and moan loudly for the viewers.),"DoActivity(""InterviewMaidStruggleSexy"")",
 190,,(Check the room.),,DialogLeave(),
-1000,,,Can you please release me or ask her to relase me?  I have an interview to do.,,
+1000,,,Can you please release me or ask her to help me?  I have an interview to do.,,
+1000,,(Clean her.),(You clean her sensually as the Mistress smirks.),"DoActivity(""InterviewMaidCleanJournalist"")","CanDoActivity(""InterviewMaidCleanForMistress"")"
+1000,,(Release her.),(The Mistress gets in front of you and instructs you to clean first.),,
 1000,,(Check the room.),,DialogLeave(),
-1100,,,Thanks for helping.  (She winks at you.)  Right on time for the interview.,,
+1100,,,Thanks for helping.  (She winks at you.)  Right on time for the interview.  Finish your cleaning so we can start.,,
 1100,,(Check the room.),,DialogLeave(),
 2000,,,"(A club member is restrained in your room.  She struggles in her cuffs.)  Hello there, I think I got in trouble.",,CurrentCharacter.IsRestrained()
 2000,,,"(A club member restrained a maid in your room.)  Hello there.  As you can see, this maid seems to enjoy trouble.",,!CurrentCharacter.IsRestrained()
