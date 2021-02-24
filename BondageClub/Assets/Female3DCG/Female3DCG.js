@@ -643,6 +643,15 @@ var AssetFemale3DCG = [
 				{ Name: "Shoes",  AllowColorize: false }
 					]
 			},
+			{ Name: "DeluxeBoots", Fetish: ["Leather"], Value: -1, Alpha: [{Masks: [[180, 900, 50, 100], [280, 900, 50, 100] ] }], DefaultColor: ["#9F0D0D","#700A0A","#700A0A","#9F0D0D"], Height: 35,
+				Layer: [
+					{ Name: "Boots", AllowColorize: true},
+					{ Name: "Laces", AllowColorize: true},
+					{ Name: "Heels", AllowColorize: true},
+					{ Name: "Straps", AllowColorize: true},
+					{ Name: "Buckles", AllowColorize: false},
+					]
+			},
 		],
 		Color: ["Default", "#bbbbbb", "#808080", "#202020", "#aa8080", "#80aa80", "#8080aa", "#aaaa80", "#80aaaa", "#aa80aa", "#cc3333", "#33cc33", "#3333cc", "#cccc33", "#33cccc", "#cc33cc"]
 	},
