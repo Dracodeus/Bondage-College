@@ -70,6 +70,7 @@ const ChatRoomArousalMsg_ChanceGagMod = {
 	} 
 var ChatRoomPinkFlashTime = 0;
 var ChatRoomHideIconState = 0;
+var ChatRoomMenuButtons = [];
 
 /**
  * Checks if the player can add the current character to her whitelist.
@@ -168,6 +169,11 @@ function ChatRoomCurrentCharacterIsAdmin() { return ((CurrentCharacter != null) 
  * @returns {boolean} - TRUE if the player is in a swap operation.
  */
 function ChatRoomHasSwapTarget() { return (ChatRoomSwapTarget != null) }
+/**
+ * Checks if the room allows the photograph feature to be used.
+ * @returns {boolean} - TRUE if the player can take a photo.
+ */
+function ChatRoomCanTakePhotos() { return (ChatRoomData && ChatRoomData.BlockCategory && !ChatRoomData.BlockCategory.includes("Photos")) || !ChatRoomData; }
 
 /**
  * Checks if the player can give the target character her high security keys.
@@ -404,6 +410,7 @@ function ChatRoomLoad() {
 	ChatRoomCharacterUpdate(Player);
 	ActivityChatRoomArousalSync(Player);
 	ChatRoomHideIconState = 0;
+	ChatRoomMenuBuild();
 }
 
 /**
@@ -461,6 +468,20 @@ function ChatRoomStart(Space, Game, LeaveRoom, Background, BackgroundTagList) {
 	BackgroundSelectionTagList = BackgroundTagList;
 	CommonSetScreen("Online", "ChatSearch");
 	
+}
+
+/**
+ * Create the list of chat room menu buttons
+ * @returns {void} - Nothing
+ */
+function ChatRoomMenuBuild() {
+	ChatRoomMenuButtons = [];
+	ChatRoomMenuButtons.push("Exit");
+	if (ChatRoomGame === "") ChatRoomMenuButtons.push("Cut");
+	else ChatRoomMenuButtons.push("GameOption");
+	ChatRoomMenuButtons.push("Kneel", "Icons");
+	if (ChatRoomCanTakePhotos()) ChatRoomMenuButtons.push("Camera");
+	ChatRoomMenuButtons.push("Dress", "Profile", "Admin");
 }
 
 /**
@@ -978,14 +999,8 @@ function ChatRoomRun() {
 		DrawButton(1005, 2, 120, 60, "", (ChatRoomCanLeave()) ? "White" : "Pink", "Icons/Rectangle/Exit.png", TextGet("MenuLeave"));
 	}
 
-	if (ChatRoomGame == "") DrawButton(1129, 2, 120, 60, "", "White", "Icons/Rectangle/Cut.png", TextGet("MenuCut"));
-	else DrawButton(1129, 2, 120, 60, "", "White", "Icons/Rectangle/GameOption.png", TextGet("MenuGameOption"));
-	DrawButton(1254, 2, 120, 60, "", (Player.CanKneel()) ? "White" : "Pink", "Icons/Rectangle/Kneel.png", TextGet("MenuKneel"));
-	DrawButton(1378, 2, 120, 60, "", "White", "Icons/Rectangle/Eye" + ChatRoomHideIconState.toString() + ".png", TextGet("MenuIcons"));
-	DrawButton(1502, 2, 120, 60, "", "White", "Icons/Rectangle/Camera.png", TextGet("MenuCamera"));
-	DrawButton(1626, 2, 120, 60, "", (Player.CanChange() && OnlineGameAllowChange()) ? "White" : "Pink", "Icons/Rectangle/Dress.png", TextGet("MenuDress"));
-	DrawButton(1751, 2, 120, 60, "", "White", "Icons/Rectangle/Character.png", TextGet("MenuProfile"));
-	DrawButton(1875, 2, 120, 60, "", "White", "Icons/Rectangle/Preference.png", TextGet("MenuAdmin"));
+	// Draw the buttons at the top-right
+	ChatRoomMenuDraw();
 
 	// In orgasm mode, we add a pink filter and different controls depending on the stage.  The pink filter shows a little above 90
 	if ((Player.ArousalSettings != null) && (Player.ArousalSettings.Active != null) && (Player.ArousalSettings.Active != "Inactive") && (Player.ArousalSettings.Active != "NoMeter")) {
@@ -1031,6 +1046,26 @@ function ChatRoomRun() {
 }
 
 /**
+ * Draws the chat room menu buttons
+ * @returns {void} - Nothing
+ */
+function ChatRoomMenuDraw() {
+	const Space = 870 / (ChatRoomMenuButtons.length - 1);
+	let ButtonColor = "White";
+	for (let B = 0; B < ChatRoomMenuButtons.length; B++) {
+		let Button = ChatRoomMenuButtons[B];
+		if (Button === "Exit") continue; // handled in ChatRoomRun()
+		const ImageSuffix = Button === "Icons" ? ChatRoomHideIconState.toString() : "";
+		if (Button === "Exit" && !ChatRoomCanLeave()
+			|| (Button === "Kneel" && !Player.CanKneel())
+			|| (Button === "Dress" && (!Player.CanChange() || !OnlineGameAllowChange())))
+			ButtonColor = "Pink";
+		else ButtonColor = "White";
+		DrawButton(1005 + Space * B, 2, 120, 60, "", ButtonColor, "Icons/Rectangle/" + Button + ImageSuffix + ".png", TextGet("Menu" + Button));
+	}
+}
+
+/**
  * Handles clicks the chatroom screen.
  * @returns {void} - Nothing.
  */
@@ -1050,94 +1085,104 @@ function ChatRoomClick() {
 
 	// When the user chats or clicks on a character
 	if (MouseIn(0, 0, 1000, 1000)) ChatRoomDrawCharacter(true);
+	
+	// When the user clicks a menu button in the top-right
+	if (MouseYIn(0, 62)) ChatRoomMenuClick();
+}
 
-	const PlayerIsSlow = Player.IsSlow();
-
-	// When the user leaves
-	if (MouseIn(1005, 0, 120, 62) && ChatRoomCanLeave() && !PlayerIsSlow) {
-		DialogLentLockpicks = false;
-		ChatRoomClearAllElements();
-		ServerSend("ChatRoomLeave", "");
-		ChatRoomSetLastChatRoom("")		
-		// Clear leash since the player has escaped
-		ChatRoomLeashPlayer = null
-		CommonSetScreen("Online", "ChatSearch");
-		CharacterDeleteAllOnline();
-	}
-
-	// When the player is slow and attempts to leave
-	if (MouseIn(1005, 0, 120, 62) && ChatRoomCanLeave() && PlayerIsSlow) {
-
-		// If the player clicked to leave, we start a timer based on evasion level and send a chat message
-		if ((ChatRoomSlowtimer == 0) && (ChatRoomSlowStop == false)) {
-			ServerSend("ChatRoomChat", { Content: "SlowLeaveAttempt", Type: "Action", Dictionary: [{Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber}]});
-			ChatRoomSlowtimer = CurrentTime + (10 * (1000 - (50 * SkillGetLevelReal(Player, "Evasion"))));
+/**
+ * Process chat room menu button clicks
+ * @returns {void} - Nothing
+ */
+function ChatRoomMenuClick() {
+	const Space = 870 / (ChatRoomMenuButtons.length - 1);
+	for (let B = 0; B < ChatRoomMenuButtons.length; B++) {
+		if (MouseXIn(1005 + Space * B, 120)) {
+			switch (ChatRoomMenuButtons[B]) {
+				case "Exit":
+					const PlayerIsSlow = Player.IsSlow();
+					// When the user leaves
+					if (ChatRoomCanLeave() && !PlayerIsSlow) {
+						DialogLentLockpicks = false;
+						ChatRoomClearAllElements();
+						ServerSend("ChatRoomLeave", "");
+						ChatRoomSetLastChatRoom("");
+						// Clear leash since the player has escaped
+						ChatRoomLeashPlayer = null;
+						CommonSetScreen("Online", "ChatSearch");
+						CharacterDeleteAllOnline();
+					}
+					// When the player is slow and attempts to leave
+					if (ChatRoomCanLeave() && PlayerIsSlow) {
+						// If the player clicked to leave, we start a timer based on evasion level and send a chat message
+						if ((ChatRoomSlowtimer == 0) && (ChatRoomSlowStop == false)) {
+							ServerSend("ChatRoomChat", { Content: "SlowLeaveAttempt", Type: "Action", Dictionary: [{ Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber }] });
+							ChatRoomSlowtimer = CurrentTime + (10 * (1000 - (50 * SkillGetLevelReal(Player, "Evasion"))));
+						}
+						// If the player clicked to cancel leaving, we alert the room and stop the timer
+						else if ((ChatRoomSlowtimer != 0) && (ChatRoomSlowStop == false)) {
+							ServerSend("ChatRoomChat", { Content: "SlowLeaveCancel", Type: "Action", Dictionary: [{ Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber }] });
+							ChatRoomSlowtimer = 0;
+						}
+					}
+					break;
+				case "Cut":
+					// When the user wants to remove the top part of his chat to speed up the screen, we only keep the last 20 entries
+					var L = document.getElementById("TextAreaChatLog");
+					while (L.childElementCount > 20)
+						L.removeChild(L.childNodes[0]);
+					ElementScrollToEnd("TextAreaChatLog");
+					break;
+				case "GameOption":
+					// The cut button can become the game option button if there's an online game going on
+					document.getElementById("InputChat").style.display = "none";
+					document.getElementById("TextAreaChatLog").style.display = "none";
+					CommonSetScreen("Online", "Game" + ChatRoomGame);
+					break;
+				case "Kneel":
+					// When the user character kneels
+					if (Player.CanKneel()) {
+						const PlayerIsKneeling = Player.ActivePose && Player.ActivePose.includes("Kneel");
+						ServerSend("ChatRoomChat", { Content: PlayerIsKneeling ? "StandUp" : "KneelDown", Type: "Action", Dictionary: [{ Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber }] });
+						CharacterSetActivePose(Player, PlayerIsKneeling ? "BaseLower" : "Kneel");
+						ChatRoomStimulationMessage("Kneel");
+						ServerSend("ChatRoomCharacterPoseUpdate", { Pose: Player.ActivePose });
+					}
+					break;
+				case "Icons":
+					// When the user toggles icon visibility
+					ChatRoomHideIconState += 1;
+					if (ChatRoomHideIconState > 3) ChatRoomHideIconState = 0;
+					break;
+				case "Camera":
+					// When the user takes a photo of the room
+					ChatRoomPhotoFullRoom();
+					break;
+				case "Dress":
+					// When the user wants to change clothes
+					if (Player.CanChange() && OnlineGameAllowChange()) {
+						document.getElementById("InputChat").style.display = "none";
+						document.getElementById("TextAreaChatLog").style.display = "none";
+						CharacterAppearanceReturnRoom = "ChatRoom";
+						CharacterAppearanceReturnModule = "Online";
+						CharacterAppearanceLoadCharacter(Player);
+					}
+					break;
+				case "Profile":
+					// When the user checks her profile
+					document.getElementById("InputChat").style.display = "none";
+					document.getElementById("TextAreaChatLog").style.display = "none";
+					InformationSheetLoadCharacter(Player);
+					break;
+				case "Admin":
+					// When the user enters the room administration screen
+					document.getElementById("InputChat").style.display = "none";
+					document.getElementById("TextAreaChatLog").style.display = "none";
+					CommonSetScreen("Online", "ChatAdmin");
+					break;
+			}
 		}
-
-		// If the player clicked to cancel leaving, we alert the room and stop the timer
-		else if ((ChatRoomSlowtimer != 0) && (ChatRoomSlowStop == false)) {
-			ServerSend("ChatRoomChat", { Content: "SlowLeaveCancel", Type: "Action", Dictionary: [{Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber}]});
-			ChatRoomSlowtimer = 0;
-		}
-
 	}
-
-	// When the user wants to remove the top part of his chat to speed up the screen, we only keep the last 20 entries
-	if (MouseIn(1129, 2, 120, 62) && (ChatRoomGame == "")) {
-		var L = document.getElementById("TextAreaChatLog");
-		while (L.childElementCount > 20)
-			L.removeChild(L.childNodes[0]);
-		ElementScrollToEnd("TextAreaChatLog");
-	}
-
-	// The cut button can become the game option button if there's an online game going on
-	if (MouseIn(1129, 2, 120, 62) && (ChatRoomGame != "")) {
-		document.getElementById("InputChat").style.display = "none";
-		document.getElementById("TextAreaChatLog").style.display = "none";
-		CommonSetScreen("Online", "Game" + ChatRoomGame);
-	}
-
-	// When the user character kneels
-	if (MouseIn(1254, 0, 120, 62) && Player.CanKneel()) {
-		const PlayerIsKneeling = Player.ActivePose && Player.ActivePose.includes("Kneel");
-		ServerSend("ChatRoomChat", { Content: PlayerIsKneeling ? "StandUp" : "KneelDown", Type: "Action", Dictionary: [{ Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber }] });
-		CharacterSetActivePose(Player, PlayerIsKneeling ? "BaseLower" : "Kneel");
-		ChatRoomStimulationMessage("Kneel");
-		ServerSend("ChatRoomCharacterPoseUpdate", { Pose: Player.ActivePose });
-	}
-
-	// When the user toggles icon visibility
-	if (MouseIn(1378, 0, 120, 62)) {
-		ChatRoomHideIconState += 1;
-		if (ChatRoomHideIconState > 3) ChatRoomHideIconState = 0;
-	}
-
-	// When the user takes a photo of the room
-	if (MouseIn(1502, 0, 120, 62)) ChatRoomPhotoFullRoom();
-
-	// When the user wants to change clothes
-	if (MouseIn(1626, 0, 120, 62) && Player.CanChange() && OnlineGameAllowChange()) {
-		document.getElementById("InputChat").style.display = "none";
-		document.getElementById("TextAreaChatLog").style.display = "none";
-		CharacterAppearanceReturnRoom = "ChatRoom";
-		CharacterAppearanceReturnModule = "Online";
-		CharacterAppearanceLoadCharacter(Player);
-	}
-
-	// When the user checks her profile
-	if (MouseIn(1751, 0, 120, 62)) {
-		document.getElementById("InputChat").style.display = "none";
-		document.getElementById("TextAreaChatLog").style.display = "none";
-		InformationSheetLoadCharacter(Player);
-	}
-
-	// When the user enters the room administration screen
-	if (MouseIn(1875, 0, 120, 62)) {
-		document.getElementById("InputChat").style.display = "none";
-		document.getElementById("TextAreaChatLog").style.display = "none";
-		CommonSetScreen("Online", "ChatAdmin");
-	}
-
 }
 
 /**
@@ -1321,30 +1366,30 @@ function ChatRoomSendChat() {
 /**
  * Publishes common player actions (add, remove, swap) to the chat.
  * @param {Character} C - Character on which the action is done.
- * @param {Asset} DialogProgressPrevItem - The item that has been removed.
- * @param {Asset} DialogProgressNextItem - The item that has been added.
+ * @param {Asset} StruggleProgressPrevItem - The item that has been removed.
+ * @param {Asset} StruggleProgressNextItem - The item that has been added.
  * @param {boolean} LeaveDialog - Whether to leave the current dialog after publishing the action.
  * @param {string} [Action] - Action modifier 
  * @returns {void} - Nothing.
  */
-function ChatRoomPublishAction(C, DialogProgressPrevItem, DialogProgressNextItem, LeaveDialog, Action = null) {
+function ChatRoomPublishAction(C, StruggleProgressPrevItem, StruggleProgressNextItem, LeaveDialog, Action = null) {
 	if (CurrentScreen == "ChatRoom") {
 
 		// Prepares the message
 		var msg = "";
 		var Dictionary = [];
 		if (Action == null) {
-			if ((DialogProgressPrevItem != null) && (DialogProgressNextItem != null) && (DialogProgressPrevItem.Asset.Name == DialogProgressNextItem.Asset.Name) && (DialogProgressPrevItem.Color != DialogProgressNextItem.Color)) msg = "ActionChangeColor";
-			else if ((DialogProgressPrevItem != null) && (DialogProgressNextItem != null) && !DialogProgressNextItem.Asset.IsLock) msg = "ActionSwap";
-			else if ((DialogProgressPrevItem != null) && (DialogProgressNextItem != null) && DialogProgressNextItem.Asset.IsLock) msg = "ActionAddLock";
-			else if (InventoryItemHasEffect(DialogProgressNextItem, "Lock")) msg = "ActionLock";
-			else if ((DialogProgressNextItem != null) && (!DialogProgressNextItem.Asset.Wear) && (DialogProgressNextItem.Asset.DynamicActivity(Player) != null)) msg = "ActionActivity" + DialogProgressNextItem.Asset.DynamicActivity(Player);
-			else if (DialogProgressNextItem != null) msg = "ActionUse";
-			else if (InventoryItemHasEffect(DialogProgressPrevItem, "Lock")) msg = "ActionUnlockAndRemove";
+			if ((StruggleProgressPrevItem != null) && (StruggleProgressNextItem != null) && (StruggleProgressPrevItem.Asset.Name == StruggleProgressNextItem.Asset.Name) && (StruggleProgressPrevItem.Color != StruggleProgressNextItem.Color)) msg = "ActionChangeColor";
+			else if ((StruggleProgressPrevItem != null) && (StruggleProgressNextItem != null) && !StruggleProgressNextItem.Asset.IsLock) msg = "ActionSwap";
+			else if ((StruggleProgressPrevItem != null) && (StruggleProgressNextItem != null) && StruggleProgressNextItem.Asset.IsLock) msg = "ActionAddLock";
+			else if (InventoryItemHasEffect(StruggleProgressNextItem, "Lock")) msg = "ActionLock";
+			else if ((StruggleProgressNextItem != null) && (!StruggleProgressNextItem.Asset.Wear) && (StruggleProgressNextItem.Asset.DynamicActivity(Player) != null)) msg = "ActionActivity" + StruggleProgressNextItem.Asset.DynamicActivity(Player);
+			else if (StruggleProgressNextItem != null) msg = "ActionUse";
+			else if (InventoryItemHasEffect(StruggleProgressPrevItem, "Lock")) msg = "ActionUnlockAndRemove";
 			else msg = "ActionRemove";
 		} else if (Action == "interrupted") {
-			if ((DialogProgressPrevItem != null) && (DialogProgressNextItem != null) && !DialogProgressNextItem.Asset.IsLock) msg = "ActionInterruptedSwap";
-			else if (DialogProgressNextItem != null) msg = "ActionInterruptedAdd";
+			if ((StruggleProgressPrevItem != null) && (StruggleProgressNextItem != null) && !StruggleProgressNextItem.Asset.IsLock) msg = "ActionInterruptedSwap";
+			else if (StruggleProgressNextItem != null) msg = "ActionInterruptedAdd";
 			else msg = "ActionInterruptedRemove";
 			Dictionary.push({ Tag: "TargetCharacter", Text: C.Name, MemberNumber: C.MemberNumber });
 		} else msg = Action;
@@ -1352,8 +1397,8 @@ function ChatRoomPublishAction(C, DialogProgressPrevItem, DialogProgressNextItem
 		// Replaces the action tags to build the phrase
 		Dictionary.push({ Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber });
 		Dictionary.push({ Tag: "DestinationCharacter", Text: C.Name, MemberNumber: C.MemberNumber });
-		if (DialogProgressPrevItem != null) Dictionary.push({ Tag: "PrevAsset", AssetName: DialogProgressPrevItem.Asset.Name });
-		if (DialogProgressNextItem != null) Dictionary.push({ Tag: "NextAsset", AssetName: DialogProgressNextItem.Asset.Name });
+		if (StruggleProgressPrevItem != null) Dictionary.push({ Tag: "PrevAsset", AssetName: StruggleProgressPrevItem.Asset.Name });
+		if (StruggleProgressNextItem != null) Dictionary.push({ Tag: "NextAsset", AssetName: StruggleProgressNextItem.Asset.Name });
 		if (C.FocusGroup != null) Dictionary.push({ Tag: "FocusAssetGroup", AssetGroupName: C.FocusGroup.Name });
 
 		// Prepares the item packet to be sent to other players in the chatroom
@@ -1775,6 +1820,8 @@ function ChatRoomSync(data) {
 		// Reloads the online game statuses if needed
 		OnlineGameLoadStatus();
 
+		// The allowed menu actions may have changed
+		ChatRoomMenuBuild();
 	}
 }
 
@@ -2599,6 +2646,14 @@ function ChatRoomPhotoFullRoom() {
  */
 function ChatRoomPhotoCurrentCharacters() {
 	ChatRoomPhoto(0, 0, 1000, 1000, [Player, CurrentCharacter]);
+}
+
+/**
+ * Take a screenshot of the player
+ * @returns {void} - Nothing
+ */
+function DialogChatRoomPhotoPlayer() {
+	ChatRoomPhoto(500, 0, 500, 1000, [Player]);
 }
 
 /**

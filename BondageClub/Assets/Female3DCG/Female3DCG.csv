@@ -103,6 +103,7 @@ ClothLower,JeansShorts,Jeans Shorts
 ClothLower,Leggings1,Short Leggings
 ClothLower,Leggings2,Long Leggings
 ClothLower,PleatedSkirt,Pleated Skirt
+ClothLower,LongSkirt1,Long Skirt
 SuitLower,,Suit Lower
 SuitLower,Catsuit,Catsuit
 SuitLower,SeamlessCatsuit, Seamless Catsuit
@@ -912,6 +913,9 @@ ItemNeckRestraints,CollarLeashTaken,Pulled Leash
 ItemNeckRestraints,ChainLeash,Chain Leash
 ItemNeckRestraints,ChainLeashTaken,Pulled Chain Leash
 ItemNeckRestraints,CollarChainMedium,Medium Chain
+ItemNeckRestraints,CollarRopeLong,Long Rope
+ItemNeckRestraints,CollarRopeShort,Short Rope
+ItemNeckRestraints,CollarRopeMedium,Medium Rope
 ItemMouth,,Mouth
 ItemMouth,ClothGag,Cloth Gag
 ItemMouth,WiffleGag,Wiffle Ball Gag
