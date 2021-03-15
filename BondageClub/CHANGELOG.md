@@ -11,9 +11,9 @@ This changelog follows the format outlined in [keepachangelog.com](https://keepa
 
 **Note to contributors:** To avoid merge conflicts, please don't update this file yourself in your PRs - one of the developers will update the changelog with your change before your PR is merged.
 
-Changelog last updated: 2021-03-13
+Changelog last updated: 2021-03-15
 
-Last recorded PR: [#2210](https://github.com/Ben987/Bondage-College/pull/2210)
+Last recorded PR: [#2228](https://github.com/Ben987/Bondage-College/pull/2228)
 
 ## [R66]
 
@@ -83,7 +83,7 @@ Last recorded PR: [#2210](https://github.com/Ben987/Bondage-College/pull/2210)
 * Technical changes, fixes and improvements:
     * Ellie - [#2119](https://github.com/Ben987/Bondage-College/pull/2119), [#2062](https://github.com/Ben987/Bondage-College/pull/2062)
     * Nina - [#2061](https://github.com/Ben987/Bondage-College/pull/2061), [#2161](https://github.com/Ben987/Bondage-College/pull/2161), [#2181](https://github.com/Ben987/Bondage-College/pull/2181)
-    * Jomshir - [#2153](https://github.com/Ben987/Bondage-College/pull/2153), [#2129](https://github.com/Ben987/Bondage-College/pull/2129), [#2162](https://github.com/Ben987/Bondage-College/pull/2162), [Server 70](https://github.com/Ben987/Bondage-Club-Server/pull/70), [Server 71](https://github.com/Ben987/Bondage-Club-Server/pull/71), [#2171](https://github.com/Ben987/Bondage-College/pull/2171), [#2173](https://github.com/Ben987/Bondage-College/pull/2173), [#2180](https://github.com/Ben987/Bondage-College/pull/2180)
+    * Jomshir - [#2153](https://github.com/Ben987/Bondage-College/pull/2153), [#2129](https://github.com/Ben987/Bondage-College/pull/2129), [#2162](https://github.com/Ben987/Bondage-College/pull/2162), [Server 70](https://github.com/Ben987/Bondage-Club-Server/pull/70), [Server 71](https://github.com/Ben987/Bondage-Club-Server/pull/71), [#2171](https://github.com/Ben987/Bondage-College/pull/2171), [#2173](https://github.com/Ben987/Bondage-College/pull/2173), [#2180](https://github.com/Ben987/Bondage-College/pull/2180), [#2228](https://github.com/Ben987/Bondage-College/pull/2228)
 
 ### [Beta Fixes]
 
@@ -100,6 +100,19 @@ Last recorded PR: [#2210](https://github.com/Ben987/Bondage-College/pull/2210)
 * Nina - Fixed an issue where the Deluxe Mistress Boots would cut holes out of the bed and other items ([#2209](https://github.com/Ben987/Bondage-College/pull/2209))
 * Jomshir - Fixed an issue where new players would be shown the changelog on account creation ([#2211](https://github.com/Ben987/Bondage-College/pull/2211))
 * DoberBit - Changed the Futuristic Gag to trigger for Cyrillic characters ([#2210](https://github.com/Ben987/Bondage-College/pull/2210))
+* Ellie - Fixed an issue where the automatic shock unit would cause crashes when triggering ([#2213](https://github.com/Ben987/Bondage-College/pull/2213))
+* Nina - Fixed some issues with notifications disappearing before being viewed, and notifications not working immediately after creating a new account ([#2214](https://github.com/Ben987/Bondage-College/pull/2214))
+* Emily R - Fixed inconsistencies in the gagging effects of the Respirator Mask in the various gag slots ([#2215](https://github.com/Ben987/Bondage-College/pull/2215))
+* Ada - Fixed an issue with the Futuristic Collar where remote blocking could be changed when the player was locked out, even if the open permissions setting was blocked ([#2217](https://github.com/Ben987/Bondage-College/pull/2217))
+* TessaTech - Fixed an issue where adding the metal cuffs to a lover with no owner could cause the game to crash ([#2218](https://github.com/Ben987/Bondage-College/pull/2218))
+* Nina - Fixed an issue where socks and shoes would appear in the incorrect pose when the player was hogtied or suspension hogtied whilst wearing a wide leg spreader ([#2220](https://github.com/Ben987/Bondage-College/pull/2220))
+* Ben - Decreased the hourly rate for club slaves from $80 to $50, increased the weekly pay for club Mistresses from $100 to $150
+* Ada - Fixed an issue with the VR Headset where the "Virtual World" background would only display on the top row in chatrooms with more than 5 players ([#2222](https://github.com/Ben987/Bondage-College/pull/2222))
+* Ada - Fixed an issue with several leg-binding items no longer applying the slow effect ([#2223](https://github.com/Ben987/Bondage-College/pull/2223))
+* Nina - Fixed an issue where the VR Headset's custom backgrounds would not be dimmed when the player's eyes were close ([#2224](https://github.com/Ben987/Bondage-College/pull/2224))
+* Nina - Fixed an issue where suspension items would allow the player to kneel ([#2225](https://github.com/Ben987/Bondage-College/pull/2225))
+* Nina - Fixed an issue with the bondage chess minigame where the player's clothes were being removed and items were being added when they shouldn't ([#2226](https://github.com/Ben987/Bondage-College/pull/2226))
+* Nina - Fixed an issue with the chess minigame where players could move a piece during their opponent's turn, causing the game to crash ([#2230](https://github.com/Ben987/Bondage-College/pull/2230))
 
 ## [R65]
 
