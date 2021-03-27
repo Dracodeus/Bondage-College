@@ -1121,25 +1121,25 @@ function DrawProgressBarColor(X, Y, W, H, Progress, ColorFG, ColorBG) {
  * @returns {string} - Custom background if applicable, otherwise ""
  */
 function DrawGetCustomBackground() {
-	var blindfold = InventoryGet(Player, "ItemHead")
-	var hood = InventoryGet(Player, "ItemHood")
-	var customBG = ""
-	
+	const blindfold = InventoryGet(Player, "ItemHead");
+	const hood = InventoryGet(Player, "ItemHood");
+	let customBG = "";
+
 	if (blindfold && blindfold.Asset && blindfold.Asset.CustomBlindBackground) {
-		var type = "None"
+		let type = "None";
 		if (blindfold.Property && blindfold.Property.Type && blindfold.Asset.CustomBlindBackground[blindfold.Property.Type] != null)
-			type = blindfold.Property.Type
+			type = blindfold.Property.Type;
 		if (blindfold.Asset.CustomBlindBackground[type])
-			customBG = blindfold.Asset.CustomBlindBackground[type]
+			customBG = blindfold.Asset.CustomBlindBackground[type];
 	} else if (hood && hood.Asset && hood.Asset.CustomBlindBackground) {
-				var type = "None"
+		let type = "None";
 		if (hood.Property && hood.Property.Type && hood.Asset.CustomBlindBackground[hood.Property.Type])
-			type = hood.Property.Type
+			type = hood.Property.Type;
 		if (hood.Asset.CustomBlindBackground[type])
-			customBG = hood.Asset.CustomBlindBackground[type]
+			customBG = hood.Asset.CustomBlindBackground[type];
 	}
-	
-	return customBG
+
+	return customBG;
 }
 
 
@@ -1155,27 +1155,24 @@ function DrawProcess() {
 	}
 
 	// Gets the current screen background and draw it, it becomes darker in dialog mode or if the character is blindfolded
-	var B = window[CurrentScreen + "Background"];
-	
-	
-	
+	let B = window[CurrentScreen + "Background"];
+
 	if ((B != null) && (B != "")) {
-		var customBG = ""
 		let DarkFactor = 1.0;
 		if ((CurrentModule != "Character" && CurrentModule != "MiniGame") && (B != "Sheet")) {
-			DarkFactor = CharacterGetDarkFactor(Player);
+			DarkFactor = CharacterGetDarkFactor(Player) * CurrentDarkFactor;
 			if (DarkFactor == 1 && (CurrentCharacter != null || ShopStarted) && !CommonPhotoMode) DarkFactor = 0.5;
 		}
 		const Invert = Player.GraphicsSettings && Player.GraphicsSettings.InvertRoom && Player.IsInverted();
 		if (DarkFactor == 0.0) {
-			customBG = DrawGetCustomBackground()
-			
+			let customBG = DrawGetCustomBackground();
+
 			if (customBG != "") {
-				B = customBG
+				B = customBG;
 				DarkFactor = CharacterGetDarkFactor(Player, true);
 			}
 		}
-		
+
 		if (DarkFactor > 0.0) {
 			if (!DrawImage("Backgrounds/" + B + ".jpg", 0, 0, Invert)) {
 				// Draw empty background to overdraw old content if background image isn't ready
@@ -1209,8 +1206,8 @@ function DrawProcess() {
 	// If needed
 	// Used to support items that remove you from the dialog during the draw phase
 	if (DialogLeaveDueToItem) {
-		DialogLeaveDueToItem = false
-		DialogLeave()
+		DialogLeaveDueToItem = false;
+		DialogLeave();
 	}
 
 }

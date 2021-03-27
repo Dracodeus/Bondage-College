@@ -1239,7 +1239,7 @@ function CharacterCanKneel(C) {
 /**
  * Determines how much the character's view should be darkened based on their blind level. 1 is fully visible, 0 is pitch black.
  * @param {Character} C - The character to check
- * @param {boolean} eyesOnly - If TRUE only check whether the character has eyes closed, and ignore item effects
+ * @param {boolean} [eyesOnly=false] - If TRUE only check whether the character has eyes closed, and ignore item effects
  * @returns {number} - The number between 0 (dark) and 1 (bright) that determines screen darkness
  */
 function CharacterGetDarkFactor(C, eyesOnly = false) {

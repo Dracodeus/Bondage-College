@@ -666,7 +666,7 @@ function PrisonCatchAdmitDefeat() {
 //When a fight starts between the player and the Police
 function PrisonFightPolice() {
 	CharacterSetActivePose(Player, null, true);
-	KidnapStart(PrisonPolice, PrisonBackground+"Dark", 5 + Math.floor(Math.random() * 5), "PrisonFightPoliceEnd()");
+	KidnapStart(PrisonPolice, PrisonBackground, 5 + Math.floor(Math.random() * 5), "PrisonFightPoliceEnd()");
 }
 
 // When the fight against Police ends

@@ -6,6 +6,7 @@ var CurrentModule;
 var CurrentScreen;
 var CurrentCharacter = null;
 var CurrentOnlinePlayers = 0;
+var CurrentDarkFactor = 1.0;
 var CommonIsMobile = false;
 var CommonCSVCache = {};
 var CutsceneStage = 0;
@@ -355,6 +356,7 @@ function CommonSetScreen(NewModule, NewScreen) {
 	var prevScreen = CurrentScreen
 	CurrentModule = NewModule;
 	CurrentScreen = NewScreen;
+	CurrentDarkFactor = 1.0;
 	CommonGetFont.clearCache();
 	CommonGetFontName.clearCache();
 	TextLoad();

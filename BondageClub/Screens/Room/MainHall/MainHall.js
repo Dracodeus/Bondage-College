@@ -166,7 +166,7 @@ function MainHallRun() {
 		if (Player.ImmersionSettings && Player.LastChatRoom && Player.LastChatRoom != "" && (MainHallMaid === null || MainHallMaid.Stage === "0")) {
 			if (MainHallFirstFrame) {
 				if (Player.ImmersionSettings.ReturnToChatRoom) {
-					ChatRoomStart("", "", "MainHall", "IntroductionDark", BackgroundsTagList);
+					ChatRoomStart("", "", "MainHall", "Introduction", BackgroundsTagList);
 					return;
 				} else ChatRoomSetLastChatRoom("");
 			} else MainHallFirstFrame = true;
@@ -357,7 +357,7 @@ function MainHallClick() {
 			window.location = window.location;
 		}
 	}
-	if ((MouseX >= 1645) && (MouseX < 1735) && (MouseY >= 145) && (MouseY < 235)) ChatRoomStart("", "", "MainHall", "IntroductionDark", BackgroundsTagList);
+	if ((MouseX >= 1645) && (MouseX < 1735) && (MouseY >= 145) && (MouseY < 235)) ChatRoomStart("", "", "MainHall", "Introduction", BackgroundsTagList);
 
 	// The options below are only available if the player can move
 	if (Player.CanWalk() && (!Player.IsRestrained() || !Player.GameplaySettings.OfflineLockedRestrained)) {

@@ -475,10 +475,11 @@ function ValidationSanitizeProperties(C, item) {
 		}
 	}
 
-	// Remove impossible combinations
-	if (property.Type == null && property.Restrain == null) {
+	// Remove invalid properties from non-typed items
+	if (property.Type == null) {
 		["SetPose", "Difficulty", "SelfUnlock", "Hide"].forEach(P => {
 			if (property[P] != null) {
+				console.warn("Removing invalid property:", P);
 				delete property[P];
 				changed = true;
 			}
