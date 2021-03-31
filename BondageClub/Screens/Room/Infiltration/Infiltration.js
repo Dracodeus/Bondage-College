@@ -14,6 +14,7 @@ function InfiltrationLoad() {
 		InventoryWear(InfiltrationSupervisor, "ReverseBunnySuit", "Suit", "#400000");
 		InventoryWear(InfiltrationSupervisor, "ReverseBunnySuit", "SuitLower", "#400000");
 		InventoryWear(InfiltrationSupervisor, "FishnetBikini1", "Bra", "#222222");
+		InventoryWear(InfiltrationSupervisor, "BondageDress1", "Cloth");
 		InventoryWear(InfiltrationSupervisor, "LatexAnkleShoes", "Shoes", "#222222");
 	}
 	if (Player.Infiltration == null) Player.Infiltration = {};

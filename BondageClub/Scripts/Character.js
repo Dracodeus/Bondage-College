@@ -974,10 +974,8 @@ function CharacterReleaseTotal(C) {
 function CharacterGetBonus(C, BonusType) {
 	var Bonus = 0;
 	for (let I = 0; I < C.Inventory.length; I++)
-		if ((C.Inventory[I].Asset != null) && (C.Inventory[I].Asset.Bonus != null))
-			for (let B = 0; B < C.Inventory[I].Asset.Bonus.length; B++)
-				if ((C.Inventory[I].Asset.Bonus[B].Type == BonusType) && (C.Inventory[I].Asset.Bonus[B].Factor > Bonus))
-					Bonus = C.Inventory[I].Asset.Bonus[B].Factor;
+		if ((C.Inventory[I].Asset != null) && (C.Inventory[I].Asset.Bonus != null) && (C.Inventory[I].Asset.Bonus == BonusType))
+			Bonus++;
 	return Bonus;
 }
 
