@@ -48,7 +48,7 @@ const AssetType = {
 	BuyGroup: "String",
 	PrerequisiteBuyGroups: "[String]",
 	Effect: "[String]",
-	Bonus: "[{ Factor: Number, Type: String }]",
+	Bonus: "String",
 	Block: "[String]",
 	Expose: "[String]",
 	Hide: "[String]",

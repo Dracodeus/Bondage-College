@@ -2037,7 +2037,7 @@ var AssetFemale3DCG = [
 					{ Name: "Rings" },
 				]
 			},
-			{ Name: "LeatherCuffs", Fetish: ["Leather"], Priority: 29, Value: 100, Left: 0, Top: 0, Difficulty: 3, Time: 20, Random: false, AllowLock: true, DefaultColor: "#404040", AllowPose: ["BackBoxTie", "BackElbowTouch", "OverTheHead", "BackCuffs", "Yoked"], Effect: ["CuffedArms"], AllowEffect: ["Block", "Prone", "NotSelfPickable"], AllowType: ["Wrist", "Elbow", "Both"], Extended: true, HasType: false, RemoveItemOnRemove: [{ Name: "X-Cross", Group: "ItemDevices" }],
+			{ Name: "LeatherCuffs", Fetish: ["Leather"], Priority: 29, Value: 100, Left: 0, Top: 0, Difficulty: 3, Time: 20, Random: false, AllowLock: true, AllowPose: ["BackBoxTie", "BackElbowTouch", "OverTheHead", "BackCuffs", "Yoked"], Effect: ["CuffedArms"], AllowEffect: ["Block", "Prone", "NotSelfPickable"], AllowType: ["Wrist", "Elbow", "Both"], Extended: true, HasType: false, RemoveItemOnRemove: [{ Name: "X-Cross", Group: "ItemDevices" }],
 			  DefaultColor: ["#2E2E2E", "Default"],
 		      Layer: [
 				  { Name: "Cuffs" },
@@ -2984,6 +2984,13 @@ var AssetFemale3DCG = [
 				Layer: [
 					{ Name: "Lips", AllowColorize: false },
 					{ Name: "Cloth", AllowColorize: true }
+				]
+			},
+			{
+				Name: "LargeDildo", Value: 20, Difficulty: -20, Time: 5, DefaultColor: "#333333", BuyGroup: "PenisDildo", Hide: ["Mouth"], ExpressionTrigger: [{ Name: "Raised", Group: "Eyebrows", Timer: 10 }],
+				Layer: [
+					{ Name: "Dildo", AllowColorize: true },
+					{ Name: "Lips", AllowColorize: false }
 				]
 			},
 			{ Name: "ChloroformCloth", Value: 40, Time: 2, Random: false, Hide: ["Mouth"], HideItem: ["ItemNoseNoseRing"], Effect: ["BlockMouth", "GagVeryLight"], ExpressionTrigger: [{ Name: "High", Group: "Blush", Timer: 20 }, { Name: "Soft", Group: "Eyebrows", Timer: 180 }, { Name: "Wink", Group: "Eyes", Timer: 180 }] },

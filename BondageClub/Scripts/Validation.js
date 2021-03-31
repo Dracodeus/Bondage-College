@@ -64,7 +64,7 @@ function ValidationResolveAppearanceDiff(previousItem, newItem, params) {
 	}
 	let { item, valid } = result;
 	// If the diff has resolved to an item, sanitize its properties
-	if (item) valid = valid && !ValidationSanitizeProperties(params.C, result);
+	if (item) valid = valid && !ValidationSanitizeProperties(params.C, item);
 	return { item, valid };
 }
 
@@ -592,7 +592,7 @@ function ValidationSanitizeLock(C, item) {
 
 	// Sanitize lockpicking seed
 	if (typeof property.LockPickSeed === "string") {
-		const seed = CommonConvertStringToArray(Item.Property.LockPickSeed);
+		const seed = CommonConvertStringToArray(property.LockPickSeed);
 		if (!seed.length) {
 			console.warn("Deleting invalid lockpicking seed: ", property.LockPickSeed);
 			delete property.LockPickSeed;
