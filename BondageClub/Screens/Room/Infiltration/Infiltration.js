@@ -1,6 +1,11 @@
 "use strict";
 var InfiltrationBackground = "Infiltration";
 var InfiltrationSupervisor = null;
+var InfiltrationDifficulty = 0;
+var InfiltrationMission = "";
+var InfiltrationMissionType = ["Rescue", "Kidnap", "Retrieve", "Steal"];
+var InfiltrationObjectType = ["USBKey", "BDSMPainting", "GoldCollar", "GeneralLedger", "SilverVibrator", "DiamondRing", "SignedPhoto"];
+var InfiltrationTarget = {};
 
 /**
  * Loads the infiltration screen by generating the supervisor.
@@ -42,4 +47,32 @@ function InfiltrationClick() {
 	if (MouseIn(1885, 25, 90, 90) && Player.CanWalk()) CommonSetScreen("Room", "MainHall");
 	if (MouseIn(1885, 145, 90, 90)) InformationSheetLoadCharacter(Player);
 	if (MouseIn(1885, 265, 90, 90)) CommonSetScreen("Room", "InfiltrationPerks");
+}
+
+/**
+ * Sets the infiltration mission challenge difficulty
+ * @returns {void} - Nothing
+ */
+function InfiltrationSelectChallenge(Difficulty) {
+	InfiltrationDifficulty = Difficulty;
+}
+
+/**
+ * Prepares the mission and presents it to the player
+ * @returns {void} - Nothing
+ */
+function InfiltrationPrepareMission() {
+	InfiltrationMission	= CommonRandomItemFromList(InfiltrationMission, InfiltrationMissionType);
+	if ((InfiltrationMission == "Rescue") || (InfiltrationMission == "Kidnap")) {
+		let C = {};
+		CharacterRandomName(C);
+		InfiltrationTarget.Type = "NPC";
+		InfiltrationTarget.Name = C.Name;
+	} else {
+		InfiltrationTarget.Type = CommonRandomItemFromList(InfiltrationTarget.Type, InfiltrationObjectType);
+		InfiltrationTarget.Name = DialogFind(InfiltrationSupervisor, "Object" + InfiltrationTarget.Type);
+	}
+	InfiltrationSupervisor.Stage = InfiltrationMission;
+	InfiltrationSupervisor.CurrentDialog = DialogFind(InfiltrationSupervisor, InfiltrationMission + "Intro");
+	InfiltrationSupervisor.CurrentDialog = InfiltrationSupervisor.CurrentDialog.replace("TargetName", InfiltrationTarget.Name);
 }

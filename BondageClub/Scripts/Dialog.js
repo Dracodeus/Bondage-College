@@ -32,17 +32,11 @@ var DialogSortOrderUnusable = 4;
 var DialogSortOrderBlocked = 5;
 var DialogSelfMenuSelected = null;
 var DialogLeaveDueToItem = false; // This allows dynamic items to call DialogLeave() without crashing the game
-
-
-
-
-
 var DialogLockMenu = false
 var DialogLentLockpicks = false
 
 /** @type {Map<string, string>} */
 var PlayerDialog = new Map();
-
 
 /**
  * The list of menu types available when clicking on yourself
