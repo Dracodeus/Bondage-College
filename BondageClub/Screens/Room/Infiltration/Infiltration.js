@@ -4,17 +4,27 @@ var InfiltrationSupervisor = null;
 var InfiltrationDifficulty = 0;
 var InfiltrationMission = "";
 //var InfiltrationMissionType = ["Rescue", "Kidnap", "Retrieve", "Steal"];
-var InfiltrationMissionType = ["Retrieve", "Steal"];
+var InfiltrationMissionType = ["Rescue", "Kidnap", "Retrieve"];
 var InfiltrationObjectType = ["USBKey", "BDSMPainting", "GoldCollar", "GeneralLedger", "SilverVibrator", "DiamondRing", "SignedPhoto"];
 var InfiltrationTarget = {};
 
 /**
- * Returns TRUE if the mission is a success and can be completed
+ * Returns TRUE if the mission can complete as a success
  * @returns {boolean} - TRUE if successful
  */
-function InfiltrationMissionSuccess() {
-	return ((InfiltrationTarget != null) && (InfiltrationTarget.Found != null) && (InfiltrationTarget.Found == true));
-}
+function InfiltrationCanSuccess() { return ((InfiltrationTarget != null) && (InfiltrationTarget.Found != null) && (InfiltrationTarget.Found == true)) }
+
+/**
+ * Returns TRUE if the mission can complete as a failure
+ * @returns {boolean} - TRUE if successful
+ */
+function InfiltrationCanFail() { return ((InfiltrationTarget == null) || (InfiltrationTarget.Found == null) || (InfiltrationTarget.Found == false)) }
+
+/**
+ * Returns TRUE if the player can go back to Pandora's Box to pursue her mission
+ * @returns {boolean} - TRUE if successful
+ */
+function InfiltrationCanGoBack() { return (((InfiltrationTarget == null) || (InfiltrationTarget.Fail == null) || (InfiltrationTarget.Fail == false)) && !InfiltrationCanSuccess()) }
 
 /**
  * Loads the infiltration screen by generating the supervisor.

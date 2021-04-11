@@ -37,6 +37,10 @@ var KinkyDungeonRestraints = [
 	{name: "WeakMagicRopeArms", Asset: "HempRope", Color: "#ff88AA", Group: "ItemArms", magic: false, power: 5, weight: 1, escapeChance: {"Struggle": 0.2, "Cut": 0.67, "Remove": 0.3}, enemyTags: {"ropeMagicWeak":2}, playerTags: {}, minLevel: 0, floors: []},
 	{name: "WeakMagicRopeLegs", Asset: "HempRope", Type: "FullBinding", Color: "#ff88AA", Group: "ItemLegs", magic: false, power: 3, weight: 1, escapeChance: {"Struggle": 0.2, "Cut": 0.67, "Remove": 0.3}, enemyTags: {"ropeMagicWeak":2}, playerTags: {}, minLevel: 0, floors: []},
 	
+	{name: "StickySlime", Asset: "Web", Type: "Wrapped", Color: "#ff77ff", Group: "ItemArms", magic: false, power: 0, weight: 1, freeze: true, escapeChance: {"Struggle": 10.0, "Cut": 10.0, "Remove": 10.0}, enemyTags: {"slime":100}, playerTags: {}, minLevel: 0, floors: []},
+	
+	{name: "TrapArmbinder", Asset: "LeatherArmbinder", Type: "WrapStrap", Group: "ItemArms", magic: false, power: 8, weight: 2, escapeChance: {"Struggle": 0.1, "Cut": 0.33, "Remove": 0.2}, enemyTags: {"trap":100}, playerTags: {}, minLevel: 0, floors: []},
+	
 ]
 
 
@@ -274,6 +278,8 @@ function KinkyDungeonRemoveRestraint(Group) {
 			if ((item.restraint && item.restraint.Group == Group)) {
 				KinkyDungeonInventory.splice(I, 1);
 				InventoryRemove(KinkyDungeonPlayer, Group)
+				
+				KinkyDungeonCalculateSlowLevel()
 				
 				return true;
 			}

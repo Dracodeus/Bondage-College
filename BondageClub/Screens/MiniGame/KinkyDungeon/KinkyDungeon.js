@@ -80,8 +80,8 @@ function KinkyDungeonRun() {
 	DrawCharacter(KinkyDungeonPlayer, 0, 0, 1);
 
 
-	
-	DrawButton(1885, 25, 90, 90, "", "White", "Icons/Exit.png");
+	if (KinkyDungeonDrawState == "Game" || KinkyDungeonState != "Game")
+		DrawButton(1885, 25, 90, 90, "", "White", "Icons/Exit.png");
 	
 	if (KinkyDungeonState == "Menu") {
 		// Draw temp start screen
@@ -142,7 +142,7 @@ function KinkyDungeonRun() {
  * @returns {void} - Nothing
  */
 function KinkyDungeonClick() {
-	if (MouseIn(1885, 25, 90, 90)) {
+	if (MouseIn(1885, 25, 90, 90) && (KinkyDungeonDrawState == "Game" || KinkyDungeonState != "Game")) {
 		KinkyDungeonExit()
 	}
 	if (KinkyDungeonState == "Menu" || KinkyDungeonState == "Lose") {
@@ -229,8 +229,22 @@ function KinkyDungeonClick() {
  * Handles exit during the kinky dungeon game
  * @returns {void} - Nothing
  */
-function KinkyDungeonExit() {
+function KinkyDungeonExit() {	
 	CommonDynamicFunction(MiniGameReturnFunction + "()");
+	
+	if (CurrentScreen == "ChatRoom" && KinkyDungeonState != "Menu" && (MiniGameKinkyDungeonLevel > 1 || KinkyDungeonState == "Lose")) {
+		let Message = "KinkyDungeonExit"
+		
+		if (KinkyDungeonState == "Lose") {
+			Message = "KinkyDungeonLose"
+		}
+		
+		let Dictionary = [
+			{ Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber },
+			{ Tag: "KinkyDungeonLevel", Text: String(MiniGameKinkyDungeonLevel)},
+		];
+		ChatRoomPublishCustomAction(Message, false, Dictionary);
+	}
 }
 
 /**
