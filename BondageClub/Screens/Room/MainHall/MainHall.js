@@ -175,9 +175,9 @@ function MainHallRun() {
 			// If the player logged into new version
 			if (CurrentCharacter == null && CommonVersionUpdated && MainHallMaid.Dialog != null && MainHallMaid.Dialog.length > 0) {
 				CommonVersionUpdated = false;
-				/*CharacterSetCurrent(MainHallMaid);
+				CharacterSetCurrent(MainHallMaid);
 				MainHallMaid.Stage = "200";
-				MainHallMaid.CurrentDialog = DialogFind(MainHallMaid, "ClubUpdated");*/
+				MainHallMaid.CurrentDialog = DialogFind(MainHallMaid, "ClubUpdated");
 				return;
 			}
 

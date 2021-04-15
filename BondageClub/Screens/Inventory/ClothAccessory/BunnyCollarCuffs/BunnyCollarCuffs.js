@@ -26,10 +26,10 @@ function InventoryClothAccessoryBunnyCollarCuffsLoad() {
 
 // Draw the item extension screen
 function InventoryClothAccessoryBunnyCollarCuffsDraw() {
-	ExtendedItemDraw(InventoryClothAccessoryBunnyCollarCuffsOptions, "BunnyCuffsType");
+	ExtendedItemDraw(InventoryClothAccessoryBunnyCollarCuffsOptions, "BunnyCuffsType", null, true, true);
 }
 
 // Catches the item extension clicks
 function InventoryClothAccessoryBunnyCollarCuffsClick() {
-	ExtendedItemClick(InventoryClothAccessoryBunnyCollarCuffsOptions);
+	ExtendedItemClick(InventoryClothAccessoryBunnyCollarCuffsOptions, true);
 }
