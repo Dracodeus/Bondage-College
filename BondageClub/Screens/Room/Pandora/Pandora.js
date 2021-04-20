@@ -168,16 +168,36 @@ function PandoraMsgBox(Text) {
 }
 
 /**
+ * Generates a random NPC for Pandora's Box missions, clear the cache if it was generated before
+ * @param {string} Group - The main group for that NPC (Random, Entrance, Underground) 
+ * @param {string} Type - The NPC function within Pandora's (Guard, Mistress, Slave, Maid, etc.)
+ * @param {string} Name - The name to give to that NPC, can be RANDOM for a fully random name
+ * @param {boolean} AllowItem - TRUE if we allow using items on her by default
+ * @returns {object} - The NPC character to return
+ */
+function PandoraGenerateNPC(Group, Type, Name, AllowItem) {
+	CharacterDelete("NPC_Pandora_" + Group + Type);
+	delete CommonCSVCache["Screens/Room/Pandora/Dialog_NPC_Pandora_" + Group + Type + ".csv"];
+	let NPC = CharacterLoadNPC("NPC_Pandora_" + Group + Type);
+	if (Name == "RANDOM") CharacterRandomName(NPC);
+	else NPC.Name = Name;
+	CharacterRelease(NPC);
+	NPC.Stage = "0";
+	NPC.AllowItem = AllowItem;
+	NPC.AllowMove = false;
+	PandoraDress(NPC, Type);
+	return NPC;
+}
+
+/**
  * Dress a character in the Rival Club fashion
  * @returns {void} - Nothing
  */
 function PandoraDress(C, Type) {
 
-	// Never keeps a cloth accessory
-	InventoryRemove(C, "ClothAccessory");
-
 	// The maids have a red outfit
 	if (Type == "Maid") {
+		InventoryRemove(C, "ClothAccessory");
 		InventoryWear(C, "MaidOutfit" + (Math.floor(Math.random() * 2) + 1).toString(), "Cloth", "#804040");
 		InventoryWear(C, "MaidHairband1", "Hat", "#804040");
 		InventoryGet(C, "Socks").Color = "#804040";
@@ -185,15 +205,20 @@ function PandoraDress(C, Type) {
 		InventoryGet(C, "Panties").Color = "#222222";
 		InventoryGet(C, "Shoes").Color = "#222222";
 		InventoryWear(C, "MaidCollar", "ItemNeck", "#804040");
+		CharacterRefresh(C, false);
+		return;
 	}
 
 	// The guards are wearing a police hat and latex
 	if (Type == "Guard") {
+		InventoryRemove(C, "ClothAccessory");
 		InventoryWear(C, "PoliceWomanHat", "Hat", "Default");
 		InventoryWear(C, "CorsetShirt", "Cloth", "Default");
 		InventoryWear(C, "LatexPants1", "ClothLower", "Default");
 		InventoryWear(C, "DeluxeBoots", "Shoes", "#222222");
 		InventoryWear(C, "LatexSocks1", "Shoes", "#222222");
+		CharacterRefresh(C, false);
+		return;
 	}
 
 	// The guards are wearing a police hat and latex
@@ -201,17 +226,23 @@ function PandoraDress(C, Type) {
 		CharacterNaked(C);
 		InventoryWear(C, "StrictPostureCollar", "ItemNeck", "#FFD700");
 		InventoryWear(C, "MetalChastityBelt", "ItemPelvis", "#FFD700");
+		CharacterRefresh(C, false);
+		return;
 	}
 
 	// The Mistress wear gold uniforms
 	if (Type == "Mistress") {
+		InventoryRemove(C, "ClothAccessory");
 		InventoryWear(C, "MistressGloves", "Gloves", "#FFD700");
 		InventoryWear(C, "MistressBoots", "Shoes", "#FFD700");
 		InventoryWear(C, "MistressTop", "Cloth", "#FFD700");
 		InventoryWear(C, "MistressBottom", "ClothLower", "#FFD700");
+		CharacterRefresh(C, false);
+		return;
 	}
 
-	// Refresh the character
+	// Since no defined type is found, we fully randomize the clothes and appearance
+	CharacterAppearanceFullRandom(C);
 	CharacterRefresh(C, false);
 
 }
@@ -243,18 +274,10 @@ function PandoraEnterRoom(Room, Direction) {
 	// 5% odds of spawning a new random NPC in the room
 	if ((PandoraCurrentRoom.Background.indexOf("Entrance") < 0) && (PandoraCurrentRoom.Character.length == 0) && (Math.random() > 0.95)) {
 		let Type = CommonRandomItemFromList("", PandoraRandomNPCList);
-		CharacterDelete("NPC_Pandora_Random" + Type);
-		delete CommonCSVCache["Screens/Room/Pandora/Dialog_NPC_Pandora_Random" + Type + ".csv"];
-		let Char = CharacterLoadNPC("NPC_Pandora_Random" + Type);
-		CharacterRandomName(Char);
-		CharacterAppearanceFullRandom(Char);
+		let Char = PandoraGenerateNPC("Random", Type, "RANDOM", (Type === "Slave"));
 		Char.Type = Type;
-		Char.AllowItem = (Type === "Slave");
-		Char.AllowMove = false;
-		Char.Stage = "0";
 		Char.Recruit = 0;
 		Char.RecruitOdds = (Type === "Slave") ? 1 : 0.75;
-		PandoraDress(Char, Type);
 		Room.Character.push(Char);
 	}
 
@@ -376,10 +399,7 @@ function PandoraBuildMainHall() {
 	PandoraParty = [];
 	PandoraRoom = [];
 	let Room = {};
-	let Char = CharacterLoadNPC("NPC_Pandora_EntranceMaid");
-	PandoraDress(Char, "Maid");
-	Char.AllowItem = false;
-	Char.AllowMove = false;
+	let Char = PandoraGenerateNPC("Entrance", "Maid", "RANDOM", false);
 	Room.Character = [];
 	Room.Character.push(Char);
 	Room.Floor = "Ground";
@@ -401,7 +421,7 @@ function PandoraBuildMainHall() {
 	PandoraPreviousRoom = null;
 	PandoraTargetRoom = null;
 
-	// Picks a random cell room for the final target
+	// Pick a random cell room for the final target, generates special NPCs if needed
 	while (PandoraTargetRoom == null) {
 		Room = PandoraRoom[Math.floor(Math.random() * PandoraRoom.length)];
 		if (Room.Background.indexOf("Cell") == 0) {
@@ -410,32 +430,21 @@ function PandoraBuildMainHall() {
 				Room.ItemY = 50 + Math.floor(Math.random() * 900);
 			}
 			if (InfiltrationMission == "Rescue") {
-				let Victim = CharacterLoadNPC("NPC_Pandora_RescueVictim");
-				Victim.Name = InfiltrationTarget.Name;
+				let Victim = PandoraGenerateNPC("Rescue", "Victim", InfiltrationTarget.Name, true);
 				if (Math.random() >= 0.333) CharacterRandomUnderwear(Victim);
 				else if (Math.random() >= 0.5) CharacterNaked(Victim);
 				CharacterFullRandomRestrain(Victim, "LOT", true);
-				Victim.AllowItem = true;
-				Victim.Stage = "0";
 				Room.Character.push(Victim);
-				let Guard = CharacterLoadNPC("NPC_Pandora_RescueGuard");
-				PandoraDress(Guard, "Guard");
-				Guard.AllowItem = false;
-				Guard.AllowMove = false;
-				Guard.Stage = "0";				
+				let Guard = PandoraGenerateNPC("Rescue", "Guard", "RANDOM", false);
 				Room.PathMap[0].Character.push(Guard);
 			}
 			if (InfiltrationMission == "Kidnap") {
-				let Target = CharacterLoadNPC("NPC_Pandora_KidnapTarget");
-				Target.Name = InfiltrationTarget.Name;
-				Target.AllowItem = false;
-				Target.Stage = "0";
+				let Target = PandoraGenerateNPC("Kidnap", "Target", InfiltrationTarget.Name, false);
 				Room.Character.push(Target);
 			}
 			PandoraTargetRoom = Room;
 		}
 	}
-	
 	
 }
 

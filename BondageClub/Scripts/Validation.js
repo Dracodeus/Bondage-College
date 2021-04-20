@@ -6,13 +6,14 @@ const ValidationPasswordRegex = /^[A-Z]{1,8}$/;
 const ValidationDefaultCombinationNumber = "0000";
 const ValidationDefaultPassword = "UNLOCK";
 const ValidationRemoveTimerToleranceMs = 5000;
-const ValidationLockProperties = [
-	"LockedBy", "LockMemberNumber", "CombinationNumber", "RemoveItem", "ShowTimer",
-	"MemberNumberListKeys", "Password", "Hint", "LockSet", "LockPickSeed",
+const ValidationBasicLockProperties = [
+	"LockedBy", "LockMemberNumber", "CombinationNumber", "MemberNumberListKeys", "Password", "Hint", "LockSet",
+	"LockPickSeed",
 ];
+const ValidationRestrictedLockProperties = ["EnableRandomInput", "RemoveItem", "ShowTimer"];
 const ValidationTimerLockProperties = ["MemberNumberList", "RemoveTimer"];
-const ValidationAllLockProperties = ValidationLockProperties
-	.concat(["EnableRandomInput"])
+const ValidationAllLockProperties = ValidationBasicLockProperties
+	.concat(ValidationRestrictedLockProperties)
 	.concat(ValidationTimerLockProperties);
 const ValidationModifiableProperties = ValidationAllLockProperties.concat(["Expression"]);
 
@@ -284,11 +285,13 @@ function ValidationIsLockChangePermitted(lock, { fromOwner, fromLover }, remove)
  */
 function ValidationCopyLockProperties(sourceProperty, targetProperty, hasLockPermissions) {
 	let changed = false;
-	ValidationLockProperties.forEach((key) => {
+	ValidationBasicLockProperties.forEach((key) => {
 		changed = ValidationCopyProperty(sourceProperty, targetProperty, key) || changed;
 	});
 	if (!hasLockPermissions) {
-		changed = ValidationCopyProperty(sourceProperty, targetProperty, "EnableRandomInput") || changed;
+		ValidationRestrictedLockProperties.forEach((key) => {
+			changed = ValidationCopyProperty(sourceProperty, targetProperty, key) || changed;
+		});
 		if (!targetProperty.EnableRandomInput) {
 			ValidationTimerLockProperties.forEach((key) => {
 				changed = ValidationCopyProperty(sourceProperty, targetProperty, key) || changed;
@@ -716,27 +719,28 @@ function ValidationSanitizeStringArray(property, key) {
 /**
  * Completely removes a lock from an item's Property object. This removes all lock-related properties, and the "Lock"
  * effect from the property object.
- * @param {object} Property - The Property object to remove the lock from
+ * @param {object} property - The Property object to remove the lock from
+ * @param {boolean} verbose - Whether or not to print console warnings when properties are deleted. Defaults to true.
  * @returns {boolean} - TRUE if the Property object was modified as a result of the lock deletion (indicating that at
  * least one lock-related property was present), FALSE otherwise
  */
-function ValidationDeleteLock(Property) {
+function ValidationDeleteLock(property, verbose = true) {
 	let changed = false;
-	if (Property) {
+	if (property) {
 		ValidationAllLockProperties.forEach(key => {
-			if (Property[key] != null) {
+			if (property[key] != null) {
 				// Special casing for RemoveTimer because it is used for both locks and expressions :(
-				if (key === "RemoveTimer" && Property.Expression != null) return;
+				if (key === "RemoveTimer" && property.Expression != null) return;
 				// Otherwise remove the property
-				console.warn("Removing invalid lock property:", key);
-				delete Property[key];
+				if (verbose) console.warn("Removing invalid lock property:", key);
+				delete property[key];
 				changed = true;
 			}
 		});
-		if (Array.isArray(Property.Effect)) {
-			Property.Effect = Property.Effect.filter(E => {
+		if (Array.isArray(property.Effect)) {
+			property.Effect = property.Effect.filter(E => {
 				if (E === "Lock") {
-					console.warn("Filtering out invalid Lock effect");
+					if (verbose) console.warn("Filtering out invalid Lock effect");
 					changed = true;
 					return false;
 				} else return true;
