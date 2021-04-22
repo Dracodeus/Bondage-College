@@ -170,6 +170,7 @@ const AssetExtendedConfigType = {
 	ChatSetting: "Maybe String",
 	Dialog: "Maybe Object",
 	ChatTags: "Maybe [String]",
+	DrawImages: "Maybe Boolean",
 };
 
 module.exports = { AssetGroupType, AssetType, AssetLayerType, AssetExtendedArchetypeType, AssetExtendedConfigType };

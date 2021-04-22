@@ -158,6 +158,34 @@ var AssetFemale3DCGExtended = {
 			},
 		}, // Crib
 	}, // ItemDevices
+	Corset: {
+		LatexCorset1: {
+			Archetype: ExtendedArchetype.TYPED,
+			Config: {
+				Options: [
+					{
+						Name: "Garter",
+						Property: { Type: null },
+					},
+					{
+						Name: "NoGarter",
+						Property: { Type: "Garterless" },
+					},
+				],
+				Dialog: {
+					Load: "LatexCorset1Select",
+					TypePrefix: "LatexCorset1",
+					ChatPrefix: "LatexCorset1Set",
+				},
+			},
+		}, // LatexCorset1
+	}, // Corset
+	ItemTorso: {
+		LatexCorset1: {
+			Archetype: ExtendedArchetype.TYPED,
+			CopyConfig: { GroupName: "Corset", AssetName: "LatexCorset1" },
+		},
+	}, // ItemTorso
 };
 
 /**

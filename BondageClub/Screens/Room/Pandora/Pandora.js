@@ -200,10 +200,14 @@ function PandoraDress(C, Type) {
 		InventoryRemove(C, "ClothAccessory");
 		InventoryWear(C, "MaidOutfit" + (Math.floor(Math.random() * 2) + 1).toString(), "Cloth", "#804040");
 		InventoryWear(C, "MaidHairband1", "Hat", "#804040");
-		InventoryGet(C, "Socks").Color = "#804040";
-		InventoryGet(C, "Bra").Color = "#222222";
-		InventoryGet(C, "Panties").Color = "#222222";
-		InventoryGet(C, "Shoes").Color = "#222222";
+		if (InventoryGet(C, "Socks") == null) InventoryWear(C, "Socks3", "Socks", "#804040");
+		else InventoryGet(C, "Socks").Color = "#804040";
+		if (InventoryGet(C, "Bra") == null) InventoryWear(C, "Bra1", "Bra", "#222222");
+		else InventoryGet(C, "Bra").Color = "#222222";
+		if (InventoryGet(C, "Panties") == null) InventoryWear(C, "Panties1", "Panties", "#222222");
+		else InventoryGet(C, "Panties").Color = "#222222";
+		if (InventoryGet(C, "Shoes") == null) InventoryWear(C, "Shoes1", "Shoes", "#222222");
+		else InventoryGet(C, "Shoes").Color = "#222222";
 		InventoryWear(C, "MaidCollar", "ItemNeck", "#804040");
 		CharacterRefresh(C, false);
 		return;
@@ -395,11 +399,14 @@ function PandoraGenerateFloor(FloorName, EntryRoom, DirectionFrom, DirectionTo) 
  */
 function PandoraBuildMainHall() {
 	
-	// Creates the ground entrance room
+	// Creates the ground entrance room with a maid
 	PandoraParty = [];
 	PandoraRoom = [];
 	let Room = {};
 	let Char = PandoraGenerateNPC("Entrance", "Maid", "RANDOM", false);
+	if (SkillGetLevel(Player, "Infiltration") >= 9) Char.Stage = "30";
+	else if (SkillGetLevel(Player, "Infiltration") >= 6) Char.Stage = "20";
+	else if (SkillGetLevel(Player, "Infiltration") >= 3) Char.Stage = "10";
 	Room.Character = [];
 	Room.Character.push(Char);
 	Room.Floor = "Ground";
@@ -491,7 +498,8 @@ function PandoraCharacterJoin() {
  */
 function PandoraCharacterFight() {
 	PandoraFightCharacter = CurrentCharacter;
-	KidnapStart(CurrentCharacter, PandoraBackground, InfiltrationDifficulty + Math.floor(Math.random() * 3), "PandoraCharacterFightEnd()");
+	let Difficulty = InfiltrationDifficulty + Math.floor(Math.random() * 3);
+	KidnapStart(CurrentCharacter, PandoraBackground, Difficulty, "PandoraCharacterFightEnd()");
 }
 
 /**
@@ -634,4 +642,20 @@ function PandoraBribeInfo(Amount, Type) {
 function PandoraSlaveActivity() {
 	if (CurrentCharacter.RecruitOdds >= 0.75)
 		CurrentCharacter.RecruitOdds = CurrentCharacter.RecruitOdds - 0.05;
+}
+
+/**
+ * Starts the player punishment process and jumps to the punishment Dominatrix
+ * @returns {void} - Nothing
+ */
+function PandoraPunishmentIntro() {
+	let IntroText;
+	if (SkillGetLevel(Player, "Infiltration") >= 8) IntroText = DialogFind(CurrentCharacter, "Punishment8");
+	else if (SkillGetLevel(Player, "Infiltration") >= 5) IntroText = DialogFind(CurrentCharacter, "Punishment5");
+	else if (SkillGetLevel(Player, "Infiltration") >= 2) IntroText = DialogFind(CurrentCharacter, "Punishment2");
+	else IntroText = DialogFind(CurrentCharacter, "Punishment0");
+	PandoraBackground = "Pandora/Underground/Cell" + Math.floor(Math.random() * 6).toString();
+	let Dominatrix = PandoraGenerateNPC("Punishment", "Mistress", "RANDOM", false);
+	CharacterSetCurrent(Dominatrix);
+	CurrentCharacter.CurrentDialog = IntroText;
 }

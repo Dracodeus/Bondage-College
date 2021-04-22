@@ -200,8 +200,13 @@ function AssetAdd(NewAsset, ExtendedConfig) {
 function AssetBuildExtended(A, ExtendedConfig) {
 	let AssetConfig = AssetFindExtendedConfig(ExtendedConfig, AssetCurrentGroup.Name, A.Name);
 	if (AssetConfig && AssetConfig.CopyConfig) {
+		const Overrides = AssetConfig.Config;
 		const { GroupName, AssetName } = AssetConfig.CopyConfig;
 		AssetConfig = AssetFindExtendedConfig(ExtendedConfig, GroupName || AssetCurrentGroup.Name, AssetName);
+		if (AssetConfig && Overrides) {
+			const MergedConfig = Object.assign({}, AssetConfig.Config, Overrides);
+			AssetConfig = Object.assign({}, AssetConfig, {Config: MergedConfig});
+		}
 	}
 	if (AssetConfig) {
 		switch (AssetConfig.Archetype) {

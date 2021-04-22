@@ -90,7 +90,7 @@ function InventoryHairAccessory3HaloClick() {
 		const y = ExtendedXY[InventoryHairAccessory3HaloOptions.length][i][1] + 80;
 
 		if (MouseIn(x, y, 225, 275)) {
-			ExtendedItemHandleOptionClick(C, InventoryHairAccessory3HaloOptions, option, false, true);
+			ExtendedItemHandleOptionClick(C, InventoryHairAccessory3HaloOptions, option, false);
 		}
 	});
 }
