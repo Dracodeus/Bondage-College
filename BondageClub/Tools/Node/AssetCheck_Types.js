@@ -33,6 +33,7 @@ const AssetGroupType = {
 	InheritColor: "Maybe String",
 	FreezeActivePose: "Maybe [String]",
 	PreviewZone: "Maybe (Number, Number, Number, Number)",
+	DynamicGroupName: "Maybe String",
 };
 
 const AssetType = {

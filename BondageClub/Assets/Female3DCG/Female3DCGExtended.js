@@ -186,6 +186,33 @@ var AssetFemale3DCGExtended = {
 			CopyConfig: { GroupName: "Corset", AssetName: "LatexCorset1" },
 		},
 	}, // ItemTorso
+	HairAccessory1: {
+		ElfEars: {
+			Archetype: ExtendedArchetype.TYPED,
+			Config: {
+				Options: [
+					{
+						Name: "InFront",
+						Property: { Type: null },
+					},
+					{
+						Name: "Behind",
+						Property: { Type: "Behind", OverridePriority: 51 },
+					},
+				],
+				Dialog: {
+					Load: "HairAccessory1ElfEarsSelect",
+					TypePrefix: "HairAccessory1ElfEars",
+				},
+			}
+		} // ElfEars
+	}, // HairAccessory1
+	HairAccessory2: {
+		ElfEars: {
+			Archetype: ExtendedArchetype.TYPED,
+			CopyConfig: { GroupName: "HairAccessory1", AssetName: "ElfEars" },
+		}
+	} // HairAccessory2
 };
 
 /**
