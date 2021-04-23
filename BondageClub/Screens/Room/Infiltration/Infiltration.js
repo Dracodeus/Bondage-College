@@ -3,7 +3,6 @@ var InfiltrationBackground = "Infiltration";
 var InfiltrationSupervisor = null;
 var InfiltrationDifficulty = 0;
 var InfiltrationMission = "";
-//var InfiltrationMissionType = ["Rescue", "Kidnap", "Retrieve", "Steal"];
 var InfiltrationMissionType = ["Rescue", "Kidnap", "Retrieve"];
 var InfiltrationObjectType = ["USBKey", "BDSMPainting", "GoldCollar", "GeneralLedger", "SilverVibrator", "DiamondRing", "SignedPhoto"];
 var InfiltrationTarget = {};
