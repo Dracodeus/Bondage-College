@@ -380,8 +380,10 @@ function ValidationCanRemoveItem(previousItem, params, isSwap) {
 	// If we're not swapping, and the asset group can't be empty, always block removal
 	if (!previousItem.Asset.Group.AllowNone && !isSwap) return false;
 
+	const {fromSelf, fromOwner, fromLover} = params;
+
 	// If the update is coming from ourself, it's always permitted
-	if (params.fromSelf) return true;
+	if (fromSelf) return true;
 
 	const lock = InventoryGetLock(previousItem);
 
@@ -392,7 +394,13 @@ function ValidationCanRemoveItem(previousItem, params, isSwap) {
 	}
 
 	// Owners can always remove lover locks, regardless of lover rules
-	if (lock && lock.Asset.LoverOnly && params.fromOwner) return true;
+	if (lock && lock.Asset.LoverOnly && fromOwner) return true;
+
+	// Only owners/lovers can remove lover locks
+	if (lock && lock.Asset.LoverOnly && !fromLover && !fromOwner) return false;
+
+	// Only owners can remove owner locks
+	if (lock && lock.Asset.OwnerOnly && !fromOwner) return false;
 
 	// Fall back to common item add/remove validation
 	return ValidationCanAddOrRemoveItem(previousItem, params);

@@ -11,43 +11,33 @@ var KinkyDungeonKeybindingCurrentKey = 0;
 var KinkyDungeonGameRunning = false
 
 //var KinkyDungeonKeyLower = [87+32, 65+32, 83+32, 68+32, 81+32, 45+32, 90+32, 43+32]; // WASD
-var KinkyDungeonKey = [87, 65, 83, 68, 81, 45, 90, 43]; // WASD
+var KinkyDungeonKey = [119, 97, 115, 100, 113, 101, 122, 99]; // WASD
 //var KinkyDungeonKeyNumpad = [56, 52, 50, 54, 55, 57, 49, 51]; // Numpad
-var KinkyDungeonKeySpell = [33, 64, 35]; // ! @ #
-var KinkyDungeonKeyWait = [32]; // Space and 5 (53)
+var KinkyDungeonKeySpell = [49, 50, 51]; // 1 2 3
+var KinkyDungeonKeyWait = [120]; // x
 
-function KinkyDungeonDressPlayer() {
-	CharacterNaked(KinkyDungeonPlayer)
-	
-	InventoryWear(KinkyDungeonPlayer, "WitchHat1", "Hat")
-	InventoryWear(KinkyDungeonPlayer, "SteampunkCorsetTop1", "Cloth")
-	InventoryWear(KinkyDungeonPlayer, "LatexSkirt1", "ClothLower")
-	InventoryWear(KinkyDungeonPlayer, "Socks4", "Socks")
-	InventoryWear(KinkyDungeonPlayer, "Heels3", "Shoes")
-	
-	
-	CharacterAppearanceSetColorForGroup(KinkyDungeonPlayer, "#444444", "Socks");
-	CharacterAppearanceSetColorForGroup(KinkyDungeonPlayer, "#222222", "Shoes");
-}
+var KinkyDungeonRootDirectory = "Screens/MiniGame/KinkyDungeon/"
 
 /**
  * Loads the kinky dungeon game
  * @returns {void} - Nothing
  */
 function KinkyDungeonLoad() {
-	
+
 	if (!KinkyDungeonGameRunning) {
 		if (!KinkyDungeonPlayer)
-			KinkyDungeonPlayer = CharacterLoadNPC("NPC_Avatar");
-		
-		//KinkyDungeonCreateMap(MiniGameDifficulty);
-		let appearance = CharacterAppearanceStringify(Player);
-		CharacterAppearanceRestore(KinkyDungeonPlayer, appearance)
-		CharacterReleaseTotal(KinkyDungeonPlayer)
-		CharacterNaked(KinkyDungeonPlayer)
-		KinkyDungeonDressPlayer()
-		
-		KinkyDungeonKeybindings = Player.KinkyDungeonKeybindings
+      KinkyDungeonPlayer = CharacterLoadNPC("NPC_Avatar");
+
+    //KinkyDungeonCreateMap(MiniGameDifficulty);
+    var appearance = CharacterAppearanceStringify(Player)
+    CharacterAppearanceRestore(KinkyDungeonPlayer, appearance)
+    CharacterReleaseTotal(KinkyDungeonPlayer)
+    CharacterNaked(KinkyDungeonPlayer)
+    KinkyDungeonInitializeDresses()
+    KinkyDungeonDressPlayer()
+    KinkyDungeonShrineInit()
+
+    KinkyDungeonKeybindings = Player.KinkyDungeonKeybindings
 		
 		KinkyDungeonState = "Menu"
 		
@@ -63,6 +53,7 @@ function KinkyDungeonLoad() {
 			}
 			if (InventoryGet(Player, group))
 				KinkyDungeonRestraintsLocked.push(group)
+
 		}
 	}
 }
@@ -168,7 +159,7 @@ function KinkyDungeonClick() {
 			KinkyDungeonState = "Keybindings"
 			
 			KinkyDungeonKeybindingsTemp = {
-				Down: 120,
+				Down: 115,
 				DownLeft: 122,
 				DownRight: 99,
 				Left: 97,
@@ -179,7 +170,7 @@ function KinkyDungeonClick() {
 				Up: 119,
 				UpLeft: 113,
 				UpRight: 101,
-				Wait: 115,
+				Wait: 120,
 			}
 		}
 	} else if (KinkyDungeonState == "Game") {
