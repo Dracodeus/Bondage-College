@@ -65,7 +65,7 @@ var KinkyDungeonBlueKeys = 0;
 var KinkyDungeonNormalBlades = 1;
 var KinkyDungeonEnchantedBlades = 0;
 
-var KinkyDungeonKnifeBreakChance = 0.1;
+var KinkyDungeonKnifeBreakChance = 0.2;
 var KinkyDungeonKeyJamChance = 0.33;
 var KinkyDungeonKeyPickBreakChance = 0.25;
 
@@ -150,6 +150,8 @@ function KinkyDungeonDealDamage(Damage) {
 		KinkyDungeonStatStamina -= dmg/2;
 	} else if (type == "pain") { // Painful attacks decrease arousal
 		KinkyDungeonStatArousal -= dmg/2;
+	} else if (type == "glue") { // Glue slows the player
+		KinkyDungeonStatStamina -= dmg/2;
 	}
 	return dmg;
 }
@@ -180,6 +182,7 @@ function KinkyDungeonDrawStats(x, y, width, heightPerBar) {
 
 
 function KinkyDungeonUpdateStats(delta) {
+	KinkyDungeonPlayers = [KinkyDungeonPlayerEntity]
 	//let now = performance.now()
 	// Initialize
 	var arousalRate = KinkyDungeonStatArousalRegen;
@@ -239,9 +242,11 @@ function KinkyDungeonCalculateSlowLevel() {
 	KinkyDungeonSlowLevel = 0;
 	if (KinkyDungeonPlayer.IsMounted() || KinkyDungeonPlayer.Effect.indexOf("Tethered") >= 0 || KinkyDungeonPlayer.IsEnclose()) {KinkyDungeonSlowLevel = 100; KinkyDungeonMovePoints = 0;}
 	else {
+		let boots = KinkyDungeonGetRestraintItem("ItemBoots");
 		if (InventoryItemHasEffect(InventoryGet(KinkyDungeonPlayer, "ItemLegs"), "Block", true) || InventoryItemHasEffect(InventoryGet(KinkyDungeonPlayer, "ItemLegs"), "KneelFreeze", true)) KinkyDungeonSlowLevel += 1;
 		if (InventoryItemHasEffect(InventoryGet(KinkyDungeonPlayer, "ItemFeet"), "Block", true) || InventoryItemHasEffect(InventoryGet(KinkyDungeonPlayer, "ItemFeet"), "Freeze", true)) KinkyDungeonSlowLevel += 1;
-		if (InventoryGet(KinkyDungeonPlayer, "ItemBoots") && InventoryGet(KinkyDungeonPlayer, "ItemBoots").Difficulty > 0) KinkyDungeonSlowLevel += 1;
+		//if (InventoryGet(KinkyDungeonPlayer, "ItemBoots") && InventoryGet(KinkyDungeonPlayer, "ItemBoots").Difficulty > 0) KinkyDungeonSlowLevel += 1;
+		if (boots && boots.restraint && boots.restraint.slowboots) KinkyDungeonSlowLevel += 1;
 		if (KinkyDungeonPlayer.Pose.includes("Kneel")) KinkyDungeonSlowLevel = Math.max(3, KinkyDungeonSlowLevel + 1);
 		if (KinkyDungeonPlayer.Pose.includes("Hogtied")) KinkyDungeonSlowLevel = Math.max(5, KinkyDungeonSlowLevel + 1);
 
