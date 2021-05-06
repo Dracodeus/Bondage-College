@@ -16,7 +16,6 @@ var PandoraTargetRoom = null;
 var PandoraClothes = "Random";
 var PandoraWillpower = 20;
 var PandoraMaxWillpower = 20;
-var PandoraPunishment = {};
 
 /**
  * NPC Dialog functions
@@ -732,6 +731,7 @@ function PandoraPunishmentIntro() {
 	if (SkillGetLevel(Player, "Infiltration") >= 8) Dominatrix.Stage = "80";
 	CharacterSetCurrent(Dominatrix);
 	CurrentCharacter.CurrentDialog = IntroText;
+	InfiltrationTarget.Fail = true;
 }
 
 /**
@@ -818,12 +818,23 @@ function PandoraPlayerUngag() {
 }
 
 /**
- * Starts the punishment sentence in minutes
+ * Sets the punishment sentence in minutes
  * @returns {void} - Nothing
  */
 function PandoraPunishmentSentence(Minutes) {
-	PandoraPunishment = {};
-	PandoraPunishment.Minutes = parseInt(Minutes);
-	PandoraPunishment.Willpower = 0;
-	PandoraPunishment.Background = PandoraBackground;
+	Player.Infiltration.Punishment = {};
+	Player.Infiltration.Punishment.Minutes = parseInt(Minutes);
+	Player.Infiltration.Punishment.Background = PandoraBackground;
+}
+
+/**
+ * Starts the punishment
+ * @returns {void} - Nothing
+ */
+function PandoraPunishmentStart() {
+	PandoraWillpower = 0;
+	Player.Infiltration.Punishment.Timer = CurrentTime + (Player.Infiltration.Punishment.Minutes * 60000);
+	ServerSend("AccountUpdate", { Infiltration: Player.Infiltration });
+	DialogLeave();
+	CommonSetScreen("Room", "PandoraPrison");
 }

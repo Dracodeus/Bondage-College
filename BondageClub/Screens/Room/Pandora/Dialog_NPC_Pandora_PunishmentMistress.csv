@@ -63,4 +63,4 @@ PlayerGagged,,,"(She smirks at you.)  Mumble or scream all you want, nobody care
 100,,How long will you keep me?,Until your ransom is paid or until the clock runs out.  The clock will be in your cell.  Known troublemakers get more time.,,
 100,,Can I pay the ransom myself?,"Talk with the staff when you get locked up, maybe they can arrange something.",,
 100,,Will you bring me water and food?,"Yes, guards will come from time to time to check on you.  Don't try anything funny.",,
-100,,"Fine, I'm ready.  (Start your sentence.)",TO DO,,
+100,,"Fine, I'm ready.  (Start your sentence.)",,PunishmentStart(),
