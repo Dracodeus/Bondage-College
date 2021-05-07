@@ -8,6 +8,9 @@ var KinkyDungeonArousalUnlockSuccessMod = 0.5; // Determines how much harder it 
 var KinkyDungeonStatArousal = 0;
 var KinkyDungeonStatArousalRegen = -1;
 var KinkyDungeonStatArousalRegenStaminaRegenFactor = -0.9; // Stamina drain per time per 100 arousal
+var KinkyDungeonStatArousalMiscastChance = 0.8; // Miscast chance at max arousal
+var KinkyDungeonVibeLevel = 0;
+var KinkyDungeonArousalPerVibe = 0.1; // How much arousal per turn per vibe level
 // Note that things which increase max arousal (aphrodiasic) also increase the max stamina drain. This can end up being very dangerous as being edged at extremely high arousal will drain all your energy completely, forcing you to wait until the torment is over or the drugs wear off
 
 // Stamina -- your MP. Used to cast spells and also struggle
@@ -23,7 +26,7 @@ var KinkyDungeonStaminaRate = KinkyDungeonStatStaminaRegen;
 // Willpower -- your HP. When it falls to 0, your character gives up and accepts her fate
 var KinkyDungeonStatWillpowerMax = 100;
 var KinkyDungeonStatWillpower = KinkyDungeonStatWillpowerMax;
-var KinkyDungeonStatWillpowerRegen = 0.1;
+var KinkyDungeonStatWillpowerRegen = 0.0; // Willpower does not regenerate! You have to visit a shrine, with an exponentially increasing price tag
 var KinkyDungeonStatWillpowerExhaustion = 0; // When casting spells, your willpower regen is stopped for this many turns
 
 // Willpower loss
@@ -73,7 +76,7 @@ var KinkyDungeonKeyPickBreakChance = 0.25;
 var KinkyDungeonPlayerDamage = 2;
 var KinkyDungeonPlayerDamageMax = 2;
 var KinkyDungeonPlayerDamageType = "crush";
-var KinkyDungeonTorsoGrabChance = 0.33;
+var KinkyDungeonTorsoGrabChance = 0.25;
 
 // Your inventory contains items that are on you
 var KinkyDungeonInventory = [];
@@ -185,7 +188,9 @@ function KinkyDungeonUpdateStats(delta) {
 	KinkyDungeonPlayers = [KinkyDungeonPlayerEntity]
 	//let now = performance.now()
 	// Initialize
-	var arousalRate = KinkyDungeonStatArousalRegen;
+	KinkyDungeonCalculateVibeLevel();
+	
+	var arousalRate = (KinkyDungeonVibeLevel == 0) ? KinkyDungeonStatArousalRegen : (KinkyDungeonArousalPerVibe * KinkyDungeonVibeLevel);
 	if (KinkyDungeonStatWillpowerExhaustion > 0) {
 		KinkyDungeonStatWillpowerExhaustion = Math.max(0, KinkyDungeonStatWillpowerExhaustion - delta);
 		KinkyDungeonStaminaRate = 0;
@@ -238,6 +243,24 @@ function KinkyDungeonUpdateStats(delta) {
 
 }
 
+function KinkyDungeonCalculateVibeLevel() {
+	KinkyDungeonVibeLevel = 0;
+	for (let I = 0; I < KinkyDungeonInventory.length; I++) {
+		if (KinkyDungeonInventory[I] && KinkyDungeonInventory[I].restraint && KinkyDungeonInventory[I].restraint.intensity) {
+			KinkyDungeonVibeLevel = Math.max(KinkyDungeonVibeLevel + KinkyDungeonInventory[I].restraint.intensity/4, KinkyDungeonInventory[I].restraint.intensity);
+		}
+	}
+}
+
+function KinkyDungeonCanOrgasm() {
+	for (let I = 0; I < KinkyDungeonInventory.length; I++) {
+		if (KinkyDungeonInventory[I] && KinkyDungeonInventory[I].restraint && KinkyDungeonInventory[I].restraint.orgasm) {
+			return true;
+		}
+	}
+	return false;
+}
+
 function KinkyDungeonCalculateSlowLevel() {
 	KinkyDungeonSlowLevel = 0;
 	if (KinkyDungeonPlayer.IsMounted() || KinkyDungeonPlayer.Effect.indexOf("Tethered") >= 0 || KinkyDungeonPlayer.IsEnclose()) {KinkyDungeonSlowLevel = 100; KinkyDungeonMovePoints = 0;}
@@ -256,15 +279,4 @@ function KinkyDungeonCalculateSlowLevel() {
 			}
 		}
 	}
-}
-
-// StimulationLevel - 0: Physical touching
-// StimulationLevel - 1: Direct vibrator contact
-// StimulationLevel - 2: Powerful vibrator or magic, edging blocks
-// StimulationLevel - 3: Bypass edging
-function KinkyDungeonCanOrgasm(StimulationLevel) {
-	if (KinkyDungeonStatArousal <= 100) return false; // Need to be at 100
-	if (KinkyDungeonStatBeltLevel > StimulationLevel) return false; // A leather belt won't stop heavy stimulation
-	if (KinkyDungeonStatEdged && StimulationLevel < 3) return false;
-	return true;
 }
