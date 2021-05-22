@@ -2038,3 +2038,9 @@ RibbonsArmsCross,,,Cross,,
 RibbonsArmsHeavy,,,Heavy,,
 ArmsRibbonsSetCross,,,SourceCharacter uses some ribbons on DestinationCharacter arms.,,
 ArmsRibbonsSetHeavy,,,SourceCharacter uses some more ribbons on DestinationCharacter arms.,,
+ItemMiscServingTraySelect,,,Add or remove drinks from the tray,,
+ItemMiscServingTrayEmpty,,,Empty
+ItemMiscServingTrayFull,,,Full
+ItemMiscServingTraySetEmpty,,,SourceCharacter removes the drinks from DestinationCharacter tray.,,
+ItemMiscServingTraySetFull,,,SourceCharacter fills DestinationCharacter tray with drinks.,,
+Page,,,Page,,
