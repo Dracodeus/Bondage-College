@@ -325,9 +325,22 @@ function DialogPrerequisite(D) {
  * @returns {boolean} - Whether or not the player is wearing a VR headset with Gaming type
  */
 function DialogHasGamingHeadset() {
-	var head = InventoryGet(Player, "ItemHead");
+	let head = InventoryGet(Player, "ItemHead");
 	if (head && head.Property && head.Property.Type == "Gaming") return true;
 
+	return false;
+}
+/**
+ * Checks if the player can watch VR games
+ * @returns {boolean} - Whether or not the player is wearing a VR headset with Gaming type
+ */
+function DialogCanWatchKinkyDungeon() {
+	if (CurrentCharacter) {
+		let head = InventoryGet(CurrentCharacter, "ItemHead");
+		if (!(head && head.Property && head.Property.Type == "Gaming")) return false;
+
+		if (Player.Effect.includes("VR")) return true;
+	}
 	return false;
 }
 
@@ -337,10 +350,18 @@ function DialogHasGamingHeadset() {
  * @returns {void}
  */
 function DialogStartKinkyDungeon() {
+	if (CurrentCharacter) {
+		KinkyDungeonPlayerCharacter = CurrentCharacter;
+		if (KinkyDungeonPlayerCharacter != Player && CurrentCharacter.MemberNumber) {
+			KinkyDungeonGameData = null;
+			ServerSend("ChatRoomChat", { Content: "RequestFullKinkyDungeonData", Type: "Hidden", Target: CurrentCharacter.MemberNumber });
+		}
+	}
 	DialogGamingPreviousRoom = CurrentScreen;
 	DialogGamingPreviousModule = CurrentModule;
 	MiniGameStart("KinkyDungeon", 0, "DialogEndKinkyDungeon");
 }
+
 
 /**
  * Return to previous room

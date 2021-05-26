@@ -1700,6 +1700,11 @@ function ChatRoomMessage(data) {
 					}
 				}
 				else if (msg == "GiveLockpicks") DialogLentLockpicks = true;
+				else if (msg == "RequestFullKinkyDungeonData") {
+					KinkyDungeonStreamingPlayers.push(SenderCharacter.MemberNumber);
+					if (CurrentScreen == "KinkyDungeon")
+						KinkyDungeonSendData(KinkyDungeonPackData(true, true, true, true), SenderCharacter.MemberNumber)
+				}
 
 				// If the message is still hidden after any modifications, stop processing
 				if (data.Type == "Hidden") return;
@@ -2948,7 +2953,9 @@ function ChatRoomPayQuest(data) {
  * @returns {void} - Nothing
  */
 function ChatRoomGameResponse(data) {
-	if (ChatRoomGame == "LARP") GameLARPProcess(data);
+	if (data.Data.KinkyDungeon) 
+        KinkyDungeonHandleData(data.Data.KinkyDungeon, data.Sender);
+    else if (ChatRoomGame == "LARP") GameLARPProcess(data);
 }
 
 /**

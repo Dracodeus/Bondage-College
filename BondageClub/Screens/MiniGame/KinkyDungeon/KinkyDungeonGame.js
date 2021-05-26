@@ -71,6 +71,15 @@ var KinkyDungeonHardLockChance = 0.2;
 var KinkyDungeonHardLockChanceScaling = 0.005;
 var KinkyDungeonHardLockChanceScalingMax = 0.4;
 
+var KinkyDungeonNextDataSendTime = 0;
+var KinkyDungeonNextDataSendTimeDelay = 500; // Send on moves every 0.5 second
+var KinkyDungeonNextDataSendTimeDelayPing = 5000; // temporary ping
+var KinkyDungeonNextDataSendStatsTimeDelay = 3000; // Send stats every 3s to save bandwidth
+var KinkyDungeonNextDataSendStatsTime = 0;
+
+var KinkyDungeonNextDataLastTimeReceived = 0;
+var KinkyDungeonNextDataLastTimeReceivedTimeout = 15000; // Clear data if more than 15 seconds of no data received
+
 
 var KinkyDungeonDoorCloseTimer = 0;
 var KinkyDungeonLastMoveDirection = null;
@@ -231,6 +240,46 @@ function KinkyDungeonPlaceEnemies(Tags, Floor, width, height) {
 		}
 		tries += 1;
 	}
+}
+
+function KinkyDungeonPlaceStairs(startpos, width, height) {
+	// Starting stairs are predetermined and guaranteed to be open
+	KinkyDungeonMapSet(1, startpos, 'S');
+
+
+	// Ending stairs are not.
+	var placed = false;
+	
+	for (let X = width - 2; X > 0.75 * width - 2 && !placed; X--)
+		for (let L = 100; L > 0; L -= 1) { // Try up to 100 times
+			let X = width - 2;
+			let Y = 1 + 2*Math.floor(Math.random()*0.5 * (height - 2));
+			if (KinkyDungeonGroundTiles.includes(KinkyDungeonMapGet(X, Y))) {
+				// Check the 3x3 area
+				var wallcount = 0;
+				for (let XX = X-1; XX <= X+1; XX += 1)
+					for (let YY = Y-1; YY <= Y+1; YY += 1)
+						if (!(XX == X && YY == Y) && (KinkyDungeonMapGet(XX, YY) == '1' || KinkyDungeonMapGet(XX, YY) == 'X'))
+							wallcount += 1;
+				if (wallcount == 7) {
+					placed = true;
+					KinkyDungeonMapSet(X, Y, 's');
+					L = 0;
+					break;
+				}
+			}
+		}
+
+	if (!placed) // Loosen the constraints
+		for (let L = 100; L > 0; L -= 1) { // Try up to 100 times
+			let X = width - 2 - Math.floor(Math.random() * width/4);
+			let Y = 1 + Math.floor(Math.random() * (height - 2));
+			if (KinkyDungeonGroundTiles.includes(KinkyDungeonMapGet(X, Y))) {
+				KinkyDungeonMapSet(X, Y, 's');
+				L = 0;
+			}
+		}
+
 }
 
 function KinkyDungeonPlaceChests(treasurechance, treasurecount, rubblechance, Floor, width, height) {
@@ -459,44 +508,6 @@ function KinkyDungeonPlaceDoors(doorchance, width, height) {
 				}
 			}
 }
-
-function KinkyDungeonPlaceStairs(startpos, width, height) {
-	// Starting stairs are predetermined and guaranteed to be open
-	KinkyDungeonMapSet(1, startpos, 'S');
-
-
-	// Ending stairs are not.
-	var placed = false;
-	for (let L = 100; L > 0; L -= 1) { // Try up to 100 times
-		let X = width - 2;
-		let Y = 1 + 2*Math.floor(Math.random()*0.5 * (height - 2));
-		if (KinkyDungeonGroundTiles.includes(KinkyDungeonMapGet(X, Y))) {
-			// Check the 3x3 area
-			var wallcount = 0;
-			for (let XX = X-1; XX <= X+1; XX += 1)
-				for (let YY = Y-1; YY <= Y+1; YY += 1)
-					if (!(XX == X && YY == Y) && (KinkyDungeonMapGet(XX, YY) == '1' || KinkyDungeonMapGet(XX, YY) == 'X'))
-						wallcount += 1;
-			if (wallcount == 7) {
-				placed = true;
-				KinkyDungeonMapSet(X, Y, 's');
-				L = 0;
-			}
-		}
-	}
-
-	if (!placed) // Loosen the constraints
-		for (let L = 100; L > 0; L -= 1) { // Try up to 100 times
-			let X = width - 2 - Math.floor(Math.random() * width/4);
-			let Y = 1 + Math.floor(Math.random() * (height - 2));
-			if (KinkyDungeonGroundTiles.includes(KinkyDungeonMapGet(X, Y))) {
-				KinkyDungeonMapSet(X, Y, 's');
-				L = 0;
-			}
-		}
-
-}
-
 
 function KinkyDungeonReplaceDoodads(Chance, width, height) {
 	for (let X = 1; X < width; X += 1)
@@ -875,7 +886,7 @@ function KinkyDungeonMoveTo(moveX, moveY) {
 	}
 }
 
-function KinkyDungeonAdvanceTime(delta) {
+function KinkyDungeonAdvanceTime(delta, NoUpdate) {
 	//let now = performance.now()
 	// Here we move enemies and such
 	KinkyDungeonUpdateLightGrid = true;
@@ -908,6 +919,7 @@ function KinkyDungeonAdvanceTime(delta) {
 		KinkyDungeonState = "Lose";
 	}
 
-
+    if (!NoUpdate)
+		KinkyDungeonMultiplayerUpdate(KinkyDungeonNextDataSendTimeDelay);
 }
 
