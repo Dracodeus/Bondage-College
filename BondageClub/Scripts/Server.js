@@ -52,6 +52,66 @@ function ServerInit() {
 	ServerSocket.on("AccountLovership", function (data) { ServerAccountLovership(data); });
 }
 
+/** @readonly */
+var ServerAccountUpdate = new class AccountUpdater {
+
+	constructor() {
+		/**
+		 * @private
+		 * @type {Map<string, object>}
+		 */
+		this.Queue = new Map;
+		/**
+		 * @private
+		 * @type {null | number}
+		 */
+		this.Timeout = null;
+		/**
+		 * @private
+		 * @type {number}
+		 */
+		this.Start = 0;
+	}
+
+	/** Clears queue and sync with server  */
+	SyncToServer() {
+		if (this.Timeout) clearTimeout(this.Timeout);
+		this.Timeout = null;
+
+		if (this.Queue.size == 0) return;
+
+		const Queue = this.Queue;
+		this.Queue = new Map;
+		const Data = {};
+		Queue.forEach((value, key) => Data[key] = value);
+
+		ServerSocket.emit('AccountUpdate', Data);
+	}
+
+	/**
+	 * Queues a data to be synced at a later time
+	 * @param {object} Data
+	 * @param {true} [Force] - force immediate sync to server
+	 */
+	QueueData(Data, Force) {
+		for (const [key, value] of Object.entries(Data)) {
+			this.Queue.set(key, value);
+		}
+
+		if (Force) {
+			this.SyncToServer();
+			return;
+		}
+
+		if (this.Timeout && (this.Start - Date.now()) < 30000) {
+			clearTimeout(this.Timeout);
+			this.Timeout = null;
+		} else this.Start = Date.now();
+
+		if (!this.Timeout) this.Timeout = setTimeout(this.SyncToServer.bind(this), 10000);
+	}
+};
+
 /**
  * Sets the connection status of the server and updates the login page message
  * @param {boolean} connected - whether or not the websocket connection to the server has been established successfully
@@ -179,8 +239,7 @@ function ServerSend(Message, Data) {
  * @returns {void} - Nothing
  */
 function ServerPlayerSync() {
-	var D = { Money: Player.Money, Owner: Player.Owner, Lover: Player.Lover };
-	ServerSend("AccountUpdate", D);
+	ServerAccountUpdate.QueueData({ Money: Player.Money, Owner: Player.Owner, Lover: Player.Lover });
 	delete Player.Lover;
 }
 
@@ -199,7 +258,7 @@ function ServerPlayerInventorySync() {
 			G.push(Player.Inventory[I].Asset.Name);
 		}
 	}
-	ServerSend("AccountUpdate", { Inventory: Inv });
+	ServerAccountUpdate.QueueData({ Inventory: Inv });
 }
 
 /**
@@ -207,11 +266,11 @@ function ServerPlayerInventorySync() {
  * @returns {void} - Nothing
  */
 function ServerPlayerBlockItemsSync() {
-	ServerSend("AccountUpdate", {
+	ServerAccountUpdate.QueueData({
 		BlockItems: CommonPackItemArray(Player.BlockItems),
 		LimitedItems: CommonPackItemArray(Player.LimitedItems),
 		HiddenItems: Player.HiddenItems
-	});
+	}, true);
 }
 
 /**
@@ -219,9 +278,7 @@ function ServerPlayerBlockItemsSync() {
  * @returns {void} - Nothing
  */
 function ServerPlayerLogSync() {
-	var D = {};
-	D.Log = Log;
-	ServerSend("AccountUpdate", D);
+	ServerAccountUpdate.QueueData({ Log });
 }
 
 /**
@@ -229,9 +286,7 @@ function ServerPlayerLogSync() {
  * @returns {void} - Nothing
  */
 function ServerPlayerReputationSync() {
-	var D = {};
-	D.Reputation = Player.Reputation;
-	ServerSend("AccountUpdate", D);
+	ServerAccountUpdate.QueueData({ Reputation: Player.Reputation });
 }
 
 /**
@@ -239,9 +294,7 @@ function ServerPlayerReputationSync() {
  * @returns {void} - Nothing
  */
 function ServerPlayerSkillSync() {
-	var D = {};
-	D.Skill = Player.Skill;
-	ServerSend("AccountUpdate", D);
+	ServerAccountUpdate.QueueData({ Skill: Player.Skill });
 }
 
 /**
@@ -260,7 +313,7 @@ function ServerPlayerRelationsSync() {
 	});
 	D.FriendNames = LZString.compressToUTF16(JSON.stringify(Array.from(Player.FriendNames)));
 	D.SubmissivesList = LZString.compressToUTF16(JSON.stringify(Array.from(Player.SubmissivesList)));
-	ServerSend("AccountUpdate", D);
+	ServerAccountUpdate.QueueData(D, true);
 }
 
 /**
@@ -443,7 +496,7 @@ function ServerPlayerAppearanceSync() {
 		var D = {};
 		D.AssetFamily = Player.AssetFamily;
 		D.Appearance = ServerAppearanceBundle(Player.Appearance);
-		ServerSend("AccountUpdate", D);
+		ServerAccountUpdate.QueueData(D, true);
 	}
 
 }
@@ -473,7 +526,7 @@ function ServerPrivateCharacterSync() {
 			};
 			D.PrivateCharacter.push(C);
 		}
-		ServerSend("AccountUpdate", D);
+		ServerAccountUpdate.QueueData(D);
 	}
 }
 

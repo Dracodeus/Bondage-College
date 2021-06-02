@@ -90,6 +90,6 @@ function InfiltrationPerksClick() {
  * @returns {void} - Nothing
  */
 function InfiltrationPerksExit() {
-	ServerSend("AccountUpdate", { Infiltration: Player.Infiltration });
+	ServerAccountUpdate.QueueData({ Infiltration: Player.Infiltration });
 	CommonSetScreen("Room", "Infiltration");
 }

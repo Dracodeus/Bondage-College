@@ -163,6 +163,21 @@ function PandoraPrisonPlayerStrip(Level) {
 }
 
 /**
+ * When the player gets locked in a chastity device by the guard
+ * @returns {void} - Nothing
+ */
+function PandoraPrisonPlayerChastity(LockType) {
+	if (InventoryGet(Player, "ItemPelvis") == null) {
+		InventoryWear(Player, CommonRandomItemFromList("", ["MetalChastityBelt", "LeatherChastityBelt", "SleekLeatherChastityBelt", "StuddedChastityBelt", "PolishedChastityBelt", "SteelChastityPanties"]), "ItemPelvis");
+		InventoryLock(Player, "ItemPelvis", LockType);
+	}
+	if (InventoryGet(Player, "ItemBreast") == null) {
+		InventoryWear(Player, CommonRandomItemFromList("", ["MetalChastityBra", "PolishedChastityBra", "LeatherBreastBinder"]), "ItemBreast");
+		InventoryLock(Player, "ItemBreast", LockType);
+	}
+}
+
+/**
  * When the NPC leaves the prison
  * @returns {void} - Nothing
  */

@@ -282,7 +282,7 @@ function GameLARPStartProcess() {
 	// Changes the game status and exits
 	ServerSend("ChatRoomGame", { GameProgress: "Start" });
 	Player.Game.LARP.Status = "Running";
-	ServerSend("AccountUpdate", { Game: Player.Game });
+	ServerAccountUpdate.QueueData({ Game: Player.Game }, true);
 	ChatRoomCharacterUpdate(Player);
 }
 
@@ -322,7 +322,7 @@ function GameLARPClick() {
 	if (MouseIn(1050, 600, 400, 65) && GameLARPCanLaunchGame()) {
 
 		// Updates the player data
-		ServerSend("AccountUpdate", { Game: Player.Game });
+		ServerAccountUpdate.QueueData({ Game: Player.Game }, true);
 		ChatRoomCharacterUpdate(Player);
 
 		// Shuffles all players in the chat room
@@ -358,7 +358,7 @@ function GameLARPExit() {
 		}
 
 		// Updates the player and go back to the chat room
-		ServerSend("AccountUpdate", { Game: Player.Game });
+		ServerAccountUpdate.QueueData({ Game: Player.Game }, true);
 		ChatRoomCharacterUpdate(Player);
 		CommonSetScreen("Online", "ChatRoom");
 
@@ -916,7 +916,7 @@ function GameLARPContinue() {
 		// Shows the winning team and updates the player status
 		GameLARPAddChatLog("EndGame", Player, Player, OnlineGameDictionaryText("Team" + Team), 0, 0, "#0000B0");
 		GameLARPReset();
-		ServerSend("AccountUpdate", { Game: Player.Game });
+		ServerAccountUpdate.QueueData({ Game: Player.Game }, true);
 
 		// Calculate the reputation gained, the longer the game took, the higher it will rise the rep, times 2 if the player team won
 		var RepGain = Math.round(GameLARPProgress.length / GameLARPPlayer.length * ((Player.Game.LARP.Team == Team) ? 0.5 : 0.25));

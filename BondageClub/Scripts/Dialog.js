@@ -895,7 +895,7 @@ function DialogFacialExpressionsSave(Slot) {
 	for (let x = 0; x < DialogFacialExpressions.length; x++) {
 		Player.SavedExpressions[Slot].push({ Group: DialogFacialExpressions[x].Group, CurrentExpression: DialogFacialExpressions[x].CurrentExpression });
 	}
-	ServerSend("AccountUpdate", { SavedExpressions: Player.SavedExpressions });
+	ServerAccountUpdate.QueueData({ SavedExpressions: Player.SavedExpressions });
 }
 /**
  * loads expressions from a slot

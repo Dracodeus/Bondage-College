@@ -207,7 +207,7 @@ function KinkyDungeonClick() {
 
 			KinkyDungeonKeybindings = KinkyDungeonKeybindingsTemp;
 
-			ServerSend("AccountUpdate", { KinkyDungeonKeybindings: KinkyDungeonKeybindings });
+			ServerAccountUpdate.QueueData({ KinkyDungeonKeybindings: KinkyDungeonKeybindings });
 		}
 
 		if (KinkyDungeonKeybindingCurrentKey > 0) {

@@ -57,7 +57,7 @@ var TitleList = [
 function TitleSet(NewTitle) {
 	if (NewTitle != Player.Title) {
 		Player.Title = NewTitle;
-		ServerSend("AccountUpdate", { Title: NewTitle });
+		ServerAccountUpdate.QueueData({ Title: NewTitle });
 	}
 	return NewTitle;
 }

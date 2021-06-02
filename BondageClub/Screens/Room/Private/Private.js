@@ -608,7 +608,7 @@ function PrivateClick() {
 		if (index < 0) index = 0;
 		BackgroundSelectionMake(backgrounds, index, Name => {
 			Player.VisualSettings.MainHallBackground = Name;
-			ServerSend("AccountUpdate", { VisualSettings: Player.VisualSettings });
+			ServerAccountUpdate.QueueData({ VisualSettings: Player.VisualSettings });
 		});
 	}
 	if (MouseIn(1885, 865, 90, 90) && LogQuery("RentRoom", "PrivateRoom")) {
@@ -619,7 +619,7 @@ function PrivateClick() {
 		BackgroundSelectionMake(backgrounds, index, Name => {
 			Player.VisualSettings.PrivateRoomBackground = Name;
 			PrivateBackground = Name;
-			ServerSend("AccountUpdate", { VisualSettings: Player.VisualSettings });
+			ServerAccountUpdate.QueueData({ VisualSettings: Player.VisualSettings });
 		});
 
 	}
