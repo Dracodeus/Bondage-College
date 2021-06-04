@@ -182,6 +182,7 @@ function PandoraPrisonPlayerChastity(LockType) {
  * @returns {void} - Nothing
  */
 function PandoraPrisonCharacterRemove() {
+	InventoryRemove(CurrentCharacter, "ItemHands");
 	PandoraPrisonCharacter = null;
 	PandoraPrisonCharacterTimer = CommonTime() + 30000 + Math.floor(Math.random() * 30000);
 	PandoraPrisonGuard.Stage = "RANDOM";
@@ -294,4 +295,29 @@ function PandoraPrisonBribeProcess(Money, Minutes) {
 		if (Player.Infiltration.Punishment.Timer < CurrentTime + 60000) Player.Infiltration.Punishment.Timer = CurrentTime + 60000;
 		ServerSend("AccountUpdate", { Infiltration: Player.Infiltration });
 	}
+}
+
+/**
+ * When the current NPC picks a random weapon to beat up the player
+ * @returns {void} - Nothing
+ */
+function PandoraPrisonPickWeapon() {
+	InventoryWear(PandoraPrisonGuard, "SpankingToys", "ItemHands");
+	InventoryGet(PandoraPrisonGuard, "ItemHands").Property = { Type: CommonRandomItemFromList("", ["Flogger", "Cane", "Paddle", "WhipPaddle", "Whip", "CattleProd", "Belt"]) };
+	CharacterRefresh(PandoraPrisonGuard);
+}
+
+/**
+ * When the guard beats up the player, she loses some strength for fights
+ * @returns {void} - Nothing
+ */
+function PandoraPrisonPlayerBeat(Damage, Blush) {
+	Damage = parseInt(Damage);
+	Damage = Math.round(Damage * PandoraMaxWillpower / 100);
+	PandoraWillpower = PandoraWillpower - Damage;
+	if (PandoraWillpower < 0) PandoraWillpower = 0;
+	PandoraWillpowerTimer = PandoraWillpowerTimer + ((InfiltrationPerksActive("Recovery")) ? 20000 : 30000);
+	CharacterSetFacialExpression(Player, "Blush", Blush, 10);
+	CharacterSetFacialExpression(Player, "Eyes", "Closed", 10);
+	CharacterSetFacialExpression(Player, "Eyes2", "Closed", 10);
 }

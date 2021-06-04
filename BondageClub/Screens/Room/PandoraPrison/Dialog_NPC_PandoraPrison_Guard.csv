@@ -141,5 +141,33 @@ ChastityLeave,,(Struggle in the devices.),You'll beg me for freedom later.  (She
 ChastityLeave,,(Leave her.),,CharacterRemove(),
 IntroBeat,,,"(Guard DialogCharacterName steps inside with whips and paddles.)  Prisoner DialogPlayerName, your corporal punishment will begin.",,
 IntroRestrainedBeat,,,"(Guard DialogCharacterName steps inside with whips and paddles.)  Prisoner DialogPlayerName, your corporal punishment will begin.",,
-Beat,,(UNDER CONSTRUCTION.),"(This area of the club is under construction.  Lots of features still need to be coded, please wait for the next version for a more complete experience.)",,
-Beat,,(Leave her.),,DialogLeave(),
+Beat,BeatStart,There's no need to go physical.,"(She picks a weapon and grins.)  There's no need, but it will be fun.  Well, maybe not for you.  Get ready!",PickWeapon(),Player.CanTalk()
+Beat,BeatStart,Wait!  What are you talking about?,"(She picks a weapon and grins.)  You're clueless, aren't you?  You will get beat up.  Get ready!",PickWeapon(),Player.CanTalk()
+Beat,BeatStart,This must be against the law.,(She picks a weapon and grins.)  I'm the law around here.  Your sentence is pain.  Get ready!,PickWeapon(),Player.CanTalk()
+Beat,BeatStart,(Mumble some words.),"(She picks a weapon and grins.)  Scream if you can, it will be funnier for me.  Get ready!",PickWeapon(),!Player.CanTalk()
+Beat,BeatStart,(Try to shake your gag off.),"(She picks a weapon and grins.)  Chew on that gag, it's going to hurt.  Get ready!",PickWeapon(),!Player.CanTalk()
+Beat,BeatStart,(Nod slowly.),(She picks a weapon and grins.)  You're enjoying this aren't you?  So am I.  Get ready!,PickWeapon(),
+Beat,BeatFight,I won't get beat up that easily.,"(She raises her fists.)  Oh yeah?  You better surrender right now, or it will leave scars.",,CanStartFight()
+BeatFight,,(Fight her.),,StartFight(),
+BeatFight,BeatStart,(Surrender.),"(She picks a weapon and grins.)  You talk tough, but let's see how you handle pain.  Get ready!",PickWeapon(),
+BeatStart,BeatSecond,No!  Please!  I'll be good!,(She hits you swiftly a few times and smiles.)  I'm not done yet.  Will you handle the pain?,"PlayerBeat(15, ""Medium"")",Player.CanTalk()
+BeatStart,BeatSecond,You think you can scare me?,(She hits you painfully many times and smirks.)  It's far from over.  Will you handle the pain?,"PlayerBeat(20, ""High"")",Player.CanTalk()
+BeatStart,BeatSecond,I'm ready Miss.,(She hits you pretty good a few times and giggles.)  This is fun.  Will you handle the pain?,"PlayerBeat(10, ""Low"")",Player.CanTalk()
+BeatStart,BeatSecond,(Whimper and beg.),(She hits you pretty good a few times and giggles.)  This is fun.  Will you handle the pain?,"PlayerBeat(10, ""Low"")",!Player.CanTalk()
+BeatStart,BeatSecond,(Struggle madly.),(She hits you painfully many times and smirks.)  It's far from over.  Will you handle the pain?,"PlayerBeat(20, ""High"")",!Player.CanTalk()
+BeatStart,BeatSecond,(Brace for impact.),(She hits you swiftly a few times and smiles.)  I'm not done yet.  Will you handle the pain?,"PlayerBeat(15, ""Medium"")",
+BeatSecond,BeatThird,"Girl, give me pain.",(She hits you painfully many times and smirks.)  You're still standing?  Time for one last round then.,"PlayerBeat(20, ""High"")",Player.CanTalk()
+BeatSecond,BeatThird,I will endure Miss.,(She hits you pretty good a few times and giggles.)  I'm sure you can take one last round.,"PlayerBeat(10, ""Low"")",Player.CanTalk()
+BeatSecond,BeatThird,(Close your eyes.),(She hits you swiftly a few times and smiles.)  Too bad I can't beat you all day.  One last round!,"PlayerBeat(15, ""Medium"")",
+BeatSecond,BeatThird,(Try to avoid her.),(She hits you swiftly a few times and smiles.)  Too bad I can't beat you all day.  One last round!,"PlayerBeat(15, ""Medium"")",!Player.CanTalk()
+BeatSecond,BeatThird,(Cry from the pain.),(She hits you pretty good a few times and giggles.)  I'm sure you can take one last round.,"PlayerBeat(10, ""Low"")",!Player.CanTalk()
+BeatSecond,BeatThird,(Stand strong.),(She hits you painfully many times and smirks.)  You're still standing?  Time for one last round then.,"PlayerBeat(20, ""High"")",
+BeatThird,BeatLeave,Ok.  One last round.,(She hits you swiftly a few times and smiles.)  All good things must end.  I hope you had as much fun as I did.  I need to go.,"PlayerBeat(15, ""Medium"")",Player.CanTalk()
+BeatThird,BeatLeave,Already?  That was boring.,(She hits you painfully many times and smirks.)  Don't pretend you're tough.  I hope you had as much fun as I did.  I need to go.,"PlayerBeat(20, ""High"")",Player.CanTalk()
+BeatThird,BeatLeave,I'll try to endure it.,(She hits you pretty good a few times and giggles.)  Was it that bad?  I hope you had as much fun as I did.  I need to go.,"PlayerBeat(10, ""Low"")",Player.CanTalk()
+BeatThird,BeatLeave,(Pretend to faint.),(She hits you pretty good a few times and giggles.)  Was it that bad?  I hope you had as much fun as I did.  I need to go.,"PlayerBeat(10, ""Low"")",!Player.CanTalk()
+BeatThird,BeatLeave,(Scream in your gag.),(She hits you painfully many times and smirks.)  Don't pretend you're tough.  I hope you had as much fun as I did.  I need to go.,"PlayerBeat(20, ""High"")",!Player.CanTalk()
+BeatThird,BeatLeave,(Take long deep breaths.),(She hits you swiftly a few times and smiles.)  All good things must end.  I hope you had as much fun as I did.  I need to go.,"PlayerBeat(15, ""Medium"")",
+BeatLeave,,You're a sadist!,Thanks!  It's one of my many qualities.  I'll see you later.  (She starts to walk away.),DialogRemove(),Player.CanTalk()
+BeatLeave,,(Grumble in your gag.),"That gag fits you so well, you can keep it.  See you later.  (She starts to walk away.)",DialogRemove(),!Player.CanTalk()
+BeatLeave,,(Leave her.),,CharacterRemove(),
