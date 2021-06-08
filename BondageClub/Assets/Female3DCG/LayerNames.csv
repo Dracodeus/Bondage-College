@@ -20,6 +20,11 @@ ClothBodice1Pattern,Pattern
 ClothAdmiralTopJacket,Jacket
 ClothAdmiralTopTrim,Trim
 ClothAdmiralTopShirt,Shirt
+ClothSummerDressLayer1,Chest
+ClothSummerDressLayer2,Buttons
+ClothSummerDressLayer3,Arm Puffs
+ClothSummerDressLayer4,Trim
+ClothSummerDressBase,Dress
 ClothAccessoryBouquetBase,Holder
 ClothAccessoryBouquetFlowers,Flowers
 ClothAccessoryCapeFront,Front
@@ -277,6 +282,12 @@ ItemNeckAccessoriesCustomCollarTagText,Text
 ItemNeckAccessoriesElectronicTagTag,Tag
 ItemNeckAccessoriesElectronicTagDisplay,Display
 ItemNeckAccessoriesElectronicTagText,Text
+ItemNeckRestraintsCollarRopeShortRope,Rope
+ItemNeckRestraintsCollarRopeShortPlate,Plate
+ItemNeckRestraintsCollarRopeMediumRope,Rope
+ItemNeckRestraintsCollarRopeMediumPlate,Plate
+ItemNeckRestraintsCollarRopeLongRope,Rope
+ItemNeckRestraintsCollarRopeLongPlate,Plate
 ItemMiscWoodenSignSign,Sign
 ItemMiscWoodenSignRope,Rope
 ItemMiscWoodenSignText,Text
@@ -632,3 +643,5 @@ ClothAccessoryBunnyCollarCuffsCollar,Collar
 ClothAccessoryBunnyCollarCuffsBow,Bow
 ItemHeadPaddedBlindfoldBase,Blindfold
 ItemHeadPaddedBlindfoldTrim,Trim
+ItemDevicesWetFloorSign,Sign
+ItemDevicesWetFloorText,Text

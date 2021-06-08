@@ -467,6 +467,270 @@ var AssetFemale3DCGExtended = {
 				ChatTags: [CommonChatTags.SOURCE_CHAR, CommonChatTags.TARGET_CHAR, CommonChatTags.DEST_CHAR ],
 			}
 		}, // DuctTape
+		Zipties: {
+			Archetype: ExtendedArchetype.TYPED,
+			Config: {
+				Options:[
+					{
+						Name: "ZipLight",
+						Property: {
+							Type: null,
+							Effect: ["Block", "Prone"],
+							SetPose: ["BackElbowTouch"],
+							Difficulty: 1
+						}
+					}, {
+						Name: "ZipMedium",
+						Property: {
+							Type: "ZipMedium",
+							Effect: ["Block", "Prone"],
+							SetPose: ["BackElbowTouch"],
+							Difficulty: 2
+						},
+						Expression: [{ Group: "Blush", Name: "Low", Timer: 5 }]
+					}, {
+						Name: "ZipFull",
+						Property: {
+							Type: "ZipFull",
+							Effect: ["Block", "Prone"],
+							SetPose: ["BackElbowTouch"],
+							Difficulty: 3
+						},
+						Expression: [{ Group: "Blush", Name: "Low", Timer: 5 }]
+					}, {
+						Name: "ZipElbowWrist",
+						Property: {
+							Type: "ZipElbowWrist",
+							Effect: ["Block", "Prone"],
+							SetPose: ["BackElbowTouch"],
+							Difficulty: 1
+						},
+						Expression: [{ Group: "Blush", Name: "Medium", Timer: 5 }]
+					}, {
+						Name: "ZipWristLight",
+						Property: {
+							Type: "ZipWristLight",
+							Effect: ["Block", "Prone"],
+							SetPose: ["BackBoxTie"],
+							Difficulty: 3
+						},
+						Expression: [{ Group: "Blush", Name: "Medium", Timer: 5 }]
+					}, {
+						Name: "ZipWristMedium",
+						Property: {
+							Type: "ZipWristMedium",
+							Effect: ["Block", "Prone"],
+							SetPose: ["BackBoxTie"],
+							Difficulty: 3
+						},
+						Expression: [{ Group: "Blush", Name: "Medium", Timer: 5 }]
+					}, {
+						Name: "ZipWristFull",
+						Property: {
+							Type: "ZipWristFull",
+							Effect: ["Block", "Prone"],
+							SetPose: ["BackBoxTie"],
+							Difficulty: 3
+						},
+						Expression: [{ Group: "Blush", Name: "Medium", Timer: 5 }]
+					}, {
+						Name: "ZipWrist",
+						Property: {
+							Type: "ZipWrist",
+							Effect: ["Block", "Prone"],
+							SetPose: ["BackBoxTie"],
+							Difficulty: 1
+						},
+						Expression: [{ Group: "Blush", Name: "Medium", Timer: 5 }]
+					}, {
+						Name: "ZipKneelingHogtie",
+						Prerequisite: ["NotMounted", "NotSuspended"],
+						Property: {
+							Type: "ZipKneelingHogtie",
+							Effect: ["Block", "Freeze", "Prone"],
+							Block: ["ItemHands", "ItemLegs", "ItemFeet", "ItemBoots", "ItemDevices"],
+							AllowActivityOn: ["ItemHands", "ItemLegs", "ItemFeet", "ItemBoots"],
+							SetPose: ["Kneel", "BackElbowTouch"], Difficulty: 3
+						},
+						Expression: [{ Group: "Blush", Name: "Medium", Timer: 10 }]
+					}, {
+						Name: "ZipHogtie",
+						Prerequisite: ["NotMounted", "NotSuspended", "CannotBeHogtiedWithAlphaHood"],
+						Property: {
+							Type: "ZipHogtied",
+							Effect: ["Block", "Freeze", "Prone"],
+							Block: ["ItemHands", "ItemLegs", "ItemFeet", "ItemBoots", "ItemDevices"],
+							AllowActivityOn: ["ItemHands", "ItemLegs", "ItemFeet", "ItemBoots"],
+							SetPose: ["Hogtied"], Difficulty: 3
+						},
+						Expression: [{ Group: "Blush", Name: "Medium", Timer: 10 }]
+					}, {
+						Name: "ZipAllFours",
+						Prerequisite: ["NotMounted", "NotSuspended", "CannotBeHogtiedWithAlphaHood"],
+						Property: {
+							Type: "ZipAllFours", Effect: ["ForceKneel"],
+							Block: ["ItemLegs", "ItemFeet", "ItemBoots", "ItemDevices"],
+							AllowActivityOn: ["ItemLegs", "ItemFeet", "ItemBoots"],
+							SetPose: ["AllFours"], Difficulty: 3
+						},
+						Expression: [{ Group: "Blush", Name: "Medium", Timer: 10 }]
+					},
+				],
+				ChatTags: [CommonChatTags.SOURCE_CHAR, CommonChatTags.TARGET_CHAR],
+				Dialog: {
+					Load: "SelectZipTie",
+				}
+			},
+		}, // Zipties
+		ThinLeatherStraps: {
+			Archetype: ExtendedArchetype.TYPED,
+			Config: {
+				Options: [
+					{ Name: "Wrist", Property: { Type: "Wrist", SetPose: ["BackBoxTie"] } },
+					{ Name: "Boxtie", Property: { Type: null, SetPose: ["BackBoxTie"] } },
+					{ Name: "WristElbow", Property: { Type: "WristElbow", SetPose: ["BackElbowTouch"] } },
+					{ Name: "WristElbowHarness", Property: { Type: "WristElbowHarness", SetPose: ["BackElbowTouch"] } },
+					{ Name: "Hogtie", Property: { Type: "Hogtie", SetPose: ["Hogtied"], Effect: ["Block", "Freeze", "Prone"] } }
+				]
+			}
+		}, //ThinLeatherStraps
+		MermaidSuit: {
+			Archetype: ExtendedArchetype.TYPED,
+			Config: {
+				Options: [
+					{
+						Name: "Zipped",
+						Property: {
+							Type: null,
+							Difficulty: 0,
+							Block: ["ItemBreast", "ItemNipples", "ItemNipplesPiercings", "ItemVulva", "ItemVulvaPiercings", "ItemButt"],
+						},
+					},
+					{
+						Name: "UnZip",
+						Property: {
+							Type: "UnZip",
+							Block: [],
+						},
+					},
+				],
+			},
+		}, // MermaidSuit
+		TightJacket: {
+			Archetype: ExtendedArchetype.TYPED,
+			Config: {
+				Options: [
+					{
+						Name: "Basic",
+						Property: {
+							Type: null,
+							Difficulty: 1,
+						},
+					},
+					{
+						Name: "PulledStraps",
+						Property: {
+							Type: "PulledStraps",
+							Difficulty: 1,
+						},
+					},
+					{
+						Name: "LiningStraps",
+						Property: {
+							Type: "LiningStraps",
+							Difficulty: 2,
+						},
+					},
+					{
+						Name: "ExtraPadding",
+						Property: {
+							Type: "ExtraPadding",
+							Difficulty: 2,
+						},
+					},
+					{
+						Name: "PulledLining",
+						Property: {
+							Type: "PulledLining",
+							Difficulty: 3,
+						},
+					},
+					{
+						Name: "PulledPadding",
+						Property: {
+							Type: "PulledPadding",
+							Difficulty: 3,
+						},
+					},
+					{
+						Name: "PaddedLining",
+						Property: {
+							Type: "PaddedLining",
+							Difficulty: 3,
+						},
+					},
+					{
+						Name: "FullJacket",
+						Property: {
+							Type: "FullJacket",
+							Difficulty: 4,
+						},
+					},
+				],
+				Dialog: {
+					Load: "ItemArmsTightJacketSelect",
+					TypePrefix: "ItemArmsTightJacket",
+					ChatPrefix: "ItemArmsTightJacketSet",
+				},
+			},
+		}, // TightJacket
+		TightJacketCrotch: {
+			Archetype: ExtendedArchetype.TYPED,
+			CopyConfig: { AssetName: "TightJacket" },
+		}, // TightJacketCrotch
+		WrappedBlanket: {
+			Archetype: ExtendedArchetype.TYPED,
+			Config: {
+				ChatTags: [CommonChatTags.SOURCE_CHAR, CommonChatTags.TARGET_CHAR],
+				Options: [
+					{
+						Name: "NormalWrapped",
+						Property: { Type: null, },
+					},
+					{
+						Name: "ShouldersWrapped",
+						Property: { Type: "ShouldersWrapped", },
+					},
+					{
+						Name: "FeetWrapped",
+						Property: { Type: "FeetWrapped", },
+					},
+					{
+						Name: "FullWrapped",
+						Property: { Type: "FullWrapped", },
+					},
+				],
+			},
+		}, // WrappedBlanket
+		Ribbons: {
+			Archetype: ExtendedArchetype.TYPED,
+			Config: {
+				Options: [
+					{
+						Name: "Cross",
+						Property: { Type: null, Difficulty: 1 },
+					},
+					{
+						Name: "Heavy",
+						SelfBondageLevel: 4,
+						Property: { Type: "Heavy", Difficulty: 2 }
+					},
+				],
+				Dialog: {
+					Load: "SelectRibbonType",
+				},
+			},
+		}, // Ribbons
 	}, // ItemArms
 	ItemNeck: {
 		ShinySteelCollar: {
@@ -585,6 +849,16 @@ var AssetFemale3DCGExtended = {
 				]				
 			},
 		}, // SilkStraps
+		ThinLeatherStraps: {
+			Archetype: ExtendedArchetype.TYPED,
+			Config: {
+				Options: [
+					{ Name: "Crotch", Property: { Type: null } },
+					{ Name: "Waist", Property: { Type: "Waist" } },
+					{ Name: "Harness", Property: { Type: "Harness" } },
+				]				
+			},
+		}, // ThinLeatherStraps
 	}, // ItemTorso
 	HairAccessory1: {
 		ElfEars: {

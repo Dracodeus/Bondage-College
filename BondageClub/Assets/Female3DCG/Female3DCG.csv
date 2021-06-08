@@ -51,6 +51,7 @@ Cloth,BondageBustier1,Bondage Bustier 1
 Cloth,BondageBustier2,Bondage Bustier 2
 Cloth,LeatherBolero,Leather Bolero
 Cloth,Bodice1,Bodice
+Cloth,SummerDress,Summer Dress
 ClothAccessory,,Cloth Accessory
 ClothAccessory,StudentOutfit3Scarf,Student Scarf
 ClothAccessory,StudentOutfit3Bow1,Student Bow 1
@@ -744,6 +745,7 @@ ItemTorso,StuddedHarness,Studded Harness
 ItemTorso,HeavyLatexCorset,Heavy Latex Corset
 ItemTorso,Ribbons,Ribbons
 ItemTorso,SilkStraps,Silk Straps
+ItemTorso,ThinLeatherStraps,Thin Leather Straps
 ItemNipples,,Nipples
 ItemNipples,NippleClamp,Nipple Clamps
 ItemNipples,VibeNippleClamp,Vibrating Nipple Clamps
@@ -850,6 +852,7 @@ ItemArms,MedicalBedRestraints,Medical Bed Restraints
 ItemArms,TransportJacket,Transport Jacket
 ItemArms,WrappedBlanket,Wrapped Blanket
 ItemArms,Ribbons,Ribbons
+ItemArms,ThinLeatherStraps,Thin Leather Straps
 ItemHands,,Hands
 ItemHands,PaddedMittens,Padded Mittens
 ItemHands,PawMittens,Paw Mittens
@@ -1253,6 +1256,7 @@ ItemDevices,VacCube,Vac-Cube
 ItemDevices,PetBowl,Pet Bowl
 ItemDevices,Pole,Pole
 ItemDevices,Cushion,Cushion
+ItemDevices,WetFloor,Wet Floor Sign
 ItemHoodAddon,,Hood
 ItemHoodAddon,OldGasMaskLenses,Blinding Lenses
 ItemHoodAddon,OldGasMaskTube1,Gas Mask Tube
