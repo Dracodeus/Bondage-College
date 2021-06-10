@@ -353,6 +353,7 @@ function DialogCanWatchKinkyDungeon() {
 function DialogStartKinkyDungeon() {
 	if (CurrentCharacter) {
 		KinkyDungeonPlayerCharacter = CurrentCharacter;
+		KinkyDungeonGameRunning = false; // Reset the game to prevent carrying over spectator data
 		if (KinkyDungeonPlayerCharacter != Player && CurrentCharacter.MemberNumber) {
 			KinkyDungeonGameData = null;
 			ServerSend("ChatRoomChat", { Content: "RequestFullKinkyDungeonData", Type: "Hidden", Target: CurrentCharacter.MemberNumber });
