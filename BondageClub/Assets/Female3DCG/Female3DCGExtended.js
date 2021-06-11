@@ -731,6 +731,32 @@ var AssetFemale3DCGExtended = {
 				},
 			},
 		}, // Ribbons
+		SturdyLeatherBelts: {
+			Archetype: ExtendedArchetype.TYPED,
+			Config: {
+				ChatTags: [CommonChatTags.SOURCE_CHAR, CommonChatTags.TARGET_CHAR],
+				ChangeWhenLocked: false,
+				Dialog: {
+					Load: "SturdyLeatherBeltsSelectTightness",
+					TypePrefix: "SturdyLeatherBeltsPose",
+					ChatPrefix: "SturdyLeatherBeltsRestrain",
+				},
+				Options: [
+					{
+						Name: "One",
+						Property: { Type: null, },
+					},
+					{
+						Name: "Two",
+						Property: { Type: "Two", Difficulty: 2, },
+					},
+					{
+						Name: "Three",
+						Property: { Type: "Three", Difficulty: 4, },
+					},
+				],
+			}
+		}, // SturdyLeatherBelts
 	}, // ItemArms
 	ItemNeck: {
 		ShinySteelCollar: {
