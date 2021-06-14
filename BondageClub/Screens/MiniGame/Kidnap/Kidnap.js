@@ -383,6 +383,15 @@ function KidnapDrawMove(C, Header, X) {
 	for (let M = 0; M < 4; M++)
 		DrawButton(X - 200, (M * 100) + 100, 400, 70, TextGet(KidnapMoveType[M]) + ((C.KidnapStat[M] > 0) ? " ( " + C.KidnapStat[M].toString() + ((KidnapMoveEffective(C, M)) ? "" : " / 2") + " )" : ""), (C.ID == 0) ? (KidnapMoveEffective(C, M) ? "White" : "Silver") : "Pink");
 	DrawButton(X - 200, 900, 400, 70, TextGet("Surrender"), (C.ID == 0) ? "White" : "Pink");
+	if (Header == "SelectMove") {
+		DrawImage("Screens/MiniGame/Kidnap/LeftRock.png", 460, 91);
+		DrawImage("Screens/MiniGame/Kidnap/LeftScissors.png", 460, 191);
+		DrawImage("Screens/MiniGame/Kidnap/LeftPaper.png", 460, 291);
+	} else {
+		DrawImage("Screens/MiniGame/Kidnap/RightRock.png", 1435, 91);
+		DrawImage("Screens/MiniGame/Kidnap/RightScissors.png", 1435, 191);
+		DrawImage("Screens/MiniGame/Kidnap/RightPaper.png", 1435, 291);
+	}
 }
 
 /**
