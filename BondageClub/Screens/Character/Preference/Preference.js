@@ -414,6 +414,7 @@ function PreferenceInitPlayer() {
 		}
 		C.OnlineSharedSettings.GameVersion = GameVersion;
 	}
+	if (typeof C.OnlineSharedSettings.ItemsAffectExpressions !== "boolean") C.OnlineSharedSettings.ItemsAffectExpressions = true;
 
 	// Graphical settings
 	if (!C.GraphicsSettings) C.GraphicsSettings = {};
@@ -635,11 +636,12 @@ function PreferenceSubscreenGeneralRun() {
 	// Checkboxes (Some are not available when playing on Hardcore or Extreme)
 	DrawCheckbox(500, 402, 64, 64, TextGet("ForceFullHeight"), Player.VisualSettings.ForceFullHeight);
 	DrawCheckbox(500, 482, 64, 64, TextGet("DisablePickingLocksOnSelf"), Player.OnlineSharedSettings.DisablePickingLocksOnSelf);
-	if (Player.GetDifficulty() < 2) {
-		DrawCheckbox(500, 722, 64, 64, TextGet(PreferenceSafewordConfirm ? "ConfirmSafeword" : "EnableSafeword"), Player.GameplaySettings.EnableSafeword);
-		DrawCheckbox(500, 562, 64, 64, TextGet("DisableAutoMaid"), !Player.GameplaySettings.DisableAutoMaid);
-		DrawCheckbox(500, 642, 64, 64, TextGet("OfflineLockedRestrained"), Player.GameplaySettings.OfflineLockedRestrained);
-	} else DrawText(TextGet("GeneralHardcoreWarning"), 500, 622, "Red", "Gray");
+	const onHighDifficulty = Player.GetDifficulty() >= 2;
+	DrawCheckbox(500, 722, 64, 64, TextGet(PreferenceSafewordConfirm ? "ConfirmSafeword" : "EnableSafeword"), Player.GameplaySettings.EnableSafeword, onHighDifficulty);
+	DrawCheckbox(500, 562, 64, 64, TextGet("DisableAutoMaid"), !Player.GameplaySettings.DisableAutoMaid, onHighDifficulty);
+	DrawCheckbox(500, 642, 64, 64, TextGet("OfflineLockedRestrained"), Player.GameplaySettings.OfflineLockedRestrained, onHighDifficulty);
+	if (onHighDifficulty) DrawTextWrap(TextGet("GeneralHardcoreWarning"), 1225, 622, 450, 100, "Red");
+	DrawCheckbox(500, 802, 64, 64, TextGet("ItemsAffectExpressions"), Player.OnlineSharedSettings.ItemsAffectExpressions);
 
 	// Draw the player & controls
 	DrawCharacter(Player, 50, 50, 0.9);
@@ -783,6 +785,7 @@ function PreferenceSubscreenGeneralClick() {
 	} else PreferenceSafewordConfirm = false;
 	if (MouseIn(500, 562, 64, 64) && (Player.GetDifficulty() < 2)) Player.GameplaySettings.DisableAutoMaid = !Player.GameplaySettings.DisableAutoMaid;
 	if (MouseIn(500, 642, 64, 64) && (Player.GetDifficulty() < 2)) Player.GameplaySettings.OfflineLockedRestrained = !Player.GameplaySettings.OfflineLockedRestrained;
+	if (MouseIn(500, 802, 64, 64)) Player.OnlineSharedSettings.ItemsAffectExpressions = !Player.OnlineSharedSettings.ItemsAffectExpressions;
 }
 
 /**

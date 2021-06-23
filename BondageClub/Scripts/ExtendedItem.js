@@ -327,8 +327,7 @@ function ExtendedItemSetType(C, Options, Option) {
 	if (!IsCloth) {
 		// If the item triggers an expression, start the expression change
 		if (Option.Expression) {
-			const E = Option.Expression[0];
-			CharacterSetFacialExpression(C, E.Group, E.Name, E.Timer);
+			InventoryExpressionTriggerApply(C, Option.Expression);
 		}
 		ChatRoomCharacterUpdate(C);
 		if (CurrentScreen === "ChatRoom") {

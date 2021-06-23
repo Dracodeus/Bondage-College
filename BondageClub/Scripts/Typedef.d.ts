@@ -199,7 +199,7 @@ interface Asset {
 	DynamicDescription: (C: Character) => string;
 	DynamicPreviewIcon: (C: Character) => string;
 	DynamicAllowInventoryAdd: (C: Character) => boolean;
-	DynamicExpressionTrigger: (C: Character) => ExpressionTrigger;
+	DynamicExpressionTrigger: (C: Character) => ExpressionTrigger[];
 	DynamicName: (C?: Character) => string;
 	DynamicGroupName: string;
 	DynamicActivity: () => string[] | string | undefined;
@@ -408,6 +408,7 @@ interface Character {
 		AllowPlayerLeashing: boolean;
 		DisablePickingLocksOnSelf: boolean;
 		GameVersion: string;
+		ItemsAffectExpressions: boolean;
 	};
 	Game?: any;
 	BlackList: number[];
