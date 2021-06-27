@@ -2178,9 +2178,16 @@ ItemMouthDentalGagSetClosed,,,SourceCharacter closes the mouth of TargetCharacte
 ItemMouthDentalGagSetOpen,,,SourceCharacter forces the mouth of TargetCharacter open.,,
 ItemMiscServingTraySelect,,,Add or remove drinks from the tray,,
 ItemMiscServingTrayEmpty,,,Empty
-ItemMiscServingTrayFull,,,Full
-ItemMiscServingTraySetEmpty,,,SourceCharacter removes the drinks from DestinationCharacter tray.,,
-ItemMiscServingTraySetFull,,,SourceCharacter fills DestinationCharacter tray with drinks.,,
+ItemMiscServingTrayEmpty,,,Empty,,
+ItemMiscServingTraySetEmpty,,,SourceCharacter empties DestinationCharacter tray.,,
+ItemMiscServingTrayDrinks,,,Drinks
+ItemMiscServingTraySetDrinks,,,SourceCharacter fills DestinationCharacter tray with drinks.,,
+ItemMiscServingTrayCake,,,Cake
+ItemMiscServingTraySetCake,,,SourceCharacter fills DestinationCharacter tray with a cake.,,
+ItemMiscServingTrayCookies,,,Cookies
+ItemMiscServingTraySetCookies,,,SourceCharacter fills DestinationCharacter tray with cookies.,,
+ItemMiscServingTrayToys,,,Toys
+ItemMiscServingTraySetToys,,,SourceCharacter fills DestinationCharacter tray with sex toys.,,
 Page,,,Page,,
 ItemArmsSuspensionHempRopeSelect,,,Set the height of the suspension,,
 ItemArmsSuspensionHempRopePercent,,,% of full height:,,
