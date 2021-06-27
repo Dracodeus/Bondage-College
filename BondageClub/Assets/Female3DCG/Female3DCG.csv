@@ -236,6 +236,9 @@ LeftAnklet,,Anklet (Left)
 LeftAnklet,BandAnklet,Band Anklet
 LeftAnklet,Ribbon,Ribbon
 LeftAnklet,Ribbon1,Ribbon Bow
+Garters,,Garters
+Garters,GarterBelt,Leather Garter Belts
+Garters,GarterBelt2,Leather Garter Belt
 Shoes,,Shoes
 Shoes,Shoes1,Style 1
 Shoes,Shoes2,Style 2
@@ -907,6 +910,7 @@ ItemHands,SpankingToysBaguette,Baguette
 ItemHands,SpankingToysPanties,Panties
 ItemHands,SpankingToysTapeRoll,Duct Tape Roll
 ItemHands,SpankingToysSpatula,Spatula
+ItemHands,SpankingToysBroom,Broom
 ItemHands,HoofMittens, Hoof Mittens
 ItemNeck,,Neck
 ItemNeck,LeatherCollar,Leather Collar
@@ -1041,6 +1045,8 @@ ItemMouth,FuturisticMuzzle,Futuristic Muzzle
 ItemMouth,CageMuzzle,Iron Cage Muzzle
 ItemMouth,DentalGag,Dental Gag
 ItemMouth,Ribbons,Ribbons
+ItemMouth,CropGag,Crop
+ItemMouth,CaneGag,Cane
 ItemMouth2,,Mouth
 ItemMouth2,ClothGag,Cloth Gag
 ItemMouth2,WiffleGag,Wiffle Ball Gag

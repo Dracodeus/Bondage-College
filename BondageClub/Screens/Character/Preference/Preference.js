@@ -2,20 +2,18 @@
 var PreferenceBackground = "Sheet";
 var PreferenceMessage = "";
 var PreferenceSafewordConfirm = false;
-var PreferenceMaidsButton = true;
 var PreferenceColorPick = "";
 var PreferenceSubscreen = "";
 var PreferenceSubscreenList = ["General", "Difficulty", "Restriction", "Chat", "Audio", "Arousal", "Security", "Online", "Visibility", "Immersion", "Graphics", "Controller", "Notifications"];
 var PreferencePageCurrent = 1;
-var PreferenceChatColorThemeSelected = "";
 var PreferenceChatColorThemeList = ["Light", "Dark", "Light2", "Dark2"];
 var PreferenceChatColorThemeIndex = 0;
-var PreferenceChatEnterLeaveSelected = "";
 var PreferenceChatEnterLeaveList = ["Normal", "Smaller", "Hidden"];
 var PreferenceChatEnterLeaveIndex = 0;
-var PreferenceChatMemberNumbersSelected = "";
 var PreferenceChatMemberNumbersList = ["Always", "Never", "OnMouseover"];
 var PreferenceChatMemberNumbersIndex = 0;
+var PreferenceChatFontSizeList = ["Small", "Medium", "Large"];
+var PreferenceChatFontSizeIndex = 1;
 var PreferenceSettingsSensDepList = ["SensDepLight", "Normal", "SensDepNames", "SensDepTotal", "SensDepExtreme"];
 var PreferenceSettingsSensDepIndex = 0;
 var PreferenceSettingsVFXList = ["VFXInactive", "VFXSolid", "VFXAnimatedTemp", "VFXAnimated"];
@@ -26,7 +24,6 @@ var PreferenceSettingsDeadZoneList = [0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.0
 var PreferenceSettingsVolumeIndex = 0;
 var PreferenceSettingsSensitivityIndex = 13;
 var PreferenceSettingsDeadZoneIndex = 1;
-var PreferenceEmailStatusReceived = false;
 var PreferenceArousalActiveList = ["Inactive", "NoMeter", "Manual", "Hybrid", "Automatic"];
 var PreferenceArousalActiveIndex = 0;
 var PreferenceArousalVisibleList = ["All", "Access", "Self"];
@@ -64,7 +61,8 @@ var PreferenceCalibrationStage = 0;
  * @param {Character} C - The player who performs the sexual activity
  * @param {string} Type - The type of the activity that is performed
  * @param {boolean} Self - Determines, if the current player is giving (false) or receiving (true)
- * @returns {number} - Returns the love factor of the activity for the character (0 is horrible, 2 is normal, 4 is great)
+ * @returns {number} - Returns the love factor of the activity for the character (0 is horrible, 2 is normal, 4 is
+ *     great)
  */
 function PreferenceGetActivityFactor(C, Type, Self) {
 	var Factor = 2;
@@ -301,6 +299,7 @@ function PreferenceInitPlayer() {
 
 	// Chat settings
 	if (!C.ChatSettings) C.ChatSettings = {};
+	if (typeof C.ChatSettings.FontSize !== "string") C.ChatSettings.FontSize = "Medium";
 	if (typeof C.ChatSettings.DisplayTimestamps !== "boolean") C.ChatSettings.DisplayTimestamps = true;
 	if (typeof C.ChatSettings.ColorNames !== "boolean") C.ChatSettings.ColorNames = true;
 	if (typeof C.ChatSettings.ColorActions !== "boolean") C.ChatSettings.ColorActions = true;
@@ -379,6 +378,7 @@ function PreferenceInitPlayer() {
 	if (typeof C.ImmersionSettings.ReturnToChatRoomAdmin !== "boolean") C.ImmersionSettings.ReturnToChatRoomAdmin = false;
 	if (typeof C.ImmersionSettings.SenseDepMessages !== "boolean") C.ImmersionSettings.SenseDepMessages = false;
 	if (typeof C.ImmersionSettings.ChatRoomMuffle !== "boolean") C.ImmersionSettings.ChatRoomMuffle = false;
+	if (typeof C.ImmersionSettings.BlindAdjacent !== "boolean") C.ImmersionSettings.BlindAdjacent = false;
 
 	// Misc
 	if (typeof C.LastChatRoom !== "string") C.LastChatRoom = "";
@@ -492,6 +492,7 @@ function PreferenceInitPlayer() {
 		C.ImmersionSettings.ReturnToChatRoomAdmin = true;
 		C.ImmersionSettings.SenseDepMessages = true;
 		C.ImmersionSettings.ChatRoomMuffle = true;
+		C.ImmersionSettings.BlindAdjacent = true;
 		C.OnlineSharedSettings.AllowPlayerLeashing = true;
 	}
 
@@ -542,7 +543,8 @@ function PreferenceMigrate(from, to, prefName, defaultValue) {
 }
 
 /**
- * Loads the preference screen. This function is called dynamically, when the character enters the preference screen for the first time
+ * Loads the preference screen. This function is called dynamically, when the character enters the preference screen
+ * for the first time
  * @returns {void} - Nothing
  */
 function PreferenceLoad() {
@@ -556,15 +558,14 @@ function PreferenceLoad() {
 	PreferenceChatColorThemeIndex = (PreferenceChatColorThemeList.indexOf(Player.ChatSettings.ColorTheme) < 0) ? 0 : PreferenceChatColorThemeList.indexOf(Player.ChatSettings.ColorTheme);
 	PreferenceChatEnterLeaveIndex = (PreferenceChatEnterLeaveList.indexOf(Player.ChatSettings.EnterLeave) < 0) ? 0 : PreferenceChatEnterLeaveList.indexOf(Player.ChatSettings.EnterLeave);
 	PreferenceChatMemberNumbersIndex = (PreferenceChatMemberNumbersList.indexOf(Player.ChatSettings.MemberNumbers) < 0) ? 0 : PreferenceChatMemberNumbersList.indexOf(Player.ChatSettings.MemberNumbers);
+	PreferenceChatFontSizeIndex = (PreferenceChatFontSizeList.indexOf(Player.ChatSettings.FontSize)) < 0 ? 1 : PreferenceChatFontSizeList.indexOf(Player.ChatSettings.FontSize);
 	PreferenceSettingsSensDepIndex = (PreferenceSettingsSensDepList.indexOf(Player.GameplaySettings.SensDepChatLog) < 0) ? 0 : PreferenceSettingsSensDepList.indexOf(Player.GameplaySettings.SensDepChatLog);
 	PreferenceSettingsVolumeIndex = (PreferenceSettingsVolumeList.indexOf(Player.AudioSettings.Volume) < 0) ? 0 : PreferenceSettingsVolumeList.indexOf(Player.AudioSettings.Volume);
 	PreferenceArousalActiveIndex = (PreferenceArousalActiveList.indexOf(Player.ArousalSettings.Active) < 0) ? 0 : PreferenceArousalActiveList.indexOf(Player.ArousalSettings.Active);
 	PreferenceSettingsVFXIndex = (PreferenceSettingsVFXList.indexOf(Player.ArousalSettings.VFX) < 0) ? 0 : PreferenceSettingsVFXList.indexOf(Player.ArousalSettings.VFX);
 	PreferenceArousalVisibleIndex = (PreferenceArousalVisibleList.indexOf(Player.ArousalSettings.Visible) < 0) ? 0 : PreferenceArousalVisibleList.indexOf(Player.ArousalSettings.Visible);
 	PreferenceArousalAffectStutterIndex = (PreferenceArousalAffectStutterList.indexOf(Player.ArousalSettings.AffectStutter) < 0) ? 0 : PreferenceArousalAffectStutterList.indexOf(Player.ArousalSettings.AffectStutter);
-	PreferenceChatColorThemeSelected = PreferenceChatColorThemeList[PreferenceChatColorThemeIndex];
-	PreferenceChatEnterLeaveSelected = PreferenceChatEnterLeaveList[PreferenceChatEnterLeaveIndex];
-	PreferenceChatMemberNumbersSelected = PreferenceChatMemberNumbersList[PreferenceChatMemberNumbersIndex];
+	ChatRoomRefreshFontSize();
 
 	// Prepares the activity list
 	PreferenceArousalActivityList = [];
@@ -848,32 +849,40 @@ function PreferenceSubscreenImmersionRun() {
 	DrawCharacter(Player, 50, 50, 0.9);
 	DrawButton(1815, 75, 90, 90, "", "White", "Icons/Exit.png");
 	if (PreferenceMessage != "") DrawText(TextGet(PreferenceMessage), 865, 125, "Red", "Black");
-	//PreferencePageChangeDraw(1595, 75, 2); // Uncomment when adding a 2nd page
+	PreferencePageChangeDraw(1595, 75, 2); // Uncomment when adding a 2nd page
 	MainCanvas.textAlign = "left";
 	DrawText(TextGet("ImmersionPreferences"), 500, 125, "Black", "Gray");
 
 	const disableButtons = Player.GetDifficulty() > 2 || (Player.GameplaySettings.ImmersionLockSetting && Player.IsRestrained());
 	if (Player.GetDifficulty() <= 2) {
-		DrawCheckbox(500, 172, 64, 64, TextGet("ImmersionLockSetting"), Player.GameplaySettings.ImmersionLockSetting, disableButtons);
+		let CheckImage = disableButtons ? "Icons/CheckLocked.png" : "Icons/CheckUnlocked.png";
+		DrawCheckbox(500, 172, 64, 64, TextGet("ImmersionLockSetting"), Player.GameplaySettings.ImmersionLockSetting, disableButtons, "Black", CheckImage);
 	} else {
 		// Cannot change any value under the Extreme difficulty mode
 		DrawText(TextGet("ImmersionLocked"), 500, 205, "Red", "Gray");
 	}
+	
+	
 	DrawEmptyRect(500, 255, 1400, 0, "Black", 1);
+	
+	let CheckHeight = 272;
+	let CheckSpacing = 80;
 
 	if (PreferencePageCurrent === 1) {
-		DrawText(TextGet("SensDepSetting"), 800, 308, "Black", "Gray");
-		DrawCheckbox(500, 352, 64, 64, TextGet("BlindDisableExamine"), Player.GameplaySettings.BlindDisableExamine, disableButtons);
-		DrawCheckbox(500, 432, 64, 64, TextGet("DisableAutoRemoveLogin"), Player.GameplaySettings.DisableAutoRemoveLogin, disableButtons);
-		DrawCheckbox(500, 512, 64, 64, TextGet("BlockGaggedOOC"), Player.ImmersionSettings.BlockGaggedOOC, disableButtons);
-		DrawCheckbox(500, 592, 64, 64, TextGet("AllowPlayerLeashing"), Player.OnlineSharedSettings.AllowPlayerLeashing, disableButtons);
-		DrawCheckbox(500, 672, 64, 64, TextGet("ReturnToChatRoom"), Player.ImmersionSettings.ReturnToChatRoom, disableButtons);
+		DrawText(TextGet("SensDepSetting"), 800, 308, "Black", "Gray"); CheckHeight += CheckSpacing;
+		DrawCheckbox(500, CheckHeight, 64, 64, TextGet("BlindDisableExamine"), Player.GameplaySettings.BlindDisableExamine, disableButtons); CheckHeight += CheckSpacing;
+		DrawCheckbox(500, CheckHeight, 64, 64, TextGet("BlindAdjacent"), Player.ImmersionSettings.BlindAdjacent, disableButtons); CheckHeight += CheckSpacing;
+		DrawCheckbox(500, CheckHeight, 64, 64, TextGet("ChatRoomMuffle"), Player.ImmersionSettings.ChatRoomMuffle, disableButtons);	CheckHeight += CheckSpacing;
+		DrawCheckbox(500, CheckHeight, 64, 64, TextGet("DisableAutoRemoveLogin"), Player.GameplaySettings.DisableAutoRemoveLogin, disableButtons); CheckHeight += CheckSpacing;
+		DrawCheckbox(500, CheckHeight, 64, 64, TextGet("BlockGaggedOOC"), Player.ImmersionSettings.BlockGaggedOOC, disableButtons); CheckHeight += CheckSpacing;
+		DrawCheckbox(500, CheckHeight, 64, 64, TextGet("AllowPlayerLeashing"), Player.OnlineSharedSettings.AllowPlayerLeashing, disableButtons); CheckHeight += CheckSpacing;
+		DrawCheckbox(500, CheckHeight, 64, 64, TextGet("ReturnToChatRoom"), Player.ImmersionSettings.ReturnToChatRoom, disableButtons);
 		const returnToRoomEnabled = Player.ImmersionSettings.ReturnToChatRoom;
-		DrawCheckbox(1300, 672, 64, 64, TextGet("ReturnToChatRoomAdmin"), returnToRoomEnabled && Player.ImmersionSettings.ReturnToChatRoomAdmin, !returnToRoomEnabled || disableButtons);
-		DrawCheckbox(500, 752, 64, 64, TextGet("StimulationEvents"), Player.ImmersionSettings.StimulationEvents, disableButtons);
-		DrawCheckbox(500, 832, 64, 64, TextGet("ChatRoomMuffle"), Player.ImmersionSettings.ChatRoomMuffle, disableButtons);
+		DrawCheckbox(1300, CheckHeight, 64, 64, TextGet("ReturnToChatRoomAdmin"), returnToRoomEnabled && Player.ImmersionSettings.ReturnToChatRoomAdmin, !returnToRoomEnabled || disableButtons);
+		CheckHeight += CheckSpacing;
 		const canHideMessages = Player.GameplaySettings.SensDepChatLog !== "SensDepLight";
 		DrawCheckbox(1300, 272, 64, 64, TextGet("SenseDepMessages"), canHideMessages && Player.ImmersionSettings.SenseDepMessages, !canHideMessages || disableButtons);
+				
 		MainCanvas.textAlign = "center";
 
 		DrawBackNextButton(500, 272, 250, 64, TextGet(Player.GameplaySettings.SensDepChatLog), "White", "",
@@ -881,7 +890,7 @@ function PreferenceSubscreenImmersionRun() {
 			() => disableButtons ? "" : TextGet(PreferenceSettingsSensDepList[(PreferenceSettingsSensDepIndex + 1) % PreferenceSettingsSensDepList.length]));
 	}
 	else if (PreferencePageCurrent === 2) {
-		// New settings here
+		DrawCheckbox(500, CheckHeight, 64, 64, TextGet("StimulationEvents"), Player.ImmersionSettings.StimulationEvents, disableButtons); CheckHeight += CheckSpacing;
 	}
 
 	MainCanvas.textAlign = "center";
@@ -896,38 +905,55 @@ function PreferenceSubscreenImmersionClick() {
 	// If the user clicks on "Exit"
 	if (MouseIn(1815, 75, 90, 90)) PreferenceSubscreen = "";
 	// Change page
-	//PreferencePageChangeClick(1595, 75, 2); // Uncomment when adding a 2nd page
+	PreferencePageChangeClick(1595, 75, 2); // Uncomment when adding a 2nd page
 
 	// Cannot change any value under the Extreme difficulty mode
 	if (Player.GetDifficulty() <= 2 && (!Player.GameplaySettings.ImmersionLockSetting || (!Player.IsRestrained()))) {
+		let CheckHeight = 272;
+		let CheckSpacing = 80;
+		
+		// Preference check boxes
+		if (MouseIn(500, 172, 64, 64)) Player.GameplaySettings.ImmersionLockSetting = !Player.GameplaySettings.ImmersionLockSetting;
+		
 		if (PreferencePageCurrent === 1) {
 			// If we must change sens dep settings
-			if (MouseIn(500, 272, 250, 64)) {
+			if (MouseIn(500, CheckHeight, 250, 64)) {
 				if (MouseX <= 625) PreferenceSettingsSensDepIndex = (PreferenceSettingsSensDepList.length + PreferenceSettingsSensDepIndex - 1) % PreferenceSettingsSensDepList.length;
 				else PreferenceSettingsSensDepIndex = (PreferenceSettingsSensDepIndex + 1) % PreferenceSettingsSensDepList.length;
 				Player.GameplaySettings.SensDepChatLog = PreferenceSettingsSensDepList[PreferenceSettingsSensDepIndex];
 				if (Player.GameplaySettings.SensDepChatLog == "SensDepExtreme") ChatRoomSetTarget(null);
 			}
-
-			// Preference check boxes
-			if (MouseIn(500, 172, 64, 64)) Player.GameplaySettings.ImmersionLockSetting = !Player.GameplaySettings.ImmersionLockSetting;
-			if (MouseIn(500, 352, 64, 64)) Player.GameplaySettings.BlindDisableExamine = !Player.GameplaySettings.BlindDisableExamine;
-			if (MouseIn(500, 432, 64, 64)) Player.GameplaySettings.DisableAutoRemoveLogin = !Player.GameplaySettings.DisableAutoRemoveLogin;
-			if (MouseIn(500, 512, 64, 64)) {
+			CheckHeight += CheckSpacing;
+			// Sensory Deprivation
+			if (MouseIn(500, CheckHeight, 64, 64)) Player.GameplaySettings.BlindDisableExamine = !Player.GameplaySettings.BlindDisableExamine;
+			CheckHeight += CheckSpacing;
+			if (MouseIn(500, CheckHeight, 64, 64)) Player.ImmersionSettings.BlindAdjacent = !Player.ImmersionSettings.BlindAdjacent; 
+			CheckHeight += CheckSpacing;
+			if (MouseIn(500, CheckHeight, 64, 64)) Player.ImmersionSettings.ChatRoomMuffle = !Player.ImmersionSettings.ChatRoomMuffle; 
+			CheckHeight += CheckSpacing;
+			
+			// Room control
+			if (MouseIn(500, CheckHeight, 64, 64)) Player.GameplaySettings.DisableAutoRemoveLogin = !Player.GameplaySettings.DisableAutoRemoveLogin; 
+			CheckHeight += CheckSpacing;
+			if (MouseIn(500, CheckHeight, 64, 64)) {
 				Player.ImmersionSettings.BlockGaggedOOC = !Player.ImmersionSettings.BlockGaggedOOC;
 				if (Player.ImmersionSettings.BlockGaggedOOC) ChatRoomSetTarget(null);
 			}
-			if (MouseIn(500, 592, 64, 64)) Player.OnlineSharedSettings.AllowPlayerLeashing = !Player.OnlineSharedSettings.AllowPlayerLeashing;
-			if (MouseIn(500, 672, 64, 64)) Player.ImmersionSettings.ReturnToChatRoom = !Player.ImmersionSettings.ReturnToChatRoom;
-			if (MouseIn(1300, 672, 64, 64) && Player.ImmersionSettings.ReturnToChatRoom)
+			CheckHeight += CheckSpacing;
+			if (MouseIn(500, CheckHeight, 64, 64)) Player.OnlineSharedSettings.AllowPlayerLeashing = !Player.OnlineSharedSettings.AllowPlayerLeashing; 
+			CheckHeight += CheckSpacing;
+			if (MouseIn(500, CheckHeight, 64, 64)) Player.ImmersionSettings.ReturnToChatRoom = !Player.ImmersionSettings.ReturnToChatRoom;
+			if (MouseIn(1300, CheckHeight, 64, 64) && Player.ImmersionSettings.ReturnToChatRoom)
 				Player.ImmersionSettings.ReturnToChatRoomAdmin = !Player.ImmersionSettings.ReturnToChatRoomAdmin;
-			if (MouseIn(500, 752, 64, 64)) Player.ImmersionSettings.StimulationEvents = !Player.ImmersionSettings.StimulationEvents;
-			if (MouseIn(500, 832, 64, 64)) Player.ImmersionSettings.ChatRoomMuffle = !Player.ImmersionSettings.ChatRoomMuffle;
+			CheckHeight += CheckSpacing;
+			
 			if (MouseIn(1300, 272, 64, 64) && Player.GameplaySettings.SensDepChatLog !== "SensDepLight")
 				Player.ImmersionSettings.SenseDepMessages = !Player.ImmersionSettings.SenseDepMessages;
 		}
 		else if (PreferencePageCurrent === 2) {
-			// New settings here
+			// Stimulation
+			if (MouseIn(500, CheckHeight, 64, 64)) Player.ImmersionSettings.StimulationEvents = !Player.ImmersionSettings.StimulationEvents;
+			CheckHeight += CheckSpacing;
 		}
 	}
 
@@ -974,7 +1000,8 @@ function PreferenceExit() {
 }
 
 /**
- * Sets the audio preferences for the player. Redirected to from the main Run function if the player is in the audio settings subscreen
+ * Sets the audio preferences for the player. Redirected to from the main Run function if the player is in the audio
+ * settings subscreen
  * @returns {void} - Nothing
  */
 function PreferenceSubscreenAudioRun() {
@@ -994,7 +1021,8 @@ function PreferenceSubscreenAudioRun() {
 }
 
 /**
- * Sets the audio preferences for the player. Redirected to from the main Run function if the player is in the audio settings subscreen
+ * Sets the audio preferences for the player. Redirected to from the main Run function if the player is in the audio
+ * settings subscreen
  * @returns {void} - Nothing
  */
 function PreferenceSubscreenControllerRun() {
@@ -1066,15 +1094,17 @@ function PreferenceSubscreenControllerRun() {
 }
 
 /**
- * Sets the chat preferences for the player. Redirected to from the main Run function if the player is in the chat settings subscreen.
+ * Sets the chat preferences for the player. Redirected to from the main Run function if the player is in the chat
+ * settings subscreen.
  * @returns {void} - Nothing
  */
 function PreferenceSubscreenChatRun() {
 	MainCanvas.textAlign = "left";
 	DrawText(TextGet("ChatPreferences"), 500, 125, "Black", "Gray");
-	DrawText(TextGet("ColorTheme"), 500, 225, "Black", "Gray");
-	DrawText(TextGet("EnterLeaveStyle"), 500, 325, "Black", "Gray");
-	DrawText(TextGet("DisplayMemberNumbers"), 500, 425, "Black", "Gray");
+	DrawText(TextGet("ColorTheme"), 500, 200, "Black", "Gray");
+	DrawText(TextGet("EnterLeaveStyle"), 500, 280, "Black", "Gray");
+	DrawText(TextGet("DisplayMemberNumbers"), 500, 360, "Black", "Gray");
+	DrawText(TextGet("FontSize"), 500, 440, "Black", "Gray");
 	DrawCheckbox(500, 492, 64, 64, TextGet("DisplayTimestamps"), Player.ChatSettings.DisplayTimestamps);
 	DrawCheckbox(500, 572, 64, 64, TextGet("ColorNames"), Player.ChatSettings.ColorNames);
 	DrawCheckbox(500, 652, 64, 64, TextGet("ColorActions"), Player.ChatSettings.ColorActions);
@@ -1087,21 +1117,17 @@ function PreferenceSubscreenChatRun() {
 	DrawCheckbox(1200, 812, 64, 64, TextGet("MuStylePoses"), Player.ChatSettings.MuStylePoses);
 
 	MainCanvas.textAlign = "center";
-	DrawBackNextButton(1000, 190, 350, 70, TextGet(PreferenceChatColorThemeSelected), "White", "",
-		() => TextGet((PreferenceChatColorThemeIndex == 0) ? PreferenceChatColorThemeList[PreferenceChatColorThemeList.length - 1] : PreferenceChatColorThemeList[PreferenceChatColorThemeIndex - 1]),
-		() => TextGet((PreferenceChatColorThemeIndex >= PreferenceChatColorThemeList.length - 1) ? PreferenceChatColorThemeList[0] : PreferenceChatColorThemeList[PreferenceChatColorThemeIndex + 1]));
-	DrawBackNextButton(1000, 290, 350, 70, TextGet(PreferenceChatEnterLeaveSelected), "White", "",
-		() => TextGet((PreferenceChatEnterLeaveIndex == 0) ? PreferenceChatEnterLeaveList[PreferenceChatEnterLeaveList.length - 1] : PreferenceChatEnterLeaveList[PreferenceChatEnterLeaveIndex - 1]),
-		() => TextGet((PreferenceChatEnterLeaveIndex >= PreferenceChatEnterLeaveList.length - 1) ? PreferenceChatEnterLeaveList[0] : PreferenceChatEnterLeaveList[PreferenceChatEnterLeaveIndex + 1]));
-	DrawBackNextButton(1000, 390, 350, 70, TextGet(PreferenceChatMemberNumbersSelected), "White", "",
-		() => TextGet((PreferenceChatMemberNumbersIndex == 0) ? PreferenceChatMemberNumbersList[PreferenceChatMemberNumbersList.length - 1] : PreferenceChatMemberNumbersList[PreferenceChatMemberNumbersIndex - 1]),
-		() => TextGet((PreferenceChatMemberNumbersIndex >= PreferenceChatMemberNumbersList.length - 1) ? PreferenceChatMemberNumbersList[0] : PreferenceChatMemberNumbersList[PreferenceChatMemberNumbersIndex + 1]));
+	PreferenceDrawBackNextButton(1000, 170, 350, 60, PreferenceChatColorThemeList, PreferenceChatColorThemeIndex);
+	PreferenceDrawBackNextButton(1000, 250, 350, 60, PreferenceChatEnterLeaveList, PreferenceChatEnterLeaveIndex);
+	PreferenceDrawBackNextButton(1000, 330, 350, 60, PreferenceChatMemberNumbersList, PreferenceChatMemberNumbersIndex);
+	PreferenceDrawBackNextButton(1000, 410, 350, 60, PreferenceChatFontSizeList, PreferenceChatFontSizeIndex);
 	DrawButton(1815, 75, 90, 90, "", "White", "Icons/Exit.png");
 	DrawCharacter(Player, 50, 50, 0.9);
 }
 
 /**
- * Sets the online preferences for the player. Redirected to from the main Run function if the player is in the online settings subscreen.
+ * Sets the online preferences for the player. Redirected to from the main Run function if the player is in the online
+ * settings subscreen.
  * @returns {void} - Nothing
  */
 function PreferenceSubscreenOnlineRun() {
@@ -1123,7 +1149,8 @@ function PreferenceSubscreenOnlineRun() {
 }
 
 /**
- * Sets the arousal preferences for a player. Redirected to from the main Run function if the player is in the arousal settings subscreen
+ * Sets the arousal preferences for a player. Redirected to from the main Run function if the player is in the arousal
+ * settings subscreen
  * @returns {void} - Nothing
  */
 function PreferenceSubscreenArousalRun() {
@@ -1185,7 +1212,8 @@ function PreferenceSubscreenArousalRun() {
 }
 
 /**
- * Sets the security preferences for a player. Redirected to from the main Run function if the player is in the security settings subscreen
+ * Sets the security preferences for a player. Redirected to from the main Run function if the player is in the
+ * security settings subscreen
  * @returns {void} - Nothing
  */
 function PreferenceSubscreenSecurityRun() {
@@ -1203,7 +1231,8 @@ function PreferenceSubscreenSecurityRun() {
 }
 
 /**
- * Sets the item visibility preferences for a player. Redirected to from the main Run function if the player is in the visibility settings subscreen
+ * Sets the item visibility preferences for a player. Redirected to from the main Run function if the player is in the
+ * visibility settings subscreen
  * @returns {void} - Nothing
  */
 function PreferenceSubscreenVisibilityRun() {
@@ -1247,7 +1276,8 @@ function PreferenceSubscreenVisibilityRun() {
 }
 
 /**
- * Sets the graphical preferences for a player. Redirected to from the main Run function if the player is in the visibility settings subscreen
+ * Sets the graphical preferences for a player. Redirected to from the main Run function if the player is in the
+ * visibility settings subscreen
  * @returns {void} - Nothing
  */
 function PreferenceSubscreenGraphicsRun() {
@@ -1418,23 +1448,27 @@ function PreferenceSubscreenChatClick() {
 	}
 
 	// If the user used one of the BackNextButtons
-	if (MouseIn(1000, 190, 350, 80)) {
-		if (MouseX <= 1175) PreferenceChatColorThemeIndex = (PreferenceChatColorThemeIndex <= 0) ? PreferenceChatColorThemeList.length - 1 : PreferenceChatColorThemeIndex - 1;
-		else PreferenceChatColorThemeIndex = (PreferenceChatColorThemeIndex >= PreferenceChatColorThemeList.length - 1) ? 0 : PreferenceChatColorThemeIndex + 1;
-		PreferenceChatColorThemeSelected = PreferenceChatColorThemeList[PreferenceChatColorThemeIndex];
-		Player.ChatSettings.ColorTheme = PreferenceChatColorThemeSelected;
+	if (MouseIn(1000, 170, 350, 60)) {
+		if (MouseX <= 1175) PreferenceChatColorThemeIndex = PreferenceGetPreviousIndex(PreferenceChatColorThemeList, PreferenceChatColorThemeIndex);
+		else PreferenceChatColorThemeIndex = PreferenceGetNextIndex(PreferenceChatColorThemeList, PreferenceChatColorThemeIndex);
+		Player.ChatSettings.ColorTheme = PreferenceChatColorThemeList[PreferenceChatColorThemeIndex];
 	}
-	if (MouseIn(1000, 290, 350, 80)) {
-		if (MouseX <= 1175) PreferenceChatEnterLeaveIndex = (PreferenceChatEnterLeaveIndex <= 0) ? PreferenceChatEnterLeaveList.length - 1 : PreferenceChatEnterLeaveIndex - 1;
-		else PreferenceChatEnterLeaveIndex = (PreferenceChatEnterLeaveIndex >= PreferenceChatEnterLeaveList.length - 1) ? 0 : PreferenceChatEnterLeaveIndex + 1;
-		PreferenceChatEnterLeaveSelected = PreferenceChatEnterLeaveList[PreferenceChatEnterLeaveIndex];
-		Player.ChatSettings.EnterLeave = PreferenceChatEnterLeaveSelected;
+	if (MouseIn(1000, 250, 350, 60)) {
+		if (MouseX <= 1175) PreferenceChatEnterLeaveIndex = PreferenceGetPreviousIndex(PreferenceChatEnterLeaveList, PreferenceChatEnterLeaveIndex);
+		else PreferenceChatEnterLeaveIndex = PreferenceGetNextIndex(PreferenceChatEnterLeaveList, PreferenceChatEnterLeaveIndex);
+		Player.ChatSettings.EnterLeave = PreferenceChatEnterLeaveList[PreferenceChatEnterLeaveIndex];
 	}
-	if (MouseIn(1000, 390, 350, 80)) {
-		if (MouseX <= 1175) PreferenceChatMemberNumbersIndex = (PreferenceChatMemberNumbersIndex <= 0) ? PreferenceChatMemberNumbersList.length - 1 : PreferenceChatMemberNumbersIndex - 1;
-		else PreferenceChatMemberNumbersIndex = (PreferenceChatMemberNumbersIndex >= PreferenceChatMemberNumbersList.length - 1) ? 0 : PreferenceChatMemberNumbersIndex + 1;
-		PreferenceChatMemberNumbersSelected = PreferenceChatMemberNumbersList[PreferenceChatMemberNumbersIndex];
-		Player.ChatSettings.MemberNumbers = PreferenceChatMemberNumbersSelected;
+	if (MouseIn(1000, 330, 350, 60)) {
+		if (MouseX <= 1175) PreferenceChatMemberNumbersIndex = PreferenceGetPreviousIndex(PreferenceChatMemberNumbersList, PreferenceChatMemberNumbersIndex);
+		else PreferenceChatMemberNumbersIndex = PreferenceGetNextIndex(PreferenceChatMemberNumbersList, PreferenceChatMemberNumbersIndex);
+		Player.ChatSettings.MemberNumbers = PreferenceChatMemberNumbersList[PreferenceChatMemberNumbersIndex];
+	}
+
+	if (MouseIn(1000, 410, 350, 60)) {
+		if (MouseX <= 1175) PreferenceChatFontSizeIndex = PreferenceGetPreviousIndex(PreferenceChatFontSizeList, PreferenceChatFontSizeIndex);
+		else PreferenceChatFontSizeIndex = PreferenceGetNextIndex(PreferenceChatFontSizeList, PreferenceChatFontSizeIndex);
+		Player.ChatSettings.FontSize = PreferenceChatFontSizeList[PreferenceChatFontSizeIndex];
+		ChatRoomRefreshFontSize();
 	}
 
 	// If the user clicked the exit icon to return to the main screen
@@ -1685,7 +1719,8 @@ function PreferenceSubscreenVisibilityLoad() {
 
 /**
  * Update the checkbox settings and asset preview image based on the new asset selection
- * @param {boolean} RefreshCheckboxes - If TRUE, load the new asset settings. If FALSE, a checkbox was just manually changed so don't refresh them
+ * @param {boolean} RefreshCheckboxes - If TRUE, load the new asset settings. If FALSE, a checkbox was just manually
+ *     changed so don't refresh them
  * @returns {void} - Nothing
  */
 function PreferenceVisibilityAssetChanged(RefreshCheckboxes) {
@@ -1815,7 +1850,8 @@ function PreferenceIsPlayerInSensDep() {
 }
 
 /**
- * Loads the preference screen. This function is called dynamically, when the character enters the preference screen for the first time
+ * Loads the preference screen. This function is called dynamically, when the character enters the preference screen
+ * for the first time
  * @returns {void} - Nothing
  */
 function PreferenceSubscreenNotificationsLoad() {
@@ -1838,7 +1874,8 @@ function PreferenceNotificationsCheckSetting(setting) {
 }
 
 /**
- * Sets the notifications preferences for a player. Redirected to from the main Run function if the player is in the notifications settings subscreen
+ * Sets the notifications preferences for a player. Redirected to from the main Run function if the player is in the
+ * notifications settings subscreen
  * @returns {void} - Nothing
  */
 function PreferenceSubscreenNotificationsRun() {
@@ -2083,4 +2120,41 @@ function PreferencePageChangeClick(Left, Top, TotalPages) {
 		PreferencePageCurrent++;
 		if (PreferencePageCurrent > TotalPages) PreferencePageCurrent = 1;
 	}
+}
+
+/**
+ * Draws a back/next button for use on preference pages
+ * @param {number} Left - The left offset of the button
+ * @param {number} Top - The top offset of the button
+ * @param {number} Width - The width of the button
+ * @param {number} Height - The height of the button
+ * @param {any[]} List - The preference list that the button should be associated with
+ * @param {number} Index - The current preference index for the given preference list
+ * @returns {void} - Nothing
+ */
+function PreferenceDrawBackNextButton(Left, Top, Width, Height, List, Index) {
+	DrawBackNextButton(Left, Top, Width, Height, TextGet(List[Index]), "White", "",
+		() => TextGet(List[PreferenceGetPreviousIndex(List, Index)]),
+		() => TextGet(List[PreferenceGetNextIndex(List, Index)]),
+	);
+}
+
+/**
+ * Returns the index of the previous preference list item (and wraps back to the end of the list if currently at 0)
+ * @param {any[]} List - The preference list
+ * @param {number} Index - The current preference index for the given list
+ * @returns {number} - The index of the previous item in the array, or the last item in the array if currently at 0
+ */
+function PreferenceGetPreviousIndex(List, Index) {
+	return (List.length + Index - 1) % List.length;
+}
+
+/**
+ * Returns the index of the next preference list item (and wraps back to the start of the list if currently at the end)
+ * @param {any[]} List - The preference list
+ * @param {number} Index - The current preference index for the given list
+ * @returns {number} - The index of the next item in the array, or 0 if the array is currently at the last item
+ */
+function PreferenceGetNextIndex(List, Index) {
+	return (Index + 1) % List.length;
 }
