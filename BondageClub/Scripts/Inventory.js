@@ -32,7 +32,7 @@ function InventoryAdd(C, NewItemName, NewItemGroup, Push) {
 * Adds multiple new items by group & name to the character inventory
 * @param {Character} C - The character that gets the new items added to her inventory
 * @param {Array.<{ Name: string, Group: string }>} NewItems - The new items to add
-* @param {Boolean} Push - Set to TRUE to push to the server, pushed by default
+* @param {Boolean} [Push=true] - Set to TRUE to push to the server, pushed by default
 */
 function InventoryAddMany(C, NewItems, Push) {
 
@@ -198,7 +198,7 @@ function InventoryPrerequisiteMessage(C, Prerequisite) {
 			|| !InventoryDoesItemExposeGroup(C, "Panties", "ItemVulva")
 			|| InventoryDoesItemBlockGroup(C, "Socks", "ItemVulva")
 			? "RemoveClothesForItem" : "";
-			
+
 		// Ensure crotch is empty
 		case "VulvaEmpty": return ((InventoryGet(C, "ItemVulva") != null)) ? "MustFreeVulvaFirst" : "";
 		case "ClitEmpty": return ((InventoryGet(C, "ItemVulvaPiercings") != null)) ? "MustFreeClitFirst" : "";
@@ -915,16 +915,22 @@ function InventoryIsWorn(C, AssetName, AssetGroup) {
  * @returns {void} - Nothing
  */
 function InventoryTogglePermission(Item, Type) {
+	const removeFromPermissions = (B) => B.Name != Item.Asset.Name || B.Group != Item.Asset.Group.Name || B.Type != Type;
+	const permissionItem = { Name: Item.Asset.Name, Group: Item.Asset.Group.Name, Type: Type };
 	if (InventoryIsPermissionBlocked(Player, Item.Asset.Name, Item.Asset.Group.Name, Type)) {
-		Player.BlockItems = Player.BlockItems.filter(B => B.Name != Item.Asset.Name || B.Group != Item.Asset.Group.Name || B.Type != Type);
-		Player.LimitedItems.push({ Name: Item.Asset.Name, Group: Item.Asset.Group.Name, Type: Type });
+		Player.BlockItems = Player.BlockItems.filter(removeFromPermissions);
+		Player.LimitedItems.push(permissionItem);
+	} else if (InventoryIsPermissionLimited(Player, Item.Asset.Name, Item.Asset.Group.Name, Type)) {
+		Player.LimitedItems = Player.LimitedItems.filter(removeFromPermissions);
+	} else if (InventoryIsFavorite(Player, Item.Asset.Name, Item.Asset.Group.Name, Type)) {
+		if (Player.GetDifficulty() >= 3)
+			Player.LimitedItems.push(permissionItem);
+		else
+			Player.BlockItems.push(permissionItem);
+		Player.FavoriteItems = Player.FavoriteItems.filter(removeFromPermissions);
+	} else {
+		Player.FavoriteItems.push(permissionItem);
 	}
-	else if (InventoryIsPermissionLimited(Player, Item.Asset.Name, Item.Asset.Group.Name, Type))
-		Player.LimitedItems = Player.LimitedItems.filter(B => B.Name != Item.Asset.Name || B.Group != Item.Asset.Group.Name || B.Type != Type);
-	else if (Player.GetDifficulty() >= 3)
-		Player.LimitedItems.push({ Name: Item.Asset.Name, Group: Item.Asset.Group.Name, Type: Type });
-	else
-		Player.BlockItems.push({ Name: Item.Asset.Name, Group: Item.Asset.Group.Name, Type: Type });
 	ServerPlayerBlockItemsSync();
 }
 
@@ -940,6 +946,23 @@ function InventoryIsPermissionBlocked(C, AssetName, AssetGroup, AssetType) {
 	if ((C != null) && (C.BlockItems != null) && Array.isArray(C.BlockItems))
 		for (let B = 0; B < C.BlockItems.length; B++)
 			if ((C.BlockItems[B].Name == AssetName) && (C.BlockItems[B].Group == AssetGroup) && (C.BlockItems[B].Type == AssetType))
+				return true;
+	return false;
+}
+
+
+/**
+* Returns TRUE if a specific item / asset is favorited by the character item permissions
+* @param {Character} C - The character on which we check the permissions
+* @param {string} AssetName - The asset / item name to scan
+* @param {string} AssetGroup - The asset group name to scan
+* @param {string} [AssetType] - The asset type to scan
+* @returns {boolean} - TRUE if asset / item is a favorite
+*/
+function InventoryIsFavorite(C, AssetName, AssetGroup, AssetType) {
+	if ((C != null) && (C.FavoriteItems != null) && Array.isArray(C.FavoriteItems))
+		for (let B = 0; B < C.FavoriteItems.length; B++)
+			if ((C.FavoriteItems[B].Name == AssetName) && (C.FavoriteItems[B].Group == AssetGroup) && (C.FavoriteItems[B].Type == AssetType))
 				return true;
 	return false;
 }
@@ -968,7 +991,7 @@ function InventoryIsPermissionLimited(C, AssetName, AssetGroup, AssetType) {
  * @returns {Boolean} - TRUE if item is allowed
  */
 function InventoryCheckLimitedPermission(C, Item, ItemType) {
-	if (!InventoryIsPermissionLimited(C, Item.Asset.DynamicName(Player), Item.Asset.DynamicGroupName, ItemType)) return true;
+	if (!InventoryIsPermissionLimited(C, Item.Asset.DynamicName(Player), Item.Asset.Group.Name, ItemType)) return true;
 	if ((C.ID == 0) || C.IsLoverOfPlayer() || C.IsOwnedByPlayer()) return true;
 	if ((C.ItemPermission < 3) && !(C.WhiteList.indexOf(Player.MemberNumber) < 0)) return true;
 	return false;
@@ -982,7 +1005,7 @@ function InventoryCheckLimitedPermission(C, Item, ItemType) {
  * @returns {Boolean} - Returns TRUE if the item cannot be used
  */
 function InventoryBlockedOrLimited(C, Item, ItemType) {
-	let Blocked = InventoryIsPermissionBlocked(C, Item.Asset.DynamicName(Player), Item.Asset.DynamicGroupName, ItemType);
+	let Blocked = InventoryIsPermissionBlocked(C, Item.Asset.DynamicName(Player), Item.Asset.Group.Name, ItemType);
 	let Limited = !InventoryCheckLimitedPermission(C, Item, ItemType);
 	return Blocked || Limited;
 }

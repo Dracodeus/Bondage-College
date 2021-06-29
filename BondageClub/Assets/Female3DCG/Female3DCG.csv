@@ -10,6 +10,7 @@ Cloth,TeacherOutfit1,Teacher
 Cloth,ChineseDress1,Chinese Dress
 Cloth,ChineseDress2,Chinese Long
 Cloth,TShirt1,T-Shirt
+Cloth,TShirt2,Classic T-Shirt
 Cloth,TennisShirt1,Tennis
 Cloth,Sweater1,Sweater
 Cloth,MistressTop,Mistress Top
@@ -52,6 +53,7 @@ Cloth,BondageBustier2,Bondage Bustier 2
 Cloth,LeatherBolero,Leather Bolero
 Cloth,Bodice1,Bodice
 Cloth,SummerDress,Summer Dress
+Cloth,Blouse1,Blouse
 ClothAccessory,,Cloth Accessory
 ClothAccessory,StudentOutfit3Scarf,Student Scarf
 ClothAccessory,StudentOutfit3Bow1,Student Bow 1
@@ -81,6 +83,7 @@ Suit,PilotSuit,Pilot Suit
 Suit,SeethroughSuit,See-through Suit
 Suit,SeethroughSuitZip,See-through Zipsuit
 Suit,ReverseBunnySuit,Reverse Bunny Suit
+Suit,Blouse1,Blouse
 ClothLower,,Bottom
 ClothLower,Skirt1,Skirt
 ClothLower,Skirt2,Student Skirt
@@ -109,6 +112,7 @@ ClothLower,Leggings2,Long Leggings
 ClothLower,PleatedSkirt,Pleated Skirt
 ClothLower,LongSkirt1,Long Skirt
 ClothLower,ShortPencilSkirt,Short Pencil Skirt
+ClothLower,HaremPants,Harem Pants
 SuitLower,,Suit Lower
 SuitLower,Catsuit,Catsuit
 SuitLower,SeamlessCatsuit, Seamless Catsuit
@@ -164,6 +168,7 @@ Bra,Ribbons,Ribbons
 Bra,LeatherBreastBinder,Leather Breast Binder
 Bra,SilkStraps,Silk Straps
 Bra,FullLatexBra,Full Latex Bra
+Bra,HaremBra,Harem Bra
 Corset,,Corset
 Corset,Corset1,Corset + Garters
 Corset,Corset2,Corset
@@ -397,6 +402,7 @@ Mask,LaceMask1,Bat Mask
 Mask,LaceMask2,Venice Festival Mask
 Mask,FuturisticVisor,Futuristic Visor
 Mask,OpenFaceHood,Open Face Hood
+Mask,FaceVeil,Face Veil
 TailStraps,,Tail Strap
 TailStraps,TailStrap,Kitty Tail Strap
 TailStraps,HorseTailStrap,Horse Tail Strap

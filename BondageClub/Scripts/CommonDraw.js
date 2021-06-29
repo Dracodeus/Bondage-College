@@ -22,7 +22,7 @@
 /**
  * A callback function used to draw a canvas on a canvas
  * @callback drawCanvas
- * @param {string} Img - The canvas to draw
+ * @param {HTMLImageElement | HTMLCanvasElement} Img - The canvas to draw
  * @param {number} x - The x coordinate to draw the canvas at
  * @param {number} y - The y coordinate to draw the canvas at
  */
@@ -182,10 +182,7 @@ function CommonDrawAppearanceBuild(C, {
 				return Acc;
 			}, []);
 
-		let Color = CA.Color;
-		if (Array.isArray(Color)) {
-			Color = Color[Layer.ColorIndex] || AG.ColorSchema[0];
-		}
+		let Color = Array.isArray(CA.Color) ? (CA.Color[Layer.ColorIndex] || AG.ColorSchema[0]) : CA.Color;
 
 		// Fix to legacy appearance data when Hands could be different to BodyUpper
 		if (GroupName === "Hands") Color = "Default";

@@ -41,12 +41,14 @@ function CharacterReset(CharacterID, CharacterAssetFamily) {
 		AllowItem: true,
 		BlockItems: [],
 		LimitedItems: [],
+		FavoriteItems: [],
 		HiddenItems: [],
 		WhiteList: [],
 		BlackList: [],
 		HeightModifier: 0,
 		HeightRatio: 1,
 		HasHiddenItems: false,
+		SavedColors: GetDefaultSavedColors(),
 		CanTalk: function () {
 			return (
 				(this.Effect.indexOf("GagVeryLight") < 0) &&
@@ -530,6 +532,7 @@ function CharacterOnlineRefresh(Char, data, SourceMemberNumber) {
 	Char.Reputation = (data.Reputation != null) ? data.Reputation : [];
 	Char.BlockItems = Array.isArray(data.BlockItems) ? data.BlockItems : [];
 	Char.LimitedItems = Array.isArray(data.LimitedItems) ? data.LimitedItems : [];
+	Char.FavoriteItems = Array.isArray(data.FavoriteItems) ? data.FavoriteItems : [];
 	if (Char.ID != 0 && Array.isArray(data.WhiteList)) Char.WhiteList = data.WhiteList;
 	if (Char.ID != 0 && Array.isArray(data.BlackList)) Char.BlackList = data.BlackList;
 	ServerAppearanceLoadFromBundle(Char, "Female3DCG", data.Appearance, SourceMemberNumber);
@@ -565,6 +568,9 @@ function CharacterLoadOnline(data, SourceMemberNumber) {
 	}
 	if (data.LimitedItems && typeof data.LimitedItems === "object" && !Array.isArray(data.LimitedItems)) {
 		data.LimitedItems = CommonUnpackItemArray(data.LimitedItems);
+	}
+	if (data.FavoriteItems && typeof data.FavoriteItems === "object" && !Array.isArray(data.FavoriteItems)) {
+		data.FavoriteItems = CommonUnpackItemArray(data.FavoriteItems);
 	}
 	if (Array.isArray(data.WhiteList)) {
 		data.WhiteList.sort((a, b) => a - b);
@@ -636,6 +642,7 @@ function CharacterLoadOnline(data, SourceMemberNumber) {
 		if (!Refresh && Array.isArray(data.BlackList) && (JSON.stringify(Char.BlackList) !== JSON.stringify(data.BlackList))) Refresh = true;
 		if (!Refresh && (data.BlockItems != null) && (Char.BlockItems.length != data.BlockItems.length)) Refresh = true;
 		if (!Refresh && (data.LimitedItems != null) && (Char.LimitedItems.length != data.LimitedItems.length)) Refresh = true;
+		if (!Refresh && (data.FavoriteItems != null) && (Char.FavoriteItems.length != data.FavoriteItems.length)) Refresh = true;
 
 		// If we must refresh
 		if (Refresh) CharacterOnlineRefresh(Char, data, SourceMemberNumber);
@@ -701,7 +708,7 @@ function CharacterCanChangeToPose(C, poseName) {
 /**
  * Checks if a certain pose is whitelisted and available for the pose menu
  * @param {Character} C - Character to check for the pose
- * @param {string} Type - Pose type to check for within items
+ * @param {string|undefined} Type - Pose type to check for within items
  * @param {string} Pose - Pose to check for whitelist
  * @returns {boolean} - TRUE if the character has the pose available
  */
@@ -968,7 +975,7 @@ function CharacterRefreshDialog(C) {
 			DialogInventory = [];
 			for (let A = 0; A < Player.Inventory.length; A++)
 				if ((Player.Inventory[A].Asset != null) && Player.Inventory[A].Asset.IsLock)
-					DialogInventoryAdd(C, Player.Inventory[A], false, DialogSortOrderUsable);
+					DialogInventoryAdd(C, Player.Inventory[A], false, DialogSortOrder.Usable);
 			DialogInventorySort();
 			DialogMenuButtonBuild(C);
 		} else {
@@ -1288,7 +1295,7 @@ function CharacterResetFacialExpression(C) {
 
 /**
  * Gets the currently selected character
- * @returns {Character} - Currently selected character
+ * @returns {Character|null} - Currently selected character
  */
 function CharacterGetCurrent() {
 	return (Player.FocusGroup != null) ? Player : CurrentCharacter;
@@ -1483,7 +1490,7 @@ function CharacterCheckHooks(C, IgnoreHooks) {
 
 			})) refresh = true;
 		} else if (C.UnregisterHook("BeforeSortLayers", "HideRestraints")) refresh = true;
-		
+
 		// Hook for layer visibility
 		// Visibility is a string individual layers have. If an item has any layers with visibility, it should have the LayerVisibility: true property
 		// We basically check the player's items and see if any are visible that have the LayerVisibility property.
@@ -1506,7 +1513,7 @@ function CharacterCheckHooks(C, IgnoreHooks) {
 					(Layer.Visibility == "Owner" && C.IsOwnedByPlayer()) ||
 					(Layer.Visibility == "Lovers" && C.IsLoverOfPlayer()) ||
 					(Layer.Visibility == "Mistresses" && LogQuery("ClubMistress", "Management"))
-					));
+				));
 			}))) refresh = true;
 			// Use the regular hook when the character is not
 			else if (!IgnoreHooks && (C.UnregisterHook("AfterLoadCanvas", "LayerVisibilityDialog") || C.RegisterHook("AfterLoadCanvas", "LayerVisibility", (C) => {
@@ -1519,9 +1526,9 @@ function CharacterCheckHooks(C, IgnoreHooks) {
 					(Layer.Visibility == "Owner" && C.IsOwnedByPlayer()) ||
 					(Layer.Visibility == "Lovers" && C.IsLoverOfPlayer()) ||
 					(Layer.Visibility == "Mistresses" && LogQuery("ClubMistress", "Management"))
-					));
+				));
 			}))) refresh = true;
-			
+
 		} else if (C.UnregisterHook("AfterLoadCanvas", "LayerVisibility")) refresh = true;
 	}
 

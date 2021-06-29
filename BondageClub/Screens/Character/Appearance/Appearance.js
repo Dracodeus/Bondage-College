@@ -10,6 +10,7 @@ var CharacterAppearanceAssets = [];
 var CharacterAppearanceColorPickerGroupName = "";
 var CharacterAppearanceColorPickerBackup = "";
 var CharacterAppearanceColorPickerRefreshTimer = null;
+/** @type {Character | null} */
 var CharacterAppearanceSelection = null;
 var CharacterAppearanceReturnRoom = "MainHall";
 var CharacterAppearanceReturnModule = "Room";
@@ -705,7 +706,9 @@ function AppearanceRun() {
 				const PreviewCanvas = DrawCharacterSegment(AppearancePreviews[I], Z[0], Z[1], Z[2], Z[3]);
 				DrawCanvasPreview(X, Y, PreviewCanvas, Item.Asset.Description, { Background });
 			}
-			else DrawAssetPreview(X, Y, Item.Asset, {Background, Vibrating});
+			else {
+				DrawAssetPreview(X, Y, Item.Asset, { Background, Vibrating, IsFavorite: InventoryIsFavorite(C, Item.Asset.Name, Item.Asset.Group.Name, null)});
+			}
 			setButton(X, Y);
 			if (Item.Icon != "") DrawImage("Icons/" + Item.Icon + ".png", X + 2, Y + 110);
 			X = X + 250;
@@ -731,8 +734,8 @@ function AppearanceGetPreviewImageColor(C, item, hover) {
 		else if (InventoryIsPermissionLimited(C, item.Asset.Name, item.Asset.Group.Name)) permission = "amber";
 		return item.Worn ? "gray" : AppearancePermissionColors[permission][hover ? 1 : 0];
 	} else {
-		const Unusable = item.SortOrder.startsWith(DialogSortOrderUnusable.toString());
-		const Blocked = item.SortOrder.startsWith(DialogSortOrderBlocked.toString());
+		const Unusable = item.SortOrder.startsWith(DialogSortOrder.Unusable.toString());
+		const Blocked = item.SortOrder.startsWith(DialogSortOrder.Blocked.toString());
 		if (hover && !Blocked) return "cyan";
 		else if (item.Worn) return "pink";
 		else if (Blocked) return "red";

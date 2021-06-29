@@ -284,8 +284,8 @@ function InventoryItemPelvisFuturisticTrainingBeltPublishGeneric(C, msg) {
 	ChatRoomPublishCustomAction(msg, true, Dictionary);
 }
 
-function InventoryItemPelvisFuturisticTrainingBeltValidate(C) {
-	return InventoryItemMouthFuturisticPanelGagValidate(C, Option); // All futuristic items refer to the gag
+function InventoryItemPelvisFuturisticTrainingBeltValidate(C, Item) {
+	return InventoryItemMouthFuturisticPanelGagValidate(C, Item); // All futuristic items refer to the gag
 }
 
 /*

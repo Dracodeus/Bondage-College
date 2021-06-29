@@ -11,8 +11,85 @@ type MemoizedFunction<T extends Function> = T & {
 	clearCache(): void;
 };
 
+// GL shim
+interface WebGL2RenderingContext {
+	program?: WebGLProgram;
+	programFull?: WebGLProgram;
+	programHalf?: WebGLProgram;
+	textureCache?: Map<string, any>;
+	maskCache?: Map<string, any>;
+}
+
+interface WebGLProgram {
+	u_alpha?: WebGLUniformLocation;
+	u_color?: WebGLUniformLocation;
+	a_position?: number;
+	a_texcoord?: number;
+	u_matrix?: WebGLUniformLocation;
+	u_texture?: WebGLUniformLocation;
+	u_alpha_texture?: WebGLUniformLocation;
+	position_buffer?: WebGLBuffer;
+	texcoord_buffer?: WebGLBuffer;
+}
+
+interface HTMLCanvasElement {
+	GL?: WebGL2RenderingContext;
+}
+
 //#endregion
 
+//#region index.html
+
+/**
+ * Main game running state, runs the drawing
+ * @param {number} Timestamp
+ */
+declare function MainRun(Timestamp: number): void;
+
+/**
+ * When the user presses a key, we send the KeyDown event to the current screen if it can accept it
+ * @param {KeyboardEvent} event
+ */
+declare function KeyDown(event: KeyboardEvent): void;
+
+/**
+ * Handler for document-wide keydown event
+ * @param {KeyboardEvent} event
+ */
+declare function DocumentKeyDown(event: KeyboardEvent): void;
+
+/**
+ * When the user clicks, we fire the click event for other screens
+ * @param {MouseEvent} event
+ */
+declare function Click(event: MouseEvent): void;
+
+/**
+ * When the user touches the screen (mobile only), we fire the click event for other screens
+ * @param {TouchEvent} event
+ */
+declare function TouchStart(event: TouchEvent): void;
+
+/**
+ * When touch moves, we keep it's position for other scripts
+ * @param {Touch} touch
+ */
+declare function TouchMove(touch: Touch): void;
+
+/**
+ * When mouse move, we keep the mouse position for other scripts
+ * @param {MouseEvent} event
+ */
+declare function MouseMove(event: MouseEvent): void;
+
+/**
+ * When the mouse is away from the control, we stop keeping the coordinates,
+ * we also check for false positives with "relatedTarget"
+ * @param {MouseEvent} event
+ */
+declare function LoseFocus(event: MouseEvent): void;
+
+//#endregion
 
 type IAssetFamily = "Female3DCG";
 
@@ -255,6 +332,12 @@ interface Activity {
 	MakeSound?: boolean;
 }
 
+interface LogRecord {
+	Name: string;
+	Group: string;
+	Value: number;
+}
+
 /** An item is a pair of asset and its dynamic properties that define a worn asset. */
 interface Item {
 	Asset: Asset;
@@ -267,6 +350,7 @@ interface Skill {
 	Type: string;
 	Level: number;
 	Progress: number;
+	Ratio?: number;
 }
 
 interface Reputation {
@@ -307,13 +391,14 @@ interface Character {
 	Skill: Skill[];
 	Pose: string[];
 	Effect: string[];
-	FocusGroup: AssetGroup;
-	Canvas: HTMLCanvasElement;
-	CanvasBlink: HTMLCanvasElement;
+	FocusGroup: AssetGroup | null;
+	Canvas: HTMLCanvasElement | null;
+	CanvasBlink: HTMLCanvasElement | null;
 	MustDraw: boolean;
 	BlinkFactor: number;
 	AllowItem: boolean;
 	BlockItems: any[];
+	FavoriteItems: any[];
 	LimitedItems: any[];
 	WhiteList: number[];
 	HeightModifier: number;
@@ -347,6 +432,7 @@ interface Character {
 	HiddenItems: any[];
 	HeightRatio: number;
 	HasHiddenItems: boolean;
+	SavedColors: HSVColor[];
 	GetBlindLevel: (eyesOnly?: boolean) => number;
 	IsLocked: () => boolean;
 	IsMounted: () => boolean;
@@ -423,6 +509,7 @@ interface Character {
 	};
 	ArousalZoom?: boolean;
 	FixedImage?: string;
+	Rule?: LogRecord[];
 }
 
 interface PlayerCharacter extends Character {
@@ -547,10 +634,12 @@ interface PlayerCharacter extends Character {
 	Wardrobe?: any[][];
 	WardrobeCharacterNames?: string[];
 	SavedExpressions?: any[];
-	SavedColors?: HSVColor[];
+	SavedColors: HSVColor[];
 	FriendList?: number[];
 	FriendNames?: Map<number, string>;
-	SubmissivesList?: Set<number>
+	SubmissivesList?: Set<number>;
+	KinkyDungeonKeybindings?: any;
+	Infiltration?: any;
 }
 
 //#region Extended items
@@ -660,6 +749,14 @@ interface ModularItemOption {
 	BondageLevel?: number;
 	/** The required self-bondage skill level for this option when using it on oneself */
 	SelfBondageLevel?: number;
+	/** The required prerequisites that must be met before this option can be selected */
+	Prerequisite?: string|string[];
+	/**
+	 * Whether or not prerequisites should be considered on the character's
+	 * appearance without the item equipped. Should be set to `true` if the item itself might interfere with prerequisites on
+	 * some of its options
+	 */
+	SelfBlockCheck?: boolean;
 	/** A list of groups that this option blocks - defaults to [] */
 	Block?: string[];
 	/** A list of groups that this option hides - defaults to [] */
@@ -856,7 +953,10 @@ type TypedItemChatCallback = (
  * @param {ExtendedItemOption} Option - The newly selected type option
  * @returns {string} - Returns a non-empty message string if the item failed validation, or an empty string otherwise
  */
-type TypedItemValidateCallback = (C: Character, Option: ExtendedItemOption) => string;
+type TypedItemValidateCallback = (C: Character,
+                                  Item: Item,
+                                  Option: ExtendedItemOption,
+                                  CurrentOption?: ExtendedItemOption) => string;
 
 /**
  * A parameter object containing information used to validate and sanitize character appearance update diffs. An

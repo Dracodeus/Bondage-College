@@ -25,6 +25,8 @@ ClothSummerDressLayer2,Buttons
 ClothSummerDressLayer3,Arm Puffs
 ClothSummerDressLayer4,Trim
 ClothSummerDressBase,Dress
+ClothTShirt2Shirt,Shirt
+ClothTShirt2Print,Print
 ClothAccessoryBouquetBase,Holder
 ClothAccessoryBouquetFlowers,Flowers
 ClothAccessoryCapeFront,Front
@@ -41,6 +43,9 @@ SuitCatsuitBase,Suit
 SuitCatsuitZip,Zip
 SuitSeethroughSuitZipBase,Suit
 SuitSeethroughSuitZipZip,Zip
+BraHaremBraFabric,Fabric
+BraHaremBraStraps,Straps
+BraHaremBraJewel,Jewel
 ClothLowerSkirt2Color,Skirt
 ClothLowerSkirt2Stripe,Trim
 ClothLowerSkirt3Color,Skirt
@@ -55,6 +60,9 @@ ClothLowerPajama1Cloth, Pants
 ClothLowerPajama1Stripe, Trim
 ClothLowerAdmiralSkirtCloth,Skirt
 ClothLowerAdmiralSkirtStripe,Trim
+ClothLowerHaremPantsPanty,Panty
+ClothLowerHaremPantsVeil,Veil
+ClothLowerHaremPantsPantyLine,Panty Line
 SuitLowerCatsuitBase,Suit
 SuitLowerCatsuitZip,Zip
 SuitLowerSeethroughSuitZipBase,Suit
@@ -114,6 +122,8 @@ HairAccessory3HaloBase,Body
 HairAccessory3HaloCore,Core
 GlovesGlovesFurFabric,Glove
 GlovesGlovesFurFur,Fur
+MaskFaceVeilFabric,Fabric
+MaskFaceVeilString,String
 TailStrapsTailStrapTail,Tail
 TailStrapsTailStrapRibbon,Ribbon
 TailStrapsTailStrapBell,Bell

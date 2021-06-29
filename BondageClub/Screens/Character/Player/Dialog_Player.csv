@@ -387,6 +387,9 @@ CollegeTheater,,,Theater,,
 CollegeClass,,,College Classroom,,
 SchoolHallway,,,School Hallway,,
 HotelBedroom,,,Hotel Bedroom,,
+Yacht1,,,Yacht Chill Room
+Yacht2,,,Yacht Main Hall
+Yacht3,,,Yacht Deck
 ExtendedItemUnlockBeforeChange,,,Remove locks before changing,,
 IntroductionMaidGreetings,,,"(As you enter the luxurious hallway, a maid comes to greet you.)  Welcome to the Bondage Club, is this your first visit?",,
 ServerMessageOfferStartTrial,,,"SourceCharacter is offering you to start a trial period as her submissive.  Click on her and manage your relationship to accept, don't do anything to refuse.",,
@@ -685,7 +688,8 @@ ItemArmsCollarCuffsTight,,,Tight,,
 ItemArmsCollarCuffsSetLoose,,,SourceCharacter loosens the strap on DestinationCharacter collar cuffs.,,
 ItemArmsCollarCuffsSetNormal,,,SourceCharacter adjusts the strap normally on DestinationCharacter collar cuffs.,,
 ItemArmsCollarCuffsSetSnug,,,SourceCharacter snugs the strap on DestinationCharacter collar cuffs.,,
-ItemArmsCollarCuffsSetTight,,,SourceCharacter tightens the strap on DestinationCharacter collar cuffs.,,InflatableBodyBagSelectTightness,,,How much do you want to inflate the body bag?,,
+ItemArmsCollarCuffsSetTight,,,SourceCharacter tightens the strap on DestinationCharacter collar cuffs.,,
+InflatableBodyBagSelectTightness,,,How much do you want to inflate the body bag?,,
 InflatableBodyBagPoseLight,,,Light,,
 InflatableBodyBagPoseInflated,,,Inflated,,
 InflatableBodyBagPoseBloated,,,Bloated,,
@@ -2250,3 +2254,12 @@ ItemTorsoThinLeatherStrapsSetHarness,,,SourceCharacter uses the straps on Destin
 SelectBikiniType,,,Select a bikini style.
 BikiniTypeOpen,,,Open,,
 BikiniTypeClosed,,,Closed,,
+ClothTShirt2Select,,,Select your design
+ClothTShirt2Plain,,,Plain
+ClothTShirt2BCLogo,,,Club Logo
+ClothTShirt2BDSM,,,BD-SM
+ClothTShirt2Gag,,,The Moaning Groans
+ClothTShirt2Knot,,,Rope Knot
+ClothTShirt2Rock,,,Rock
+ClothTShirt2Smile,,,Smiley
+ClothTShirt2Tick,,,Check
