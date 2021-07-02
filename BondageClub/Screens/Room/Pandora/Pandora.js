@@ -41,14 +41,15 @@ function PandoraLoad() {
 
 /**
  * Returns the color of the direction buttons, it can change if the direction was recently navigated to
+ * The Cartographer perk can show the returning path in yellow
  * @param {"North" | "South" | "East" | "West"} Direction - The cardinal direction
  * @returns {string} - The color to use
  */
 function PandoraDirectionButtonColor(Direction) {
 	if ((PandoraMoveDirectionTimer.Timer >= CommonTime()) && (PandoraMoveDirectionTimer.Direction === Direction))
-		return PandoraDirectionAvailable(Direction) ? "#80FF80" : "#408040";
-	else
-		return PandoraDirectionAvailable(Direction) ? "White" : "#BF8080";
+		return PandoraDirectionAvailable(Direction) ? (((Direction == PandoraCurrentRoom.DirectionMap[0]) && InfiltrationPerksActive("Cartographer") && (PandoraCurrentRoom.Background != "Entrance")) ? "#BFFF40" : "#80FF80") : "#408040";
+	else 
+		return PandoraDirectionAvailable(Direction) ? (((Direction == PandoraCurrentRoom.DirectionMap[0]) && InfiltrationPerksActive("Cartographer") && (PandoraCurrentRoom.Background != "Entrance")) ? "#FFFF00" : "White") : "#BF8080";
 }
 
 /**
@@ -443,9 +444,14 @@ function PandoraGenerateRoom(EntryRoom, DirectionFrom, RoomLevel, MaxRoom) {
 		let Continue = false;
 		let PathNum;
 		while (!Continue) {
-			PathNum = Math.floor(Math.random() * 4);
-			if (EntryRoom.Background.indexOf("Tunnel") == 0) PathNum = PandoraDirectionListFrom.indexOf(DirectionFrom);
-			Continue = ((PandoraDirectionList.indexOf(DirectionFrom) != PathNum) && (Path.indexOf(PathNum) < 0));
+			if (EntryRoom.Background.indexOf("Tunnel") == 0) {
+				PathNum = PandoraDirectionListFrom.indexOf(DirectionFrom);
+				Continue = true;
+			}
+			else {
+				PathNum = Math.floor(Math.random() * 4);
+				Continue = ((PandoraDirectionList.indexOf(DirectionFrom) != PathNum) && (Path.indexOf(PathNum) < 0));
+			}
 		}
 		Path.push(PathNum);
 
@@ -462,12 +468,9 @@ function PandoraGenerateRoom(EntryRoom, DirectionFrom, RoomLevel, MaxRoom) {
 			if ((RoomBack == "Cell") && (Math.random() >= 0.9)) RoomBack = "Rest0";
 			else RoomBack = RoomBack + Math.floor(Math.random() * 7);
 			Continue = (RoomBack !== EntryRoom.Background);
-			if (Continue)
-				for (let R = 0; R < PandoraRoom.length; R++)
-					if ((PandoraRoom[R].Background == RoomBack) && (Math.random() >= 0.25)) {
-						Continue = false;
-						break;
-					}
+			for (let R = 0; Continue && (R < PandoraRoom.length); R++)
+				if ((PandoraRoom[R].Background == RoomBack) && (Math.random() >= 0.25))
+					Continue = false;
 		}
 
 		// Creates the room

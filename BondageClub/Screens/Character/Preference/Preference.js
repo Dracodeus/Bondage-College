@@ -399,13 +399,19 @@ function PreferenceInitPlayer() {
 
 	// Online settings
 	if (!C.OnlineSettings) C.OnlineSettings = {};
-	if (typeof C.OnlineSettings.AutoBanBlackList !== "boolean") C.ChatSettings.AutoBanBlackList = false;
-	if (typeof C.OnlineSettings.AutoBanGhostList !== "boolean") C.ChatSettings.AutoBanGhostList = true;
-	if (typeof C.OnlineSettings.DisableAnimations !== "boolean") C.ChatSettings.DisableAnimations = false;
-	if (typeof C.OnlineSettings.SearchShowsFullRooms !== "boolean") C.ChatSettings.SearchShowsFullRooms = true;
-	if (typeof C.OnlineSettings.SearchFriendsFirst !== "boolean") C.ChatSettings.SearchFriendsFirst = false;
+	if (typeof C.OnlineSettings.AutoBanBlackList !== "boolean") C.OnlineSettings.AutoBanBlackList = false;
+	if (typeof C.OnlineSettings.AutoBanGhostList !== "boolean") C.OnlineSettings.AutoBanGhostList = true;
+	if (typeof C.OnlineSettings.DisableAnimations !== "boolean") C.OnlineSettings.DisableAnimations = false;
+	if (typeof C.OnlineSettings.SearchShowsFullRooms !== "boolean") C.OnlineSettings.SearchShowsFullRooms = true;
+	if (typeof C.OnlineSettings.SearchFriendsFirst !== "boolean") C.OnlineSettings.SearchFriendsFirst = false;
 	if (typeof C.OnlineSettings.EnableAfkTimer !== "boolean") C.OnlineSettings.EnableAfkTimer = true;
 	if (typeof C.OnlineSettings.EnableWardrobeIcon !== "boolean") C.OnlineSettings.EnableWardrobeIcon = false;
+	// Delete old improper settings.
+	delete C.ChatSettings.AutoBanBlackList;
+	delete C.ChatSettings.AutoBanGhostList;
+	delete C.ChatSettings.SearchFriendsFirst;
+	delete C.ChatSettings.DisableAnimations;
+	delete C.ChatSettings.SearchShowsFullRooms;
 
 	// Onilne shared settings
 	if (!C.OnlineSharedSettings) C.OnlineSharedSettings = {};
@@ -690,8 +696,8 @@ function PreferenceSubscreenDifficultyRun() {
 		// Draw the difficulty levels
 		DrawText(TextGet("DifficultyTitle"), 500, 225, "Black", "Gray");
 		for (let D = 0; D <= 3; D++) {
-			DrawText(TextGet("DifficultySummary" + D.toString() + "A"), 850, 325 + 150 * D, 1050, 120, "Black", "White");
-			DrawText(TextGet("DifficultySummary" + D.toString() + "B"), 850, 375 + 150 * D, 1050, 120, "Black", "White");
+			DrawText(TextGet("DifficultySummary" + D.toString() + "A"), 850, 325 + 150 * D, "Black", "White");
+			DrawText(TextGet("DifficultySummary" + D.toString() + "B"), 850, 375 + 150 * D, "Black", "White");
 		}
 
 		// Draw the difficulty buttons
@@ -1214,7 +1220,7 @@ function PreferenceSubscreenArousalRun() {
 
 		// Fetish elements
 		DrawBackNextButton(900, 513, 500, 64, TextGet("ArousalFetish" + PreferenceArousalFetishList[PreferenceArousalFetishIndex]), "White", "", () => "", () => "");
-		DrawBackNextButton(1455, 513, 450, 64, TextGet("ArousalFetishLove" + PreferenceArousalFetishFactor), PreferenceGetFactorColor(PreferenceGetFetishFactor(Player, PreferenceArousalFetishList[PreferenceArousalFetishIndex], false)), "", () => "", () => "");
+		DrawBackNextButton(1455, 513, 450, 64, TextGet("ArousalFetishLove" + PreferenceArousalFetishFactor), PreferenceGetFactorColor(PreferenceGetFetishFactor(Player, PreferenceArousalFetishList[PreferenceArousalFetishIndex])), "", () => "", () => "");
 	}
 
 	// We always draw the active & stutter control

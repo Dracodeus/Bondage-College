@@ -314,7 +314,7 @@ function InventoryPrerequisiteConflictingGags(C, BlockingPrereqs) {
 	let GagIndex = 4; // By default, assume no gag slots are allowed to conflict
 	if (C.FocusGroup && C.FocusGroup.Name.startsWith("ItemMouth")) {
 		// If there's a focus group, calculate the gag index
-		GagIndex = Number(C.FocusGroup.Name.replace("ItemMouth", "") || 4);
+		GagIndex = Number(C.FocusGroup.Name.replace("ItemMouth", "") || 1);
 	}
 	const MouthItems = [InventoryGet(C, "ItemMouth"), InventoryGet(C, "ItemMouth2"), InventoryGet(C, "ItemMouth3")];
 	let MinBlockingIndex = 0;
