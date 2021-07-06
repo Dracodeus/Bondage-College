@@ -11,7 +11,7 @@ var PandoraModeAppearance = null;
 var PandoraMessage = null;
 var PandoraParty = [];
 var PandoraFightCharacter = null;
-var PandoraRandomNPCList = ["Member", "Mistress", "Slave", "Maid", "Guard"];
+var PandoraRandomNPCList = ["MemberNew", "MemberOld", "Mistress", "Slave", "Maid", "Guard"];
 var PandoraMoveDirectionTimer = { Direction: "", Timer: 0 };
 var PandoraTargetRoom = null;
 var PandoraClothes = "Random";
@@ -22,7 +22,7 @@ var PandoraMaxWillpower = 20;
  * NPC Dialog functions
  * @returns {boolean} - TRUE if the dialog option will be available to the player
  */
-function PandoraCanStartRecruit() { return ((CurrentCharacter.Recruit == null) || (CurrentCharacter.Recruit == 0)); }
+function PandoraCanStartRecruit() { return (((CurrentCharacter.Recruit == null) || (CurrentCharacter.Recruit == 0)) && !CurrentCharacter.IsNaked()); }
 function PandoraCanRecruit() { return (CurrentCharacter.Recruit + (InfiltrationPerksActive("Recruiter") ? 0.25 : 0) >= CurrentCharacter.RecruitOdds); }
 function PandoraCharacterCanJoin() { return ((PandoraParty.length == 0) || (PandoraParty[0].Name != CurrentCharacter.Name)); }
 function PandoraCharacterCanLeave() { return ((PandoraParty.length == 1) && (PandoraParty[0].Name == CurrentCharacter.Name) && ((PandoraCurrentRoom.Character == null) || (PandoraCurrentRoom.Character.length <= 1))); }
@@ -762,6 +762,9 @@ function PandoraCanJoinPrivateRoom() { return (LogQuery("RentRoom", "PrivateRoom
 function PandoraCharacterJoinPrivateRoom() {
 	CurrentScreen = "Private";
 	PrivateAddCharacter(CurrentCharacter, (CurrentCharacter.Type === "Slave") ? "Submissive" : null);
+	let C = PrivateCharacter[PrivateCharacter.length - 1];
+	C.FromPandora = true;
+	ServerPrivateCharacterSync();
 	CurrentScreen = "Pandora";
 	PandoraRemoveCurrentCharacter();
 }
@@ -943,4 +946,21 @@ function PandoraPunishmentStart() {
  */
 function PandoraPlayerPay(Amount) {
 	CharacterChangeMoney(Player, parseInt(Amount));
+}
+
+/**
+ * When the player pays an NPC to wear her clothes
+ * @returns {void} - Nothing
+ */
+function PandoraBuyRandomClothes() {
+	CharacterChangeMoney(Player, -10);
+	CharacterNaked(Player);
+	CharacterTransferItem(CurrentCharacter, Player, "Cloth");
+	CharacterTransferItem(CurrentCharacter, Player, "ClothLower");
+	CharacterTransferItem(CurrentCharacter, Player, "Bra");
+	CharacterTransferItem(CurrentCharacter, Player, "Panties");
+	CharacterTransferItem(CurrentCharacter, Player, "Socks");
+	CharacterTransferItem(CurrentCharacter, Player, "Shoes");
+	CharacterNaked(CurrentCharacter);
+	PandoraClothes = "Random";
 }

@@ -1298,17 +1298,16 @@ function DrawProcess(time) {
  * @param {boolean} [Options.Hover] - Whether or not the button should enable hover behaviour (background color change)
  * @param {string} [Options.HoverBackground] - The background color that should be used on mouse hover, if any
  * @param {boolean} [Options.Disabled] - Whether or not the element is disabled (prevents hover functionality)
- * @param {boolean} [Options.IsFavorite] - Whether or not the element is a favorite. (Adds visual distinction)
+ * @param {string[]} [Options.Icons] - A list of small icons to display in the top-left corner
  * @returns {void} - Nothing
  */
 function DrawAssetPreview(X, Y, A, Options) {
-	let { C, Description, Background, Foreground, Vibrating, Border, Hover, HoverBackground, Disabled, IsFavorite} = (Options || {});
-	const DynamicPreviewIcon = C ? A.DynamicPreviewIcon(C) : "";
-	const Path = `${AssetGetPreviewPath(A)}/${A.Name}${DynamicPreviewIcon}.png`;
+	let { C, Description, Background, Foreground, Vibrating, Border, Hover, HoverBackground, Disabled, Icons} = (Options || {});
+	const DynamicPreviewImage = C ? A.DynamicPreviewImage(C) : "";
+	const Path = `${AssetGetPreviewPath(A)}/${A.Name}${DynamicPreviewImage}.png`;
 	if (Description == null) Description = C ? A.DynamicDescription(C) : A.Description;
-	if (IsFavorite) Description = "★ " + Description;
 	DrawPreviewBox(X, Y, Path, Description, { Background, Foreground, Vibrating, Border, Hover,
-		HoverBackground, Disabled });
+		HoverBackground, Disabled, Icons });
 }
 
 /**
@@ -1325,10 +1324,11 @@ function DrawAssetPreview(X, Y, A, Options) {
  * @param {boolean} [Options.Hover] - Whether or not the button should enable hover behaviour (background color change)
  * @param {string} [Options.HoverBackground] - The background color that should be used on mouse hover, if any
  * @param {boolean} [Options.Disabled] - Whether or not the element is disabled (prevents hover functionality)
+ * @param {string[]} [Options.Icons] - A list of images to draw in the top-left of the preview box
  * @returns {void} - Nothing
  */
 function DrawPreviewBox(X, Y, Path, Description, Options) {
-	let {Background, Foreground, Vibrating, Border, Hover, HoverBackground, Disabled} = (Options || {});
+	let {Background, Foreground, Vibrating, Border, Hover, HoverBackground, Disabled, Icons} = (Options || {});
 	const Height = Description ? 275 : 225;
 	Background = Background || "#fff";
 	Foreground = Foreground || "#000";
@@ -1340,7 +1340,30 @@ function DrawPreviewBox(X, Y, Path, Description, Options) {
 	const ImageX = Vibrating ? X + 1 + Math.floor(Math.random() * 3) : X + 2;
 	const ImageY = Vibrating ? Y + 1 + Math.floor(Math.random() * 3) : Y + 2;
 	if (Path !== "") DrawImageResize(Path, ImageX, ImageY, 221, 221);
+	DrawPreviewIcons(Icons, X, Y);
 	if (Description) DrawTextFit(Description, X + 110, Y + 250, 221, Foreground);
+}
+
+/**
+ * Draws a list of small icons over a preview box
+ * @param {string[]} icons - An array of icon names
+ * @param {number} X - The X co-ordinate to start drawing from
+ * @param {number} Y - The Y co-ordinate to start drawing from
+ * @returns {void} - Nothing
+ */
+function DrawPreviewIcons(icons, X, Y) {
+	if (icons && icons.length) {
+		const iconsPerCol = 4;
+		const iconSize = 50;
+		icons.forEach((icon, index) => {
+			const iconX = X + (iconSize + 5) * Math.floor(index / iconsPerCol);
+			const iconY = Y + (iconSize + 5) * (index % iconsPerCol);
+			DrawImageResize(`Icons/Previews/${icon}.png`, iconX, iconY, iconSize, iconSize);
+			if (MouseIn(iconX, iconY, iconSize * 0.9, iconSize * 0.9)) {
+				DrawButtonHover(iconX, iconY, 100, 65, DialogFindPlayer("PreviewIcon" + icon));
+			}
+		});
+	}
 }
 
 /**

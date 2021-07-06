@@ -124,7 +124,7 @@ function CharacterReset(CharacterID, CharacterAssetFamily) {
 			return this.GetBlindLevel() > 0;
 		},
 		IsEnclose: function () {
-			return (this.Effect.indexOf("Enclose") >= 0);
+			return (this.Effect.indexOf("Enclose") >= 0 || (this.Effect.indexOf("OneWayEnclose") >= 0 && this.ID == 0));
 		},
 		IsMounted: function () {
 			return (this.Effect.indexOf("Mounted") >= 0);
@@ -1471,7 +1471,6 @@ function CharacterGetClumsiness(C) {
 	return Math.min(clumsiness, 5);
 }
 
-
 /**
  * Applies hooks to a character based on conditions
  * Future hooks go here
@@ -1534,4 +1533,19 @@ function CharacterCheckHooks(C, IgnoreHooks) {
 
 	if (refresh) CharacterLoadCanvas(C);
 	return refresh;
+}
+
+
+/**
+ * Transfers an item from one character to another
+ * @param {Character} FromC - The character from which to pick the item
+ * @param {Character} ToC - The character on which we must put the item
+ * @param {string} Group - The item group to transfer (Cloth, Hat, etc.)
+ * @returns {void} - Nothing
+ */
+function CharacterTransferItem(FromC, ToC, Group, Refresh) {
+	let Item = InventoryGet(FromC, Group);
+	if (Item == null) return;
+	InventoryWear(ToC, Item.Asset.Name, Group, Item.Color, Item.Difficulty);
+	if (Refresh) CharacterRefresh(ToC);
 }

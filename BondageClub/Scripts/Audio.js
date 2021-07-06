@@ -6,6 +6,10 @@ var AudioList = [
 	{ Name: "Beep", File: "BeepAlarm" },
 	{ Name: "BellMedium", File: "BellMedium" },
 	{ Name: "BellSmall", File: "BellSmall" },
+	{ Name: "CageClose", File: "CageClose" },
+	{ Name: "CageEquip", File: "CageEquip" },
+	{ Name: "CageOpen", File: "CageOpen" },
+	{ Name: "CageStruggle", File: "CageStruggle" },
 	{ Name: "ChainLong", File: "ChainLong" },
 	{ Name: "SciFiEffect", File: "SciFiEffect" },
 	{ Name: "SciFiPump", File: "SciFiPump" },
@@ -64,6 +68,14 @@ var AudioActions = [
 	{
 		IsAction: (data) => data.Content.indexOf("ActionActivity") == 0,
 		GetAudioInfo: AudioPlayAssetSound
+	},
+	{
+		IsAction: (data) => ["KennelSetDC", "KennelSetPADC", "KennelSetPRDC"].find(A => data.Content === A),
+		Sound: "CageClose"
+	},
+	{
+		IsAction: (data) => ["KennelSetDO", "KennelSetPADO", "KennelSetPRDO"].find(A => data.Content === A),
+		Sound: "CageOpen"
 	},
 	{
 		IsAction: (data) => [

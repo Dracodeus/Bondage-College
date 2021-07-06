@@ -146,12 +146,16 @@ function ExtendedItemDraw(Options, DialogPrefix, OptionsPerPage, ShowImages = tr
 		const Option = Options[I];
 		const Hover = MouseIn(X, Y, 225, 55 + ImageHeight) && !CommonIsMobile;
 		const IsSelected = DialogFocusItem.Property.Type == Option.Property.Type;
-		const IsFavorite = InventoryIsFavorite(C, Asset.Name, Asset.Group.Name, Option.Property && Option.Property.Type ? Option.Property.Type : null);
+		const IsFavorite = InventoryIsFavorite(ExtendedItemPermissionMode ? Player : C, Asset.Name, Asset.Group.Name, Option.Property && Option.Property.Type ? Option.Property.Type : null);
 		const ButtonColor = ExtendedItemGetButtonColor(C, Option, CurrentOption, Hover, IsSelected);
 
 		DrawButton(X, Y, 225, 55 + ImageHeight, "", ButtonColor, null, null, IsSelected);
-		if (ShowImages) DrawImage(`${AssetGetInventoryPath(Asset)}/${Option.Name}.png`, X + 2, Y);
-		DrawTextFit((IsFavorite ? "★ " : "") + DialogFindPlayer(DialogPrefix + Option.Name), X + 112, Y + 30 + ImageHeight, 225, "black");
+		if (ShowImages) {
+			DrawImage(`${AssetGetInventoryPath(Asset)}/${Option.Name}.png`, X + 2, Y);
+			const icons = IsFavorite ? ["Favorite"] : null;
+			DrawPreviewIcons(icons, X + 2, Y);
+		}
+		DrawTextFit((IsFavorite && !ShowImages ? "★ " : "") + DialogFindPlayer(DialogPrefix + Option.Name), X + 112, Y + 30 + ImageHeight, 225, "black");
 		if (ControllerActive == true) {
 			setButton(X + 112, Y + 30 + ImageHeight);
 		}
@@ -159,7 +163,9 @@ function ExtendedItemDraw(Options, DialogPrefix, OptionsPerPage, ShowImages = tr
 
 	// Permission mode toggle
 	if (Player.GetDifficulty() < 3) {
-		DrawButton(1775, 25, 90, 90, "", "White", ExtendedItemPermissionMode ? "Icons/DialogNormalMode.png" : "Icons/DialogPermissionMode.png", DialogFindPlayer(ExtendedItemPermissionMode ? "DialogNormalMode" : "DialogPermissionMode"));
+		DrawButton(1775, 25, 90, 90, "", "White",
+			ExtendedItemPermissionMode ? "Icons/DialogNormalMode.png" : "Icons/DialogPermissionMode.png",
+			DialogFindPlayer(ExtendedItemPermissionMode ? "DialogNormalMode" : "DialogPermissionMode"));
 	}
 }
 
@@ -174,16 +180,15 @@ function ExtendedItemDraw(Options, DialogPrefix, OptionsPerPage, ShowImages = tr
  */
 function ExtendedItemGetButtonColor(C, Option, CurrentOption, Hover, IsSelected) {
 	const IsSelfBondage = C.ID === 0;
-	const FailSkillCheck = !!ExtendedItemRequirementCheckMessageMemo(Option, CurrentOption, IsSelfBondage);
-	const BlockedOrLimited = InventoryBlockedOrLimited(C, DialogFocusItem, Option.Property.Type);
-	const PlayerBlocked = InventoryIsPermissionBlocked(
-		Player, DialogFocusItem.Asset.DynamicName(Player), DialogFocusItem.Asset.Group.Name,
-		Option.Property.Type,
-	);
-	const PlayerLimited = InventoryIsPermissionLimited(
-		Player, DialogFocusItem.Asset.Name, DialogFocusItem.Asset.Group.Name, Option.Property.Type);
 	let ButtonColor;
 	if (ExtendedItemPermissionMode) {
+		const PlayerBlocked = InventoryIsPermissionBlocked(
+			Player, DialogFocusItem.Asset.DynamicName(Player), DialogFocusItem.Asset.Group.Name,
+			Option.Property.Type,
+		);
+		const PlayerLimited = InventoryIsPermissionLimited(
+			Player, DialogFocusItem.Asset.Name, DialogFocusItem.Asset.Group.Name, Option.Property.Type);
+
 		if ((IsSelfBondage && IsSelected) || Option.Property.Type == null) {
 			ButtonColor = "#888888";
 		} else if (PlayerBlocked) {
@@ -194,6 +199,9 @@ function ExtendedItemGetButtonColor(C, Option, CurrentOption, Hover, IsSelected)
 			ButtonColor = Hover ? "green" : "lime";
 		}
 	} else {
+		const BlockedOrLimited = InventoryBlockedOrLimited(C, DialogFocusItem, Option.Property.Type);
+		const FailSkillCheck = !!ExtendedItemRequirementCheckMessageMemo(Option, CurrentOption, IsSelfBondage);
+
 		if (IsSelected && !Option.HasSubscreen) {
 			ButtonColor = "#888888";
 		} else if (BlockedOrLimited) {

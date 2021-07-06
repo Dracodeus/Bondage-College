@@ -76,6 +76,7 @@ Necklace,IDCard,ID Card
 Necklace,BlackHeart,Black Heart
 Necklace,ElegantHeartNecklace,Elegant Heart Necklace
 Necklace,Bandana,Bandana
+Necklace,FurScarf,Fur Scarf
 Suit,,Upper Suit
 Suit,Catsuit,Catsuit
 Suit,SeamlessCatsuit, Seamless Catsuit
@@ -192,6 +193,7 @@ Panties,Bikini1,Frilled Bikini
 Panties,Diapers1,Diaper
 Panties,Diapers2,Plastic Covered Diaper
 Panties,Diapers3,Satin Covered Diaper
+Panties,Diapers4,Patterned Diaper
 Panties,Panties16,Frill Panties
 Panties,MaidPanties1,Maid Panties
 Panties,LatexPanties1,Crotchless Latex Panties
@@ -296,6 +298,7 @@ Hat,Veil1,Veil Half Face
 Hat,Veil2,Veil Full Face
 Hat,BakerBoyHat,Baker Boy Hat
 Hat,ReindeerBand,Reindeer Hairband
+Hat,FurHeadband,Fur Headband
 HairAccessory3,,Hair Accessory
 HairAccessory3,Ribbons1,Hair Ribbon 1
 HairAccessory3,Ribbons2,Hair Ribbon 2
@@ -976,6 +979,7 @@ ItemNeckAccessories,CollarPupBone,Pup Bone
 ItemNeckRestraints,,Collar
 ItemNeckRestraints,CollarChainLong,Long Chain
 ItemNeckRestraints,CollarChainShort,Short Chain
+ItemNeckRestraints,Post,Hitching Post
 ItemNeckRestraints,CollarLeash,Leash
 ItemNeckRestraints,CollarLeashTaken,Pulled Leash
 ItemNeckRestraints,ChainLeash,Chain Leash
@@ -1274,6 +1278,7 @@ ItemDevices,ChangingTable,Changing Table
 ItemDevices,Locker,Locker
 ItemDevices,SmallLocker,Small Locker
 ItemDevices,ConcealingCloak,Concealing Cloak
+ItemDevices,Kennel,Kennel
 ItemDevices,PetBed,Pet Bed
 ItemDevices,TransportWoodenBox,Transport Box
 ItemDevices,VacCube,Vac-Cube

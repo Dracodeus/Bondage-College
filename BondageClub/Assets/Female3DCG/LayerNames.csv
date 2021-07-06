@@ -69,6 +69,9 @@ SuitLowerSeethroughSuitZipBase,Suit
 SuitLowerSeethroughSuitZipZip,Zip
 PantiesDiapers2Diaper,Diaper
 PantiesDiapers2Cover,Plastic Cover
+PantiesDiapers4Diaper,Diaper
+PantiesDiapers4Tape,Tape
+PantiesDiapers4Pattern,Pattern
 PantiesFlowerPantiesPanties,Panties
 PantiesFlowerPantiesFlowers,Flowers
 SocksSocks6Sock,Sock
@@ -298,6 +301,10 @@ ItemNeckRestraintsCollarRopeMediumRope,Rope
 ItemNeckRestraintsCollarRopeMediumPlate,Plate
 ItemNeckRestraintsCollarRopeLongRope,Rope
 ItemNeckRestraintsCollarRopeLongPlate,Plate
+ItemNeckRestraintsPostChain,Chain
+ItemNeckRestraintsPostHead,Cap
+ItemNeckRestraintsPostPost,Post
+ItemNeckRestraintsPostBase,Baseplate
 ItemMiscWoodenSignSign,Sign
 ItemMiscWoodenSignRope,Rope
 ItemMiscWoodenSignText,Text
@@ -331,6 +338,10 @@ ItemDevicesCribPillowTrim,Pillow Trim
 ItemDevicesCribPlushies,Plushies
 ItemDevicesConcealingCloakFront,Cloak
 ItemDevicesConcealingCloakStrap,Straps
+ItemDevicesKennelKennel,Kennel
+ItemDevicesKennelFrame,Front Frame
+ItemDevicesKennelDoor,Door
+ItemDevicesKennelPadding,Padding
 ItemDevicesPetBedBed,Bed
 ItemDevicesPetBedLining,Bed Lining
 ItemDevicesPetBedBlanket,Blanket

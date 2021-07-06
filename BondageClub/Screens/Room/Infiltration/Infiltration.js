@@ -236,6 +236,7 @@ function InfiltrationEndKidnapping(Reward) {
 		CommonSetScreen("Room", "Private");
 		let C = PrivateCharacter[PrivateCharacter.length - 1];
 		C.Love = -80;
+		C.FromPandora = true;
 		if (InventoryIsWorn(C, "MistressBoots", "Shoes")) {
 			C.Title = "Dominatrix";
 			NPCTraitSet(C, "Dominant", 50 + Math.floor(Math.random() * 51));

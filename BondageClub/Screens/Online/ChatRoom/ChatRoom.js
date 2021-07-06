@@ -22,6 +22,7 @@ var ChatRoomStruggleAssistBonus = 0;
 var ChatRoomStruggleAssistTimer = 0;
 var ChatRoomSlowtimer = 0;
 var ChatRoomSlowStop = false;
+var ChatRoomChatHidden = false;
 
 var ChatRoomCharacterCount = 0;
 var ChatRoomCharacterDrawlist = [];
@@ -403,7 +404,7 @@ function ChatRoomCanBeLeashedBy(sourceMemberNumber, C) {
 					canLeash = true;
 					if (C.Appearance[A].Asset.Group.Name == "ItemNeckRestraints")
 						neckLock = InventoryGetLock(C.Appearance[A]);
-				} else if (InventoryItemHasEffect(C.Appearance[A], "Tethered", true) || InventoryItemHasEffect(C.Appearance[A], "Mounted", true) || InventoryItemHasEffect(C.Appearance[A], "Enclose", true)){
+				} else if (InventoryItemHasEffect(C.Appearance[A], "Tethered", true) || InventoryItemHasEffect(C.Appearance[A], "Mounted", true) || InventoryItemHasEffect(C.Appearance[A], "Enclose", true) || InventoryItemHasEffect(C.Appearance[A], "OneWayEnclose", true)){
 					isTrapped = true;
 				}
 			}
@@ -505,6 +506,9 @@ function ChatRoomLoad() {
  * Removes all elements that can be open in the chat room
 */
 function ChatRoomClearAllElements() {
+	// Dialog
+	DialogLeave();
+	
 	// Friendlist
 	ElementRemove("FriendList");
 	FriendListBeepMenuClose();
@@ -522,9 +526,6 @@ function ChatRoomClearAllElements() {
 	// Chatroom
 	ElementRemove("InputChat");
 	ElementRemove("TextAreaChatLog");
-
-	// Dialog
-	DialogLeave();
 
 	// Preferences
 	ElementRemove("InputEmailOld");
@@ -879,6 +880,7 @@ function ChatRoomClickCharacter(C, CharX, CharY, Zoom, ClickX, ClickY, Pos) {
 	// Gives focus to the character
 	document.getElementById("InputChat").style.display = "none";
 	document.getElementById("TextAreaChatLog").style.display = "none";
+	ChatRoomChatHidden = true;
 	ChatRoomBackground = ChatRoomData.Background;
 	C.AllowItem = C.ID === 0 || ServerChatRoomGetAllowItem(Player, C);
 	ChatRoomOwnershipOption = "";
@@ -1128,8 +1130,15 @@ function ChatRoomStimulationMessage(Context) {
  * @param {boolean} load - If the reason for call was load (`true`) or window resize (`false`)
  */
 function ChatRoomResize(load) {
-	ElementPositionFix("TextAreaChatLog", ChatRoomFontSize, 1005, 66, 988, 835);
-	ElementPosition("InputChat", 1456, 950, 900, 82);
+	if (
+		CharacterGetCurrent() == null
+		&& CurrentScreen == "ChatRoom"
+		&& document.getElementById("InputChat")
+		&& document.getElementById("TextAreaChatLog")
+	) {
+		ElementPositionFix("TextAreaChatLog", ChatRoomFontSize, 1005, 66, 988, 835);
+		ElementPosition("InputChat", 1456, 950, 900, 82);
+	}
 }
 
 /**
@@ -1145,6 +1154,10 @@ function ChatRoomRun() {
 	ChatRoomBackground = "";
 	DrawRect(0, 0, 2000, 1000, "Black");
 	ChatRoomDrawCharacter(false);
+	if (ChatRoomChatHidden) {
+		ChatRoomChatHidden = false;
+		ChatRoomResize(false);
+	}
 	DrawButton(1905, 908, 90, 90, "", "White", "Icons/Chat.png");
 	if (!ChatRoomCanLeave() && ChatRoomSlowtimer != 0){//Player got interrupted while trying to leave. (Via a bind)
 		ServerSend("ChatRoomChat", { Content: "SlowLeaveInterrupt", Type: "Action", Dictionary: [{Tag: "SourceCharacter", Text: Player.Name, MemberNumber: Player.MemberNumber}]});

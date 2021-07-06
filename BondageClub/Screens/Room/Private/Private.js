@@ -322,6 +322,21 @@ function PrivateSubCanTurnTables() { return (!Player.IsRestrained() && !CurrentC
  * @returns {boolean} - TRUE if we allow NPC cheats
  */
 function PrivateNPCAllowCheat() { return (CheatFactor("ChangeNPCTrait", 0) == 0); }
+/**
+ * Checks if the character comes from Pandora's Box and she has a negative opinion of the player
+ * @returns {boolean} - TRUE if the character is from Pandora's Box and has a negative opinion
+ */
+function PrivateIsFromPandoraNegative() { return ((CurrentCharacter.FromPandora != null) && (CurrentCharacter.FromPandora == true) && (CurrentCharacter.Love <= -40) && !CurrentCharacter.IsLoverPrivate()); }
+/**
+ * Checks if the character comes from Pandora's Box and she has a neutral opinion of the player
+ * @returns {boolean} - TRUE if the character is from Pandora's Box and has a neutral opinion
+ */
+function PrivateIsFromPandoraNeutral() { return ((CurrentCharacter.FromPandora != null) && (CurrentCharacter.FromPandora == true) && (CurrentCharacter.Love > -40) && (CurrentCharacter.Love < 40) && !CurrentCharacter.IsLoverPrivate()); }
+/**
+ * Checks if the character comes from Pandora's Box and she has a positive opinion of the player
+ * @returns {boolean} - TRUE if the character is from Pandora's Box and has a positive opinion
+ */
+function PrivateIsFromPandoraPositive() { return ((CurrentCharacter.FromPandora != null) && (CurrentCharacter.FromPandora == true) && (CurrentCharacter.Love >= 40) && !CurrentCharacter.IsLoverPrivate()); }
 
 /**
  * Loads the private room screen and the vendor NPC.
@@ -341,14 +356,15 @@ function PrivateLoad() {
 	PrivateVendor.AllowItem = false;
 	Player.ArousalSettings.OrgasmCount = 0;
 	NPCTraitDialog(PrivateVendor);
-	let mustSync = false;
+	let MustSync = false;
 	for (let C = 1; C < PrivateCharacter.length; C++) {
-		const updateRequired = PrivateLoadCharacter(C);
-		mustSync = mustSync || updateRequired;
+		let FromPandora = PrivateCharacter[C].FromPandora;
+		let UpdateRequired = PrivateLoadCharacter(C);
+		if (FromPandora != null) PrivateCharacter[C].FromPandora = FromPandora;
+		MustSync = (MustSync || UpdateRequired);
 	}
-	mustSync = mustSync || PrivateRelationDecay();
-
-	if (mustSync) ServerPrivateCharacterSync();
+	MustSync = (MustSync || PrivateRelationDecay());
+	if (MustSync) ServerPrivateCharacterSync();
 }
 
 /**

@@ -428,11 +428,7 @@ function CharacterAppearanceItemIsHidden(AssetName, GroupName) {
  * @returns {void} - Nothing
  */
 function CharacterAppearanceSetHeightModifiers(C) {
-	if (CharacterAppearanceForceUpCharacter == C.MemberNumber) {
-		// If the "Up" button was clicked, move the character to the top
-		C.HeightModifier = 0;
-		C.HeightRatioProportion = 1;
-	} else {
+	if (CharacterAppearanceForceUpCharacter != C.MemberNumber) {
 		let Height = 0;
 		let HeightRatioProportion = 1;
 
@@ -533,10 +529,15 @@ function CharacterAppearanceXOffset(C, HeightRatio) {
  * up at the 'ceiling'
  * @param {Character} C - The character to reposition
  * @param {number} HeightRatio - The character's height ratio
+ * @param {boolean} [IgnoreUpButton=false] - Whether or not to ignore the up button status
  * @returns {number} - The amounnt to move the character along the Y co-ordinate
  */
-function CharacterAppearanceYOffset(C, HeightRatio) {
-	return 1000 * (1 - HeightRatio) * C.HeightRatioProportion - C.HeightModifier * HeightRatio;
+function CharacterAppearanceYOffset(C, HeightRatio, IgnoreUpButton) {
+	let HeightModifier = C.HeightModifier;
+	if (!IgnoreUpButton && CharacterAppearanceForceUpCharacter == C.MemberNumber) {
+		HeightModifier = 0;
+	}
+	return 1000 * (1 - HeightRatio) * C.HeightRatioProportion - HeightModifier * HeightRatio;
 }
 
 /**
@@ -697,20 +698,18 @@ function AppearanceRun() {
 			const Item = DialogInventory[I];
 			const Hover = MouseIn(X, Y, 225, 275) && !CommonIsMobile;
 			const Background = AppearanceGetPreviewImageColor(C, Item, Hover);
-			const Vibrating = Item.Worn && InventoryItemHasEffect(InventoryGet(C, Item.Asset.Group.Name), "Vibrating", true);
-			const Hidden = CharacterAppearanceItemIsHidden(Item.Asset.Name, Item.Asset.Group.Name);
 
-			if (Hidden) DrawPreviewBox(X, Y, "Icons/HiddenItem.png", Item.Asset.Description, { Background });
-			else if (AppearancePreviewUseCharacter(C.FocusGroup)) {
+			if (Item.Hidden) {
+				DrawPreviewBox(X, Y, "Icons/HiddenItem.png", Item.Asset.Description, { Background });
+			} else if (AppearancePreviewUseCharacter(C.FocusGroup)) {
 				const Z = C.FocusGroup.PreviewZone;
 				const PreviewCanvas = DrawCharacterSegment(AppearancePreviews[I], Z[0], Z[1], Z[2], Z[3]);
-				DrawCanvasPreview(X, Y, PreviewCanvas, Item.Asset.Description, { Background });
+				DrawCanvasPreview(X, Y, PreviewCanvas, Item.Asset.Description, { Background, Vibrating: Item.Vibrating, Icons: Item.Icons });
+			} else {
+				DrawAssetPreview(X, Y, Item.Asset, { Background, Vibrating: Item.Vibrating, Icons: Item.Icons });
 			}
-			else {
-				DrawAssetPreview(X, Y, Item.Asset, { Background, Vibrating, IsFavorite: InventoryIsFavorite(C, Item.Asset.Name, Item.Asset.Group.Name, null)});
-			}
+
 			setButton(X, Y);
-			if (Item.Icon != "") DrawImage("Icons/" + Item.Icon + ".png", X + 2, Y + 110);
 			X = X + 250;
 			if (X > 1800) {
 				X = 1250;
@@ -723,7 +722,7 @@ function AppearanceRun() {
 /**
  * Calculates the background color of the preview image for and item
  * @param {Character} C - The character whose appearance we are viewing
- * @param {Item} item - The item to calculate the color for
+ * @param {DialogInventoryItem} item - The item to calculate the color for
  * @param {boolean} hover - Whether or not the item is currently hovering over the preview image
  * @returns {string} - A CSS color string determining the color that the preview icon should be drawn in
  */
@@ -1096,7 +1095,7 @@ function AppearanceClick() {
 					var CurrentItem = InventoryGet(C, C.FocusGroup.Name);
 
 					if (CurrentItem && (CurrentItem.Asset.Name == Item.Asset.Name)) return;
-					InventoryTogglePermission(Item, null);
+					DialogInventoryTogglePermission(Item);
 
 				} else {
 					if (InventoryBlockedOrLimited(C, Item)) return;

@@ -128,7 +128,7 @@ interface AssetGroup {
 	DrawingBlink: boolean;
 	InheritColor?: string;
 	FreezeActivePose: string[];
-	PreviewZone?: [number, number, number, number][];
+	PreviewZone?: [number, number, number, number];
 	DynamicGroupName: string;
 }
 
@@ -272,9 +272,9 @@ interface Asset {
 	IsRestraint: boolean;
 	BodyCosplay: boolean;
 	OverrideBlinking: boolean;
-	DialogSortOverride?: number;
+	DialogSortOverride?: DialogSortOrder;
 	DynamicDescription: (C: Character) => string;
-	DynamicPreviewIcon: (C: Character) => string;
+	DynamicPreviewImage: (C: Character) => string;
 	DynamicAllowInventoryAdd: (C: Character) => boolean;
 	DynamicExpressionTrigger: (C: Character) => ExpressionTrigger[];
 	DynamicName: (C?: Character) => string;
@@ -301,6 +301,7 @@ interface Asset {
 	ColorableLayerCount: number;
 	Archetype?: string;
 	Attribute: string[];
+	PreviewIcons: string[];
 }
 
 /** An ItemBundle is a minified version of the normal Item */
@@ -321,7 +322,7 @@ interface Pose {
 	AllowMenu?: true;
 	OverrideHeight?: { Height: number; Priority: number; };
 	Hide?: string[];
-	MovePosition?: { Group: string; X: number; Y: number; }[];
+	MovePosition?: { Group: string; Asset?: string; X: number; Y: number; })[];
 }
 
 interface Activity {
@@ -344,6 +345,14 @@ interface Item {
 	Color?: string | string[];
 	Difficulty?: number;
 	Property?: ItemProperties;
+}
+
+interface DialogInventoryItem extends Item {
+	Worn: boolean;
+	Icons: string[];
+	SortOrder: string;
+	Hidden: boolean;
+	Vibrating: boolean;
 }
 
 interface Skill {
