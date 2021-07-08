@@ -46,6 +46,8 @@ SuitSeethroughSuitZipZip,Zip
 BraHaremBraFabric,Fabric
 BraHaremBraStraps,Straps
 BraHaremBraJewel,Jewel
+BraFlowerBraBra,Bra
+BraFlowerBraFlowers,Flowers
 ClothLowerSkirt2Color,Skirt
 ClothLowerSkirt2Stripe,Trim
 ClothLowerSkirt3Color,Skirt
@@ -402,6 +404,8 @@ ItemBootsFuturisticHeels2Display,Display
 ItemBootsFuturisticHeels2Lock,Lock
 ItemBootsLeatherFootMitts1Mitts,Mittens
 ItemBootsLeatherFootMitts1Straps,Straps
+GartersGarterBeltLeft,Left
+GartersGarterBeltRight,Right
 ShoesFuturisticHeels2Mesh,Body
 ShoesFuturisticHeels2Shine,Shine
 ShoesFuturisticHeels2Cuffs,Cuffs

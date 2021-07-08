@@ -171,6 +171,7 @@ Bra,LeatherBreastBinder,Leather Breast Binder
 Bra,SilkStraps,Silk Straps
 Bra,FullLatexBra,Full Latex Bra
 Bra,HaremBra,Harem Bra
+Bra,FlowerBra,Flower Bra
 Corset,,Corset
 Corset,Corset1,Corset + Garters
 Corset,Corset2,Corset
@@ -976,6 +977,7 @@ ItemNeckAccessories,CollarFlower,Flower
 ItemNeckAccessories,CollarRose,Rose
 ItemNeckAccessories,CollarCowBell,Cowbell
 ItemNeckAccessories,CollarPupBone,Pup Bone
+ItemNeckAccessories,Key,Key
 ItemNeckRestraints,,Collar
 ItemNeckRestraints,CollarChainLong,Long Chain
 ItemNeckRestraints,CollarChainShort,Short Chain
@@ -1278,7 +1280,7 @@ ItemDevices,ChangingTable,Changing Table
 ItemDevices,Locker,Locker
 ItemDevices,SmallLocker,Small Locker
 ItemDevices,ConcealingCloak,Concealing Cloak
-ItemDevices,Kennel,Kennel
+ItemDevices,Kennel,Heavy Kennel
 ItemDevices,PetBed,Pet Bed
 ItemDevices,TransportWoodenBox,Transport Box
 ItemDevices,VacCube,Vac-Cube

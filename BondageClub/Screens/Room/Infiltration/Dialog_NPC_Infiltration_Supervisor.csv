@@ -93,3 +93,16 @@ Ransom0,,Give me a minute.  (Leave her.),,DialogLeave(),
 Ransom10,End,"Yes, I'll take the money.",Here you go comrade.  (She gives you a money envelope.)  Are you ready to go back?,"PayRansom(""Money"")",
 Ransom10,End,"No, but I want some infiltration training.","Of course, comrade.  (She gives you great infiltration tricks.)  Are you ready to go back?","PayRansom(""Skill"")",
 Ransom10,End,I don't want anything.,You make us proud comrade.  (She salutes you.)  Are you ready to go back?,"PayRansom(""None"")",
+100,,,Comrade DialogPlayerName!  (She gives you a military salute.)  What's wrong?  You look worried.,,"DialogSkillGreater(""Infiltration"", 7)"
+100,,,Comrade DialogPlayerName!  Is there something troubling you?,,"DialogSkillGreater(""Infiltration"", 3)"
+100,,,Hello!  Is there anything I can do to help you?,,
+100,110,My friend was kidnapped.,Sorry about that.  Pandora's Box has been causing lots of trouble lately.  Is there a ransom to pay?,,
+100,0,I don't need anything.  (Leave her.),,DialogLeave(),
+110,,I'm not paying.  I'll go free her.,TO DO,,
+110,180,"Yes, the ransom amount is 100$.",(She nods.)  That's the usual price.  Will you pay to free her?,,
+110,,For how long will they keep her?,It depends on the guards and Dominatrixes.  Most victims are usually kept for a week.,,
+110,0,Let's drop this.  (Leave her.),,DialogLeave(),
+180,190,I don't have enough money.,I understand comrade.  It's a big sum and it might be used to finance more kidnappings.  Let me know if you get the funds.,,
+180,190,I'll pay right now.  (Give her 100$.),(She takes the money and arranges her liberation.)  Your friend should be back in a few minutes comrade.,RansomFriend(),DialogMoneyGreater(100)
+180,190,I don't know yet.,Think about it comrade.  It's a big sum and it might be used to finance more kidnappings.,,
+190,0,Thanks.  Take care.  (Leave her.),,DialogLeave(),

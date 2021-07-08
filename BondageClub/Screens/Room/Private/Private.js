@@ -364,6 +364,7 @@ function PrivateLoad() {
 		MustSync = (MustSync || UpdateRequired);
 	}
 	MustSync = (MustSync || PrivateRelationDecay());
+	MustSync = (MustSync || PrivateRansomStart());
 	if (MustSync) ServerPrivateCharacterSync();
 }
 
@@ -386,14 +387,19 @@ function PrivateDrawCharacter() {
 			// If the character is sent to the asylum, she won't show in the room but her slot is still taken
 			if (NPCEventGet(PrivateCharacter[C], "AsylumSent") <= CurrentTime) {
 
-				// Draw the NPC and the cage if needed
-				if (PrivateCharacter[C].Cage != null) DrawImage("Screens/Room/Private/CageBack.png", X + (C - PrivateCharacterOffset) * 470, 0);
-				DrawCharacter(PrivateCharacter[C], X + (C - PrivateCharacterOffset) * 470, 0, 1);
-				if (PrivateCharacter[C].Cage != null) DrawImage("Screens/Room/Private/CageFront.png", X + (C - PrivateCharacterOffset) * 470, 0);
-				if (LogQuery("Cage", "PrivateRoom") && !LogQuery("BlockCage", "Rule"))
-					if ((Player.Cage == null) || (C == 0))
-						if (!PrivateCharacter[C].IsOwner())
-							DrawButton(X + 205 + (C - PrivateCharacterOffset) * 470, 900, 90, 90, "", "White", "Icons/Cage.png");
+				// If the character is kidnapped by Pandora's Box, a ransom note will be shown
+				if (NPCEventGet(PrivateCharacter[C], "Kidnap") <= CurrentTime) {
+			
+					// Draw the NPC and the cage if needed
+					if (PrivateCharacter[C].Cage != null) DrawImage("Screens/Room/Private/CageBack.png", X + (C - PrivateCharacterOffset) * 470, 0);
+					DrawCharacter(PrivateCharacter[C], X + (C - PrivateCharacterOffset) * 470, 0, 1);
+					if (PrivateCharacter[C].Cage != null) DrawImage("Screens/Room/Private/CageFront.png", X + (C - PrivateCharacterOffset) * 470, 0);
+					if (LogQuery("Cage", "PrivateRoom") && !LogQuery("BlockCage", "Rule"))
+						if ((Player.Cage == null) || (C == 0))
+							if (!PrivateCharacter[C].IsOwner())
+								DrawButton(X + 205 + (C - PrivateCharacterOffset) * 470, 900, 90, 90, "", "White", "Icons/Cage.png");
+							
+				} else DrawImage("Screens/Room/PrivateRansom/RansomNote.png", X + 160 + (C - PrivateCharacterOffset) * 470, 375);
 
 			} else {
 
@@ -489,7 +495,7 @@ function PrivateClickCharacterButton() {
 
 		// The cage is only available on certain conditions
 		if ((MouseX >= X + 205 + (C - PrivateCharacterOffset) * 470) && (MouseX <= X + 295 + (C - PrivateCharacterOffset) * 470))
-			if ((NPCEventGet(PrivateCharacter[C], "SlaveMarketRent") <= CurrentTime) && (NPCEventGet(PrivateCharacter[C], "AsylumSent") <= CurrentTime))
+			if ((NPCEventGet(PrivateCharacter[C], "SlaveMarketRent") <= CurrentTime) && (NPCEventGet(PrivateCharacter[C], "AsylumSent") <= CurrentTime) && (NPCEventGet(PrivateCharacter[C], "Kidnap") <= CurrentTime))
 				if (LogQuery("Cage", "PrivateRoom") && !LogQuery("BlockCage", "Rule"))
 					if ((Player.Cage == null) || (C == 0))
 						if (!PrivateCharacter[C].IsOwner()) {
@@ -525,6 +531,13 @@ function PrivateClickCharacter() {
 	for (let C = PrivateCharacterOffset; (C < PrivateCharacter.length && C < PrivateCharacterOffset + 4); C++)
 		if ((MouseX >= X + (C - PrivateCharacterOffset) * 470) && (MouseX <= X + 470 + (C - PrivateCharacterOffset) * 470))
 			if ((NPCEventGet(PrivateCharacter[C], "SlaveMarketRent") <= CurrentTime) && (NPCEventGet(PrivateCharacter[C], "AsylumSent") <= CurrentTime)) {
+
+				// If a kidnapping is in progress, we show the ransom note
+				if (NPCEventGet(PrivateCharacter[C], "Kidnap") >= CurrentTime) {
+					PrivateRansomCharacter = PrivateCharacter[C];
+					CommonSetScreen("Room", "PrivateRansom");
+					return;
+				}
 
 				// If the arousal meter is shown for that character, we can interact with it
 				if ((PrivateCharacter[C].ID == 0) || (Player.ArousalSettings.ShowOtherMeter == null) || Player.ArousalSettings.ShowOtherMeter)

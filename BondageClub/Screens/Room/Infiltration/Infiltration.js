@@ -344,3 +344,13 @@ function InfiltrationGetPandoraLock() {
 	InventoryAdd(Player, "PandoraPadlock", "ItemMisc");
 	InventoryAdd(Player, "PandoraPadlockKey", "ItemMisc");
 }
+
+/**
+ * Pays for the ransom to free a friend from the private room
+ * @returns {void} - Nothing
+ */
+function InfiltrationRansomFriend() {
+	NPCEventAdd(PrivateRansomCharacter, "Kidnap", CurrentTime);
+	ServerPrivateCharacterSync();
+	CharacterChangeMoney(Player, -100);
+}
